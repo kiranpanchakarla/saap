@@ -56,12 +56,18 @@ public class MISDaoImpl implements MISdao {
 	public  User verifyUser(User user) {		
 		User validUser = null;
 		String ss="from User  where name=:un   and CAST(password as binary) = CAST(:pw as binary) ";
-		Query q=sessionFactory.getCurrentSession().createQuery(ss);
-		q.setParameter("un",user.getName());
-		q.setParameter("pw", user.getPassword());
+		//Query q=sessionFactory.getCurrentSession().createQuery(ss);
+		//q.setParameter("un",user.getName());
+		//q.setParameter("pw", user.getPassword());
 		
-		if(q.list().size() != 0){
-			 validUser=(User) q.list().get(0);
+		List users = sessionFactory.getCurrentSession()
+		        .createQuery( "from User  where name=:un and CAST(password as binary) = CAST(:pw as binary)")
+		        .setParameter("un",user.getName())
+		        .setParameter("pw", user.getPassword())
+		        .list();
+		
+		if(users.size() != 0){
+			 validUser=(User) users.get(0);
 		}else
 			 validUser = null;
 		return validUser;
