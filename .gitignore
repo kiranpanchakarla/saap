@@ -1,25 +1,10 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
+target/
 .settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
+.project
+.classpath
+.pmd
+.pmdruleset.xml
+.checkstyle
 .idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+delta.iml
+*.class
