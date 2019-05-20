@@ -131,9 +131,11 @@
     
     <div class="row">
     <div class="col-md-12">
-        <form id="msform" method="post" action="adminSection"  modelAttribute="adminSecObject">
+     <c:url value="/administrativeSection/save" var="createUrl" />
+        <form id="msform" method="post" action="${createUrl}"  modelAttribute="adminSecObject">
            
-            
+             <input type="hidden" name="${_csrf.parameterName}"
+            value="${_csrf.token}" />
             <!-- fieldsets -->  
             <fieldset>
              <div class="fs-list-full"> 

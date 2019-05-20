@@ -132,7 +132,8 @@
     <div class="col-md-12">
         <form id="msform" method="post" action="lineDepartment" modelAttribute="lineDeptObj">
            
-            
+             <input type="hidden" name="${_csrf.parameterName}"
+            value="${_csrf.token}" />
             <!-- fieldsets -->
             <fieldset>
             <div class="fs-list-full"> 

@@ -1,14 +1,11 @@
 package com.ap.mis.daoImpl;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.Query;
-
 import com.ap.mis.dao.MISdao;
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.AgreementDetails;

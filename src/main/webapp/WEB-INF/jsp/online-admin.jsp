@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,15 +138,19 @@
     </div>
 
     <!-- Login Form -->
-    <form method="post" action="adminloggedin" modelAttribute="userObject">
-      <input type="text" id="login" class="fadeIn second" name="name" placeholder="login">
+    <form method="post" action="<c:url value='j_spring_security_check'/>" >
+      <input type="text" id="login" class="fadeIn second" name="username" placeholder="login">
       <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
       <input type="submit" class="fadeIn fourth" value="Log In">
-    </form>
     
-    <c:if test="${not empty invalidUser}">
-  <span style="color:red;">Invalid User Name</span>
-</c:if>
+    <input type="hidden" name="${_csrf.parameterName}"
+            value="${_csrf.token}" />
+            
+    </form>
+     
+    <c:if test="${not empty error}">
+           <span style="color:red;">Invalid Credentials! </span>
+    </c:if>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">

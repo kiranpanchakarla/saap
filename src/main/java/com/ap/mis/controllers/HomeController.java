@@ -31,6 +31,7 @@ import com.ap.mis.service.DistrictService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.MandalService;
 import com.ap.mis.service.VillageService;
+import com.ap.mis.util.SecurityUtil;
 
 @Controller
 public class HomeController {
@@ -43,37 +44,38 @@ public class HomeController {
 	@Autowired ConstituencyService  constituencyService;
 	
 	
-	@RequestMapping(value = "/")
+	/*@RequestMapping(value = "/")
 	public String loginPageDisplay(Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.removeAttribute("generalInfo");
 		session.removeAttribute("loggedInUserObj");
 		return "online-admin";
-	}
+	}*/
 	
-	@RequestMapping(value = "/adminloggedin" , method = RequestMethod.POST)
+	@RequestMapping(value = "/adminloggedin" , method = RequestMethod.GET)
 	public String validatingLoginUser(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		userObject = SecurityUtil.getLoggedUser();
 		model.addAttribute("districts", districtsService.findAll());
 		model.addAttribute("allMandals", mandalService.findAll());
 		model.addAttribute("allVillages", villageService.findAll());
 		model.addAttribute("allConstituencs", constituencyService.findAll());
 		userObject =misService.verifyUser(userObject);
 		session.setAttribute("loggedInUserObj", userObject);
-		if(userObject != null && userObject.getRole().getRoleName().equalsIgnoreCase("ADMIN"))
+		//if(userObject != null && userObject.getRole().getRoleName().equalsIgnoreCase("ADMIN"))
 			return "online-mis";
-		else
-			model.addAttribute("invalidUser", "invalidUser");
-			return "online-admin";
+		//else
+			//model.addAttribute("invalidUser", "invalidUser");
+		//	return "online-admin";
 		
-	}
+	} 
 	
-	
-	@RequestMapping(value = "/worksCreation", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/worksCreation", method = RequestMethod.GET)
 	public String workCreationSave(@ModelAttribute  Works  workObject,Model model,HttpServletRequest request) {
 		System.out.println("workObject :"+workObject);
 		HttpSession session = request.getSession();
 		User loggedInUser = (User) session.getAttribute("loggedInUserObj");
+		loggedInUser = SecurityUtil.getLoggedUser();
 		workObject.setUser(loggedInUser);
 		WorktoLandDetails obj = new WorktoLandDetails(); 
 		int i = misService.saveWorks(workObject);
@@ -86,9 +88,9 @@ public class HomeController {
 		}
 		else
 			return "online-mis";
-	}
+	}*/
 	
-	@RequestMapping(value = "/adminSection", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/adminSection", method = RequestMethod.GET)
 	public String administrativeSectionSave(@ModelAttribute  AdministrativeSection  adminSecObject,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User loggedInUser = (User) session.getAttribute("loggedInUserObj");
@@ -103,7 +105,7 @@ public class HomeController {
 		}
 		else
 			return "online-mis-administrative-section";
-	}
+	}*/
 	
 	@RequestMapping(value = "/lineDepartment", method = RequestMethod.POST)
 	public String lineDepatmentSave(@ModelAttribute  DepartmentLinkingLine  lineDeptObj,Model model,HttpServletRequest request) {

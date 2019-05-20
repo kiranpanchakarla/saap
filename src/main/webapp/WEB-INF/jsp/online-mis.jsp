@@ -101,8 +101,11 @@ $(document).ready(function(){
     
     <div class="row">
     <div class="col-md-12">
-        <form id="msform" method="post" action="worksCreation" modelAttribute="workObject">
-           
+    <c:url value="/worksCreation/save" var="createUrl" />
+        <form id="msform" method="post" action="${createUrl}" modelAttribute="workObject">
+        
+           <input type="hidden" name="${_csrf.parameterName}"
+            value="${_csrf.token}" /> 
             
             <!-- fieldsets -->
             <fieldset>
