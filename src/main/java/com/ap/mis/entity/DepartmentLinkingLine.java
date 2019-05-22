@@ -36,13 +36,13 @@ public final class DepartmentLinkingLine implements Serializable{
 	private String circle;
 	
 	@Column(name = "division_name")
-	private String divisionName;
+	private int divisionName;
 	
 	@Column(name = "subdivision_name")
-	private String subdivisionName;
+	private int subdivisionName;
 	
 	@Column(name = "section_name")
-	private String sectionName;
+	private int sectionName;
 	
 	@Column(name = "section_officer_name")
 	private String sectionOfficerName;
@@ -89,27 +89,27 @@ public final class DepartmentLinkingLine implements Serializable{
 		this.circle = circle;
 	}
 
-	public String getDivisionName() {
+	public int getDivisionName() {
 		return divisionName;
 	}
 
-	public void setDivisionName(String divisionName) {
+	public void setDivisionName(int divisionName) {
 		this.divisionName = divisionName;
 	}
 
-	public String getSubdivisionName() {
+	public int getSubdivisionName() {
 		return subdivisionName;
 	}
 
-	public void setSubdivisionName(String subdivisionName) {
+	public void setSubdivisionName(int subdivisionName) {
 		this.subdivisionName = subdivisionName;
 	}
 
-	public String getSectionName() {
+	public int getSectionName() {
 		return sectionName;
 	}
 
-	public void setSectionName(String sectionName) {
+	public void setSectionName(int sectionName) {
 		this.sectionName = sectionName;
 	}
 

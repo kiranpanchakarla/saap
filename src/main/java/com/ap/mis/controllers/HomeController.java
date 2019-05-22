@@ -24,12 +24,17 @@ import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Village;
+import com.ap.mis.entity.GrantType;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
+import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.ConstituencyService;
 import com.ap.mis.service.DistrictService;
+import com.ap.mis.service.LandDetailService;
+import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.MandalService;
+import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.service.VillageService;
 import com.ap.mis.util.SecurityUtil;
 
@@ -42,6 +47,10 @@ public class HomeController {
 	@Autowired MandalService  mandalService;
 	@Autowired VillageService villageService;
 	@Autowired ConstituencyService  constituencyService;
+	@Autowired AdministrativeSectionService administrativeSectionService;
+	@Autowired LineDepartmentService lineDepartmentService;
+	@Autowired LandDetailService landDetailService;
+	@Autowired TenderingProcessService tenderingProcessService;
 	
 	
 	/*@RequestMapping(value = "/")
@@ -66,20 +75,26 @@ public class HomeController {
 			return "online-mis";
 		//else
 			//model.addAttribute("invalidUser", "invalidUser");
-		//	return "online-admin";
+			// "online-admin";
 		
-	} 
+	}
 	
-	/*@RequestMapping(value = "/worksCreation", method = RequestMethod.GET)
+	
+	/*@RequestMapping(value = "/worksCreation", method = RequestMethod.POST)
 	public String workCreationSave(@ModelAttribute  Works  workObject,Model model,HttpServletRequest request) {
+		System.out.println("getWorkDetails .... "+workObject.getWorkDetails());
+		System.out.println("getCost .... "+workObject.getCost());
 		System.out.println("workObject :"+workObject);
 		HttpSession session = request.getSession();
 		User loggedInUser = (User) session.getAttribute("loggedInUserObj");
-		loggedInUser = SecurityUtil.getLoggedUser();
-		workObject.setUser(loggedInUser);
+		workObject.setUser(loggedInUser);		
 		WorktoLandDetails obj = new WorktoLandDetails(); 
 		int i = misService.saveWorks(workObject);
 		if(i != 0){
+			model.addAttribute("grantTypeList", administrativeSectionService.findAll());
+			model.addAttribute("finYearList", administrativeSectionService.getfinancialYearList());
+			model.addAttribute("executiveDeptList", administrativeSectionService.getExecutiveDeptList());
+			model.addAttribute("executiveConsultantList", administrativeSectionService.getExecutiveConsultantList());
 			obj.setWorks(workObject);
 			session.setAttribute("generalInfo", obj);
 			
@@ -90,7 +105,7 @@ public class HomeController {
 			return "online-mis";
 	}*/
 	
-	/*@RequestMapping(value = "/adminSection", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/adminSection", method = RequestMethod.POST)
 	public String administrativeSectionSave(@ModelAttribute  AdministrativeSection  adminSecObject,Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User loggedInUser = (User) session.getAttribute("loggedInUserObj");
@@ -98,6 +113,11 @@ public class HomeController {
 		int i = misService.adminstrativeSectionSave(adminSecObject);
 		WorktoLandDetails obj = new WorktoLandDetails(); 
 		if(i != 0){
+			
+			model.addAttribute("divisionList", lineDepartmentService.getDivisionList());
+			model.addAttribute("subdivisionList", lineDepartmentService.getSubdivisionList());
+			model.addAttribute("sectionList", lineDepartmentService.getSectionList());
+
 			obj = (WorktoLandDetails) session.getAttribute("generalInfo");
 		    obj.setAdministrativeesction(adminSecObject);
 		    session.setAttribute("generalInfo", obj);
@@ -107,7 +127,7 @@ public class HomeController {
 			return "online-mis-administrative-section";
 	}*/
 	
-	@RequestMapping(value = "/lineDepartment", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/lineDepartment", method = RequestMethod.POST)
 	public String lineDepatmentSave(@ModelAttribute  DepartmentLinkingLine  lineDeptObj,Model model,HttpServletRequest request) {
 		Works  workInfo=null;
 		HttpSession session = request.getSession();
@@ -119,6 +139,7 @@ public class HomeController {
 		model.addAttribute("workInfo", workInfo);
 		WorktoLandDetails obj = new WorktoLandDetails(); 
 		if(i != 0){
+			model.addAttribute("LandTypeList", landDetailService.getLandTypeList());			
 			obj = (WorktoLandDetails) session.getAttribute("generalInfo");
 			obj.setDepartmentlinkingine(lineDeptObj);
 			session.setAttribute("generalInfo", obj);
@@ -150,7 +171,7 @@ public class HomeController {
 	public String generalInformation(Model model) {
 		return  "online-mis-consultant-information";
 		
-	}
+	}*/
 	
 	@RequestMapping(value = "/consultantInfo")
 	public String saveConsultantInfo(@ModelAttribute  ConsultantInfo  consultantInfoObject,Model model,HttpServletRequest request) {
@@ -191,15 +212,25 @@ public class HomeController {
 		System.out.println("techsanc...."+techsanc);
 		Works  workInfo=null;
 		HttpSession session = request.getSession();
+		if(session.getAttribute("loggedInUserObj") == null){
+			model.addAttribute("sessionTimeout", "sessionTimeout");
+			return "online-admin";
+		}
 		int wrokid =(int) session.getAttribute("workIdSession");
 		techsanc.setWorkId(wrokid);	
 		int i = misService.saveTechSanction(techsanc);
 		workInfo=misService.getWorkInfo(wrokid);
 		model.addAttribute("workInfo", workInfo);
-		if(i != 0)
+		if(i != 0) {
+			model.addAttribute("authoritiesTypeList", tenderingProcessService.getAuthoritiesList());			
+			model.addAttribute("agencyList", tenderingProcessService.getAgencyList());	
+			
 			return "online-mis-tendering-process";
-		else
+		}
+		else {
 			return "online-mis-technical-sanction";
+
+		}
 	}	
 		
 		

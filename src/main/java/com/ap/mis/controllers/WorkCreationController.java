@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
+import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.ConstituencyService;
 import com.ap.mis.service.DistrictService;
+import com.ap.mis.service.LandDetailService;
+import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.MandalService;
+import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.service.VillageService;
 import com.ap.mis.util.SecurityUtil;
 
@@ -30,6 +34,10 @@ public class WorkCreationController {
 	@Autowired MandalService  mandalService;
 	@Autowired VillageService villageService;
 	@Autowired ConstituencyService  constituencyService;
+	@Autowired AdministrativeSectionService administrativeSectionService;
+	@Autowired LineDepartmentService lineDepartmentService;
+	@Autowired LandDetailService landDetailService;
+	@Autowired TenderingProcessService tenderingProcessService;
 	
 	@PostMapping(value = "/save")
 	public String workCreationSave(@ModelAttribute  Works  workObject,Model model,HttpServletRequest request) {
@@ -41,6 +49,11 @@ public class WorkCreationController {
 		WorktoLandDetails obj = new WorktoLandDetails(); 
 		int i = misService.saveWorks(workObject);
 		if(i != 0){
+			model.addAttribute("grantTypeList", administrativeSectionService.findAll());
+			model.addAttribute("finYearList", administrativeSectionService.getfinancialYearList());
+			model.addAttribute("executiveDeptList", administrativeSectionService.getExecutiveDeptList());
+			model.addAttribute("executiveConsultantList", administrativeSectionService.getExecutiveConsultantList());
+			
 			obj.setWorks(workObject);
 			session.setAttribute("generalInfo", obj);
 			

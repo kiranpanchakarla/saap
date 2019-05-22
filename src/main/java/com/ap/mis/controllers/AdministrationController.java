@@ -16,6 +16,7 @@ import com.ap.mis.entity.User;
 import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.ConstituencyService;
 import com.ap.mis.service.DistrictService;
+import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.MandalService;
 import com.ap.mis.service.VillageService;
@@ -30,6 +31,8 @@ public class AdministrationController {
 	@Autowired MandalService  mandalService;
 	@Autowired VillageService villageService;
 	@Autowired ConstituencyService  constituencyService;
+	@Autowired LineDepartmentService lineDepartmentService;
+
 	
 	@PostMapping(value = "/save")
 	public String administrativeSectionSave(@ModelAttribute  AdministrativeSection  adminSecObject,Model model,HttpServletRequest request) {
@@ -40,6 +43,9 @@ public class AdministrationController {
 		int i = misService.adminstrativeSectionSave(adminSecObject);
 		WorktoLandDetails obj = new WorktoLandDetails(); 
 		if(i != 0){
+			model.addAttribute("divisionList", lineDepartmentService.getDivisionList());
+			model.addAttribute("subdivisionList", lineDepartmentService.getSubdivisionList());
+			model.addAttribute("sectionList", lineDepartmentService.getSectionList());
 			obj = (WorktoLandDetails) session.getAttribute("generalInfo");
 		    obj.setAdministrativeesction(adminSecObject);
 		    session.setAttribute("generalInfo", obj);

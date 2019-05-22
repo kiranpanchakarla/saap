@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="agreement_details")
 public class AgreementDetails {
@@ -22,15 +24,18 @@ public class AgreementDetails {
 	private double performanceSecurityAmount;
 	
 	@Column(name="sitehandover_date")
+	@DateTimeFormat(pattern = "yy-mm-dd") 
 	private Date siteHandOverDate;
 	
 	@Column(name="agreementConcluded_date")
+	@DateTimeFormat(pattern = "yy-mm-dd") 
 	private Date agreementCouncludedDate;
 	
 	@Column(name="periodofcontract")
 	private int periodOfContract;
 	
 	@Column(name="expcompletion_date")
+	@DateTimeFormat(pattern = "yy-mm-dd") 
 	private Date expectedCompletionDate;
 	
 	@Column(name="agreement_number")
