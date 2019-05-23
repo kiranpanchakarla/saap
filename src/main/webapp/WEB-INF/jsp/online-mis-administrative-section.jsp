@@ -49,7 +49,7 @@
     <div class="row">
     <div class="col-md-12">
     <c:url value="/administrativeSection/save" var="createUrl" />
-        <form id="msform" method="post" action="${createUrl}"  modelAttribute="adminSecObject">
+        <form id="msform" method="post" action="${createUrl}"  modelAttribute="adminSecObject" enctype="multipart/form-data">
            
            <input type="hidden" name="${_csrf.parameterName}"
             value="${_csrf.token}" />
@@ -135,7 +135,9 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Upload Adminstrative Details Document(pdf/jpg/png)  <span class="red">*</span></p></li>
-                <li><input type="file" name="adminstrative-files" placeholder="Adminstrative Details"></li>
+                <li><input type="file" name="file" id="file"  placeholder="Adminstrative Details"></li>
+                 <br><span id="file_error" class="errors" style="color:red;float:right;"></span>
+              
                 </ul>
                 
                 
@@ -165,6 +167,16 @@
 <jsp:include page="online-mis-footer.jsp" />
 
 <script type="text/javascript">
+$(document).ready(function(){
+$("input[type='file']").on("change", function () {
+	  $("#file_error").html("");
+	     if(this.files[0].size > 2000000) {
+	    	 $("#file_error").html("File size is greater than 2MB");
+	      /*  alert("Please upload file less than 2MB. Thanks!!"); */
+	       $(this).val('');
+	     }
+	    });
+});
 
 $("#submit").click(function(){
 	
@@ -226,6 +238,15 @@ $("#submit").click(function(){
 	}else{
 		$("#consultantErr").text("");
 	}
+	
+	var file=$("#file").val();
+    if(file=="" || file==null){
+        $("#file_error").html("Please Upload a file ");
+        $("#file").focus();
+        return false;
+    }else{
+        $("#file_error").html("");
+    }
 })
 
 </script>

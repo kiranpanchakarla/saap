@@ -49,9 +49,33 @@ public class AdministrativeSection implements Serializable{
 	 @OneToOne(targetEntity=User.class)
 	 @JoinColumn(name="user_id", referencedColumnName="user_id")
 	 private User user;
+	 @Column(name = "path")
+	 private String path;
+	/*@Column(name = "content")
+	private Blob content;
+	 
+	public Blob getContent() {
+		return content;
+	}
+
+
+
+	public void setContent(Blob content) {
+		this.content = content;
+	}*/
+
+
 
 	public int getId() {
 		return id;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public void setId(int id) {

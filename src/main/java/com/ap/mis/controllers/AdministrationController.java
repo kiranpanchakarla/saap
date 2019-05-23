@@ -9,17 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.User;
 import com.ap.mis.model.WorktoLandDetails;
-import com.ap.mis.service.ConstituencyService;
-import com.ap.mis.service.DistrictService;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
-import com.ap.mis.service.MandalService;
-import com.ap.mis.service.VillageService;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -27,25 +24,24 @@ import com.ap.mis.util.SecurityUtil;
 public class AdministrationController {
 
 	@Autowired MISService misService;
-	@Autowired DistrictService districtsService;
-	@Autowired MandalService  mandalService;
-	@Autowired VillageService villageService;
-	@Autowired ConstituencyService  constituencyService;
+
 	@Autowired LineDepartmentService lineDepartmentService;
 
 	
 	@PostMapping(value = "/save")
-	public String administrativeSectionSave(@ModelAttribute  AdministrativeSection  adminSecObject,Model model,HttpServletRequest request) {
+	public String administrativeSectionSave(@ModelAttribute  AdministrativeSection  adminSecObject,Model model,HttpServletRequest request,@RequestParam("file") MultipartFile file) {
 		HttpSession session = request.getSession();
+		int wrokid =(int) session.getAttribute("workIdSession");
 		User loggedInUser = (User) session.getAttribute("loggedInUserObj");
 		loggedInUser = SecurityUtil.getLoggedUser();
 		adminSecObject.setUser(loggedInUser);
-		int i = misService.adminstrativeSectionSave(adminSecObject);
+		int i = misService.adminstrativeSection(adminSecObject, file);
 		WorktoLandDetails obj = new WorktoLandDetails(); 
 		if(i != 0){
 			model.addAttribute("divisionList", lineDepartmentService.getDivisionList());
 			model.addAttribute("subdivisionList", lineDepartmentService.getSubdivisionList());
 			model.addAttribute("sectionList", lineDepartmentService.getSectionList());
+			model.addAttribute("wrokid", wrokid);
 			obj = (WorktoLandDetails) session.getAttribute("generalInfo");
 		    obj.setAdministrativeesction(adminSecObject);
 		    session.setAttribute("generalInfo", obj);

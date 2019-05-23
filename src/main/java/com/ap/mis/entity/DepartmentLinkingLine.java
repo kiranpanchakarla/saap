@@ -53,6 +53,9 @@ public final class DepartmentLinkingLine implements Serializable{
 	@Column(name = "email_id")
 	private String email;
 	
+	@Column(name = "work_id")
+    private int  work;
+	
 	 @OneToOne(targetEntity=User.class)
 	 @JoinColumn(name="user_id", referencedColumnName="user_id")
 	 private User user;
@@ -144,6 +147,16 @@ public final class DepartmentLinkingLine implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public int getWork() {
+		return work;
+	}
+
+	public void setWork(int work) {
+		this.work = work;
+	}
+
+	
 	 
 	 
 

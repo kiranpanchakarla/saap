@@ -45,8 +45,10 @@
     
     <div class="row">
     <div class="col-md-12">
-        <form id="msform" method="post" action="agreementDetails" modelAttribute="agreementDetailsObj">
-           
+     
+          <c:url value="/agreementDetails/save" var="createUrl" />
+      <form id="msform" method="POST" action="${createUrl}" modelAttribute="agreementDetailsObj"  >
+      <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />     
             
             <!-- fieldsets -->
             <fieldset>

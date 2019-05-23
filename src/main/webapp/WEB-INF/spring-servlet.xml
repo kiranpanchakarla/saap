@@ -58,7 +58,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
     <property name="exceptionMappings">
         <props>
             <prop key="com.ap.mis.exception.RequestedResourceNotAvailable">errorPage</prop>
@@ -67,6 +67,10 @@
      <property name="defaultErrorView" value="errorPage"/> 
     
 </bean> -->
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
+	
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

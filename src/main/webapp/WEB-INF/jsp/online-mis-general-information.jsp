@@ -46,7 +46,11 @@
     
     <div class="row">
     <div class="col-md-12">
-        <form id="msform" method="post" action="generalInfo" >
+       <c:url value="/landDetails/generalInfo" var="createUrl" />
+      <form id="msform" method="GET" action="${createUrl}" >
+
+           <input type="hidden" name="${_csrf.parameterName}"
+          value="${_csrf.token}" />
            
             
             <!-- fieldsets -->
@@ -168,8 +172,17 @@
                 </ul>
                 
                 <ul class="fs-list-details">
-                <li><p>Upload Adminstrative Details Document(pdf/jpg/png)  <span class="red">*</span></p></li>
-                <li><img src="/resource/img/logo.png"/></li>
+                <li><p>Upload Adminstrative Details Document(pdf/jpg/png) ${generalInfo.administrativeesction.path}  <span class="red">*</span></p></li>
+                 <li><img src="${generalInfo.administrativeesction.path}"/></li>
+                   <!-- <li><img src="/resource/img/logo.png"></li> -->
+            
+				
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>
                 </ul>
                 
                 

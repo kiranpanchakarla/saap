@@ -47,10 +47,11 @@
     
     <div class="row">
     <div class="col-md-12">
-        <form id="msform" method="post" action="lineDepartment" modelAttribute="lineDeptObj">
-            <input type="hidden" name="${_csrf.parameterName}"
-            value="${_csrf.token}" />
-            
+        <c:url value="/lineDepartment/save" var="createUrl" />
+       <form id="msform" method="post" action="${createUrl}" modelAttribute="lineDeptObj">
+       <input type="hidden" name="${_csrf.parameterName}"
+           value="${_csrf.token}" />
+          
             <!-- fieldsets -->
             <fieldset>
             <div class="fs-list-full"> 

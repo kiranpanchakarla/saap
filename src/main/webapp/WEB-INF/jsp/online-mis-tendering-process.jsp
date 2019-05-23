@@ -44,7 +44,11 @@
     
     <div class="row">
     <div class="col-md-12">
-    <form id="msform" method="post" action="tenderingProcess" modelAttribute="tenderingProcessObj">
+   
+    <c:url value="/tenderProcess/save" var="createUrl" />
+      <form id="msform" method="POST" action="${createUrl}" modelAttribute="tenderingProcessObj"  enctype="multipart/form-data" >
+      <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />   
+     
             <!-- fieldsets -->
             <fieldset>
             <div class="fs-list-full"> 
@@ -121,7 +125,9 @@
                
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - English (pdf/jpg/png) </p></li>
-                <li><input type="file" name="englishPaperCopyLocation" id="englishPaperCopyLocationFile" class="form-control mb-md"  >
+                <li><input type="file" name="engfile" id="englishPaperCopyLocationFile" class="form-control mb-md"  >
+                 <span id="file_error1" class="errors" style="color:red;float:right;"></span>
+                
                </li>
                </ul>
                                            
@@ -143,7 +149,8 @@
             
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - Telugu (pdf/jpg/png)</p></li>
-                <li><input type="file" name="teluguPaperCopyLocation" id="teluguPaperCopyLocationFile" class="form-control mb-md">
+                <li><input type="file" name="telugufile" id="teluguPaperCopyLocationFile" class="form-control mb-md">
+               <span id="file_error2" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
@@ -317,6 +324,24 @@
 <jsp:include page="online-mis-footer.jsp" />
 
 <script type="text/javascript">
+
+$(document).ready(function(){
+	  $("input[name='engfile']").on("change", function () {
+		  $("#file_error1").html("");
+		     if(this.files[0].size > 2000000) {
+		    	 $("#file_error1").html("File size is greater than 2MB");
+		     $(this).val('');
+		     }
+		    });
+	  
+	  $("input[name='telugufile']").on("change", function () {
+		  $("#file_error2").html("");
+		     if(this.files[0].size > 2000000) {
+		    	 $("#file_error2").html("File size is greater than 2MB");
+		     $(this).val('');
+		     }
+		    });
+	});
 
 $("#tenderNoticeNumber").on('input', function () {
     this.value = this.value.match(/^\d+/);

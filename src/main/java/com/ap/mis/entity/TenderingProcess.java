@@ -107,7 +107,31 @@ public class TenderingProcess {
 	@Nullable
 	@Column(name="work_id")
 	private int workId;
+	
+	@Column(name="engUpload")
+	private String engUpload;
+	
+	@Column(name="telUpload")
+	private String telUpload;
+	
 
+	public String getEngUpload() {
+		return engUpload;
+	}
+
+	public void setEngUpload(String engUpload) {
+		this.engUpload = engUpload;
+	}
+
+	public String getTelUpload() {
+		return telUpload;
+	}
+
+	public void setTelUpload(String telUpload) {
+		this.telUpload = telUpload;
+	}
+
+	
 	public int getId() {
 		return id;
 	}

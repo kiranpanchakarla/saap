@@ -46,8 +46,10 @@
     
     <div class="row">
     <div class="col-md-12">
-      <form id="msform" method="post" action="technicalSanctionSave" modelAttribute="techsanc">
-           
+    
+     <c:url value="/technicalSanction/save" var="createUrl" />
+      <form id="msform" method="POST" action="${createUrl}"  modelAttribute="techsanc" >
+      <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />   
             
             <!-- fieldsets -->
             <fieldset>

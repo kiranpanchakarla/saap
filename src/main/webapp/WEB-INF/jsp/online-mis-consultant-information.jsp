@@ -46,7 +46,10 @@
     
     <div class="row">
     <div class="col-md-12">
-        <form id="msform" method="post" action="consultantInfo" modelAttribute="consultantInfoObject">
+       		   <c:url value="/ConsultantInfo/save" var="createUrl" />
+		   <form id="msform" method="post" action="${createUrl}" modelAttribute="consultantInfoObject">
+              <input type="hidden" name="${_csrf.parameterName}"
+          value="${_csrf.token}" />
            
             
             <!-- fieldsets -->

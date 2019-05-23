@@ -48,6 +48,88 @@ $(document).ready(function(){
 		 	 }
 	    
 	  });
+	  
+	  $(document).on("change", "#district", function(){
+			var selected_value = $(this).val();
+			if(""===selected_value){
+			    $('#constituency').find('option').not(':first').remove();								
+				$('#mandal').find('option').not(':first').remove();
+				$('#village').find('option').not(':first').remove();
+			 }
+			 else{
+	        $.ajax({
+						url : "<c:url value ='/constituency'/>?PlaceId="+selected_value,
+						error : function(xhr,status, error) {
+							alert('Exception occurred:'+ error);
+						},
+						success : function(data) {
+							var datata = JSON.parse(data);
+							var constituency_dropdown = $("#constituency");
+							constituency_dropdown.find('option').not(':first').remove();
+							$.each(datata,function(index, item){
+								constituency_dropdown.append(  $("<option />").val(item.id).text(item.name)  );
+							});
+							
+						}
+					});
+			 }
+			
+	    });
+	  
+	  
+	  
+	  $(document).on("change", "#constituency", function(){
+			var selected_value = $(this).val();
+			
+			if(""===selected_value){
+			 	$('#mandal').find('option').not(':first').remove();
+				$('#village').find('option').not(':first').remove();
+			 }
+			 else{
+			  $.ajax({
+						url : "<c:url value ='/mandal'/>?PlaceId="+selected_value,
+						error : function(xhr,status, error) {
+							alert('Exception occurred:'+ error);
+						},
+						success : function(data) {
+							var datata = JSON.parse(data);
+							var mandal_dropdown = $("#mandal");
+							mandal_dropdown.find('option').not(':first').remove();
+							$.each(datata,function(index, item){
+								mandal_dropdown.append(  $("<option />").val(item.id).text(item.name)  );
+							});
+							
+						}
+					});
+			 }
+			 
+	    });
+	  
+	  $(document).on("change", "#mandal", function(){
+			var selected_value = $(this).val();
+			if(""===selected_value){
+			  $('#village').find('option').not(':first').remove();
+			 }
+			 else{
+			  $.ajax({
+						url : "<c:url value ='/village'/>?PlaceId="+selected_value,
+						error : function(xhr,status, error) {
+							alert('Exception occurred:'+ error);
+						},
+						success : function(data) {
+							var datata = JSON.parse(data);
+							var village_dropdown = $("#village");
+							village_dropdown.find('option').not(':first').remove();
+							$.each(datata,function(index, item){
+								village_dropdown.append(  $("<option />").val(item.id).text(item.name)  );
+							});
+							
+						}
+					});
+			 }
+	    });
+	  
+	  
 	});
 
 </script>
@@ -110,99 +192,73 @@ $(document).ready(function(){
                 </ul>
                 
                 
+                
+                
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
                 <li><select id="natureOfWork" name="natureOfWork" >
-                <option value="" selected="">--select work--</option>
-             	 <option value="NTR KVK (Constituency KVKs)">NTR KVK (Constituency KVKs)</option>
-             	 <option value="NTR MKVKs">NTR MKVKs</option>
-             	 <option value="Modernization Works">Modernization Works</option>
-             	 <option value="Regional Academics">Regional Academics</option>
-             	 <option value="District Level Sports Complex">District Level Sports Complex</option>
-             	 <option value="Swimming Pools">Swimming Pools</option>
-             	 <option value="400 mtrs Synthetic Athletic Track">400 mtrs Synthetic Athletic Track</option>
-             	 <option value="Water Sports Academies">Water Sports Academies</option>
-             	 <option value="Model Sport School at Vizzy Stadium">Model Sport School at Vizzy Stadium</option>
-             	 <option value="Twin Synthetic Tennis Courts">Twin Synthetic Tennis Courts</option>
-             	 <option value="Wooden Flooring">Wooden Flooring</option>
-             	 <option value="Repairs to Swimming Pools">Repairs to Swimming Pools</option>
-             	 <option value="Shopping Complex">Shopping Complex</option>
-               </select>
+               <option value="" selected="">--select work--</option>
+                 <c:forEach  var="natureOfWork" items="${natureOfWork}">
+				         <option value="${natureOfWork.name}">${natureOfWork.name}</option>
+				      </c:forEach>
+                </select>
                		<br><span id="natureOfWorkErr" class="errors" style="color:red;float:right;"></span>
                </li>
                 </ul>
                 
-                <!-- <ul class="fs-list-details">
-                <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><select id="worknatureid" name="natureOfWork" >
-                <option value="" selected="">--select work--</option>
-             	 <option value="work1">NTR KVK (Constituency KVKs)</option>
-             	 <option value="work2">NTR MKVKs</option>
-             	 <option value="work3">Modernization Works</option>
-             	 <option value="work4">Regional Academics</option>
-             	 <option value="work5">District Level Sports Complex</option>
-             	 <option value="work6">Swimming Pools</option>
-             	 <option value="work7">400 mtrs Synthetic Athletic Track</option>
-             	 <option value="work8">Water Sports Academies</option>
-             	 <option value="work9">Model Sport School at Vizzy Stadium</option>
-             	 <option value="work10">Twin Synthetic Tennis Courts</option>
-             	 <option value="work11">Wooden Flooring</option>
-             	 <option value="work12">Repairs to Swimming Pools</option>
-             	 <option value="work13">Shopping Complex</option>
-               </select>
-               </li>
-                </ul> -->
+                
+                
+               
                 
                 <ul class="fs-list-details">
                 <li><p>District <span class="red">*</span></p></li>
                 <li><select id="district" name="district" >
                 <option value="" selected="">--select district--</option>
-                 <c:forEach  var="districts" items="${districts}">
-         			<option value="${districts.name}">${districts.name}</option>
-      			</c:forEach>
+                  <c:forEach  var="districts" items="${districts}">
+                   <option value="${districts.id}">${districts.name}</option>
+                 </c:forEach> 
                </select>
                <br><span id="districtErr" class="errors" style="color:red;float:right;"></span>
                </li>
                 </ul>
                 
+            
+                
                 <ul class="fs-list-details">
                 <li><p>Constituency <span class="red">*</span></p></li>
                 <li>                
-                <select id="constituency" name="constituency">
-                  <option value="" selected="" disabled="">--select --</option>
-                   <c:forEach  var="constituency" items="${allConstituencs}">
-         			<option value="${constituency.name}">${constituency.name}</option>
-      				</c:forEach>
-              </select>
+               <select id="constituency" name="constituency">
+                <option value="">--select constituency--</option>
+                </select>
               <br><span id="constituencyErr" class="errors" style="color:red;float:right;"></span>
             </li>
                 </ul>
                 
+                  
+                
                 <ul class="fs-list-details">
                 <li><p>Mandal <span class="red">*</span></p></li>
                 <li>
-                <select id="mandal" name="mandal" class="form-control mb-md">
-              <option value="" selected="" disabled="">--select Mandal--</option>
-                <c:forEach  var="mandals" items="${allMandals}">
-         		<option value="${mandals.name}">${mandals.name}</option>
-      			</c:forEach>
-            </select>
-            <span id="mandalErr" class="errors" style="color:red;float:right;"></span>
-            </li>
-                </ul>
+	                <select id="mandal" name="mandal" class="form-control mb-md">
+	                  <option value="" >--select Mandal--</option>
+	               </select>
+		            <span id="mandalErr" class="errors" style="color:red;float:right;"></span>
+		            </li>
+		         </ul>
+                
+                
+                
                 
                 <ul class="fs-list-details">
                 <li><p>Village <span class="red">*</span></p></li>
                 <li><select id="village" class="form-control mb-md" name="village">
-              <option value="" selected="" disabled="">--select--</option>
-                <c:forEach  var="village" items="${allVillages}">
-         <option value="${village.name}">${village.name}</option>
-      </c:forEach> 
-            
-            </select>
+                <option value="" >--select village--</option>
+			   </select></li>
             <span id="villageErr" class="errors" style="color:red;float:right;"></span>
             </li>
                 </ul>
+                
+               
                 
                 <ul class="fs-list-details">
                 <li><p>Location <span class="red">*</span></p></li>

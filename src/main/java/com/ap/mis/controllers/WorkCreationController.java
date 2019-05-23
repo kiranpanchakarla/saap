@@ -9,20 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.AdministrativeSectionService;
-import com.ap.mis.service.ConstituencyService;
-import com.ap.mis.service.DistrictService;
-import com.ap.mis.service.LandDetailService;
-import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
-import com.ap.mis.service.MandalService;
-import com.ap.mis.service.TenderingProcessService;
-import com.ap.mis.service.VillageService;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -30,14 +22,8 @@ import com.ap.mis.util.SecurityUtil;
 public class WorkCreationController {
 	
 	@Autowired MISService misService;
-	@Autowired DistrictService districtsService;
-	@Autowired MandalService  mandalService;
-	@Autowired VillageService villageService;
-	@Autowired ConstituencyService  constituencyService;
-	@Autowired AdministrativeSectionService administrativeSectionService;
-	@Autowired LineDepartmentService lineDepartmentService;
-	@Autowired LandDetailService landDetailService;
-	@Autowired TenderingProcessService tenderingProcessService;
+    @Autowired AdministrativeSectionService administrativeSectionService;
+
 	
 	@PostMapping(value = "/save")
 	public String workCreationSave(@ModelAttribute  Works  workObject,Model model,HttpServletRequest request) {
