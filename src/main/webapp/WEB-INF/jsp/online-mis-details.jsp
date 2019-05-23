@@ -49,43 +49,46 @@
   </tr>
   <tr>
     <td colspan="11"><p class="text-center"><strong>Abstract of status of SAAP infra work entrusted to various Executing Departments in AP State</strong></p></td>
-    <td>Dt. 26.12.2019</td>
+   <td>Dt. 26.12.2019</td> 
   </tr>
   <tr>
     <td rowspan="2">S.No.</td>
     <td rowspan="2">Name of the Department</td>
     <td rowspan="2">No. of works entrusted</td>
-    <td rowspan="2">Estimate cost in crores</td>
+    <td rowspan="2">Estimate cost in Lakhs</td>
     <td colspan="2">No. of works for which</td>
     <td rowspan="2">No. of works to be Tendered</td>
     <td rowspan="2">No. of works in Tender stage</td>
     <td rowspan="2">No. Agreement entered</td>
     <td rowspan="2">No. of works in progress</td>
     <td rowspan="2">No.of works Completed</td>
-    <td rowspan="2">Remarks</td>
+    <td rowspan="2">Remarks</td> 
   </tr>
   <tr>
     <td>Sites identified</td>
-    <td>DPRs completed</td>
+    <td>DPRs completed</td> 
   </tr>
   <tr>
-    <td colspan="12"><strong>KVK Works</strong></td>
+    <td colspan="12"><strong>KVK Works</strong></td> 
   </tr>
+  <c:forEach items="${reportList}" var="product">
   <tr>
-    <td>1</td>
-    <td>APEWIDC</td>
-    <td>34</td>
-    <td>68.00</td>
-    <td>32</td>
-    <td>29</td>
-    <td>3</td>
-    <td>7</td>
-    <td>18</td>
-    <td>17</td>
+    <td><c:set var="count" value="${count + 1}"
+	scope="page" /> <c:out value="${count}" /></td>
+    <td>${product.departmentName}</td>
+    <td>${product.noOfWorks}</td>
+    <td>${product.estimatedCost}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
-  <tr>
+  </c:forEach>
+  <!-- <tr>
     <td>2</td>
     <td>APMSIDC</td>
     <td>7</td>
@@ -465,47 +468,47 @@
     <td><strong>55</strong></td>
     <td><strong>51</strong></td>
     <td>&nbsp;</td>
-  </tr>
+  </tr> -->
 </table>
 
-<table width="100%" border="1" class="table">
+ <table width="100%" border="1" class="table">
  <tr>
     <td>Entrusted</td>
-    <td>527</td>
-    <td>918.82</td>
-    <td>331</td>
-    <td>305</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
     <td>&nbsp;</td>
-    <td>68</td>
+    <td></td>
     <td>&nbsp;</td>
-    <td>125</td>
-    <td>77</td>
+    <td></td>
+    <td></td>
  </tr>
  <tr>
     <td>Agency not known</td>
-    <td>39</td>
-    <td>73.24</td>
-    <td>29</td>
-    <td>7</td>
-    <td>22</td>
-    <td>2</td>
-    <td>5</td>
-    <td>1</td>
-    <td>4</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
  </tr>
  <tr>
     <td><strong>Total</strong></td>
-    <td><strong>566</strong></td>
-    <td><strong>992.06</strong></td>
-    <td><strong>360</strong></td>
-    <td><strong>312</strong></td>
-    <td><strong>22</strong></td>
-    <td><strong>70</strong></td>
-    <td><strong>5</strong></td>
-    <td><strong>126</strong></td>
-    <td><strong>81</strong></td>
+    <td><strong></strong></td>
+    <td><strong></strong></td>
+    <td><strong></strong></td>
+    <td><strong></strong></td>
+    <td><strong></strong></td>
+    <td><strong></strong></td>
+    <td><strong></strong></td>
+    <td><strong></strong></td>
+    <td><strong></strong></td>
  </tr>
-</table>
+</table> 
     
     </div>
     </div>
