@@ -3,6 +3,7 @@ package com.ap.mis.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ import com.ap.mis.util.SecurityUtil;
 @Controller
 @RequestMapping("/administrativeSection")
 public class AdministrationController {
-
+private static final Logger log=Logger.getLogger(AdministrationController.class);
 	@Autowired MISService misService;
 
 	@Autowired LineDepartmentService lineDepartmentService;

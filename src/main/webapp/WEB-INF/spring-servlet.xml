@@ -18,6 +18,9 @@
 	<!-- Specifying the Resource location to load JS, CSS, Images etc -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
+ 
+ <mvc:resources mapping="/data/uploads/tmp/**" location="file:/data/uploads/tmp/" /> 
+
 
 	<!-- View Resolver -->
 	<bean

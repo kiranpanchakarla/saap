@@ -170,12 +170,16 @@
                 <li><input type="text" title="SAAP" name="grantid" class="form-control mb-md" readonly value="${generalInfo.administrativeesction.consultant}">
                 </li>
                 </ul>
+             
                 
                 <ul class="fs-list-details">
-                <li><p>Upload Adminstrative Details Document(pdf/jpg/png) ${generalInfo.administrativeesction.path}  <span class="red">*</span></p></li>
-                 <li><img src="${generalInfo.administrativeesction.path}"/></li>
-                   <!-- <li><img src="/resource/img/logo.png"></li> -->
-            
+                <li><div id="page-title1"></div>
+                <p>Upload Adminstrative Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
+                <li> <img  src="${filePath}"    width="100" height="70"/> 
+               </li> 
+              
+               
+           
 				
 			</td>
 		</tr>
@@ -295,7 +299,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li><img src="/resource/img/logo.png"></li>
+                <li><img src="${landfilePath}"  width="100" height="70"/></li>
                 </ul>
                 
                 </div>

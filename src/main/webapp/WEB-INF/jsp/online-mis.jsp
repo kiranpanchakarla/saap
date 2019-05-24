@@ -36,7 +36,7 @@ $(document).ready(function(){
 			    		+ '<input type="text" name="workDetails" id="work_details"  class="form-control mb-md" />'
 			    		+ '</td>'
 			    		+ '<td>'
-			    		+ '<input type="number" name="cost" id="estimated_cost"  class="form-control mb-md" />'
+			    		+ '<input type="text" name="cost" id="estimated_cost" maxlength="9" class="form-control mb-md" />'
 			    		+ '</td>'
 			            +'</tr>');
 						sno=sno+1;
@@ -129,7 +129,9 @@ $(document).ready(function(){
 			 }
 	    });
 	  
-	  
+	  $(document).on("blur", "#estimated_cost", function(){
+          this.value = this.value.match(/^\d+/);
+        });  
 	});
 
 </script>
@@ -331,9 +333,7 @@ $(document).ready(function(){
 <jsp:include page="online-mis-footer.jsp" />
 
 <script type="text/javascript">
-$("#estimated_cost").on('input', function () {
-    this.value = this.value.match(/^\d+/);
-});
+
 	
 $("#noOfWorks").on('input', function () {
     this.value = this.value.match(/^\d+/);
