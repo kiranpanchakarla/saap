@@ -170,7 +170,7 @@
 <script type="text/javascript">
 
 $("#departmentName,#circle,#sectionOfficerName").on('input', function() {
-	  $(this).val($(this).val().replace(/[^a-z]/gi, ''));
+	  $(this).val($(this).val().replace(/[^a-z ]/gi, ''));
 })
 $("#mobileNo").on('input', function () {
     this.value = this.value.match(/^\d+/);

@@ -344,8 +344,9 @@ $('#location').on('input', function() {
 	});
 
 function isText(txtVal){
-	txtVal.value = txtVal.value.replace(/[^a-z0-9]/gi, '');
+	txtVal.value = txtVal.value.replace(/[^a-z0-9 ]/gi, '');
 }
+
 function isNumber(evt) {
   evt = (evt) ? evt : window.event;
   var charCode = (evt.which) ? evt.which : evt.keyCode;

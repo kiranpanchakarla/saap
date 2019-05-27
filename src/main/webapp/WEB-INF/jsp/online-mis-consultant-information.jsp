@@ -87,7 +87,7 @@
                
                <ul class="fs-list-details">
                 <li><p>Landline Number <span class="red">*</span></p></li>
-                <li><input type="text" title="landline-number" id="landline_no" name="landline_no" class="form-control mb-md" placeholder="landline Number"> 
+                <li><input type="text" title="landline-number" id="landline_no" name="landline_no" maxlength="10" class="form-control mb-md" placeholder="landline Number"> 
                <span id="landline_noErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
