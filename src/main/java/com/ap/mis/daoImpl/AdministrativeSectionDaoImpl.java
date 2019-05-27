@@ -48,4 +48,31 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 		return excConsultantList;
 	}
 
+	@Override
+	public FinancialYear findById(int id) {
+		FinancialYear  financialYear=new FinancialYear();
+		financialYear=(FinancialYear) sessionFactory.getCurrentSession().get(FinancialYear.class, id);
+		return financialYear;
+	}
+
+	@Override
+	public ExecutiveDept findByExecutiveDeptId(int id) {
+		ExecutiveDept executiveDept=(ExecutiveDept) sessionFactory.getCurrentSession().get(ExecutiveDept.class, id);
+		return executiveDept;
+	}
+
+	@Override
+	public ExecutiveConsultant findByExecutiveConsultantId(int id) {
+		// TODO Auto-generated method stub
+		return (ExecutiveConsultant)sessionFactory.getCurrentSession().get(ExecutiveConsultant.class, id);
+	}
+
+	@Override
+	public GrantType findByGrantId(int id) {
+		// TODO Auto-generated method stub
+		return (GrantType)sessionFactory.getCurrentSession().get(GrantType.class, id);
+	}
+
+	
+	
 }

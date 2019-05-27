@@ -12,5 +12,10 @@ public interface AdministrativeSectionDao {
 	public List<GrantType> findAll();
 	public List<FinancialYear> getfinancialYearList();
 	public List<ExecutiveDept> getExecutiveDeptList();
-	public List<ExecutiveConsultant> getExecutiveConsultantList();	
+	public List<ExecutiveConsultant> getExecutiveConsultantList();
+	public FinancialYear findById(int id);
+	public ExecutiveDept findByExecutiveDeptId(int id);
+	public ExecutiveConsultant findByExecutiveConsultantId(int id);
+	public GrantType findByGrantId(int id);
+		
 }

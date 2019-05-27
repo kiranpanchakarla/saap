@@ -34,5 +34,26 @@ public class AdministrativeSectionServiceImpl implements AdministrativeSectionSe
 	public List<ExecutiveConsultant> getExecutiveConsultantList() {
 		return administrativeSectionDao.getExecutiveConsultantList();
 	}
+	@Override
+	public FinancialYear findById(int id) {
+		
+		return administrativeSectionDao.findById(id);
+	}
+	@Override
+	public ExecutiveDept findByExecutiveDeptId(int id) {
+		return administrativeSectionDao.findByExecutiveDeptId(id);
+	}
+	@Override
+	public ExecutiveConsultant findByExecutiveConsultantId(int id) {
+		// TODO Auto-generated method stub
+		return administrativeSectionDao.findByExecutiveConsultantId(id);
+	}
+	@Override
+	public GrantType findByGrantId(int id) {
+		// TODO Auto-generated method stub
+		return administrativeSectionDao.findByGrantId(id);
+	}
+	
+	
 
 }
