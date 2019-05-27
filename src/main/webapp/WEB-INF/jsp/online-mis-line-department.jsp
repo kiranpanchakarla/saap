@@ -66,8 +66,8 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><input type="text" id="workNature" name="workNature" placeholder="Nature of work">
-                <br><span id="workNatureErr" class="errors" style="color:red;float:right;"></span>
+                <li><input type="text" id="workNature" name="workNature"  class="form-control mb-md" readonly value="${workInfo.natureOfWork}">
+                <span id="workNatureErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
                 
@@ -169,21 +169,12 @@
 
 <script type="text/javascript">
 
-/* $("#mobileNo").keyup(function(e){
-	if (/\D/g.test(this.value)){
-		this.value = this.value.replace(/\D/g, '');
-	}
-}); */
-
-/* function validateEmail(email) {
-	 alert("indide validateEmail");
-	  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-	  return emailReg.test( email );
-	} */
-	
-	$("#mobileNo").on('input', function () {
-	    this.value = this.value.match(/^\d+/);
-	});
+$("#departmentName,#circle,#sectionOfficerName").on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z]/gi, ''));
+})
+$("#mobileNo").on('input', function () {
+    this.value = this.value.match(/^\d+/);
+});
 	
  function isEmail(email) {
 	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;

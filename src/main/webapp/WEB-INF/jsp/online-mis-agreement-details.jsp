@@ -78,14 +78,14 @@
                
                <ul class="fs-list-details">
                 <li><p>Amount(in Rs.) <span class="red">*</span></p></li>
-                <li><input type="text" name="bgAmount" id="bgAmount"  class="form-control mb-md"  placeholder="0.00">
+                <li><input type="text" name="bgAmount" id="bgAmount"  class="form-control mb-md" maxlength="9"  value ="00.00">
                 <span id="bgAmountErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Performance Security Amount(in Rs.)   <span class="red">*</span></p></li>
-                <li><input type="text" name="performanceSecurityAmount" id="performanceSecurityAmount"  class="form-control mb-md" placeholder="0.00">
+                <li><input type="text" name="performanceSecurityAmount" id="performanceSecurityAmount"  class="form-control mb-md" maxlength="9"  value ="00.00">
                 <span id="performanceSecurityAmountErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -106,7 +106,7 @@
                
                <ul class="fs-list-details">
                 <li><p>Period of Contract (No. of Months): <span class="red">*</span></p></li>
-                <li><input type="text" name="periodOfContract" id="periodOfContract" class="form-control mb-md">
+                <li><input type="text" name="periodOfContract" id="periodOfContract" class="form-control mb-md" maxlength="9">
                 <span id="periodOfContractErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -186,11 +186,7 @@
 
 <script type="text/javascript">
 
-$("#bgAmount").on('input', function () {
-    this.value = this.value.match(/^\d+\.?\d{0,2}/);
-});
-
-$("#performanceSecurityAmount").on('input', function () {
+$("#performanceSecurityAmount,#bgAmount").on('input', function () {
     this.value = this.value.match(/^\d+\.?\d{0,2}/);
 });
 $("#periodOfContract").on('input', function () {

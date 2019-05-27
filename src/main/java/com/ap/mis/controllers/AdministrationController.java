@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.User;
+import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
@@ -31,12 +32,15 @@ private static final Logger log=Logger.getLogger(AdministrationController.class)
 	
 	@PostMapping(value = "/save")
 	public String administrativeSectionSave(@ModelAttribute  AdministrativeSection  adminSecObject,Model model,HttpServletRequest request,@RequestParam("file") MultipartFile file) {
+		Works  workInfo=null;
 		HttpSession session = request.getSession();
 		int wrokid =(int) session.getAttribute("workIdSession");
 		User loggedInUser = (User) session.getAttribute("loggedInUserObj");
 		loggedInUser = SecurityUtil.getLoggedUser();
 		adminSecObject.setUser(loggedInUser);
 		int i = misService.adminstrativeSection(adminSecObject, file);
+		workInfo=misService.getWorkInfo(wrokid);
+		model.addAttribute("workInfo", workInfo);
 		WorktoLandDetails obj = new WorktoLandDetails(); 
 		if(i != 0){
 			model.addAttribute("divisionList", lineDepartmentService.getDivisionList());

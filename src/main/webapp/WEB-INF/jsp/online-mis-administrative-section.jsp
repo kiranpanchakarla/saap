@@ -53,21 +53,21 @@
            
            <input type="hidden" name="${_csrf.parameterName}"
             value="${_csrf.token}" />
-            
+
             <!-- fieldsets -->  
             <fieldset>
              <div class="fs-list-full"> 
                 <h2 class="fs-title">Administrative Section</h2>
                 <ul class="fs-list-details">
                 <li><p>Name of Work <span class="red">*</span></p></li>
-                <li><input type="text" name="workName" id="workName" placeholder="Name of Work"/>
-                	<br><span id="workNameErr" class="errors" style="color:red;float:right;"></span> </li>
+                <li><input type="text" id="workName" name="workName"  class="form-control mb-md" readonly value="${workInfo.workDetails}">
+                <span id="workNameErr" class="errors" style="color:red;float:right;"></span> </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Work Number <span class="red">*</span></p></li>
-                <li><input type="text" name="workNumber" id="workNumber" placeholder="Work Number"/>
-                	<br><span id="workNumberErr" class="errors" style="color:red;float:right;"></span> 
+                <li><input type="text" id="workNumber" name="workNumber"  class="form-control mb-md" readonly value="${workInfo.workNo}">                
+                <span id="workNumberErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
                 
@@ -178,9 +178,13 @@ $("input[type='file']").on("change", function () {
 	    });
 });
 
+$('input').on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
+	});
+
 $("#submit").click(function(){
 	
-    var workName=$("#workName").val();
+/*     var workName=$("#workName").val();
     if(workName=="" || workName==null){
         $("#workNameErr").html("Please Enter Name of Work ");
         $("#workName").focus();
@@ -196,7 +200,7 @@ $("#submit").click(function(){
         return false;
     }else{
         $("#workNumberErr").html("");
-    }
+    } */
     
     var sanctionedDetails=$("#sanctionedDetails").val();
     if(sanctionedDetails=="" || sanctionedDetails==null){

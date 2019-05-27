@@ -114,9 +114,9 @@
                 <li><input type="text" name="englishNewspaperName" id="englishNewspaperName" class="charcterId form-control mb-md" placeholder="English Newspaper name">
                <span id="englishNewspaperNameErr" class="errors" style="color:red;float:right;"></span>
                </li>
-               </ul>
+               </ul> 
                
-                  <ul class="fs-list-details">
+               <ul class="fs-list-details">
                 <li><p>Date </p></li>
                 <li><input type="date" name="engNewsPaperDate" id="engNewsPaperDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
                 <span id="engNewsPaperDateErr" class="errors" style="color:red;float:right;"></span>
@@ -174,8 +174,6 @@
                 <span id="bidOpeningDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
-               
-                
               
                <ul class="fs-list-details">
                 <li><p>No of Bids received through Online</p></li>
@@ -209,21 +207,21 @@
                
                <ul class="fs-list-details">
                 <li><p>Estimated Contract Value (in Rs.)<span class="red">*</span></p></li>
-                <li><input type="text"  id="contractValue" name="contractValue" class="form-control mb-md" value="00.00" placeholder="Estimated Contract Value">
+                <li><input type="text"  id="contractValue" name="contractValue" class="form-control mb-md" maxlength="9" value="00.00" placeholder="Estimated Contract Value">
                 <span id="contractValueErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Contract Value quoted By L1 Bidder<span class="red">*</span></p></li>
-                <li><input type="text" id="contractValueByL1Bidder"  name="contractValueByL1Bidder" maxlength="10" value="00.00" class="form-control mb-md" >
+                <li><input type="text" id="contractValueByL1Bidder"  name="contractValueByL1Bidder" maxlength="9" value="00.00" class="form-control mb-md" >
                 <span id="contractValueByL1BidderErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                   <ul class="fs-list-details">
                 <li><p>Percentage quoted Less / Excess<span class="red">*</span></p></li>
-                <li><input type="text"  id="percentageQuoted" name="percentageQuoted" value="00" class="charcterId form-control mb-md">
+                <li><input type="text"  id="percentageQuoted" name="percentageQuoted" maxlength="9" value="00" class="charcterId form-control mb-md">
                 <span id="percentageQuotedErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -343,21 +341,16 @@ $(document).ready(function(){
 		    });
 	});
 
-$("#tenderNoticeNumber").on('input', function () {
+$("#tenderNoticeNumber,#percentageQuoted,#bidsReceived,#hardCopiesSubmitted,#noofBidsQualified").on('input', function () {
     this.value = this.value.match(/^\d+/);
 });
 
-$("#contractValue").on('input', function () {
+$("#contractValue,#contractValueByL1Bidder").on('input', function () {
     this.value = this.value.match(/^\d+\.?\d{0,2}/);
 });
-
-$("#contractValueByL1Bidder").on('input', function () {
-    this.value = this.value.match(/^\d+\.?\d{0,2}/);
+$('#englishNewspaperName,#teluguNewspaperName').on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z ]/gi, ''));
 });
-$("#percentageQuoted").on('input', function () {
-    this.value = this.value.match(/^\d+/);
-});
-
 
 $("#submit").click(function(){
 

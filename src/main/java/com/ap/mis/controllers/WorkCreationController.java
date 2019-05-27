@@ -42,7 +42,7 @@ public class WorkCreationController {
 			
 			obj.setWorks(workObject);
 			session.setAttribute("generalInfo", obj);
-			
+			model.addAttribute("workInfo", workObject);
 			session.setAttribute("workIdSession", i);
 			return  "online-mis-administrative-section";
 		}

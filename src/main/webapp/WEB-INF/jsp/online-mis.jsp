@@ -11,43 +11,45 @@
 </head>
 <script>
 $(document).ready(function(){
-	  $(".createClass").click(function(){
-		 	 var count = $("#noOfWorks").val(); 
-		 	//alert(count);
-		 	 if( count > 0){
-			 	 
-					$("#work_table tr").remove();
-					
-					var sno = 1;
-					
-					 $('#work_table')
-			            .append(
-			            '<tr>'
-			            + ' <th>S.No</th>'
-			            + ' <th>Work Detail</th>'
-			            + ' <th>Estimated Cost (in Lakhs)</th>'
-			            + '</tr>');
-					
-					for(var i=1;i<=count;i++){
-						$('#work_table')
-			            .append(
-			            '<tr><td><b>'+ sno +'<b></td>'
-			            + '<td>'
-			    		+ '<input type="text" name="workDetails" id="work_details"  class="form-control mb-md" />'
-			    		+ '</td>'
-			    		+ '<td>'
-			    		+ '<input type="text" name="cost" id="estimated_cost" maxlength="9" class="form-control mb-md" />'
-			    		+ '</td>'
-			            +'</tr>');
-						sno=sno+1;
-					}
-					$("#work_table_div").toggle();
+	  $(".createClass").click(function(){		 
+			  $("#work_detailsErr").html("");
+			 	 var count = $("#noOfWorks").val(); 
+			 	//alert(count);
+			 	 if( count > 0){
+			 		$("#createval").val(1);
+						$("#work_table tr").remove();
+						
+						var sno = 1;
+						
+						 $('#work_table')
+				            .append(
+				            '<tr>'
+				            + ' <th>S.No</th>'
+				            + ' <th>Work Detail</th>'
+				            + ' <th>Estimated Cost (in Lakhs)</th>'
+				            + '</tr>');
+						 
+						for(var i=1;i<=count;i++){
+							$('#work_table')
+				            .append(
+				            '<tr><td><b>'+ sno +'<b></td>'
+				            + '<td>'
+				    		+ '<input type="text" name="workDetails" id="work_details'+i+'"  onkeyup="return isText(this)" class="form-control mb-md" />'
+				    		+ '</td>'
+				    		+ '<td>'
+				    		+ '<input type="text" name="cost" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />'
+				    		+ '</td>'
+				            +'</tr>');
+							sno=sno+1;
+						}
+						$("#work_table_div").toggle();
 
-		 	 }else{
-		 		$("#work_table tr").remove();
-		 	 }
-	    
-	  });
+			 	 }else{
+			 		$("#work_table tr").remove();
+			 		$("#createval").val(0);
+			 	 }
+		    
+		  });
 	  
 	  $(document).on("change", "#district", function(){
 			var selected_value = $(this).val();
@@ -307,7 +309,7 @@ $(document).ready(function(){
                 
                 <!-- name="next" -->
             </fieldset>
-            
+             <input type="hidden" id="createval" name="createval" value="0">
             
             
             
@@ -334,7 +336,24 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 
-	
+$("#workNo").on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
+	})	
+$('#location').on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z]/gi, ''));
+	});
+
+function isText(txtVal){
+	txtVal.value = txtVal.value.replace(/[^a-z0-9]/gi, '');
+}
+function isNumber(evt) {
+  evt = (evt) ? evt : window.event;
+  var charCode = (evt.which) ? evt.which : evt.keyCode;
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+  }
+  return true;
+}	
 $("#noOfWorks").on('input', function () {
     this.value = this.value.match(/^\d+/);
 });
@@ -434,16 +453,28 @@ $('#Create').on('click',function(){
         $("#noOfWorksErr").html("");
     }
     
-    if( noofworks >= 1){
-    	if($("#work_details").val() =="" || $("#work_details").val() ==null){
-    		$("#work_detailsErr").html("Create and Enter Work Details");  		
-    		$("#work_details").focus();
-    		 return false;
+    if( noofworks >= 1){    	
+    	if($("#createval").val() == 1){
+        	for(var i=1;i<=noofworks;i++){
+            	if($('#work_details'+i+'').val() =="" || $('#work_details'+i+'').val() ==null){
+            		$("#work_detailsErr").html("Please Enter Work Details");  		
+            		$('#work_details'+i+'').focus();
+            		 return false;
+            	}
+            	if($('#estimated_cost'+i+'').val() =="" || $('#estimated_cost'+i+'').val() ==null){
+            		$("#work_detailsErr").html("Please Enter Estimated Cost");  		
+            		$('#estimated_cost'+i+'').focus();
+            		 return false;
+            	}   		
+        	}    		
+    	}else{
+    		$("#work_detailsErr").html("Create Work Details"); 
+    		return false;
     	}
     }else{
     	 $("#work_detailsErr").html("");
     }
-})
+});
  
 </script>
 </body>

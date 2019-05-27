@@ -35,8 +35,8 @@ public class AdministrativeSection implements Serializable{
 	private String sanctionedDetails;
 	
 	@Column(name = "typeof_grant")
-	private int typeOfGrant;
-	
+	private int typeOfGrant;	
+
 	@Column(name = "financial_year")
 	private int financialYear;
 	
@@ -46,24 +46,12 @@ public class AdministrativeSection implements Serializable{
 	@Column(name = "consultant")
 	private int consultant;
 	
-	 @OneToOne(targetEntity=User.class)
-	 @JoinColumn(name="user_id", referencedColumnName="user_id")
-	 private User user;
+	@OneToOne(targetEntity=User.class)
+	@JoinColumn(name="user_id", referencedColumnName="user_id")
+	private User user;
+	 
 	 @Column(name = "path")
 	 private String path;
-	/*@Column(name = "content")
-	private Blob content;
-	 
-	public Blob getContent() {
-		return content;
-	}
-
-
-
-	public void setContent(Blob content) {
-		this.content = content;
-	}*/
-
 
 
 	public int getId() {

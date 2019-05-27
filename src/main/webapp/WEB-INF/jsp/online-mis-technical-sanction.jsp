@@ -79,7 +79,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Technical Sanction No <span class="red">*</span></p></li>
-                <li><input type="text" id="techSanction_no"name="techSanction_no" placeholder="Transaction Number" maxlength="10">
+                <li><input type="text" id="techSanction_no"name="techSanction_no" placeholder="Transaction Number" maxlength="9">
                 <span id="techSanction_noErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -94,7 +94,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Amount<span class="red">*</span></p></li>
-                <li><input type="text" id="amount" name="amount"  placeholder="Amount" >
+                <li><input type="text" id="amount" name="amount"  placeholder="Amount" maxlength="9">
                 <span id="amountErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>

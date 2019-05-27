@@ -135,7 +135,7 @@
                
                <ul class="fs-list-details">
                 <li><p>A/c Number<span class="red">*</span></p></li>
-                <li><input type="number" title="account-number" id="account_number" name="account_number" class="form-control mb-md" placeholder="Account Number">
+                <li><input type="text" title="account-number" id="account_number" name="account_number" class="form-control mb-md" placeholder="Account Number">
                <span id="account_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -174,17 +174,17 @@
 <script src="contactform/contactform.js"></script>
 
 <script type="text/javascript">
- 
- $("#mobile_no").on('input', function () {
-	    this.value = this.value.match(/^\d+/);
-	});
- $("#landline_no").on('input', function () {
-	    this.value = this.value.match(/^\d+/);
-	});
- $("#account_number").on('input', function () {
-	    this.value = this.value.match(/^\d+/);
-	});
 
+ $("#mobile_no,#landline_no,#account_number").on('input', function () {
+	    this.value = this.value.match(/^\d+/);
+	});
+ $("#ifsc_code,#pan_number,#tin_number").on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
+	})
+	
+ $("#consultant_firm,#bank,#branch,#account_type").on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z ]/gi, ''));
+	})
 function isEmail(email) {
 	 var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	 return regex.test(email);	
