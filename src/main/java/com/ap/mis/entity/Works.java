@@ -37,16 +37,16 @@ public class Works implements Serializable {
 	private String location;
 
 	@Column
-	private String district;
+	private int district;
 	
 	@Column
-	private String village;
+	private int village;
 	
 	@Column
-	private String mandal;
+	private int mandal;
 	
 	@Column
-	private String constituency;
+	private int constituency;
 	
 	@Column(name = "work_username")
 	private String workUserName;
@@ -128,37 +128,7 @@ public class Works implements Serializable {
 		this.location = location;
 	}
 
-	public String getDistrict() {
-		return district;
-	}
-
-	public void setDistrict(String district) {
-		this.district = district;
-	}
-
-	public String getVillage() {
-		return village;
-	}
-
-	public void setVillage(String village) {
-		this.village = village;
-	}
-
-	public String getMandal() {
-		return mandal;
-	}
-
-	public void setMandal(String mandal) {
-		this.mandal = mandal;
-	}
-
-	public String getConstituency() {
-		return constituency;
-	}
-
-	public void setConstituency(String constituency) {
-		this.constituency = constituency;
-	}
+	
 
 	public String getWorkUserName() {
 		return workUserName;
@@ -174,6 +144,38 @@ public class Works implements Serializable {
 
 	public void setWorkNo(String workNo) {
 		this.workNo = workNo;
+	}
+
+	public int getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(int district) {
+		this.district = district;
+	}
+
+	public int getVillage() {
+		return village;
+	}
+
+	public void setVillage(int village) {
+		this.village = village;
+	}
+
+	public int getMandal() {
+		return mandal;
+	}
+
+	public void setMandal(int mandal) {
+		this.mandal = mandal;
+	}
+
+	public int getConstituency() {
+		return constituency;
+	}
+
+	public void setConstituency(int constituency) {
+		this.constituency = constituency;
 	}
 
 	

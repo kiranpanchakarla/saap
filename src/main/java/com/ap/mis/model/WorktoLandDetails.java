@@ -2,6 +2,8 @@ package com.ap.mis.model;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.LandDetails;
@@ -22,6 +24,21 @@ public class WorktoLandDetails implements Serializable{
 	private DepartmentLinkingLine departmentlinkingine;
 	 
 	private LandDetails  landdetails;
+	
+	 private MultipartFile file;
+	 
+	 
+		
+		public MultipartFile getFile() {
+			return file;
+		}
+
+
+
+		public void setFile(MultipartFile file) {
+			this.file = file;
+		}
+
 
 	public Works getWorks() {
 		return works;

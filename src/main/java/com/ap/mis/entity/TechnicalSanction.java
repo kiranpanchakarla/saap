@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+
 @Entity
 @Table(name ="technicalsanction")
 public class TechnicalSanction implements Serializable{
@@ -31,6 +34,7 @@ public class TechnicalSanction implements Serializable{
 	private int techSanction_no;
 	
 	@Column(name="date")
+	@DateTimeFormat(pattern = "yy-mm-dd") 
 	private Date date;
 	
 	@Column(name="amount")

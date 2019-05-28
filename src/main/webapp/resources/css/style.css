@@ -1112,7 +1112,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 	-ms-transform: scale(0.95);
 	transform: scale(0.95);
 }
-#formContent input[type=text] {
+#formContent input[type=text],#formContent input[type=password] {
 	background-color: #f6f6f6;
 	border: none;
 	color: #0d0d0d;
@@ -1132,12 +1132,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 	-webkit-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
 }
-#formContent input[type=text]:focus {
+#formContent input[type=text]:focus,#formContent input[type=password]:focus {
 	background-color: #fff;
 	border-bottom: 2px solid #008c3b;
 	outline: 0px;
 }
- #formContent input[type=text]:placeholder {
+ #formContent input[type=text]:placeholder, #formContent input[type=password]:placeholder {
  color: #cccccc;
 }
 /* Online Admin Section End

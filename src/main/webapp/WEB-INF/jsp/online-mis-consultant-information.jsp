@@ -1,101 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>SAAP : Consultant Information</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="" name="keywords">
-<meta content="" name="description">
+<c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 
-<!-- Favicons -->
-<link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
-
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Raleway:400,500i,600,700" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600" rel="stylesheet">
-
-<!-- Bootstrap CSS File -->
-<link href="${pageContext.request.contextPath}/resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Libraries CSS Files -->
-<link href="${pageContext.request.contextPath}/resources/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/lib/animate/animate.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-
-<!-- Main Stylesheet File -->
-<link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-<!--==========================
-    Header
-  ============================-->
-<header id="header">
-  <div class="container social-links">
-    <div class="social-links"> 
-    <a target="_blank" href="https://www.facebook.com/SportsAuthorityAP/" class="facebook"><i class="fa fa-facebook"></i></a> 
-    <a target="_blank" href="https://twitter.com/SportsinAP" class="twitter"><i class="fa fa-twitter"></i></a> 
-    <a target="_blank" href="https://www.instagram.com/sports_authority_ap/" class="instagram"><i class="fa fa-instagram"></i></a> 
-    <a target="_blank" href="https://www.linkedin.com/company/sports-authority-of-ap/" class="linkedin"><i class="fa fa-linkedin"></i></a> 
-    <a target="_blank" href="https://www.youtube.com/channel/UCy3mdgAFCimIxl60stdXopQ" class="youtube"><i class="fa fa-youtube"></i></a> </div>
-  </div>
-  <div class="container-fluid">
-    <div id="logo" class="pull-left">
-      <h1><a href="index.html"><img src="img/logo.png" alt="" title="" /></a></h1>
-    </div>
-    <nav id="nav-menu-container">
-      <ul class="nav-menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about-us.html">About</a></li>
-        <li class="menu-has-children"><a href="facilities.html">Facilities</a>
-        <ul>
-              <li><a href="stadiums-inout-door.html">Stadiums (Indoor / Outdoor)</a></li>
-              <li><a href="pools.html">Pools</a></li>
-              <li><a href="sports-schools.html">Sports Schools</a></li>
-              <li><a href="kvk-indoor.html">KVK’s (Playfields / Indoor / Pavilion Building)</a></li>
-              <li><a href="regional.html">Regional Academies</a></li>
-              <li><a href="water-sports.html">Water Sports Academies</a></li>
-              <li><a href="distric-sports.html">District Sports Complexes</a></li>
-              <li><a href="shopping.html">Shopping Complexes</a></li>
-            </ul>
-        </li>
-        <li class="menu-has-children"><a href="schemes.html">Schemes</a>
-        <ul>
-              <li><a href="pay-play.html">Pay and Play</a></li>
-              <li><a href="khelo-india.html">KHELO INDIA</a></li>
-              <li><a href="day-borders.html">Day Borders & Nurseries</a></li>
-              <li><a href="gaandiva.html">Gaandiva</a></li>
-            </ul>
-        </li>
-        <li><a href="notifications.html">Notifications</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li class="menu-has-children"><a href="associations.html">Associations</a>
-        <ul>
-              <li><a href="coaches.html">Coaches</a></li>
-              <li><a href="http://34.216.29.65:8080/" target="_blank">AP Associations Data</a></li>
-            </ul>
-        </li>
-        <li class="menu-has-children"><a href="infrastructure.html">Infrastructure</a>
-        <ul>
-              <li><a href="stadiums.html">Stadiums</a></li>
-              <li><a href="sports-schools.html">Sports Schools</a></li>
-            </ul>
-        </li>
-        <li class="menu-active"><a href="online-mis.html">Online Mis</a></li>
-        <li><a href="feedback.html">Feedback</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="stadium.html">Stadia Booking</a></li>
-      </ul>
-    </nav>
-    <!-- #nav-menu-container --> 
-  </div>
-</header>
-<!-- #header --> 
+<!--=== Header ====-->
+<jsp:include page="online-mis-header.jsp" />
 
 <!--==========================
     Intro Section
@@ -128,7 +46,10 @@
     
     <div class="row">
     <div class="col-md-12">
-        <form id="msform" method="post" action="consultantInfo" modelAttribute="consultantInfoObject">
+       		   <c:url value="/ConsultantInfo/save" var="createUrl" />
+		   <form id="msform" method="post" action="${createUrl}" modelAttribute="consultantInfoObject">
+              <input type="hidden" name="${_csrf.parameterName}"
+          value="${_csrf.token}" />
            
             
             <!-- fieldsets -->
@@ -138,42 +59,50 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of Consultant Firm<span class="red">*</span></p></li>
-                <li><input type="text" title="consultant-firm" id="consultant-firm" name="consultant_firm" class="form-control mb-md" placeholder="Name of Consultant Firm">  
+                <li><input type="text" title="consultant-firm" id="consultant_firm" name="consultant_firm" class="form-control mb-md" placeholder="Name of Consultant Firm">  
+                <span id="consultant_firmErr" class="errors" style="color:red;float:right;"></span>
+                </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>PAN Number <span class="red">*</span></p></li>
-                <li><input type="text" title="pan-number" id="pan-no" name="pan_number" class="form-control mb-md" placeholder="PAN Number"> 
+                <li><input type="text" title="pan-number" id="pan_number" name="pan_number" class="form-control mb-md" placeholder="PAN Number"> 
+                 <span id="pan_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>TIN Number <span class="red">*</span></p></li>
-                <li><input type="text" title="tin-number" id="tin-number" name="tin_number" class="form-control mb-md" placeholder="TIN Number"> 
+                <li><input type="text" title="tin-number" id="tin_number" name="tin_number" class="form-control mb-md" placeholder="TIN Number"> 
+                 <span id="tin_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Mobile Number<span class="red">*</span></p></li>
-                <li><input type="text" title="mobile-number" id="mobile-number" name="mobile_no" class="form-control mb-md" placeholder="Mobile Number"> 
+                <li><input type="text" title="mobile-number" id="mobile_no" name="mobile_no" maxlength="10" class="form-control mb-md"  placeholder="Mobile Number"> 
+                <span id="mobile_noErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Landline Number <span class="red">*</span></p></li>
-                <li><input type="text" title="landline-number" id="landline-number" name="landline_no" class="form-control mb-md" placeholder="landline Number"> 
+                <li><input type="text" title="landline-number" id="landline_no" name="landline_no" maxlength="10" class="form-control mb-md" placeholder="landline Number"> 
+               <span id="landline_noErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Email Id<span class="red">*</span></p></li>
-                <li><input type="text" title="email-id" id="email-id" name="emailId" class="form-control mb-md" placeholder="Email Number"> 
+                <li><input type="text" title="email-id" id="emailId" name="emailId" class="form-control mb-md" placeholder="Email Number"> 
+               <span id="emailIdErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Address<span class="red">*</span></p></li>
-                <li><textarea type="text" title="address" id="address" name="address" class="form-control mb-md" placeholder="Address"> </textarea>
+                <li><textarea title="address" id="address" name="address" class="form-control mb-md" placeholder="Address"> </textarea>
+               <span id="addressErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                 
@@ -186,35 +115,40 @@
                 <ul class="fs-list-details">
                 <li><p>Bank <span class="red">*</span></p></li>
                 <li><input type="text" title="bank" id="bank" name="bank_name" class="form-control mb-md" placeholder="Bank"> 
+                 <span id="bankErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Branch <span class="red">*</span></p></li>
                 <li><input type="text" title="branch" id="branch" name="branch" class="form-control mb-md" placeholder="Branch">
+               <span id="branchErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Account Type<span class="red">*</span></p></li>
-                <li><input type="text" title="account-type" id="account-type" name="account_type" class="form-control mb-md" placeholder="Account Type">
+                <li><input type="text" title="account-type" id="account_type" name="account_type" class="form-control mb-md" placeholder="Account Type">
+               <span id="account_typeErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>A/c Number<span class="red">*</span></p></li>
-                <li><input type="text" title="account-number" id="account-number" name="account_number" class="form-control mb-md" placeholder="Account Number">
+                <li><input type="text" title="account-number" id="account_number" name="account_number" class="form-control mb-md" placeholder="Account Number">
+               <span id="account_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>IFSC Code<span class="red">*</span></p></li>
-                <li><input type="text" title="ifsc-code" id="ifsc-code" name="ifsc_code" class="form-control mb-md" placeholder="IFSC Code">
+                <li><input type="text" title="ifsc-code" id="ifsc_code" name="ifsc_code" class="form-control mb-md" placeholder="IFSC Code">
+                <span id="ifsc_codeErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                 
                 </div>
-                <input type="submit" name="next" class="next action-button" value="Save and Continue">
+                <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
                 
             </fieldset>
             
@@ -234,192 +168,145 @@
   <!-- #contact --> 
   
 </main>
-
-<!--==========================
-    Footer
-  ============================-->
-<footer id="footer">
-  <div class="footer-connect">
-    <div class="container">
-      <div class="footer-social">
-        <label class="font-heading" for="">Follow us</label>
-        <a target="_blank" href="https://www.facebook.com/SportsAuthorityAP/" title="Facebook">
-        <i class="fa fa-facebook"></i></a> 
-        <a target="_blank" href="https://twitter.com/SportsinAP" title="Twitter">
-        <i class="fa fa-twitter"></i></a> 
-        <a target="_blank" href="https://www.instagram.com/sports_authority_ap/" href="#" title="Instagram">
-        <i class="fa fa-instagram"></i></a> 
-        <a target="_blank" href="https://www.linkedin.com/company/sports-authority-of-ap/" href="#" title="Linkedin"><i class="fa fa-linkedin-square"></i></a> 
-        <a target="_blank" href="https://www.youtube.com/channel/UCy3mdgAFCimIxl60stdXopQ" href="#" title="Youtube"><i class="fa fa-youtube"></i></a></div>
-    </div>
-  </div>
-  <div class="footer-top">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-3 col-md-6 footer-info">
-          <h4>Know more about Us</h4>
-          <p>Sports Authority of Andhra Pradesh is an Apex body for Promotion of Sports in the state. SAAP is implementing the Sports development programs, Schemes of Govt. of India / SAI, besides Construction / Maintenance of Stadia, Establishment / Sports Authority of India.</p>
-        </div>
-        <div class="col-lg-3 col-md-6 footer-links">
-          <h4>Company </h4>
-          <ul>
-            <li> <a href="index.html">Home</a></li>
-            <li> <a href="about-us.html">About us</a></li>
-            <li> <a href="online-mis.html">Online Mis</a></li>
-            <li> <a href="feedback.html">Feedback</a></li>
-            <li> <a href="contact.html">Contact Us</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-3 col-md-6 footer-contact">
-          <h4>Our location</h4>
-          <div class="contact-info-box">
-            <div class="contact-info-item">
-              <div class="contact-text"><i class="fa fa-map-marker"></i></div>
-              <div class="contact-value">Bandar Road, Labbipet, Vijayawada- 520010,
-                INDIRA GANDHI MUNICIPAL CORPORATION (IGMC) STADIUM</div>
-            </div>
-            <div class="contact-info-item">
-              <div class="contact-text"><i class="fa fa-phone"></i></div>
-              <div class="contact-value">0866 - 2499699</div>
-            </div>
-            <div class="contact-info-item">
-              <div class="contact-text"><i class="fa fa-envelope"></i></div>
-              <div class="contact-value"><a href="sportsinap@gmail.com">sportsinap@gmail.com</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 footer-newsletter">
-          <h4>Business Hours</h4>
-          <div class="contact-info-box">
-            <p>Our support available to help you 24 hours a day, seven days a week.</p>
-            <ul class="hours">
-              <li>Monday-Friday: <span>9am to 5pm</span></li>
-              <li>Saturday: <span>10am to 2pm</span></li>
-              <li>Sunday: <span>Closed</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="copyright"> &copy; copyright © 2019 <strong>Sports Authority of Andhra Pradesh</strong> . All rights reserved. </div>
-  </div>
-</footer>
-<!-- #footer --> 
-
-<a href="#" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
-<div id="preloader"></div>
-
-<!-- JavaScript Libraries --> 
-<script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery-migrate.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/bootstrap/js/bootstrap.bundle.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/easing/easing.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/superfish/hoverIntent.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/superfish/superfish.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/wow/wow.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/waypoints/waypoints.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/counterup/counterup.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/owlcarousel/owl.carousel.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/isotope/isotope.pkgd.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/lightbox/js/lightbox.min.js"></script> 
-<script src="${pageContext.request.contextPath}/resources/lib/touchSwipe/jquery.touchSwipe.min.js"></script> 
+<!--=== Footer ====-->
+<jsp:include page="online-mis-footer.jsp" />
 <!-- Contact Form JavaScript File --> 
-<script src="contactform/contactform.js"></script> 
+<script src="contactform/contactform.js"></script>
 
-<!-- Template Main Javascript File --> 
-<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<script type="text/javascript">
 
-<script>
-
-//jQuery time
-var current_fs, next_fs, previous_fs; //fieldsets
-var left, opacity, scale; //fieldset properties which we will animate
-var animating; //flag to prevent quick multi-click glitches
-
-$(".next").click(function(){
-	if(animating) return false;
-	animating = true;
-	
-	current_fs = $(this).parent();
-	next_fs = $(this).parent().next();
-	
-	//activate next step on progressbar using the index of next_fs
-	$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-	
-	//show the next fieldset
-	next_fs.show(); 
-	//hide the current fieldset with style
-	current_fs.animate({opacity: 0}, {
-		step: function(now, mx) {
-			//as the opacity of current_fs reduces to 0 - stored in "now"
-			//1. scale current_fs down to 80%
-			scale = 1 - (1 - now) * 0.2;
-			//2. bring next_fs from the right(50%)
-			left = (now * 50)+"%";
-			//3. increase opacity of next_fs to 1 as it moves in
-			opacity = 1 - now;
-			current_fs.css({
-        'transform': 'scale('+scale+')',
-        'position': 'absolute'
-      });
-			next_fs.css({'left': left, 'opacity': opacity});
-		}, 
-		duration: 800, 
-		complete: function(){
-			current_fs.hide();
-			animating = false;
-		}, 
-		//this comes from the custom easing plugin
-		easing: 'easeInOutBack'
+ $("#mobile_no,#landline_no,#account_number").on('input', function () {
+	    this.value = this.value.match(/^\d+/);
 	});
-});
-
-$(".previous").click(function(){
-	if(animating) return false;
-	animating = true;
+ $("#ifsc_code,#pan_number,#tin_number").on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
+	})
 	
-	current_fs = $(this).parent();
-	previous_fs = $(this).parent().prev();
+ $("#consultant_firm,#bank,#branch,#account_type").on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z ]/gi, ''));
+	})
+function isEmail(email) {
+	 var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	 return regex.test(email);	
+	}
+$("#submit").click(function(){
 	
-	//de-activate current step on progressbar
-	$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-	
-	//show the previous fieldset
-	previous_fs.show(); 
-	//hide the current fieldset with style
-	current_fs.animate({opacity: 0}, {
-		step: function(now, mx) {
-			//as the opacity of current_fs reduces to 0 - stored in "now"
-			//1. scale previous_fs from 80% to 100%
-			scale = 0.8 + (1 - now) * 0.2;
-			//2. take current_fs to the right(50%) - from 0%
-			left = ((1-now) * 50)+"%";
-			//3. increase opacity of previous_fs to 1 as it moves in
-			opacity = 1 - now;
-			current_fs.css({'left': left});
-			previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
-		}, 
-		duration: 800, 
-		complete: function(){
-			current_fs.hide();
-			animating = false;
-		}, 
-		//this comes from the custom easing plugin
-		easing: 'easeInOutBack'
-	});
-});
-
-$(".submit").click(function(){
-	return false;
+	var consultant_firm=$("#consultant_firm").val();
+    if(consultant_firm=="" || consultant_firm==null){
+        $("#consultant_firmErr").html("Please Enter Name of Consultant Firm ");
+        $("#consultant_firm").focus();
+        return false;
+    }else{
+        $("#consultant_firmErr").html("");
+    }
+    
+	var pan_number=$("#pan_number").val();
+    if(pan_number=="" || pan_number==null){
+        $("#pan_numberErr").html("Please Enter PAN Number");
+        $("#pan_number").focus();
+        return false;
+    }else{
+        $("#pan_numberErr").html("");
+    }
+    
+	var tin_number=$("#tin_number").val();
+    if(tin_number=="" || tin_number==null){
+        $("#tin_numberErr").html("Please Enter TIN Number");
+        $("#tin_number").focus();
+        return false;
+    }else{
+        $("#tin_numberErr").html("");
+    }
+    
+	var mobile_no=$("#mobile_no").val();
+    if(mobile_no=="" || mobile_no==null){
+        $("#mobile_noErr").html("Please Enter Mobile Number");
+        $("#mobile_no").focus();
+        return false;
+    }else{
+        $("#mobile_noErr").html("");
+    }
+    
+	var landline_no=$("#landline_no").val();
+    if(landline_no=="" || landline_no==null){
+        $("#landline_noErr").html("Please Enter Landline Number");
+        $("#landline_no").focus();
+        return false;
+    }else{
+        $("#landline_noErr").html("");
+    }
+    
+	var emailId=$("#emailId").val();
+    if(emailId=="" || emailId==null){
+        $("#emailIdErr").html("Please Enter Email Id");
+        $("#emailId").focus();
+        return false;
+    }else{
+        $("#emailIdErr").html("");
+    }
+    
+    if( !isEmail(emailId)) { 
+   	 $("#emailIdErr").html("Please Enter Valid Email Id");
+   	 $("#emailId").focus();
+       return false;
+   } else{
+       $("#emailIdErr").html("");
+   } 
+    
+	var address=$("#address").val();
+    if($('#address').val().trim().length < 1){
+        $("#addressErr").html("Please Enter Address");
+        $("#address").focus();
+        return false;
+    }else{
+        $("#addressErr").html("");
+    }
+    
+	var bank=$("#bank").val();
+    if(bank=="" || bank==null){
+        $("#bankErr").html("Please Enter Bank ");
+        $("#bank").focus();
+        return false;
+    }else{
+        $("#bankErr").html("");
+    }
+    
+	var branch=$("#branch").val();
+    if(branch=="" || branch==null){
+        $("#branchErr").html("Please Enter Branch");
+        $("#branch").focus();
+        return false;
+    }else{
+        $("#branchErr").html("");
+    }
+    
+	var account_type=$("#account_type").val();
+    if(account_type=="" || account_type==null){
+        $("#account_typeErr").html("Please Enter Account Type");
+        $("#account_type").focus();
+        return false;
+    }else{
+        $("#account_typeErr").html("");
+    }
+    
+	var account_number=$("#account_number").val();
+    if(account_number=="" || account_number==null){
+        $("#account_numberErr").html("Please Enter Account Number");
+        $("#account_number").focus();
+        return false;
+    }else{
+        $("#account_numberErr").html("");
+    }
+    
+	var ifsc_code=$("#ifsc_code").val();
+    if(ifsc_code=="" || ifsc_code==null){
+        $("#ifsc_codeErr").html("Please Enter IFSC Code");
+        $("#ifsc_code").focus();
+        return false;
+    }else{
+        $("#ifsc_codeErr").html("");
+    }
 })
-
-$(document).ready(function(){
-  $(".create-button").click(function(){
-    $("#work_table_div").toggle();
-  });
-});
 
 </script>
 </body>

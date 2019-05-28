@@ -9,6 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+
 @Entity
 @Table(name="tendering_process")
 public class TenderingProcess {
@@ -19,12 +23,14 @@ public class TenderingProcess {
 	private int id;
 	
 	@Column(name="ifb_preparation_date")
+	@DateTimeFormat(pattern = "yy-mm-dd") 
 	private Date ifbPreperationDate;
 	
 	@Column(name="tender_notice_number")
 	private String tenderNoticeNumber;
 	
 	@Column(name="tender_notice_issuedDate")
+	@DateTimeFormat(pattern = "yy-mm-dd") 
 	private Date tenderNoticeIssuedDate;
 	
 	@Column(name="notice_issusing_authorities")
@@ -33,34 +39,46 @@ public class TenderingProcess {
 	@Column(name="eng_newspaper_name")
 	private String englishNewspaperName;
 	
+	@Nullable
 	@Column(name="english_newspaper_date")
+	@DateTimeFormat(pattern = "yy-mm-dd") 
 	private Date engNewsPaperDate;
 	
 	@Column(name="tel_newspaper_name")
 	private String teluguNewspaperName;
 	
+	@Nullable
 	@Column(name="telugu_newspaper_date")
-	private Date telNewspaperDate;
+	@DateTimeFormat(pattern = "yy-mm-dd") 
+	private Date telNewspaperDate;	
 	
+	@Nullable
 	@Column(name="bid_start_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date bidStrartDate;
 	
+	@Nullable
 	@Column(name="bid_closing_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date bidClosingDate;
 	
+	@Nullable
 	@Column(name="bid_opening_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date bidOpeningDate;
 	
 	@Column(name="bids_received")
-	private int bidsReceived;
+	private Integer bidsReceived;
 	
 	@Column(name="hardcopies_submitted")
-	private int hardCopiesSubmitted;
+	private Integer hardCopiesSubmitted;
 	
 	@Column(name="bidsForPriceBid")
-	private int bidsForPriceBid;
+	private Integer bidsForPriceBid;
 	
+	@Nullable
 	@Column(name="evaluationCompleted_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date dateOfEvaluationCompleted;
 	
 	@Column(name="contractvalue")
@@ -69,21 +87,51 @@ public class TenderingProcess {
 	@Column(name="contractvalue_L1bidder")
 	private double contractValueByL1Bidder;
 	
+	@Nullable
 	@Column(name="percentage_quoted")
 	private int percentageQuoted;
 	
+	@Nullable
 	@Column(name="bidstatus")
 	private String bidStatus;
 	
+	@Nullable
 	@Column(name="loa_issued_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date dateOfLoaIssued;
 	
+	@Nullable
 	@Column(name="agency_name")
 	private String angencyName;
 	
+	@Nullable
 	@Column(name="work_id")
 	private int workId;
+	
+	@Column(name="engUpload")
+	private String engUpload;
+	
+	@Column(name="telUpload")
+	private String telUpload;
+	
 
+	public String getEngUpload() {
+		return engUpload;
+	}
+
+	public void setEngUpload(String engUpload) {
+		this.engUpload = engUpload;
+	}
+
+	public String getTelUpload() {
+		return telUpload;
+	}
+
+	public void setTelUpload(String telUpload) {
+		this.telUpload = telUpload;
+	}
+
+	
 	public int getId() {
 		return id;
 	}
@@ -180,27 +228,27 @@ public class TenderingProcess {
 		this.bidOpeningDate = bidOpeningDate;
 	}
 
-	public int getBidsReceived() {
+	public Integer getBidsReceived() {
 		return bidsReceived;
 	}
 
-	public void setBidsReceived(int bidsReceived) {
+	public void setBidsReceived(Integer bidsReceived) {
 		this.bidsReceived = bidsReceived;
 	}
 
-	public int getHardCopiesSubmitted() {
+	public Integer getHardCopiesSubmitted() {
 		return hardCopiesSubmitted;
 	}
 
-	public void setHardCopiesSubmitted(int hardCopiesSubmitted) {
+	public void setHardCopiesSubmitted(Integer hardCopiesSubmitted) {
 		this.hardCopiesSubmitted = hardCopiesSubmitted;
 	}
 
-	public int getBidsForPriceBid() {
+	public Integer getBidsForPriceBid() {
 		return bidsForPriceBid;
 	}
 
-	public void setBidsForPriceBid(int bidsForPriceBid) {
+	public void setBidsForPriceBid(Integer bidsForPriceBid) {
 		this.bidsForPriceBid = bidsForPriceBid;
 	}
 

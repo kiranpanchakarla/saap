@@ -40,6 +40,17 @@ public class LandDetails implements Serializable{
 	@OneToOne(targetEntity=User.class)
 	@JoinColumn(name="user_id", referencedColumnName="user_id")
 	private User user;
+	@Column(name = "path")
+	private String path;
+	
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public int getId() {
 		return id;

@@ -4,20 +4,29 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 import com.ap.mis.dao.MISdao;
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.AgreementDetails;
+import com.ap.mis.entity.Constituency;
 import com.ap.mis.entity.ConsultantInfo;
 import com.ap.mis.entity.DepartmentLinkingLine;
+import com.ap.mis.entity.District;
 import com.ap.mis.entity.LandDetails;
+import com.ap.mis.entity.Mandal;
+import com.ap.mis.entity.NatureOfWork;
 import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.TenderingProcess;
+import com.ap.mis.entity.TypeOfWork;
 import com.ap.mis.entity.User;
+import com.ap.mis.entity.Village;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
 
@@ -43,7 +52,10 @@ public class MISDaoImpl implements MISdao {
 	@Override
 	public int adminstrativeSectionSave(AdministrativeSection adminSec) {
 		int i=0;
+		  Blob encodstring =null;  
 		try{
+			
+			/*encodstring = (Blob) Hibernate.getLobCreator((Session) sessionFactory).createBlob(data);*/
 		    i =(int) sessionFactory.getCurrentSession().save(adminSec);	
 		}
 		catch(Exception e){
@@ -56,12 +68,18 @@ public class MISDaoImpl implements MISdao {
 	public  User verifyUser(User user) {		
 		User validUser = null;
 		String ss="from User  where name=:un   and CAST(password as binary) = CAST(:pw as binary) ";
-		Query q=sessionFactory.getCurrentSession().createQuery(ss);
-		q.setParameter("un",user.getName());
-		q.setParameter("pw", user.getPassword());
+		//Query q=sessionFactory.getCurrentSession().createQuery(ss);
+		//q.setParameter("un",user.getName());
+		//q.setParameter("pw", user.getPassword());
 		
-		if(q.list().size() != 0){
-			 validUser=(User) q.list().get(0);
+		List users = sessionFactory.getCurrentSession()
+		        .createQuery( "from User  where name=:un and CAST(password as binary) = CAST(:pw as binary)")
+		        .setParameter("un",user.getName())
+		        .setParameter("pw", user.getPassword())
+		        .list();
+		
+		if(users.size() != 0){
+			 validUser=(User) users.get(0);
 		}else
 			 validUser = null;
 		return validUser;
@@ -184,8 +202,42 @@ public class MISDaoImpl implements MISdao {
 		}
 		return i;
 	}
+
+	@Override
+	public List<TypeOfWork> findAll() {
+		String details="from TypeOfWork";
+		Query q=sessionFactory.getCurrentSession().createQuery(details);
+		List<TypeOfWork> typeOfWorkDetails=q.list();
+		return typeOfWorkDetails;
+	}
+
+	@Override
+	public List<NatureOfWork> natureOfDetails() {
+		String details="from NatureOfWork";
+		Query q=sessionFactory.getCurrentSession().createQuery(details);
+		List<NatureOfWork> natureOfWorkDetails=q.list();
+		return natureOfWorkDetails;
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Constituency> constituencyDetails(int PlaceId) {
+		return sessionFactory.getCurrentSession().createQuery("from Constituency where districtId="+PlaceId).list();
+	}
 	
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Mandal> mandalDetails(int placeId) {
+		return sessionFactory.getCurrentSession().createQuery("from Mandal where constituencyId="+placeId).list();
+	}
 
-
-}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Village> villageDetails(int placeId) {
+		return sessionFactory.getCurrentSession().createQuery("from Village where mandalId="+placeId).list();
+	}
+	
+	
+	}

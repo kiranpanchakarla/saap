@@ -35,23 +35,35 @@ public class AdministrativeSection implements Serializable{
 	private String sanctionedDetails;
 	
 	@Column(name = "typeof_grant")
-	private String typeOfGrant;
-	
+	private int typeOfGrant;	
+
 	@Column(name = "financial_year")
-	private String financialYear;
+	private int financialYear;
 	
 	@Column(name = "executive_dept")
-	private String executiveDept;
+	private int executiveDept;
 	
 	@Column(name = "consultant")
-	private String consultant;
+	private int consultant;
 	
-	 @OneToOne(targetEntity=User.class)
-	 @JoinColumn(name="user_id", referencedColumnName="user_id")
-	 private User user;
+	@OneToOne(targetEntity=User.class)
+	@JoinColumn(name="user_id", referencedColumnName="user_id")
+	private User user;
+	 
+	 @Column(name = "path")
+	 private String path;
+
 
 	public int getId() {
 		return id;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public void setId(int id) {
@@ -83,27 +95,27 @@ public class AdministrativeSection implements Serializable{
 		this.sanctionedDetails = sanctionedDetails;
 	}
 
-	public String getTypeOfGrant() {
+	public int getTypeOfGrant() {
 		return typeOfGrant;
 	}
 
-	public void setTypeOfGrant(String typeOfGrant) {
+	public void setTypeOfGrant(int typeOfGrant) {
 		this.typeOfGrant = typeOfGrant;
 	}
 
-	public String getExecutiveDept() {
+	public int getExecutiveDept() {
 		return executiveDept;
 	}
 
-	public void setExecutiveDept(String executiveDept) {
+	public void setExecutiveDept(int executiveDept) {
 		this.executiveDept = executiveDept;
 	}
 
-	public String getConsultant() {
+	public int getConsultant() {
 		return consultant;
 	}
 
-	public void setConsultant(String consultant) {
+	public void setConsultant(int consultant) {
 		this.consultant = consultant;
 	}
 
@@ -115,11 +127,11 @@ public class AdministrativeSection implements Serializable{
 		this.user = user;
 	}
 
-	public String getFinancialYear() {
+	public int getFinancialYear() {
 		return financialYear;
 	}
 
-	public void setFinancialYear(String financialYear) {
+	public void setFinancialYear(int financialYear) {
 		this.financialYear = financialYear;
 	}
 

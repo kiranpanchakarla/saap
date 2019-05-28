@@ -46,6 +46,31 @@ public class User implements Serializable {
 	    @OneToOne(targetEntity=Role.class)
 		@JoinColumn(name="role_id", referencedColumnName="id")
 	    private Role role;
+	    
+	    public User(String name, String password) {
+			this.name = name;
+			this.password = password;
+		}
+	    
+	    public User() {
+			
+		}
+	    
+	    public static  User toUser(User inUser){
+			User user=new User();
+			user.setId(inUser.getId());
+			user.setName(inUser.getName());
+			user.setPassword(inUser.getPassword());
+			user.setAddress(inUser.getAddress());
+			user.setEmail(inUser.getEmail());
+			user.setMobile(inUser.getMobile());
+			user.setRole(inUser.getRole());
+			user.setIsActive(inUser.getIsActive());
+			user.setIsDeleted(inUser.getIsDeleted());
+			user.setAdmin(inUser.isAdmin());
+			return user;
+			
+		}
 
 		public int getId() {
 			return id;
