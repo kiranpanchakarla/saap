@@ -13,40 +13,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.MISService;
+import com.ap.mis.service.TechnicalSanctionService;
 import com.ap.mis.service.TenderingProcessService;
 
 @Controller
 @RequestMapping("/technicalSanction")
 public class TechnicalSanctionController {
-	
-	@Autowired MISService misService;
-	
-	@Autowired TenderingProcessService tenderingProcessService;
-	
+
+	@Autowired
+	MISService misService;
+
+	@Autowired
+	TechnicalSanctionService techSanction;
+
+	@Autowired
+	TenderingProcessService tenderingProcessService;
+
 	@PostMapping(value = "/save")
-	public String technicalSanctionSave(@ModelAttribute TechnicalSanction techsanc ,Model model,HttpServletRequest request) {	
-		System.out.println("techsanc...."+techsanc);
-		Works  workInfo=null;
-		HttpSession session = request.getSession();
-		if(session.getAttribute("loggedInUserObj") == null){
+	public String technicalSanctionSave(@ModelAttribute TechnicalSanction techsanc, Model model,
+			HttpServletRequest request, HttpSession session) {
+
+		if (session.getAttribute("loggedInUserObj") == null) {
 			model.addAttribute("sessionTimeout", "sessionTimeout");
 			return "online-admin";
 		}
-		int wrokid =(int) session.getAttribute("workIdSession");
-		techsanc.setWorkId(wrokid);	
-		int i = misService.saveTechSanction(techsanc);
-		workInfo=misService.getWorkInfo(wrokid);
+
+		int wrokid = (int) session.getAttribute("workIdSession");
+		techsanc.setWorkId(wrokid);
+		techSanction.saveTechSanction(techsanc);
+
+		Works workInfo = misService.getWorkInfo(wrokid);
 		model.addAttribute("workInfo", workInfo);
-		if(i != 0) {
-			model.addAttribute("authoritiesTypeList", tenderingProcessService.getAuthoritiesList());			
-			model.addAttribute("agencyList", tenderingProcessService.getAgencyList());	
-			
-			return "online-mis-tendering-process";
-		}
-		else {
-			return "online-mis-technical-sanction";
+		model.addAttribute("authoritiesTypeList", tenderingProcessService.getAuthoritiesList());
+		model.addAttribute("agencyList", tenderingProcessService.getAgencyList());
 
-		}
-	}	
+		return "online-mis-tendering-process";
 
+	}
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ap.mis.dao.LandDetailDao;
 import com.ap.mis.entity.Division;
 import com.ap.mis.entity.Land;
+import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.Section;
 import com.ap.mis.entity.Subdivision;
 @Repository
@@ -44,6 +45,20 @@ public class LandDetailDaoImpl implements LandDetailDao {
 	public Section findBySectionId(int id) {
 		// TODO Auto-generated method stub
 		return (Section)sessionFactory.getCurrentSession().get(Section.class, id);
+	}
+
+
+
+	@Override
+	public LandDetails landDetailsSave(LandDetails landDetails) {
+		
+		try{
+		   sessionFactory.getCurrentSession().save(landDetails);	
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return landDetails;
 	}
 	
 

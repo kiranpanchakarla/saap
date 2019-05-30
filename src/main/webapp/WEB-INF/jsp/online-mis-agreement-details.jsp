@@ -78,14 +78,14 @@
                
                <ul class="fs-list-details">
                 <li><p>Amount(in Rs.) <span class="red">*</span></p></li>
-                <li><input type="text" name="bgAmount" id="bgAmount"  class="form-control mb-md" maxlength="9"  value ="00.00">
+                <li><input type="text" name="bgAmount" id="bgAmount"  class="form-control mb-md" maxlength="9"  value ="">
                 <span id="bgAmountErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Performance Security Amount(in Rs.)   <span class="red">*</span></p></li>
-                <li><input type="text" name="performanceSecurityAmount" id="performanceSecurityAmount"  class="form-control mb-md" maxlength="9"  value ="00.00">
+                <li><input type="text" name="performanceSecurityAmount" id="performanceSecurityAmount"  class="form-control mb-md" maxlength="9"  value ="">
                 <span id="performanceSecurityAmountErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>

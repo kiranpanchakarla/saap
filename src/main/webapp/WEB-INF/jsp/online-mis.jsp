@@ -11,7 +11,8 @@
 </head>
 <script>
 $(document).ready(function(){
-	  $(".createClass").click(function(){		 
+	  $(".createClass").click(function(){	
+		 
 			  $("#work_detailsErr").html("");
 			 	 var count = $("#noOfWorks").val(); 
 			 	//alert(count);
@@ -35,15 +36,17 @@ $(document).ready(function(){
 				            '<tr><td><b>'+ sno +'<b></td>'
 				            + '<td>'
 				    		+ '<input type="text" name="workDetails" id="work_details'+i+'"  onkeyup="return isText(this)" class="form-control mb-md" />'
+				    		/* + '<input type="text" name="WorkLineItemsList['+i+'].workDetails" id="work_details'+i+'"  onkeyup="return isText(this)" class="form-control mb-md" />' */
 				    		+ '</td>'
 				    		+ '<td>'
-				    		+ '<input type="text" name="cost" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />'
+				    		 + '<input type="text" name="cost" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' 
+				    		/* + '<input type="text" name="WorkLineItemsList['+i+'].cost" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' */
 				    		+ '</td>'
 				            +'</tr>');
 							sno=sno+1;
 						}
 						$("#work_table_div").toggle();
-
+						 $("#saveDiv").show();
 			 	 }else{
 			 		$("#work_table tr").remove();
 			 		$("#createval").val(0);
@@ -60,7 +63,7 @@ $(document).ready(function(){
 			 }
 			 else{
 	        $.ajax({
-						url : "<c:url value ='/constituency'/>?PlaceId="+selected_value,
+						url : "<c:url value ='/workCreationView/constituency'/>?PlaceId="+selected_value,
 						error : function(xhr,status, error) {
 							alert('Exception occurred:'+ error);
 						},
@@ -89,7 +92,7 @@ $(document).ready(function(){
 			 }
 			 else{
 			  $.ajax({
-						url : "<c:url value ='/mandal'/>?PlaceId="+selected_value,
+						url : "<c:url value ='/workCreationView/mandal'/>?PlaceId="+selected_value,
 						error : function(xhr,status, error) {
 							alert('Exception occurred:'+ error);
 						},
@@ -114,7 +117,7 @@ $(document).ready(function(){
 			 }
 			 else{
 			  $.ajax({
-						url : "<c:url value ='/village'/>?PlaceId="+selected_value,
+						url : "<c:url value ='/workCreationView/village'/>?PlaceId="+selected_value,
 						error : function(xhr,status, error) {
 							alert('Exception occurred:'+ error);
 						},
@@ -184,18 +187,17 @@ $(document).ready(function(){
                 <h2 class="fs-title">Work Creation</h2>
                 <!--<h3 class="fs-subtitle">Tell us something about you</h3>-->  
                 
-                <ul class="fs-list-details">
+             
+                
+                   <ul class="fs-list-details">
                 <li><p>Types of Work <span class="red">*</span></p></li>
-                <li><select id="typeOfWork" name="typeOfWork" class="required">
-                <option value="" selected="">--Types of Work --</option> 
-                <option value="New">New</option>
-                <option value="upgrade">Upgrade</option>
-                <option value="repair">Repair</option>
-                </select> 
-                	<br><span id="typeworkErr" class="errors" style="color:red;float:right;"></span>
+                <li><select id="typeworkid" name="typeOfWork">
+                     <option value="" selected="">--select Type Of Work--</option>
+				     <c:forEach  var="typeOfWork" items="${typeOfWork}">
+				         <option value="${typeOfWork.name}">${typeOfWork.name}</option>
+				      </c:forEach>
+                     </select> 
                 </ul>
-                
-                
                 
                 
                 <ul class="fs-list-details">
@@ -304,9 +306,9 @@ $(document).ready(function(){
             </table>
         </div> 
                 
-                
+                <div id="saveDiv" style="display:none">
                 <input type="submit" id="submit" name="submit" class="next action-button float-right" value="Save and Continue"/>
-                
+                </div>
                 <!-- name="next" -->
             </fieldset>
              <input type="hidden" id="createval" name="createval" value="0">

@@ -1,34 +1,21 @@
 package com.ap.mis.daoImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.Session;
-
 import com.ap.mis.dao.MISdao;
-import com.ap.mis.entity.AdministrativeSection;
-import com.ap.mis.entity.AgreementDetails;
 import com.ap.mis.entity.Constituency;
-import com.ap.mis.entity.ConsultantInfo;
-import com.ap.mis.entity.DepartmentLinkingLine;
-import com.ap.mis.entity.District;
-import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.Mandal;
 import com.ap.mis.entity.NatureOfWork;
-import com.ap.mis.entity.TechnicalSanction;
-import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.TypeOfWork;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Village;
 import com.ap.mis.entity.Works;
-import com.ap.mis.model.WorktoLandDetails;
 
 @Repository
 public class MISDaoImpl implements MISdao {
@@ -36,7 +23,25 @@ public class MISDaoImpl implements MISdao {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	
+    
 	@Override
+	public Works saveWorks(Works work) {
+		try{
+		sessionFactory.getCurrentSession().save(work);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return work;
+	}
+	
+	
+	
+
+	
+	
+	/*@Override
 	public int saveWorks(Works work) {
 		int i = 0;
 		try{
@@ -47,22 +52,9 @@ public class MISDaoImpl implements MISdao {
 			
 		}
 		return i;
-	}
+	}*/
 
-	@Override
-	public int adminstrativeSectionSave(AdministrativeSection adminSec) {
-		int i=0;
-		  Blob encodstring =null;  
-		try{
-			
-			/*encodstring = (Blob) Hibernate.getLobCreator((Session) sessionFactory).createBlob(data);*/
-		    i =(int) sessionFactory.getCurrentSession().save(adminSec);	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return i;
-	}
+
 
 	@Override
 	public  User verifyUser(User user) {		
@@ -85,31 +77,11 @@ public class MISDaoImpl implements MISdao {
 		return validUser;
 	}
 
-	@Override
-	public int departmentLinkingLineSave(DepartmentLinkingLine departmentLink) {
-		int i=0;
-		try{
-		    i =(int) sessionFactory.getCurrentSession().save(departmentLink);	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return i;
-	}
-
-	@Override
-	public int landDetailsSave(LandDetails landDetails) {
-		int i=0;
-		try{
-		    i =(int) sessionFactory.getCurrentSession().save(landDetails);	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return i;
-	}
 	
-	@Override
+
+	
+	
+	/*@Override
 	public int saveConsultantInfo(ConsultantInfo consultantInfo) {
 		int i = 0;
 		// TODO Auto-generated method stub
@@ -122,9 +94,9 @@ public class MISDaoImpl implements MISdao {
 			
 		}
 		return i;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int saveTechSanction(TechnicalSanction technicalSanction) {
 		int i = 0;
 		// TODO Auto-generated method stub
@@ -137,27 +109,11 @@ public class MISDaoImpl implements MISdao {
 			
 		}
 		return i;
-	}
+	}*/
 
-	@Override
-	public Works getWorkInfo(int workId) {
-		System.out.println("workId -- :"+workId);
-		List<Works> workList=new ArrayList<Works>();
-		Works workInfo =new Works();
-		String hql="from Works where id=:workId";
-		Query query=sessionFactory.getCurrentSession().createQuery(hql);
-		query.setParameter("workId", workId);
-		System.out.println("q.list() :"+query.list());
-		if(query.list().size() !=0) {
-			workList =  query.list();
-		}
-		for(Works work :workList) {
-			workInfo=work;
-		}
-		return workInfo;
-	}
+	
 
-	@Override
+	/*@Override
 	public int saveAgreementDetails(AgreementDetails agreementDetails) {
 		int i = 0;
 		// TODO Auto-generated method stub
@@ -170,9 +126,9 @@ public class MISDaoImpl implements MISdao {
 			
 		}
 		return i;
-	}
+	}*/
 	
-	public TenderingProcess getTenderingInfo(int tenderingId){
+	/*public TenderingProcess getTenderingInfo(int tenderingId){
 		List<TenderingProcess> tenderingList=new ArrayList<TenderingProcess>();
 		TenderingProcess tenderingInfo = new TenderingProcess();
 		String hql="from TenderingProcess where id=:tenderingId";
@@ -186,9 +142,9 @@ public class MISDaoImpl implements MISdao {
 			tenderingInfo=tender;
 		}
 		return tenderingInfo;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int saveTenderingProcess(TenderingProcess tenderingProcess) {
 		int i = 0;
 		// TODO Auto-generated method stub
@@ -201,7 +157,7 @@ public class MISDaoImpl implements MISdao {
 			
 		}
 		return i;
-	}
+	}*/
 
 	@Override
 	public List<TypeOfWork> findAll() {
@@ -238,6 +194,66 @@ public class MISDaoImpl implements MISdao {
 	public List<Village> villageDetails(int placeId) {
 		return sessionFactory.getCurrentSession().createQuery("from Village where mandalId="+placeId).list();
 	}
+	
+	@Override
+	public Works getWorkInfo(int workId) {
+		System.out.println("workId -- :"+workId);
+		List<Works> workList=new ArrayList<Works>();
+		Works workInfo =new Works();
+		String hql="from Works where id=:workId";
+		Query query=sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("workId", workId);
+		System.out.println("q.list() :"+query.list());
+		if(query.list().size() !=0) {
+			workList =  query.list();
+		}
+		for(Works work :workList) {
+			workInfo=work;
+		}
+		return workInfo;
+	}
+	
+	
+	/*@Override
+	public int adminstrativeSectionSave(AdministrativeSection adminSec) {
+		int i=0;
+		  Blob encodstring =null;  
+		try{
+			
+			encodstring = (Blob) Hibernate.getLobCreator((Session) sessionFactory).createBlob(data);
+		    i =(int) sessionFactory.getCurrentSession().save(adminSec);	
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return i;
+	}*/
+	
+	/*@Override
+	public int departmentLinkingLineSave(DepartmentLinkingLine departmentLink) {
+		int i=0;
+		try{
+		    i =(int) sessionFactory.getCurrentSession().save(departmentLink);	
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return i;
+	}
+	*/
+	
+	
+	/*@Override
+	public int landDetailsSave(LandDetails landDetails) {
+		int i=0;
+		try{
+		    i =(int) sessionFactory.getCurrentSession().save(landDetails);	
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return i;
+	}*/
 	
 	
 	}

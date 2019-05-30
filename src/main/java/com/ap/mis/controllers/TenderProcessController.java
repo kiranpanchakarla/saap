@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.MISService;
+import com.ap.mis.service.TenderingProcessService;
 
 @Controller
 @RequestMapping("/tenderProcess")
@@ -22,26 +23,23 @@ public class TenderProcessController {
 
 	@Autowired MISService misService;
 
+	@Autowired TenderingProcessService tenderProcess;
 	
 	@PostMapping(value = "/save")
-	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj ,Model model,HttpServletRequest request,@RequestParam("engfile") MultipartFile engfile,@RequestParam("telugufile") MultipartFile telugufile) {	
+	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj ,Model model,HttpServletRequest request,@RequestParam("engfile") MultipartFile engfile,@RequestParam("telugufile") MultipartFile telugufile,HttpSession session) {	
 		
-		Works  workInfo=null;
-		TenderingProcess tenderingInfo=null;
-		HttpSession session = request.getSession();
 		int wrokid =(int) session.getAttribute("workIdSession");
 		tenderingProcessObj.setWorkId(wrokid);	
-		int i = misService.saveTenderingProcess(tenderingProcessObj,engfile,telugufile);
-		workInfo=misService.getWorkInfo(wrokid);
+		tenderProcess.saveTenderingProcess(tenderingProcessObj,engfile,telugufile);
+		
+		Works workInfo=misService.getWorkInfo(wrokid);
 		model.addAttribute("workInfo", workInfo);
-		if(i != 0){
-		   session.setAttribute("tenderingIdSession", i);
+		
+		   session.setAttribute("tenderingIdSession", tenderingProcessObj.getId());
 		   int tenderingId =(int) session.getAttribute("tenderingIdSession");
-		   tenderingInfo=misService.getTenderingInfo(tenderingId);
+		   TenderingProcess tenderingInfo=tenderProcess.getTenderingInfo(tenderingId);
 		   model.addAttribute("tenderingInfo", tenderingInfo);
 		   return "online-mis-agreement-details";
-		} 	
-		else
-			return "online-mis-tendering-process";
+
    }
 }

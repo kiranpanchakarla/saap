@@ -20,23 +20,32 @@ import com.ap.mis.entity.Village;
 import com.ap.mis.entity.Works;
 
 public interface MISService {
-	public int saveWorks(Works work);
-	public int adminstrativeSectionSave(AdministrativeSection adminSec);
-	public int departmentLinkingLineSave(DepartmentLinkingLine departmentLink);
+	public Works saveWorks(Works work);
+	
+	
 	public User verifyUser(User user);
-	public int saveConsultantInfo(ConsultantInfo consultantInfo);
-	public int saveTechSanction(TechnicalSanction technicalSanction);
-	public int saveAgreementDetails(AgreementDetails agreementDetails);
-	public int saveTenderingProcess(TenderingProcess tenderingProcessObj, MultipartFile engfile,MultipartFile telugufile);
-	public Works getWorkInfo(int workId);
-	public TenderingProcess getTenderingInfo(int tenderingId);
+	/*public int saveConsultantInfo(ConsultantInfo consultantInfo);*/
+	/*public int saveTechSanction(TechnicalSanction technicalSanction);*/
+	/*public int saveAgreementDetails(AgreementDetails agreementDetails);*/
+	/*public int saveTenderingProcess(TenderingProcess tenderingProcessObj, MultipartFile engfile,MultipartFile telugufile);*/
+	/*public TenderingProcess getTenderingInfo(int tenderingId);*/
 	public List<TypeOfWork> findAll();
 	public List<NatureOfWork> natureOfDetails();
-	
+	public Works getWorkInfo(int workId);
 	List<Constituency> constituencyDetails(int PlaceId);
 	public List<Mandal> mandalDetails(int PlaceId);
 	public List<Village> villageDetails(int PlaceId);
-	public int adminstrativeSection(AdministrativeSection adminSecObject, MultipartFile file);
-	public int landDetailsSave(LandDetails landDetails, MultipartFile file);
+
+
+	/*public TenderingProcess getTenderingInfo(int tenderingId);*/
 	
+	
+	/*==========admin=========*/
+	/*public int adminstrativeSectionSave(AdministrativeSection adminSec);*/
+	/**/
+	/*public int adminstrativeSection(AdministrativeSection adminSecObject, MultipartFile file);*/
+	
+	/*public int departmentLinkingLineSave(DepartmentLinkingLine departmentLink);*/
+	
+	/*public int landDetailsSave(LandDetails landDetails, MultipartFile file);*/
 }

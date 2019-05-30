@@ -15,6 +15,7 @@ import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.LandDetailService;
+import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.SecurityUtil;
 
@@ -22,32 +23,35 @@ import com.ap.mis.util.SecurityUtil;
 @RequestMapping("/lineDepartment")
 public class LineDepartmentController {
 
-	@Autowired MISService misService;
-	@Autowired LandDetailService landDetailService;
-	
-	
+	@Autowired
+	MISService misService;
+	@Autowired
+	LandDetailService landDetailService;
+	@Autowired
+	LineDepartmentService LineDepartService;
+
 	@PostMapping(value = "/save")
-	public String lineDepatmentSave(@ModelAttribute  DepartmentLinkingLine  lineDeptObj,Model model,HttpServletRequest request) {
-		Works  workInfo=null;
-		HttpSession session = request.getSession();
-		int wrokid =(int) session.getAttribute("workIdSession");
-		User loggedInUser = (User) session.getAttribute("loggedInUserObj");
-		loggedInUser = SecurityUtil.getLoggedUser();
-		lineDeptObj.setUser(loggedInUser);	
-	
-		lineDeptObj.setWork(wrokid);
-		int i = misService.departmentLinkingLineSave(lineDeptObj);
-		workInfo=misService.getWorkInfo(wrokid);
+	public String lineDepatmentSave(@ModelAttribute DepartmentLinkingLine lineDeptObj, Model model,
+			HttpServletRequest request, HttpSession session) {
+
+		
+		User loggedInUser = SecurityUtil.getLoggedUser();
+		int workid = (int) session.getAttribute("workIdSession");
+		Works workInfo = misService.getWorkInfo(workid);
 		model.addAttribute("workInfo", workInfo);
-		WorktoLandDetails obj = new WorktoLandDetails(); 
-		if(i != 0){
-			model.addAttribute("LandTypeList", landDetailService.getLandTypeList());	
-			obj = (WorktoLandDetails) session.getAttribute("generalInfo");
-			obj.setDepartmentlinkingine(lineDeptObj);
-			session.setAttribute("generalInfo", obj);
-			return "online-mis-land-details";
-		}
-		else
-			return  "online-mis-line-department";
+		
+		lineDeptObj.setUser(loggedInUser);
+		lineDeptObj.setWork(workid);
+		LineDepartService.departmentLinkingLineSave(lineDeptObj);
+		
+		WorktoLandDetails obj = new WorktoLandDetails();
+        obj = (WorktoLandDetails) session.getAttribute("generalInfo");
+		obj.setDepartmentlinkingine(lineDeptObj);
+		session.setAttribute("generalInfo", obj);
+		
+		
+		model.addAttribute("LandTypeList", landDetailService.getLandTypeList());
+		return "online-mis-land-details";
+
 	}
 }

@@ -1,5 +1,6 @@
 package com.ap.mis.daoImpl;
 
+import java.sql.Blob;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ap.mis.dao.AdministrativeSectionDao;
+import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.ExecutiveConsultant;
 import com.ap.mis.entity.ExecutiveDept;
 import com.ap.mis.entity.FinancialYear;
@@ -19,6 +21,8 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	
 	
 	@Override
 	public List<GrantType> findAll() {
@@ -73,6 +77,23 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 		return (GrantType)sessionFactory.getCurrentSession().get(GrantType.class, id);
 	}
 
+	@Override
+	public AdministrativeSection adminstrativeSectionSave(AdministrativeSection adminSec) {
+		
+		  Blob encodstring =null;  
+		try{
+			
+			/*encodstring = (Blob) Hibernate.getLobCreator((Session) sessionFactory).createBlob(data);*/
+		  /*  i =(int) sessionFactory.getCurrentSession().save(adminSecObject);*/
+			sessionFactory.getCurrentSession().save(adminSec);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return adminSec;
+	}
+
+	
 	
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ap.mis.dao.LineDepartmentDao;
+import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.Division;
 import com.ap.mis.entity.Section;
 import com.ap.mis.entity.Subdivision;
@@ -39,5 +40,20 @@ public class LineDepartmentDaoImpl implements LineDepartmentDao {
 		List<Section> sectionList= sessionFactory.getCurrentSession().createQuery("from Section").getResultList();
 		return sectionList;
 	}
+
+	
+	
+	@Override
+	public DepartmentLinkingLine departmentLinkingLineSave(DepartmentLinkingLine departmentLink) {
+		
+		try{
+			sessionFactory.getCurrentSession().save(departmentLink);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return departmentLink;
+	}
+	
 
 }

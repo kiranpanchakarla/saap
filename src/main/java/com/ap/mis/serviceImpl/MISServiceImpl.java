@@ -33,6 +33,7 @@ import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.TypeOfWork;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Village;
+import com.ap.mis.entity.WorkLineItemsList;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.UploadUtil;
@@ -52,58 +53,41 @@ public class MISServiceImpl implements MISService {
 	private ServletContext servletContext;
 
 	@Override
-	public int saveWorks(Works work) {
-	   return	misDao.saveWorks(work);
+	public Works saveWorks(Works work) {
+	return	misDao.saveWorks(work);
 	}
 
-	@Override
-	public int adminstrativeSectionSave(AdministrativeSection adminSec) {
-		return misDao.adminstrativeSectionSave(adminSec);
-	}
-
+	
 	@Override
 	public User verifyUser(User user) {
 		return misDao.verifyUser(user);
 	}
 
-	@Override
-	public int departmentLinkingLineSave(DepartmentLinkingLine departmentLink) {
-		// TODO Auto-generated method stub
-		return misDao.departmentLinkingLineSave(departmentLink);
-	}
+	
+
+
 
 	/*@Override
-	public int landDetailsSave(LandDetails departmentLink) {
-		// TODO Auto-generated method stub
-		return misDao.landDetailsSave(departmentLink);
-	}*/
-
-	@Override
 	public int saveConsultantInfo(ConsultantInfo consultantInfo) {
 		return misDao.saveConsultantInfo(consultantInfo);
-	}
+	}*/
 
-	@Override
+/*	@Override
 	public int saveTechSanction(TechnicalSanction technicalSanction) {
 		return misDao.saveTechSanction(technicalSanction);
-	}
+	}*/
 
-	@Override
-	public Works getWorkInfo(int workId) {
-		return misDao.getWorkInfo(workId);
-		
-		
-	}
+	
 
-	@Override
+	/*@Override
 	public int saveAgreementDetails(AgreementDetails agreementDetails) {
 		// TODO Auto-generated method stub
 		return misDao.saveAgreementDetails(agreementDetails);
-	}
+	}*/
 
 	
 	
-	@Override
+	/*@Override
 	public int saveTenderingProcess(TenderingProcess tenderingProcess, MultipartFile engfile,MultipartFile telugufile) {
 		 try
 		 {
@@ -141,12 +125,12 @@ public class MISServiceImpl implements MISService {
 		}
 		return misDao.saveTenderingProcess(tenderingProcess);
 	}
-
-	@Override
+*/
+	/*@Override
 	public TenderingProcess getTenderingInfo(int tenderingId) {
 		// TODO Auto-generated method stub
 		return misDao.getTenderingInfo(tenderingId);
-	}
+	}*/
 
 	@Override
 	public List<TypeOfWork> findAll() {
@@ -178,43 +162,9 @@ public class MISServiceImpl implements MISService {
 		return misDao.villageDetails(PlaceId);
 	}
 
-	@Override
-	public int adminstrativeSection(AdministrativeSection adminSecObject, MultipartFile file) {
-		try
-		 {
-			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			String saveDirectory = servletContext.getRealPath("/");
-			String uploadfile="";
-			 byte[] data = null;
-		        Blob encodstring =null;  
-				if (!file.getOriginalFilename().isEmpty()) {
-					File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-					log.info("==rootFolder=="+rootFolder);
-					if (!rootFolder.exists()) {
-						rootFolder.mkdirs();
-					}
-				    String  filepath=rootFolder + File.separator+ file.getOriginalFilename();
-					file.transferTo(new File(filepath));
-					log.info("===filepath==:"+filepath);
-					 adminSecObject.setPath(filepath);	
-					/* if ((!(" ".equals(uploadfile)) || uploadfile == null)) {
-                           InputStream stream = (InputStream) file.getInputStream();
-			                data = new byte[50000];
-			                stream.read(data);
-			               System.out.println("file is*********************" + data);
-			            } 
-					 encodstring = (Blob) Hibernate.getLobCreator((Session) sessionFactory).createBlob(data);
-				}
-				 adminSecObject.setContent(encodstring);*/
-		 }
-		 }
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return misDao.adminstrativeSectionSave(adminSecObject);
-	}
 
-	@Override
+
+/*	@Override
 	public int landDetailsSave(LandDetails landDetails, MultipartFile file) {
 		 try
 		 {
@@ -237,12 +187,65 @@ public class MISServiceImpl implements MISService {
 			e.printStackTrace();
 		}
 		 return misDao.landDetailsSave(landDetails);
+	}*/
+	@Override
+	public Works getWorkInfo(int workId) {
+		return misDao.getWorkInfo(workId);
+		
+		
 	}
+	
+	
+	/*@Override
+	public int adminstrativeSectionSave(AdministrativeSection adminSec) {
+		return misDao.adminstrativeSectionSave(adminSec);
+	}*/
 
+	/**/
+	
+	/*	@Override
+	public int adminstrativeSection(AdministrativeSection adminSecObject, MultipartFile file) {
+		try
+		 {
+			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String saveDirectory = servletContext.getRealPath("/");
+			String uploadfile="";
+			 byte[] data = null;
+		        Blob encodstring =null;  
+				if (!file.getOriginalFilename().isEmpty()) {
+					File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
+					log.info("==rootFolder=="+rootFolder);
+					if (!rootFolder.exists()) {
+						rootFolder.mkdirs();
+					}
+				    String  filepath=rootFolder + File.separator+ file.getOriginalFilename();
+					file.transferTo(new File(filepath));
+					log.info("===filepath==:"+filepath);
+					 adminSecObject.setPath(filepath);	
+					 if ((!(" ".equals(uploadfile)) || uploadfile == null)) {
+                           InputStream stream = (InputStream) file.getInputStream();
+			                data = new byte[50000];
+			                stream.read(data);
+			               System.out.println("file is*********************" + data);
+			            } 
+					 encodstring = (Blob) Hibernate.getLobCreator((Session) sessionFactory).createBlob(data);
+				}
+				 adminSecObject.setContent(encodstring);
+		 }
+		 }
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return misDao.adminstrativeSectionSave(adminSecObject);
+	}*/
 	
 	
 	
-
+	/*@Override
+	public int departmentLinkingLineSave(DepartmentLinkingLine departmentLink) {
+		// TODO Auto-generated method stub
+		return misDao.departmentLinkingLineSave(departmentLink);
+	}*/
 	
 
 }

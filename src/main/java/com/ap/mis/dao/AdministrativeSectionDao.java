@@ -2,6 +2,7 @@ package com.ap.mis.dao;
 
 import java.util.List;
 
+import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.ExecutiveConsultant;
 import com.ap.mis.entity.ExecutiveDept;
 import com.ap.mis.entity.FinancialYear;
@@ -17,5 +18,7 @@ public interface AdministrativeSectionDao {
 	public ExecutiveDept findByExecutiveDeptId(int id);
 	public ExecutiveConsultant findByExecutiveConsultantId(int id);
 	public GrantType findByGrantId(int id);
+	public AdministrativeSection adminstrativeSectionSave(AdministrativeSection adminSecObject);
+
 		
 }

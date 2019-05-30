@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ap.mis.entity.Division;
 import com.ap.mis.entity.Land;
+import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.Section;
 import com.ap.mis.entity.Subdivision;
 
@@ -22,5 +23,9 @@ public interface LandDetailDao {
 
 
 	public Section findBySectionId(int id);
+
+
+
+	public LandDetails landDetailsSave(LandDetails landDetails);
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ap.mis.entity.AgreementDetails;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.OnlineMisDetails;
+import com.ap.mis.service.AgreementDetailService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.OnlineMisDetailsService;
 
@@ -26,19 +27,21 @@ public class AgreementDetailsController {
 	@Autowired MISService misService;
 	
 	@Autowired OnlineMisDetailsService onlineMisDetailsService;
+	
+	@Autowired AgreementDetailService agreeDetailsService;
 
 	@PostMapping(value = "/save")
-	public String saveAgreementDetails(@ModelAttribute AgreementDetails agreementDetailsObj ,Model model,HttpServletRequest request) {	
-		Works  workInfo=null;
-		HttpSession session = request.getSession();
+	public String saveAgreementDetails(@ModelAttribute AgreementDetails agreementDetailsObj ,Model model,HttpServletRequest request,HttpSession session) {	
 		int wrokid =(int) session.getAttribute("workIdSession");
 		agreementDetailsObj.setWorkId(wrokid);	
-		int i = misService.saveAgreementDetails(agreementDetailsObj);
-		workInfo=misService.getWorkInfo(wrokid);
+		agreeDetailsService.saveAgreementDetails(agreementDetailsObj);
+		
+		Works workInfo=misService.getWorkInfo(wrokid);
 		model.addAttribute("workInfo", workInfo);
 		 
 		List<OnlineMisDetails> reportList = onlineMisDetailsService.getList();
 		model.addAttribute("reportList", reportList); 
+		
 		return "online-mis-details";
 	}	
 	

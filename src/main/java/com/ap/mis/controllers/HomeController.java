@@ -28,39 +28,33 @@ import com.ap.mis.util.SecurityUtil;
 import com.google.gson.Gson;
 
 @Controller
+@RequestMapping("/workCreationView")
 public class HomeController {
 	
 	
 	@Autowired MISService misService;
 	@Autowired DistrictService districtsService;
-	@Autowired MandalService  mandalService;
+	/*@Autowired MandalService  mandalService;
 	@Autowired VillageService villageService;
 	@Autowired ConstituencyService  constituencyService;
-	
-	@RequestMapping(value = "/adminloggedin" , method = RequestMethod.GET)
+	*/
+	@RequestMapping(value = "/view")
 	public String validatingLoginUser(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userObject = SecurityUtil.getLoggedUser();
 		model.addAttribute("districts", districtsService.findAll());
-		model.addAttribute("allMandals", mandalService.findAll());
-		model.addAttribute("allVillages", villageService.findAll());
-		model.addAttribute("allConstituencs", constituencyService.findAll());
-		userObject =misService.verifyUser(userObject);
+	    userObject =misService.verifyUser(userObject);
 		session.setAttribute("loggedInUserObj", userObject);
 		List<TypeOfWork> typeOfWork=misService.findAll();
 		model.addAttribute("typeOfWork", typeOfWork);
 		List<NatureOfWork> natureOfWork=misService.natureOfDetails();
 		model.addAttribute("natureOfWork", natureOfWork);
-	
-			return "online-mis";
+	    return "online-mis";
 		
 		
 	}
 	
-	
-
-		
-		@RequestMapping(value="/constituency", method=RequestMethod.GET)
+	   @RequestMapping(value="/constituency", method=RequestMethod.GET)
 	    public @ResponseBody String constituencyInfo(String PlaceId) {
 			List<Constituency> constituencyDetails=misService.constituencyDetails(Integer.parseInt(PlaceId));
 			return new Gson().toJson(constituencyDetails);

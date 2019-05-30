@@ -19,22 +19,30 @@ import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
 
 public interface MISdao {
-	public int saveWorks(Works work);
-	public int adminstrativeSectionSave(AdministrativeSection adminSec);
+	public Works saveWorks(Works work);
+	
 	public  User verifyUser(User user);
-	public int departmentLinkingLineSave(DepartmentLinkingLine departmentLink);
-	public int landDetailsSave(LandDetails landDetails);
-	public int saveConsultantInfo(ConsultantInfo consultantInfo);
-	public int saveTechSanction(TechnicalSanction technicalSanction);
-	public int saveAgreementDetails(AgreementDetails agreementDetails);
-	public int saveTenderingProcess(TenderingProcess tenderingProcess);
+
+	
+	/*public int saveConsultantInfo(ConsultantInfo consultantInfo);*/
+/*	public int saveTechSanction(TechnicalSanction technicalSanction);*/
+	/*public int saveAgreementDetails(AgreementDetails agreementDetails);*/
+/*	public int saveTenderingProcess(TenderingProcess tenderingProcess);*/
 	public Works getWorkInfo(int workId);
-	public TenderingProcess getTenderingInfo(int tenderingId);
+/*	public TenderingProcess getTenderingInfo(int tenderingId);*/
 	public List<TypeOfWork> findAll();
 	public List<NatureOfWork> natureOfDetails();
 	public List<Constituency> constituencyDetails(int placeId);
 	public List<Mandal> mandalDetails(int placeId);
 	public List<Village> villageDetails(int placeId);
+
 	
 	
+	
+	/*public int landDetailsSave(LandDetails landDetails);*/
+	/*public int adminstrativeSectionSave(AdministrativeSection adminSec);*/
+	/**/
+	
+	
+	/*public int departmentLinkingLineSave(DepartmentLinkingLine departmentLink);*/
 }

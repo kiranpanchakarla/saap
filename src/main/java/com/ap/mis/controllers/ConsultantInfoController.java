@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.ConsultantInfo;
 import com.ap.mis.entity.Works;
+import com.ap.mis.service.ConsultantInfoService;
 import com.ap.mis.service.MISService;
 
 @Controller
@@ -20,20 +21,21 @@ public class ConsultantInfoController {
 
 	@Autowired MISService misService;
 	
+	@Autowired ConsultantInfoService constInfoService;
 	
 	@PostMapping(value = "/save")
-	public String saveConsultantInfo(@ModelAttribute  ConsultantInfo  consultantInfoObject,Model model,HttpServletRequest request) {
-		Works  workInfo=null;
-		HttpSession session = request.getSession();
+	public String saveConsultantInfo(@ModelAttribute  ConsultantInfo  consultantInfoObject,Model model,HttpServletRequest request,HttpSession session) {
+		
 		int wrokid =(int) session.getAttribute("workIdSession");
 		consultantInfoObject.setWorkId(wrokid);	
-		int i = misService.saveConsultantInfo(consultantInfoObject);
-		workInfo=misService.getWorkInfo(wrokid);
+	    constInfoService.saveConsultantInfo(consultantInfoObject);
+	    
+		Works workInfo=misService.getWorkInfo(wrokid);
 		model.addAttribute("workInfo", workInfo);
-		if(i != 0)
+		
+	
 		return  "online-mis-technical-sanction";
-		else
-		return  "online-mis-consultant-information";
+		
 		
 	}
 }

@@ -207,21 +207,21 @@
                
                <ul class="fs-list-details">
                 <li><p>Estimated Contract Value (in Rs.)<span class="red">*</span></p></li>
-                <li><input type="text"  id="contractValue" name="contractValue" class="form-control mb-md" maxlength="9" value="00.00" placeholder="Estimated Contract Value">
+                <li><input type="text"  id="contractValue" name="contractValue" class="form-control mb-md" maxlength="9" value="" placeholder="Estimated Contract Value">
                 <span id="contractValueErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Contract Value quoted By L1 Bidder<span class="red">*</span></p></li>
-                <li><input type="text" id="contractValueByL1Bidder"  name="contractValueByL1Bidder" maxlength="9" value="00.00" class="form-control mb-md" >
+                <li><input type="text" id="contractValueByL1Bidder"  name="contractValueByL1Bidder" maxlength="9" value="" class="form-control mb-md" >
                 <span id="contractValueByL1BidderErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                   <ul class="fs-list-details">
                 <li><p>Percentage quoted Less / Excess<span class="red">*</span></p></li>
-                <li><input type="text"  id="percentageQuoted" name="percentageQuoted" maxlength="9" value="00" class="charcterId form-control mb-md">
+                <li><input type="text"  id="percentageQuoted" name="percentageQuoted" maxlength="9" value="" class="charcterId form-control mb-md">
                 <span id="percentageQuotedErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>

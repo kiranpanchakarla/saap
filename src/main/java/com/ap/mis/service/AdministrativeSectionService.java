@@ -3,7 +3,9 @@ package com.ap.mis.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.ExecutiveConsultant;
 import com.ap.mis.entity.ExecutiveDept;
 import com.ap.mis.entity.FinancialYear;
@@ -20,6 +22,8 @@ public interface AdministrativeSectionService {
 	public ExecutiveDept findByExecutiveDeptId(int id);
 	public ExecutiveConsultant findByExecutiveConsultantId(int id);
 	public GrantType findByGrantId(int id);
+	public AdministrativeSection adminstrativeSection(AdministrativeSection adminSecObject, MultipartFile file);
+	
 	
 
 	

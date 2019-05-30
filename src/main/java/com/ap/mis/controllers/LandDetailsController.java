@@ -25,68 +25,80 @@ import com.ap.mis.service.MISService;
 import com.ap.mis.service.MandalService;
 import com.ap.mis.service.VillageService;
 import com.ap.mis.util.ContextUtil;
+import com.ap.mis.util.SecurityUtil;
 
 @Controller
 @RequestMapping("/landDetails")
 public class LandDetailsController {
-	private static final Logger log=Logger.getLogger(ContextUtil.class);
-	@Autowired MISService misService;
-	@Autowired DistrictService districtsService;
-	@Autowired ConstituencyService  constituencyService;
-	@Autowired MandalService  mandalService;
-	@Autowired VillageService villageService;
-	@Autowired AdministrativeSectionService administrativeSectionService;
-	@Autowired LandDetailService landDetailService;
+	private static final Logger log = Logger.getLogger(ContextUtil.class);
+	@Autowired
+	MISService misService;
+	@Autowired
+	DistrictService districtsService;
+	@Autowired
+	ConstituencyService constituencyService;
+	@Autowired
+	MandalService mandalService;
+	@Autowired
+	VillageService villageService;
+	@Autowired
+	AdministrativeSectionService administrativeSectionService;
+	@Autowired
+	LandDetailService landDetailService;
 
-	
 	@PostMapping(value = "/save")
-	public String landDetailsSave(@ModelAttribute  LandDetails  landDetails,Model model,HttpServletRequest request,@RequestParam("file") MultipartFile file) {
-		HttpSession session = request.getSession();
-		User loggedInUser = (User) session.getAttribute("loggedInUserObj");
+	public String landDetailsSave(@ModelAttribute LandDetails landDetails, Model model, HttpServletRequest request,
+			@RequestParam("file") MultipartFile file, HttpSession session) {
+
+		User loggedInUser = SecurityUtil.getLoggedUser();
 		landDetails.setUser(loggedInUser);
+		landDetailService.landDetailsSave(landDetails, file);
 		
-		int i = misService.landDetailsSave(landDetails,file);
-		WorktoLandDetails obj = new WorktoLandDetails(); 
-		if(i != 0){
-			obj = (WorktoLandDetails) session.getAttribute("generalInfo");
-			obj.setLanddetails(landDetails);
-			session.setAttribute("generalInfo", obj);
-			
-			
-		    model.addAttribute("districts", districtsService.findById(obj.getWorks().getDistrict()));
-		    model.addAttribute("constituency", constituencyService.findById(obj.getWorks().getConstituency()));
-		    model.addAttribute("mandal", mandalService.findById(obj.getWorks().getMandal()));
-		    model.addAttribute("village", villageService.findById(obj.getWorks().getVillage()));
-		    model.addAttribute("typeOfGrant", administrativeSectionService.findByGrantId(obj.getAdministrativeesction().getTypeOfGrant()));
-		    model.addAttribute("financialYear", administrativeSectionService.findById(obj.getAdministrativeesction().getFinancialYear()));
-		    model.addAttribute("executiveDept",administrativeSectionService.findByExecutiveDeptId(obj.getAdministrativeesction().getExecutiveDept()));
-		    model.addAttribute("consultant", administrativeSectionService.findByExecutiveConsultantId(obj.getAdministrativeesction().getConsultant()));
-		    model.addAttribute("division", landDetailService.findByDivisionId(obj.getDepartmentlinkingine().getDivisionName()));
-		    model.addAttribute("subdivisionName",landDetailService.findBySubDivision(obj.getDepartmentlinkingine().getSubdivisionName()));
-		    model.addAttribute("sectionName", landDetailService.findBySectionId(obj.getDepartmentlinkingine().getSectionName()));
-			
-			if (obj.getAdministrativeesction().getPath()!= null && !obj.getAdministrativeesction().getPath().equals("")) {
-				model.addAttribute("filePath", ContextUtil.populateContext(request)+obj.getAdministrativeesction().getPath());
-			} else {
-				model.addAttribute("filePath", null);
-			}
-			
-			if (obj.getLanddetails().getPath()!= null && !obj.getLanddetails().getPath().equals("")) {
-			
-				model.addAttribute("landfilePath", ContextUtil.populateContext(request)+obj.getLanddetails().getPath());
-			} else {
-				model.addAttribute("landfilePath", null);
-			}
-			
-			return "online-mis-general-information";
+		WorktoLandDetails obj = new WorktoLandDetails();
+		obj = (WorktoLandDetails) session.getAttribute("generalInfo");
+		obj.setLanddetails(landDetails);
+		session.setAttribute("generalInfo", obj);
+
+		model.addAttribute("districts", districtsService.findById(obj.getWorks().getDistrict()));
+		model.addAttribute("constituency", constituencyService.findById(obj.getWorks().getConstituency()));
+		model.addAttribute("mandal", mandalService.findById(obj.getWorks().getMandal()));
+		model.addAttribute("village", villageService.findById(obj.getWorks().getVillage()));
+		model.addAttribute("typeOfGrant",
+				administrativeSectionService.findByGrantId(obj.getAdministrativeesction().getTypeOfGrant()));
+		model.addAttribute("financialYear",
+				administrativeSectionService.findById(obj.getAdministrativeesction().getFinancialYear()));
+		model.addAttribute("executiveDept",
+				administrativeSectionService.findByExecutiveDeptId(obj.getAdministrativeesction().getExecutiveDept()));
+		model.addAttribute("consultant", administrativeSectionService
+				.findByExecutiveConsultantId(obj.getAdministrativeesction().getConsultant()));
+		model.addAttribute("division",
+				landDetailService.findByDivisionId(obj.getDepartmentlinkingine().getDivisionName()));
+		model.addAttribute("subdivisionName",
+				landDetailService.findBySubDivision(obj.getDepartmentlinkingine().getSubdivisionName()));
+		model.addAttribute("sectionName",
+				landDetailService.findBySectionId(obj.getDepartmentlinkingine().getSectionName()));
+
+		if (obj.getAdministrativeesction().getPath() != null && !obj.getAdministrativeesction().getPath().equals("")) {
+			model.addAttribute("filePath",
+					ContextUtil.populateContext(request) + obj.getAdministrativeesction().getPath());
+		} else {
+			model.addAttribute("filePath", null);
 		}
-		else
-			return "online-mis-land-details";		
+
+		if (obj.getLanddetails().getPath() != null && !obj.getLanddetails().getPath().equals("")) {
+
+			model.addAttribute("landfilePath", ContextUtil.populateContext(request) + obj.getLanddetails().getPath());
+		} else {
+			model.addAttribute("landfilePath", null);
+		}
+
+		return "online-mis-general-information";
+
 	}
-	
+
 	@GetMapping(value = "/generalInfo")
-    public String generalInformation(Model model) {
-        return  "online-mis-consultant-information";
-        
-    }
+	public String generalInformation(Model model) {
+		return "online-mis-consultant-information";
+
+	}
 }
