@@ -45,8 +45,7 @@
   
   <section id="contact" class="section-bg-con">
     <div class="container">
-    
-    <div class="row">
+     <div class="row">
     <div class="col-md-12">
     <c:url value="/administrativeSection/save" var="createUrl" />
         <form id="msform" method="post" action="${createUrl}"  modelAttribute="adminSecObject" enctype="multipart/form-data">
@@ -80,7 +79,7 @@
                 <ul class="fs-list-details">
                 <li><p>Grant<span class="red">*</span></p></li>
                 <li>
-                <select id="typeOfGrant" name="typeOfGrant">
+                <select id="typeOfGrant" name="typeOfGrant.id">
 					<option value="" selected="" disabled="">--Select Grant --</option>
 					<c:forEach  var="grant" items="${grantTypeList}">
 					<option value="${grant.id}">${grant.name}</option>
@@ -94,7 +93,7 @@
                 <ul class="fs-list-details">
                 <li><p>Financial Year <span class="red">*</span></p></li>
                 <li>
-                <select id="financialYear" name="financialYear">
+                <select id="financialYear" name="financialYear.id">
 					<option value="" selected="" disabled="">--Select Year --</option>
 					<c:forEach  var="fyear" items="${finYearList}">
 					<option value="${fyear.id}">${fyear.year}</option>
@@ -107,7 +106,7 @@
                 <ul class="fs-list-details">
                 <li><p>Engagement of executive dept by <span class="red">*</span></p></li>
                 <li>
-               <select id="executiveDept" name="executiveDept">
+               <select id="executiveDept" name="executiveDept.id">
 					<option value="" selected="" disabled="">--Select Executive Dept --</option>
 					<c:forEach  var="dpt" items="${executiveDeptList}">
 					<option value="${dpt.id}">${dpt.name}</option>
@@ -121,7 +120,7 @@
                 <ul class="fs-list-details">
                 <li><p>Engagement of consultant by <span class="red">*</span></p></li>
                 <li>
-                <select id="consultant" name="consultant">
+                <select id="consultant" name="consultant.id">
 					<option value="" selected="" disabled="">--Select Executive Consultant --</option>
 					<c:forEach  var="cons" items="${executiveConsultantList}">
 					<option value="${cons.id}">${cons.name}</option>
@@ -146,6 +145,7 @@
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue"/>
                
             </fieldset>
+                            <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">
         </form>
         
     </div>
@@ -179,7 +179,7 @@ $("input[type='file']").on("change", function () {
 });
 
 $('input').on('input', function() {
-	  $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
+	  $(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''));
 	});
 
 $("#submit").click(function(){
