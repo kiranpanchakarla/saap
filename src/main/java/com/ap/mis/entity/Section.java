@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_linedept_section")
+@Table(name="tbl_sa_linedept_section")
 public class Section {
  	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -43,8 +43,5 @@ public class Section {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-    
-    
-
+	}   
 }

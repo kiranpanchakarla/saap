@@ -61,42 +61,42 @@
                 <ul class="fs-list-details">
                 <li><p>Types of Work <span class="red">*</span></p></li>
                 <li><!-- <input type="text" title="New" id="typeworkid" name="typeworkid" class="form-control mb-md" readonly value="New">  -->
-                <input type="text" title="New" id="typeworkid" name="typeOfWork" class="form-control mb-md" readonly value="${generalInfo.works.typeOfWork}">
+                <input type="text" title="New" id="typeworkid" name="typeOfWork" class="form-control mb-md" readonly value="${workInfo.typeOfWork.name}">
                  </li> 
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><input type="text" title="NTR KVK (Constituency KVKs)" id="worknatureid" name="natureOfWork" class="form-control mb-md" readonly value="${generalInfo.works.natureOfWork}"> 
+                <li><input type="text" title="NTR KVK (Constituency KVKs)" id="worknatureid" name="natureOfWork" class="form-control mb-md" readonly value="${workInfo.natureOfWork.name}"> 
                </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>District <span class="red">*</span></p></li>
-                <li><input type="text" title="Ananthapuramu" id="districtid" name="districtid" class="form-control mb-md" readonly value="${districts.name}">
+                <li><input type="text" title="Ananthapuramu" id="districtid" name="districtid" class="form-control mb-md" readonly value="${workInfo.district.name}">
                </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Constituency <span class="red">*</span></p></li>
-                <li><input type="text" title="Ichchapuram" id="constituancyId" name="constituancyId" class="form-control mb-md" readonly value="${constituency.name}">
+                <li><input type="text" title="Ichchapuram" id="constituancyId" name="constituancyId" class="form-control mb-md" readonly value="${workInfo.constituency.name}">
             </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Mandal <span class="red">*</span></p></li>
-                <li><input type="text" title="Amadalavalasa" id="mandalId" name="mandalId" class="form-control mb-md" readonly value="${mandal.name}">
+                <li><input type="text" title="Amadalavalasa" id="mandalId" name="mandalId" class="form-control mb-md" readonly value="${workInfo.mandal.name}">
             </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Village <span class="red">*</span></p></li>
-                <li><input type="text" title="Alikam" id="villagesId" name="villagesId" class="form-control mb-md" readonly value="${village.name}"></li>
+                <li><input type="text" title="Alikam" id="villagesId" name="villagesId" class="form-control mb-md" readonly value="${workInfo.village.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Location <span class="red">*</span></p></li>
-                <li><input type="text" title="1" name="location" class="form-control mb-md" readonly value="${generalInfo.works.district}">
+                <li><input type="text" title="1" name="location" class="form-control mb-md" readonly value="${workInfo.district.name}">
                 </ul>
                 
                 <ul class="fs-list-details">
@@ -293,7 +293,7 @@
                 <ul class="fs-list-details">
                 <li><p>Type Of Land  <span class="red">*</span></p></li>
                 <li><input type="text" title="Government" name="activityId" class="form-control mb-md" readonly 
-                value="${generalInfo.landdetails.typeOfLand}">
+                value="${generalInfo.landdetails.typeOfLand.name}">
                 </li>
                 </ul>
                 

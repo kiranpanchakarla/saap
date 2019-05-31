@@ -58,7 +58,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of Work <span class="red">*</span></p></li>
-                <li><input type="text" id="work" name="work" placeholder="Nature of Work" class="form-control mb-md" readonly value="${workInfo.natureOfWork}">
+                <li><input type="text" id="natureOfWork" name="natureOfWork" placeholder="Nature of Work" class="form-control mb-md" readonly value="${workInfo.natureOfWork.name}">
                 <span id="workErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -104,7 +104,9 @@
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
                 
             </fieldset>
+             <input type="hidden" id="workid" name="work.id" value="${workInfo.id}"> 
         </form>
+        
         
     </div>
 </div>
@@ -141,7 +143,7 @@ $("#amount").on('input', function () {
 
 $("#submit").click(function(){
 	
-	var work=$("#work").val();
+	var natureOfWork=$("#natureOfWork").val();
     if(work=="" || work==null){
         $("#workErr").html("Please Enter Nature of Work");
         return false;

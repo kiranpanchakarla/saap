@@ -4,15 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "works")
+@Table(name = "tbl_sa_works")
 public class Works implements Serializable {
 	
 
@@ -20,33 +22,38 @@ public class Works implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	@Column(name = "id", nullable = false , unique = true)
 	private int id;
-
 	
-	@Column(name = "typeof_work")
-	private String typeOfWork;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="typeof_work", referencedColumnName = "id")
+	private TypeOfWork  typeOfWork; 
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="natureof_work", referencedColumnName = "id")
+	private NatureOfWork  natureOfWork; 
 
-	@Column(name = "natureof_work")
-	private String natureOfWork;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="District", referencedColumnName = "district_id")
+	private District  district; 
 
-	@Column(name = "noof_works")
-	private int noOfWorks;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="village", referencedColumnName = "village_id")
+	private Village  village; 
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="mandal", referencedColumnName = "mandal_id")
+	private Mandal  mandal; 
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="constituency", referencedColumnName = "constituency_id")
+	private Constituency  constituency; 
 
 	@Column
 	private String location;
 
-	@Column
-	private int district;
-	
-	@Column
-	private int village;
-	
-	@Column
-	private int mandal;
-	
-	@Column
-	private int constituency;
+	@Column(name = "noof_works")
+	private int noOfWorks;
 	
 	@Column(name = "work_username")
 	private String workUserName;
@@ -64,7 +71,57 @@ public class Works implements Serializable {
 	@JoinColumn(name="user_id", referencedColumnName="user_id")
 	private User user;
 	
-	 public String getWorkDetails() {
+	
+	public TypeOfWork getTypeOfWork() {
+		return typeOfWork;
+	}
+
+	public void setTypeOfWork(TypeOfWork typeOfWork) {
+		this.typeOfWork = typeOfWork;
+	}
+
+	public NatureOfWork getNatureOfWork() {
+		return natureOfWork;
+	}
+
+	public void setNatureOfWork(NatureOfWork natureOfWork) {
+		this.natureOfWork = natureOfWork;
+	}
+	
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+	}
+	
+	
+	 public Village getVillage() {
+		return village;
+	}
+
+	public void setVillage(Village village) {
+		this.village = village;
+	}
+
+	public Mandal getMandal() {
+		return mandal;
+	}
+
+	public void setMandal(Mandal mandal) {
+		this.mandal = mandal;
+	}
+
+	public Constituency getConstituency() {
+		return constituency;
+	}
+
+	public void setConstituency(Constituency constituency) {
+		this.constituency = constituency;
+	}
+
+	public String getWorkDetails() {
 		return workDetails;
 	}
 
@@ -96,22 +153,6 @@ public class Works implements Serializable {
 		this.id = id;
 	}
 
-	public String getTypeOfWork() {
-		return typeOfWork;
-	}
-
-	public void setTypeOfWork(String typeOfWork) {
-		this.typeOfWork = typeOfWork;
-	}
-
-	public String getNatureOfWork() {
-		return natureOfWork;
-	}
-
-	public void setNatureOfWork(String natureOfWork) {
-		this.natureOfWork = natureOfWork;
-	}
-
 	public int getNoOfWorks() {
 		return noOfWorks;
 	}
@@ -128,8 +169,6 @@ public class Works implements Serializable {
 		this.location = location;
 	}
 
-	
-
 	public String getWorkUserName() {
 		return workUserName;
 	}
@@ -145,40 +184,5 @@ public class Works implements Serializable {
 	public void setWorkNo(String workNo) {
 		this.workNo = workNo;
 	}
-
-	public int getDistrict() {
-		return district;
-	}
-
-	public void setDistrict(int district) {
-		this.district = district;
-	}
-
-	public int getVillage() {
-		return village;
-	}
-
-	public void setVillage(int village) {
-		this.village = village;
-	}
-
-	public int getMandal() {
-		return mandal;
-	}
-
-	public void setMandal(int mandal) {
-		this.mandal = mandal;
-	}
-
-	public int getConstituency() {
-		return constituency;
-	}
-
-	public void setConstituency(int constituency) {
-		this.constituency = constituency;
-	}
-
-	
-	
 	
 }

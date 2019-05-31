@@ -3,7 +3,7 @@ package com.ap.mis.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "villages")
+@Table(name = "tbl_sa_villages")
 
 public class Village {
     @Id
@@ -13,10 +13,11 @@ public class Village {
 
     @Column(name = "village_name")
     private String name;
-
-    @Column(name = "mandal_id")
-    private Long mandalId;
-
+  
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="mandal_id", referencedColumnName = "mandal_id")
+	private Mandal  mandalId; 
+   
     @Column(name = "village_isactive")
     private boolean active;
 
@@ -40,14 +41,6 @@ public class Village {
 		this.name = name;
 	}
 
-	public Long getMandalId() {
-		return mandalId;
-	}
-
-	public void setMandalId(Long mandalId) {
-		this.mandalId = mandalId;
-	}
-
 	public boolean isActive() {
 		return active;
 	}
@@ -62,6 +55,14 @@ public class Village {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public Mandal getMandalId() {
+		return mandalId;
+	}
+
+	public void setMandalId(Mandal mandalId) {
+		this.mandalId = mandalId;
 	}
     
     

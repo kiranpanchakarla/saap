@@ -6,7 +6,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "districts")
+@Table(name = "tbl_sa_districts")
 public class District implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -17,7 +17,7 @@ public class District implements Serializable {
     private String name;
 
     @Column(name = "state_id")
-    private Long stateId;
+    private int stateId;
 
     @Column(name = "district_isactive")
     private boolean active;
@@ -43,11 +43,11 @@ public class District implements Serializable {
 		this.name = name;
 	}
 
-	public Long getStateId() {
+	public int getStateId() {
 		return stateId;
 	}
 
-	public void setStateId(Long stateId) {
+	public void setStateId(int stateId) {
 		this.stateId = stateId;
 	}
 

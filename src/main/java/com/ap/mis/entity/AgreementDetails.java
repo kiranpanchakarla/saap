@@ -7,12 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="agreement_details")
+@Table(name="tbl_sa_agreement_details")
 public class AgreementDetails {
 	
 	@Id
@@ -49,10 +51,11 @@ public class AgreementDetails {
 	
 	@Column(name="others")
 	private String others;
+		
+	@OneToOne(targetEntity=Works.class)
+	@JoinColumn(name="work_id", referencedColumnName="id")
+	private Works work;
 	
-	@Column(name="work_id")
-	private int workId;
-
 	public int getId() {
 		return id;
 	}
@@ -132,13 +135,12 @@ public class AgreementDetails {
 	public void setOthers(String others) {
 		this.others = others;
 	}
-
-	public int getWorkId() {
-		return workId;
+	public Works getWork() {
+		return work;
 	}
 
-	public void setWorkId(int workId) {
-		this.workId = workId;
+	public void setWork(Works work) {
+		this.work = work;
 	}
 
 	@Override
@@ -147,9 +149,7 @@ public class AgreementDetails {
 				+ ", siteHandOverDate=" + siteHandOverDate + ", agreementCouncludedDate=" + agreementCouncludedDate
 				+ ", periodOfContract=" + periodOfContract + ", expectedCompletionDate=" + expectedCompletionDate
 				+ ", agreementNumber=" + agreementNumber + ", bankGuaranteeDetails=" + bankGuaranteeDetails
-				+ ", demandDraftDetails=" + demandDraftDetails + ", others=" + others + ", workId=" + workId + "]";
+				+ ", demandDraftDetails=" + demandDraftDetails + ", others=" + others + ", work=" + work + "]";
 	}
-	
-	
 	
 }

@@ -27,7 +27,7 @@ public class ConsultantInfoController {
 	public String saveConsultantInfo(@ModelAttribute  ConsultantInfo  consultantInfoObject,Model model,HttpServletRequest request,HttpSession session) {
 		
 		int wrokid =(int) session.getAttribute("workIdSession");
-		consultantInfoObject.setWorkId(wrokid);	
+//		consultantInfoObject.setWorkId(wrokid);	
 	    constInfoService.saveConsultantInfo(consultantInfoObject);
 	    
 		Works workInfo=misService.getWorkInfo(wrokid);

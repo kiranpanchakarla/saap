@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.User;
+import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.ConstituencyService;
@@ -59,7 +60,10 @@ public class LandDetailsController {
 		obj.setLanddetails(landDetails);
 		session.setAttribute("generalInfo", obj);
 
-		model.addAttribute("districts", districtsService.findById(obj.getWorks().getDistrict()));
+		Works workInfo=misService.getWorkInfo(obj.getWorks().getId());
+		model.addAttribute("workInfo",workInfo);
+
+/*		model.addAttribute("districts", districtsService.findById(obj.getWorks().getDistrict()));
 		model.addAttribute("constituency", constituencyService.findById(obj.getWorks().getConstituency()));
 		model.addAttribute("mandal", mandalService.findById(obj.getWorks().getMandal()));
 		model.addAttribute("village", villageService.findById(obj.getWorks().getVillage()));
@@ -77,7 +81,7 @@ public class LandDetailsController {
 				landDetailService.findBySubDivision(obj.getDepartmentlinkingine().getSubdivisionName()));
 		model.addAttribute("sectionName",
 				landDetailService.findBySectionId(obj.getDepartmentlinkingine().getSectionName()));
-
+*/
 		if (obj.getAdministrativeesction().getPath() != null && !obj.getAdministrativeesction().getPath().equals("")) {
 			model.addAttribute("filePath",
 					ContextUtil.populateContext(request) + obj.getAdministrativeesction().getPath());

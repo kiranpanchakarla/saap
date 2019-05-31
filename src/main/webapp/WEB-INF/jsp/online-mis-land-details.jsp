@@ -59,7 +59,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of Work <span class="red">*</span></p></li>
-                <li><input type="text" id="natureofwork" name="natureofwork" title="NTR KVK (Constituency KVKs)" class="form-control mb-md" readonly value="${workInfo.natureOfWork}">
+                <li><input type="text" id="natureofwork" name="natureofwork" title="NTR KVK (Constituency KVKs)" class="form-control mb-md" readonly value="${workInfo.natureOfWork.name}">
                 <span id="natureofworkErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -102,7 +102,7 @@
                 <ul class="fs-list-details">
                 <li><p>Type Of Land  <span class="red">*</span></p></li>
                 <li>                           		            		
-            	<select id="typeOfLand" name="typeOfLand">
+            	<select id="typeOfLand" name="typeOfLand.id">
 					<option value="" selected="" disabled="">--Select Land Type --</option>
 					<c:forEach  var="land" items="${LandTypeList}">
 					<option value="${land.id}">${land.name}</option>
@@ -123,7 +123,9 @@
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
                 
             </fieldset>
+            <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">
         </form>
+        
         
     </div>
 </div>
@@ -155,12 +157,9 @@ $(document).ready(function(){
 		    });
 	});
 
-$("#landExtend,#bookDetails").on('input', function() {
-	  $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
+$("#landExtend,#bookDetails,#surveyNo").on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''));
 	})
-$("#surveyNo").on('input', function () {
-    this.value = this.value.match(/^\d+/);
-});
 $("#submit").click(function(){
 	
 	var natureofwork=$("#natureofwork").val();

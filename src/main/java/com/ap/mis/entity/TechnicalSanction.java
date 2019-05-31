@@ -5,16 +5,20 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
-@Table(name ="technicalsanction")
+@Table(name ="tbl_sa_technicalsanction")
 public class TechnicalSanction implements Serializable{
 	
 	@Id
@@ -40,16 +44,10 @@ public class TechnicalSanction implements Serializable{
 	@Column(name="amount")
 	private double amount;
 	
-	@Column(name="work_id")
-	private int workId;
-
-	public int getWorkId() {
-		return workId;
-	}
-
-	public void setWorkId(int workId) {
-		this.workId = workId;
-	}
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="work_id", referencedColumnName = "id")
+	private Works  work; 
 
 	public int getId() {
 		return id;
@@ -58,30 +56,6 @@ public class TechnicalSanction implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	/*public String getWork() {
-		return work;
-	}
-
-	public void setWork(String work) {
-		this.work = work;
-	}
-
-	public int getWorkNumber() {
-		return workNumber;
-	}
-
-	public void setWorkNumber(int workNumber) {
-		this.workNumber = workNumber;
-	}
-
-	public String getWorkName() {
-		return workName;
-	}
-
-	public void setWorkName(String workName) {
-		this.workName = workName;
-	}*/
 
 	public int getTechSanction_no() {
 		return techSanction_no;
@@ -107,22 +81,21 @@ public class TechnicalSanction implements Serializable{
 		this.amount = amount;
 	}
 
+
+
+
+	public Works getWork() {
+		return work;
+	}
+
+	public void setWork(Works work) {
+		this.work = work;
+	}
+
 	@Override
 	public String toString() {
 		return "TechnicalSanction [id=" + id + ", techSanction_no=" + techSanction_no + ", date=" + date + ", amount="
-				+ amount + ", workId=" + workId + "]";
+				+ amount + ", work=" + work + "]";
 	}
-
-	/*@Override
-	public String toString() {
-		return "TechnicalSanction [id=" + id + ", work=" + work + ", workNumber=" + workNumber + ", workName="
-				+ workName + ", techSanction_no=" + techSanction_no + ", date=" + date + ", amount=" + amount
-				+ ", workId=" + workId + "]";
-	}*/
-
-	
-	
-	
-	
 
 }

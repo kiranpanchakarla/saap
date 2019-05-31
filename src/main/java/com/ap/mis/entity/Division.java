@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_lineDept_division")
+@Table(name="tbl_sa_linedept_division")
 public class Division {
 	
   	@Id
@@ -45,7 +45,4 @@ public class Division {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-    
-    
-
 }

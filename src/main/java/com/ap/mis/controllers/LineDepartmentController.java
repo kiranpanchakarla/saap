@@ -41,7 +41,7 @@ public class LineDepartmentController {
 		model.addAttribute("workInfo", workInfo);
 		
 		lineDeptObj.setUser(loggedInUser);
-		lineDeptObj.setWork(workid);
+//		lineDeptObj.setWork(workid);
 		LineDepartService.departmentLinkingLineSave(lineDeptObj);
 		
 		WorktoLandDetails obj = new WorktoLandDetails();

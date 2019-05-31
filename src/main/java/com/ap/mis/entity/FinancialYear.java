@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="financial_year")
+@Table(name="tbl_sa_financial_year")
 public class FinancialYear {
 	
 	@Id

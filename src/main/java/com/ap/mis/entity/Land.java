@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_landdetails_typeofland")
+@Table(name="tbl_sa_landdetails_typeofland")
 public class Land {
 	
   	@Id

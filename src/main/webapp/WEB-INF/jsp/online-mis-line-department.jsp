@@ -66,7 +66,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><input type="text" id="workNature" name="workNature"  class="form-control mb-md" readonly value="${workInfo.natureOfWork}">
+                <li><input type="text" id="workNature" name="workNature"  class="form-control mb-md" readonly value="${workInfo.natureOfWork.name}">
                 <span id="workNatureErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -81,7 +81,7 @@
                 <ul class="fs-list-details">
                 <li><p>Name of the Division <span class="red">*</span></p></li>
                 <li>
-      			<select id="divisionName" name="divisionName">
+      			<select id="divisionName" name="divisionName.id">
 					<option value="" selected="" disabled="">--Select division --</option>
 					<c:forEach  var="divi" items="${divisionList}">
 					<option value="${divi.id}">${divi.name}</option>
@@ -94,7 +94,7 @@
                 <ul class="fs-list-details">
                 <li><p>Name of the SubDivision <span class="red">*</span></p></li>
                 <li>
-	           <select id="subdivisionName" name="subdivisionName">
+	           <select id="subdivisionName" name="subdivisionName.id">
 					<option value="" selected="" disabled="">--Select subdivision --</option>
 					<c:forEach  var="subdiv" items="${subdivisionList}">
 					<option value="${subdiv.id}">${subdiv.name}</option>
@@ -107,7 +107,7 @@
                 <ul class="fs-list-details">
                 <li><p>Name of the Section <span class="red">*</span></p></li>
                 <li>	                
-	          <select id="sectionName" name="sectionName">
+	          <select id="sectionName" name="sectionName.id">
 					<option value="" selected="" disabled="">--Select section --</option>
 					<c:forEach  var="sect" items="${sectionList}">
 					<option value="${sect.id}">${sect.name}</option>
@@ -146,7 +146,9 @@
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
                 
             </fieldset>
+            <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">
         </form>
+        
         
     </div>
 </div>

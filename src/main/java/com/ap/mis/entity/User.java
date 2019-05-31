@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="users")
+@Table(name ="tbl_sa_users")
 public class User implements Serializable {
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,28 +21,28 @@ public class User implements Serializable {
 
 	    @Column(name = "user_name")
 	    private String name;
+	    
+	    @Column(name = "user_password")
+	    private String password;
 
-	    @Column(name = "user_address")
-	    private String address;
+	    @Column(name = "user_mobile")
+	    private String mobile;
 
 	    @Column(name = "user_email")
 	    private String email;
 
-	    @Column(name = "user_mobile")
-	    private String mobile;
+	    @Column(name = "user_address")
+	    private String address;
 	    
 	    @Column(name = "user_isadmin")
 	    private boolean isAdmin;
 	    
 	    @Column(name = "user_isactive")
-	    private String isActive;
+	    private boolean isActive;
 	    
 	    @Column(name = "user_isdeleted")
-	    private String isDeleted;
-	    
-	    @Column(name = "user_password")
-	    private String password;
-	    
+	    private boolean isDeleted;
+	    	    
 	    @OneToOne(targetEntity=Role.class)
 		@JoinColumn(name="role_id", referencedColumnName="id")
 	    private Role role;
@@ -67,7 +67,7 @@ public class User implements Serializable {
 			user.setRole(inUser.getRole());
 			user.setIsActive(inUser.getIsActive());
 			user.setIsDeleted(inUser.getIsDeleted());
-			user.setAdmin(inUser.isAdmin());
+			user.setAdmin(inUser.getIsAdmin());
 			return user;
 			
 		}
@@ -112,7 +112,7 @@ public class User implements Serializable {
 			this.mobile = mobile;
 		}
 
-		public boolean isAdmin() {
+		public boolean getIsAdmin() {
 			return isAdmin;
 		}
 
@@ -120,19 +120,19 @@ public class User implements Serializable {
 			this.isAdmin = isAdmin;
 		}
 
-		public String getIsActive() {
+		public boolean getIsActive() {
 			return isActive;
 		}
 
-		public void setIsActive(String isActive) {
+		public void setIsActive(boolean isActive) {
 			this.isActive = isActive;
 		}
 
-		public String getIsDeleted() {
+		public boolean getIsDeleted() {
 			return isDeleted;
 		}
 
-		public void setIsDeleted(String isDeleted) {
+		public void setIsDeleted(boolean isDeleted) {
 			this.isDeleted = isDeleted;
 		}
 
@@ -151,7 +151,6 @@ public class User implements Serializable {
 		public void setRole(Role role) {
 			this.role = role;
 		}
-	    
-	    
+   
 
 }

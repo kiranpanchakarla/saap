@@ -92,7 +92,7 @@
                <ul class="fs-list-details">
                 <li><p>Notice issuing authorities (SE/CE/ENC)  <span class="red">*</span></p></li>
                 <li>                                          
-                 <select id="noticeIssuingAuthorities" name="noticeIssuingAuthorities">
+                 <select id="noticeIssuingAuthorities" name="noticeIssuingAuthorities.id">
 					<option value="" selected="" disabled="">--Select Authorities --</option>
 					<c:forEach  var="auth" items="${authoritiesTypeList}">
 					<option value="${auth.id}">${auth.name}</option>
@@ -295,7 +295,7 @@
 			          
                      </select>
  -->                     
-                <select id="agencyName" name="angencyName" class="form-control mb-md">
+                <select id="agencyName" name="angencyName.id" class="form-control mb-md">
 					<option value="" selected="" disabled="">--Select Agency --</option>
 					<c:forEach  var="agency" items="${agencyList}">
 					<option value="${agency.id}">${agency.name}</option>
@@ -308,6 +308,7 @@
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
                 
             </fieldset>
+            <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">
         </form>
     </div>
 </div>
@@ -340,8 +341,7 @@ $(document).ready(function(){
 		     }
 		    });
 	});
-
-$("#tenderNoticeNumber,#percentageQuoted,#bidsReceived,#hardCopiesSubmitted,#noofBidsQualified").on('input', function () {
+("#percentageQuoted,#bidsReceived,#hardCopiesSubmitted,#noofBidsQualified").on('input', function () {
     this.value = this.value.match(/^\d+/);
 });
 
@@ -351,7 +351,9 @@ $("#contractValue,#contractValueByL1Bidder").on('input', function () {
 $('#englishNewspaperName,#teluguNewspaperName').on('input', function() {
 	  $(this).val($(this).val().replace(/[^a-z ]/gi, ''));
 });
-
+$('#tenderNoticeNumber').on('input', function() {
+	  $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
+});
 $("#submit").click(function(){
 
 /* 	var workName=$("#workName").val();

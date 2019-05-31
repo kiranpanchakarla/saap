@@ -4,21 +4,19 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "administrative_section")
+@Table(name = "tbl_sa_administrative_section")
 public class AdministrativeSection implements Serializable{
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7281661295866227383L;
 
 	@Id
@@ -33,25 +31,33 @@ public class AdministrativeSection implements Serializable{
 	
 	@Column(name = "sanctioned_details")
 	private String sanctionedDetails;
+		
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="typeof_grant", referencedColumnName = "id")
+	private GrantType  typeOfGrant; 
 	
-	@Column(name = "typeof_grant")
-	private int typeOfGrant;	
-
-	@Column(name = "financial_year")
-	private int financialYear;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="financial_year", referencedColumnName = "id")
+	private FinancialYear  financialYear; 
 	
-	@Column(name = "executive_dept")
-	private int executiveDept;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="executive_dept", referencedColumnName = "id")
+	private ExecutiveDept  executiveDept; 
 	
-	@Column(name = "consultant")
-	private int consultant;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="consultant", referencedColumnName = "id")
+	private ExecutiveConsultant  consultant; 
+		
+	@OneToOne(targetEntity=Works.class)
+	@JoinColumn(name="work_id", referencedColumnName="id")
+	private Works work;
+	 
+	@Column(name = "path")
+	private String path;
 	
 	@OneToOne(targetEntity=User.class)
 	@JoinColumn(name="user_id", referencedColumnName="user_id")
 	private User user;
-	 
-	 @Column(name = "path")
-	 private String path;
 
 
 	public int getId() {
@@ -95,29 +101,6 @@ public class AdministrativeSection implements Serializable{
 		this.sanctionedDetails = sanctionedDetails;
 	}
 
-	public int getTypeOfGrant() {
-		return typeOfGrant;
-	}
-
-	public void setTypeOfGrant(int typeOfGrant) {
-		this.typeOfGrant = typeOfGrant;
-	}
-
-	public int getExecutiveDept() {
-		return executiveDept;
-	}
-
-	public void setExecutiveDept(int executiveDept) {
-		this.executiveDept = executiveDept;
-	}
-
-	public int getConsultant() {
-		return consultant;
-	}
-
-	public void setConsultant(int consultant) {
-		this.consultant = consultant;
-	}
 
 	public User getUser() {
 		return user;
@@ -127,13 +110,47 @@ public class AdministrativeSection implements Serializable{
 		this.user = user;
 	}
 
-	public int getFinancialYear() {
+	public Works getWork() {
+		return work;
+	}
+	
+	public void setWork(Works work) {
+		this.work = work;
+	}
+
+	public GrantType getTypeOfGrant() {
+		return typeOfGrant;
+	}
+
+	public void setTypeOfGrant(GrantType typeOfGrant) {
+		this.typeOfGrant = typeOfGrant;
+	}
+
+	public FinancialYear getFinancialYear() {
 		return financialYear;
 	}
 
-	public void setFinancialYear(int financialYear) {
+	public void setFinancialYear(FinancialYear financialYear) {
 		this.financialYear = financialYear;
 	}
+
+	public ExecutiveDept getExecutiveDept() {
+		return executiveDept;
+	}
+
+	public void setExecutiveDept(ExecutiveDept executiveDept) {
+		this.executiveDept = executiveDept;
+	}
+
+	public ExecutiveConsultant getConsultant() {
+		return consultant;
+	}
+
+	public void setConsultant(ExecutiveConsultant consultant) {
+		this.consultant = consultant;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -142,7 +159,6 @@ public class AdministrativeSection implements Serializable{
 				+ financialYear + ", executiveDept=" + executiveDept + ", consultant=" + consultant + ", user=" + user
 				+ "]";
 	}
-	
 
 
 }

@@ -29,7 +29,7 @@ public class TenderProcessController {
 	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj ,Model model,HttpServletRequest request,@RequestParam("engfile") MultipartFile engfile,@RequestParam("telugufile") MultipartFile telugufile,HttpSession session) {	
 		
 		int wrokid =(int) session.getAttribute("workIdSession");
-		tenderingProcessObj.setWorkId(wrokid);	
+//		tenderingProcessObj.setWorkId(wrokid);	
 		tenderProcess.saveTenderingProcess(tenderingProcessObj,engfile,telugufile);
 		
 		Works workInfo=misService.getWorkInfo(wrokid);

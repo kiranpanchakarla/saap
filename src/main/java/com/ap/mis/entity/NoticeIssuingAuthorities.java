@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_tendering_noticeissuingauthorities")
+@Table(name="tbl_sa_tendering_noticeissuingauthorities")
 public class NoticeIssuingAuthorities {
 
   	@Id
@@ -44,7 +44,5 @@ public class NoticeIssuingAuthorities {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-
-    
+	}   
 }

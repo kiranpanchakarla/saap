@@ -151,8 +151,9 @@
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
                 
             </fieldset>
-            
+            <input type="hidden" id="work.id" name="work.id" value="${workIdSession}">
         </form>
+        
         
     </div>
 </div>

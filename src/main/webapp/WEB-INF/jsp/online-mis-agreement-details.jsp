@@ -57,7 +57,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of Work <span class="red">*</span></p></li>
-                <li><input type="text" id="natureOfWork" name="natureOfWork"  class="form-control mb-md" readonly value="${workInfo.natureOfWork}">
+                <li><input type="text" id="natureOfWork" name="natureOfWork"  class="form-control mb-md" readonly value="${workInfo.natureOfWork.name}">
                 <span id="natureOfWorkErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -71,7 +71,7 @@
                
                <ul class="fs-list-details">
                 <li><p>Contractor Name<span class="red">*</span></p></li>
-                <li><input type="text"  id="contratorName" name="contratorName" class="form-control mb-md" readonly value="${tenderingInfo.angencyName}">
+                <li><input type="text"  id="contratorName" name="contratorName" class="form-control mb-md" readonly value="${tenderingInfo.angencyName.name}">
                 <span id="contratorNameErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -124,11 +124,7 @@
                 <span id="agreementNumberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
-               
-                
                 </div>
-                
-                
             </fieldset>
             
             
@@ -161,20 +157,13 @@
                </div>
                <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
                </fieldset>
-               
-               
-            
-            
-            
+               <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">
         </form>
-        
     </div>
 </div>
 <!-- /.MultiStep Form -->
-    
-
-    </div>
-  </section>
+</div>
+</section>
       
   <!-- #contact -->   
 </main>

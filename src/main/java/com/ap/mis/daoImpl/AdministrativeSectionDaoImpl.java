@@ -82,9 +82,6 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 		
 		  Blob encodstring =null;  
 		try{
-			
-			/*encodstring = (Blob) Hibernate.getLobCreator((Session) sessionFactory).createBlob(data);*/
-		  /*  i =(int) sessionFactory.getCurrentSession().save(adminSecObject);*/
 			sessionFactory.getCurrentSession().save(adminSec);
 		}
 		catch(Exception e){

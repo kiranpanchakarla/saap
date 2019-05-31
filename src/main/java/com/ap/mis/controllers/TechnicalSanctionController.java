@@ -39,7 +39,7 @@ public class TechnicalSanctionController {
 		}
 
 		int wrokid = (int) session.getAttribute("workIdSession");
-		techsanc.setWorkId(wrokid);
+//		techsanc.setWorkId(wrokid);
 		techSanction.saveTechSanction(techsanc);
 
 		Works workInfo = misService.getWorkInfo(wrokid);

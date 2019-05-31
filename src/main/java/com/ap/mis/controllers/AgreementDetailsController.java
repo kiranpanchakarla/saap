@@ -33,7 +33,7 @@ public class AgreementDetailsController {
 	@PostMapping(value = "/save")
 	public String saveAgreementDetails(@ModelAttribute AgreementDetails agreementDetailsObj ,Model model,HttpServletRequest request,HttpSession session) {	
 		int wrokid =(int) session.getAttribute("workIdSession");
-		agreementDetailsObj.setWorkId(wrokid);	
+//		agreementDetailsObj.setWorkId(wrokid);	
 		agreeDetailsService.saveAgreementDetails(agreementDetailsObj);
 		
 		Works workInfo=misService.getWorkInfo(wrokid);

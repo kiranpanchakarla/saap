@@ -8,10 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="consultant_Info")
+@Table(name="tbl_sa_consultant_Info")
 public class ConsultantInfo implements Serializable{
 	private static final long serialVersionUID = -3465813074586302847L;
 	
@@ -56,28 +58,9 @@ public class ConsultantInfo implements Serializable{
 	@Column(name="ifsc_code")
 	private String ifsc_code;
 	
-	@Column(name="work_id")
-	private int workId;
-	
-	public int getWorkId() {
-		return workId;
-	}
-
-	public void setWorkId(int workId) {
-		this.workId = workId;
-	}
-	
-	/*@Column(name="work_id")
-	private String workId;
-	
-	 public String getWorkId() {
-		return workId;
-	}
-
-	public void setWorkId(String workId) {
-		this.workId = workId;
-	}*/
-	
+	@OneToOne(targetEntity=Works.class)
+	@JoinColumn(name="work_id", referencedColumnName="id")
+	private Works work;
 	
 
 	public int getId() {
@@ -182,6 +165,14 @@ public class ConsultantInfo implements Serializable{
 
 	public void setIfsc_code(String ifsc_code) {
 		this.ifsc_code = ifsc_code;
+	}
+
+	public Works getWork() {
+		return work;
+	}
+
+	public void setWork(Works work) {
+		this.work = work;
 	}
 
 	@Override

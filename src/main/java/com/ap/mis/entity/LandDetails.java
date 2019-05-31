@@ -4,20 +4,19 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "land_details")
+@Table(name = "tbl_sa_land_details")
 public class LandDetails implements Serializable{
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -3724216488406858738L;
 	
 	@Id
@@ -25,21 +24,28 @@ public class LandDetails implements Serializable{
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "type_of_land")
-	private String typeOfLand;
-
+/*	@Column(name = "type_of_land")
+	private int typeOfLand;
+*/
 	@Column(name = "field_measurement_bk_details")
 	private String bookDetails;
 	
 	@Column(name = "survey_number")
-	private int surveyNo;
+	private String surveyNo;
 	
 	@Column(name = "land_extend")
 	private String landExtend;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="type_of_land", referencedColumnName = "id")
+	private Land  typeOfLand; 
+	
 	@OneToOne(targetEntity=User.class)
 	@JoinColumn(name="user_id", referencedColumnName="user_id")
 	private User user;
+	
+
+	
 	@Column(name = "path")
 	private String path;
 	
@@ -60,13 +66,13 @@ public class LandDetails implements Serializable{
 		this.id = id;
 	}
 
-	public String getTypeOfLand() {
+/*	public int getTypeOfLand() {
 		return typeOfLand;
 	}
 
-	public void setTypeOfLand(String typeOfLand) {
+	public void setTypeOfLand(int typeOfLand) {
 		this.typeOfLand = typeOfLand;
-	}
+	}*/
 
 	public String getBookDetails() {
 		return bookDetails;
@@ -76,11 +82,11 @@ public class LandDetails implements Serializable{
 		this.bookDetails = bookDetails;
 	}
 
-	public int getSurveyNo() {
+	public String getSurveyNo() {
 		return surveyNo;
 	}
 
-	public void setSurveyNo(int surveyNo) {
+	public void setSurveyNo(String surveyNo) {
 		this.surveyNo = surveyNo;
 	}
 
@@ -100,10 +106,31 @@ public class LandDetails implements Serializable{
 		this.user = user;
 	}
 
+	@OneToOne(targetEntity=Works.class)
+	@JoinColumn(name="work_id", referencedColumnName="id")
+	private Works work;
+
+
+	public Land getTypeOfLand() {
+		return typeOfLand;
+	}
+
+	public void setTypeOfLand(Land typeOfLand) {
+		this.typeOfLand = typeOfLand;
+	}
+
+	public Works getWork() {
+		return work;
+	}
+
+	public void setWork(Works work) {
+		this.work = work;
+	}
+
 	@Override
 	public String toString() {
 		return "LandDetails [id=" + id + ", typeOfLand=" + typeOfLand + ", bookDetails=" + bookDetails + ", surveyNo="
-				+ surveyNo + ", landExtend=" + landExtend + ", user=" + user + "]";
+				+ surveyNo + ", landExtend=" + landExtend + ", user=" + user + ", work=" + work + "]";
 	}
 
 

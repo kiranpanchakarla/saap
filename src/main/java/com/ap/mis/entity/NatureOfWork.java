@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_workcreation_natureofwork")
+@Table(name="tbl_sa_works_natureofwork")
 public class NatureOfWork {
 	
 	@Id

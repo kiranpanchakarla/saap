@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
-@Table(name="tbl_WorkLineItemsList")
+@Table(name="tbl_sa_WorkLineItemsList")
 public class WorkLineItemsList {
 
 

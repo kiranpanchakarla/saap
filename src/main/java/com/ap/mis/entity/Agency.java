@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_tendering_agency")
+@Table(name="tbl_sa_tendering_agency")
 public class Agency {
 	
   	@Id
@@ -45,7 +45,4 @@ public class Agency {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-    
-    
-
 }

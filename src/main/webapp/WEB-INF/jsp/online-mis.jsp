@@ -191,10 +191,10 @@ $(document).ready(function(){
                 
                    <ul class="fs-list-details">
                 <li><p>Types of Work <span class="red">*</span></p></li>
-                <li><select id="typeworkid" name="typeOfWork">
+                <li><select id="typeworkid" name="typeOfWork.id">
                      <option value="" selected="">--select Type Of Work--</option>
 				     <c:forEach  var="typeOfWork" items="${typeOfWork}">
-				         <option value="${typeOfWork.name}">${typeOfWork.name}</option>
+				         <option value="${typeOfWork.id}">${typeOfWork.name}</option>
 				      </c:forEach>
                      </select> 
                 </ul>
@@ -202,10 +202,10 @@ $(document).ready(function(){
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><select id="natureOfWork" name="natureOfWork" >
+                <li><select id="natureOfWork" name="natureOfWork.id" >
                <option value="" selected="">--select work--</option>
                  <c:forEach  var="natureOfWork" items="${natureOfWork}">
-				         <option value="${natureOfWork.name}">${natureOfWork.name}</option>
+				         <option value="${natureOfWork.id}">${natureOfWork.name}</option>
 				      </c:forEach>
                 </select>
                		<br><span id="natureOfWorkErr" class="errors" style="color:red;float:right;"></span>
@@ -218,7 +218,7 @@ $(document).ready(function(){
                 
                 <ul class="fs-list-details">
                 <li><p>District <span class="red">*</span></p></li>
-                <li><select id="district" name="district" >
+                <li><select id="district" name="district.id" >
                 <option value="" selected="">--select district--</option>
                   <c:forEach  var="districts" items="${districts}">
                    <option value="${districts.id}">${districts.name}</option>
@@ -233,7 +233,7 @@ $(document).ready(function(){
                 <ul class="fs-list-details">
                 <li><p>Constituency <span class="red">*</span></p></li>
                 <li>                
-               <select id="constituency" name="constituency">
+               <select id="constituency" name="constituency.id">
                 <option value="">--select constituency--</option>
                 </select>
               <br><span id="constituencyErr" class="errors" style="color:red;float:right;"></span>
@@ -245,7 +245,7 @@ $(document).ready(function(){
                 <ul class="fs-list-details">
                 <li><p>Mandal <span class="red">*</span></p></li>
                 <li>
-	                <select id="mandal" name="mandal" class="form-control mb-md">
+	                <select id="mandal" name="mandal.id" class="form-control mb-md">
 	                  <option value="" >--select Mandal--</option>
 	               </select>
 		            <span id="mandalErr" class="errors" style="color:red;float:right;"></span>
@@ -257,7 +257,7 @@ $(document).ready(function(){
                 
                 <ul class="fs-list-details">
                 <li><p>Village <span class="red">*</span></p></li>
-                <li><select id="village" class="form-control mb-md" name="village">
+                <li><select id="village" name="village.id" class="form-control mb-md" >
                 <option value="" >--select village--</option>
 			   </select></li>
             <span id="villageErr" class="errors" style="color:red;float:right;"></span>
@@ -311,26 +311,14 @@ $(document).ready(function(){
                 </div>
                 <!-- name="next" -->
             </fieldset>
-             <input type="hidden" id="createval" name="createval" value="0">
-            
-            
-            
-            
-        </form>
-        
+            <input type="hidden" id="createval" name="createval" value="0">
+        </form>  
     </div>
 </div>
 <!-- /.MultiStep Form -->
-    
-
-    </div>
-  </section>
-
- 
-  
-    
-  <!-- #contact --> 
-  
+</div>
+</section>
+<!-- #contact --> 
 </main>
 
 <!--=== Footer ====-->

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "constituency")
+@Table(name = "tbl_sa_constituency")
 
 public class Constituency implements Serializable {
     @Id
@@ -15,9 +15,10 @@ public class Constituency implements Serializable {
 
     @Column(name = "constituency_name")
     private String name;
-
-    @Column(name = "district_id")
-    private Long districtId;
+    
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="district_id", referencedColumnName = "district_id")
+	private District  districtId; 
 
     @Column(name = "constituency_isactive")
     private boolean active;
@@ -25,7 +26,6 @@ public class Constituency implements Serializable {
     @Column(name = "constituency_isdeleted")
     private boolean deleted;
 
-	
 
 	public int getId() {
 		return id;
@@ -43,14 +43,6 @@ public class Constituency implements Serializable {
 		this.name = name;
 	}
 
-	public Long getDistrictId() {
-		return districtId;
-	}
-
-	public void setDistrictId(Long districtId) {
-		this.districtId = districtId;
-	}
-
 	public boolean isActive() {
 		return active;
 	}
@@ -65,6 +57,14 @@ public class Constituency implements Serializable {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public District getDistrictId() {
+		return districtId;
+	}
+
+	public void setDistrictId(District districtId) {
+		this.districtId = districtId;
 	}
     
     

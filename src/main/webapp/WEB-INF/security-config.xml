@@ -30,10 +30,10 @@
     
 	<http auto-config="true" use-expressions="true" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
 		<!-- <intercept-url pattern="/home" access="permitAll" /> -->
-		<intercept-url pattern="/OnlineMisApplication/worksCreation/save" access="permitAll" />
-		  <intercept-url pattern="/worksCreation" access="permitAll" /> 
-		  <intercept-url pattern="/*.*" access="permitAll" />
-		  <intercept-url pattern="/*" access="permitAll" />
+		<!-- <intercept-url pattern="/OnlineMisApplication/worksCreation/save" access="permitAll" /> -->
+		<intercept-url pattern="/*.*" access="permitAll" />
+		<intercept-url pattern="/*" access="permitAll" />
+		<intercept-url pattern="/OnlineMisApplication/worksCreation/save" access="permitAll"  />
 		<!-- <intercept-url pattern="/*.*" access="permitAll" />
 		<intercept-url pattern="/*.*" access="permitAll" />
 		<intercept-url pattern="/showPackagePreview/**" access="hasAnyRole('SE_PR','SE_RB','DE_EPDCL','ADMIN','ENC_RB','ED_EPDCL','CE_PR')" />

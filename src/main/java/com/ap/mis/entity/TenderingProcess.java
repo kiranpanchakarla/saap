@@ -4,9 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 @Entity
-@Table(name="tendering_process")
+@Table(name="tbl_sa_tendering_process")
 public class TenderingProcess {
 
 	@Id
@@ -33,8 +37,12 @@ public class TenderingProcess {
 	@DateTimeFormat(pattern = "yy-mm-dd") 
 	private Date tenderNoticeIssuedDate;
 	
-	@Column(name="notice_issusing_authorities")
-	private String noticeIssuingAuthorities;
+/*	@Column(name="notice_issusing_authorities")
+	private int noticeIssuingAuthorities;*/
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="notice_issusing_authorities", referencedColumnName = "id")
+	private NoticeIssuingAuthorities  noticeIssuingAuthorities; 
 	
 	@Column(name="eng_newspaper_name")
 	private String englishNewspaperName;
@@ -100,13 +108,20 @@ public class TenderingProcess {
 	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date dateOfLoaIssued;
 	
-	@Nullable
+/*	@Nullable
 	@Column(name="agency_name")
-	private String angencyName;
+	private int angencyName;*/
 	
-	@Nullable
-	@Column(name="work_id")
-	private int workId;
+/*	@Column(name="work_id")
+	private int workId;*/
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="agency_name", referencedColumnName = "id")
+	private Agency  angencyName; 
+	
+	@OneToOne(targetEntity=Works.class)
+	@JoinColumn(name="work_id", referencedColumnName="id")
+	private Works work;
 	
 	@Column(name="engUpload")
 	private String engUpload;
@@ -164,13 +179,13 @@ public class TenderingProcess {
 		this.tenderNoticeIssuedDate = tenderNoticeIssuedDate;
 	}
 
-	public String getNoticeIssuingAuthorities() {
+/*	public int getNoticeIssuingAuthorities() {
 		return noticeIssuingAuthorities;
 	}
 
-	public void setNoticeIssuingAuthorities(String noticeIssuingAuthorities) {
+	public void setNoticeIssuingAuthorities(int noticeIssuingAuthorities) {
 		this.noticeIssuingAuthorities = noticeIssuingAuthorities;
-	}
+	}*/
 
 	public String getEnglishNewspaperName() {
 		return englishNewspaperName;
@@ -300,20 +315,44 @@ public class TenderingProcess {
 		this.dateOfLoaIssued = dateOfLoaIssued;
 	}
 
-	public String getAngencyName() {
+/*	public int getAngencyName() {
 		return angencyName;
 	}
 
-	public void setAngencyName(String angencyName) {
+	public void setAngencyName(int angencyName) {
 		this.angencyName = angencyName;
-	}
+	}*/
 
-	public int getWorkId() {
+/*	public int getWorkId() {
 		return workId;
 	}
 
 	public void setWorkId(int workId) {
 		this.workId = workId;
+	}*/
+
+	public NoticeIssuingAuthorities getNoticeIssuingAuthorities() {
+		return noticeIssuingAuthorities;
+	}
+
+	public void setNoticeIssuingAuthorities(NoticeIssuingAuthorities noticeIssuingAuthorities) {
+		this.noticeIssuingAuthorities = noticeIssuingAuthorities;
+	}
+
+	public Agency getAngencyName() {
+		return angencyName;
+	}
+
+	public void setAngencyName(Agency angencyName) {
+		this.angencyName = angencyName;
+	}
+
+	public Works getWork() {
+		return work;
+	}
+
+	public void setWork(Works work) {
+		this.work = work;
 	}
 
 	@Override
@@ -328,7 +367,7 @@ public class TenderingProcess {
 				+ ", dateOfEvaluationCompleted=" + dateOfEvaluationCompleted + ", contractValue=" + contractValue
 				+ ", contractValueByL1Bidder=" + contractValueByL1Bidder + ", percentageQuoted=" + percentageQuoted
 				+ ", bidStatus=" + bidStatus + ", dateOfLoaIssued=" + dateOfLoaIssued + ", angencyName=" + angencyName
-				+ ", workId=" + workId + "]";
+				+ ", work=" + work + "]";
 	}
 		
 	
