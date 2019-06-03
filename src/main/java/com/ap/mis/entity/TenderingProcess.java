@@ -18,117 +18,106 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 @Entity
-@Table(name="tbl_sa_tendering_process")
+@Table(name = "tbl_sa_tendering_process")
 public class TenderingProcess {
 
 	@Id
-	@Column(name="id")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@Column(name="ifb_preparation_date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
+
+	@Column(name = "ifb_preparation_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date ifbPreperationDate;
-	
-	@Column(name="tender_notice_number")
+
+	@Column(name = "tender_notice_number")
 	private String tenderNoticeNumber;
-	
-	@Column(name="tender_notice_issuedDate")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
+
+	@Column(name = "tender_notice_issuedDate")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date tenderNoticeIssuedDate;
-	
-/*	@Column(name="notice_issusing_authorities")
-	private int noticeIssuingAuthorities;*/
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="notice_issusing_authorities", referencedColumnName = "id")
-	private NoticeIssuingAuthorities  noticeIssuingAuthorities; 
-	
-	@Column(name="eng_newspaper_name")
+	@JoinColumn(name = "notice_issusing_authorities", referencedColumnName = "id")
+	private NoticeIssuingAuthorities noticeIssuingAuthorities;
+
+	@Column(name = "eng_newspaper_name")
 	private String englishNewspaperName;
-	
+
 	@Nullable
-	@Column(name="english_newspaper_date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
+	@Column(name = "english_newspaper_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date engNewsPaperDate;
-	
-	@Column(name="tel_newspaper_name")
+
+	@Column(name = "tel_newspaper_name")
 	private String teluguNewspaperName;
-	
+
 	@Nullable
-	@Column(name="telugu_newspaper_date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
-	private Date telNewspaperDate;	
-	
+	@Column(name = "telugu_newspaper_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
+	private Date telNewspaperDate;
+
 	@Nullable
-	@Column(name="bid_start_date")
+	@Column(name = "bid_start_date")
 	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date bidStrartDate;
-	
+
 	@Nullable
-	@Column(name="bid_closing_date")
+	@Column(name = "bid_closing_date")
 	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date bidClosingDate;
-	
+
 	@Nullable
-	@Column(name="bid_opening_date")
+	@Column(name = "bid_opening_date")
 	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date bidOpeningDate;
-	
-	@Column(name="bids_received")
+
+	@Column(name = "bids_received")
 	private Integer bidsReceived;
-	
-	@Column(name="hardcopies_submitted")
+
+	@Column(name = "hardcopies_submitted")
 	private Integer hardCopiesSubmitted;
-	
-	@Column(name="bidsForPriceBid")
+
+	@Column(name = "bidsForPriceBid")
 	private Integer bidsForPriceBid;
-	
+
 	@Nullable
-	@Column(name="evaluationCompleted_date")
+	@Column(name = "evaluationCompleted_date")
 	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date dateOfEvaluationCompleted;
-	
-	@Column(name="contractvalue")
+
+	@Column(name = "contractvalue")
 	private double contractValue;
-	
-	@Column(name="contractvalue_L1bidder")
+
+	@Column(name = "contractvalue_L1bidder")
 	private double contractValueByL1Bidder;
-	
+
 	@Nullable
-	@Column(name="percentage_quoted")
+	@Column(name = "percentage_quoted")
 	private int percentageQuoted;
-	
+
 	@Nullable
-	@Column(name="bidstatus")
+	@Column(name = "bidstatus")
 	private String bidStatus;
-	
+
 	@Nullable
-	@Column(name="loa_issued_date")
+	@Column(name = "loa_issued_date")
 	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date dateOfLoaIssued;
-	
-/*	@Nullable
-	@Column(name="agency_name")
-	private int angencyName;*/
-	
-/*	@Column(name="work_id")
-	private int workId;*/
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="agency_name", referencedColumnName = "id")
-	private Agency  angencyName; 
-	
-	@OneToOne(targetEntity=Works.class)
-	@JoinColumn(name="work_id", referencedColumnName="id")
+	@JoinColumn(name = "agency_name", referencedColumnName = "id")
+	private Agency angencyName;
+
+	@OneToOne(targetEntity = Works.class)
+	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
-	
-	@Column(name="engUpload")
+
+	@Column(name = "engUpload")
 	private String engUpload;
-	
-	@Column(name="telUpload")
+
+	@Column(name = "telUpload")
 	private String telUpload;
-	
 
 	public String getEngUpload() {
 		return engUpload;
@@ -146,7 +135,6 @@ public class TenderingProcess {
 		this.telUpload = telUpload;
 	}
 
-	
 	public int getId() {
 		return id;
 	}
@@ -178,14 +166,6 @@ public class TenderingProcess {
 	public void setTenderNoticeIssuedDate(Date tenderNoticeIssuedDate) {
 		this.tenderNoticeIssuedDate = tenderNoticeIssuedDate;
 	}
-
-/*	public int getNoticeIssuingAuthorities() {
-		return noticeIssuingAuthorities;
-	}
-
-	public void setNoticeIssuingAuthorities(int noticeIssuingAuthorities) {
-		this.noticeIssuingAuthorities = noticeIssuingAuthorities;
-	}*/
 
 	public String getEnglishNewspaperName() {
 		return englishNewspaperName;
@@ -315,22 +295,6 @@ public class TenderingProcess {
 		this.dateOfLoaIssued = dateOfLoaIssued;
 	}
 
-/*	public int getAngencyName() {
-		return angencyName;
-	}
-
-	public void setAngencyName(int angencyName) {
-		this.angencyName = angencyName;
-	}*/
-
-/*	public int getWorkId() {
-		return workId;
-	}
-
-	public void setWorkId(int workId) {
-		this.workId = workId;
-	}*/
-
 	public NoticeIssuingAuthorities getNoticeIssuingAuthorities() {
 		return noticeIssuingAuthorities;
 	}
@@ -369,7 +333,5 @@ public class TenderingProcess {
 				+ ", bidStatus=" + bidStatus + ", dateOfLoaIssued=" + dateOfLoaIssued + ", angencyName=" + angencyName
 				+ ", work=" + work + "]";
 	}
-		
-	
-	
+
 }

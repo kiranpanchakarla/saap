@@ -8,19 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_sa_adminSection_consultant")
+@Table(name = "tbl_sa_adminSection_consultant")
 public class ExecutiveConsultant {
-	
- 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
-    private int id;
 
-    @Column(name = "name")
-    private String name;
-    
-    @Column(name = "isactive")
-    private boolean active;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "id")
+	private int id;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "isactive")
+	private boolean active;
 
 	public int getId() {
 		return id;
@@ -45,7 +45,5 @@ public class ExecutiveConsultant {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-    
-    
 
 }

@@ -1,31 +1,29 @@
 package com.ap.mis.entity;
 
-
 import java.io.Serializable;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name ="tbl_sa_mandals")
+@Table(name = "tbl_sa_mandals")
 public class Mandal implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "mandal_id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "mandal_id")
+	private int id;
 
-    @Column(name = "mandal_name")
-    private String name;
-    
+	@Column(name = "mandal_name")
+	private String name;
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="constituency_id", referencedColumnName = "constituency_id")
-	private Constituency  constituencyId; 
+	@JoinColumn(name = "constituency_id", referencedColumnName = "constituency_id")
+	private Constituency constituencyId;
 
-    @Column(name = "mandal_isactive")
-    private boolean active;
+	@Column(name = "mandal_isactive")
+	private boolean active;
 
-    @Column(name = "mandal_isdeleted")
-    private boolean deleted;
-	
+	@Column(name = "mandal_isdeleted")
+	private boolean deleted;
 
 	public int getId() {
 		return id;
@@ -66,7 +64,4 @@ public class Mandal implements Serializable {
 	public void setConstituencyId(Constituency constituencyId) {
 		this.constituencyId = constituencyId;
 	}
-
-   
-    
 }

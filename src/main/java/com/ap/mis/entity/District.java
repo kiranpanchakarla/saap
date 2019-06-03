@@ -1,6 +1,5 @@
 package com.ap.mis.entity;
 
-
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -8,24 +7,22 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tbl_sa_districts")
 public class District implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "district_id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "district_id")
+	private int id;
 
-    @Column(name = "district_name")
-    private String name;
+	@Column(name = "district_name")
+	private String name;
 
-    @Column(name = "state_id")
-    private int stateId;
+	@Column(name = "state_id")
+	private int stateId;
 
-    @Column(name = "district_isactive")
-    private boolean active;
+	@Column(name = "district_isactive")
+	private boolean active;
 
-    @Column(name = "district_isdeleted")
-    private boolean deleted;
-
-
+	@Column(name = "district_isdeleted")
+	private boolean deleted;
 
 	public int getId() {
 		return id;
@@ -66,6 +63,5 @@ public class District implements Serializable {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-    
-    
+
 }

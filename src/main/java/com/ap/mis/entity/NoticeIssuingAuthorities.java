@@ -8,19 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_sa_tendering_noticeissuingauthorities")
+@Table(name = "tbl_sa_tendering_noticeissuingauthorities")
 public class NoticeIssuingAuthorities {
 
-  	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "id")
+	private int id;
 
-    @Column(name = "name")
-    private String name;
-    
-    @Column(name = "isactive")
-    private boolean active;
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "isactive")
+	private boolean active;
 
 	public int getId() {
 		return id;
@@ -44,5 +44,5 @@ public class NoticeIssuingAuthorities {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}   
+	}
 }

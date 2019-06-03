@@ -6,24 +6,23 @@ import javax.persistence.*;
 @Table(name = "tbl_sa_villages")
 
 public class Village {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "village_id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "village_id")
+	private int id;
 
-    @Column(name = "village_name")
-    private String name;
-  
+	@Column(name = "village_name")
+	private String name;
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="mandal_id", referencedColumnName = "mandal_id")
-	private Mandal  mandalId; 
-   
-    @Column(name = "village_isactive")
-    private boolean active;
+	@JoinColumn(name = "mandal_id", referencedColumnName = "mandal_id")
+	private Mandal mandalId;
 
-    @Column(name = "village_isdeleted")
-    private boolean deleted;
+	@Column(name = "village_isactive")
+	private boolean active;
 
+	@Column(name = "village_isdeleted")
+	private boolean deleted;
 
 	public int getId() {
 		return id;
@@ -64,6 +63,5 @@ public class Village {
 	public void setMandalId(Mandal mandalId) {
 		this.mandalId = mandalId;
 	}
-    
-    
+
 }

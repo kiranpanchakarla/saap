@@ -14,48 +14,48 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="tbl_sa_agreement_details")
+@Table(name = "tbl_sa_agreement_details")
 public class AgreementDetails {
-	
+
 	@Id
-	@Column(name="id")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@Column(name="perf_securityAmount")
+
+	@Column(name = "perf_securityAmount")
 	private double performanceSecurityAmount;
-	
-	@Column(name="sitehandover_date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
+
+	@Column(name = "sitehandover_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date siteHandOverDate;
-	
-	@Column(name="agreementConcluded_date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
+
+	@Column(name = "agreementConcluded_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date agreementCouncludedDate;
-	
-	@Column(name="periodofcontract")
+
+	@Column(name = "periodofcontract")
 	private int periodOfContract;
-	
-	@Column(name="expcompletion_date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
+
+	@Column(name = "expcompletion_date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date expectedCompletionDate;
-	
-	@Column(name="agreement_number")
+
+	@Column(name = "agreement_number")
 	private String agreementNumber;
-	
-	@Column(name="bank_gauranteedetails")
+
+	@Column(name = "bank_gauranteedetails")
 	private String bankGuaranteeDetails;
-	
-	@Column(name="demanddraft_details")
+
+	@Column(name = "demanddraft_details")
 	private String demandDraftDetails;
-	
-	@Column(name="others")
+
+	@Column(name = "others")
 	private String others;
-		
-	@OneToOne(targetEntity=Works.class)
-	@JoinColumn(name="work_id", referencedColumnName="id")
+
+	@OneToOne(targetEntity = Works.class)
+	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -135,6 +135,7 @@ public class AgreementDetails {
 	public void setOthers(String others) {
 		this.others = others;
 	}
+
 	public Works getWork() {
 		return work;
 	}
@@ -151,5 +152,5 @@ public class AgreementDetails {
 				+ ", agreementNumber=" + agreementNumber + ", bankGuaranteeDetails=" + bankGuaranteeDetails
 				+ ", demandDraftDetails=" + demandDraftDetails + ", others=" + others + ", work=" + work + "]";
 	}
-	
+
 }

@@ -341,7 +341,7 @@ $(document).ready(function(){
 		     }
 		    });
 	});
-("#percentageQuoted,#bidsReceived,#hardCopiesSubmitted,#noofBidsQualified").on('input', function () {
+$("#percentageQuoted,#bidsReceived,#hardCopiesSubmitted,#noofBidsQualified").on('input', function () {
     this.value = this.value.match(/^\d+/);
 });
 
@@ -356,7 +356,7 @@ $('#tenderNoticeNumber').on('input', function() {
 });
 $("#submit").click(function(){
 
-/* 	var workName=$("#workName").val();
+	/* 	var workName=$("#workName").val();
 	if(workName=="" || workName==null){
 	    $("#workNameErr").html("Please Enter Name of Work ");
 	    $("#workNameErr").focus();

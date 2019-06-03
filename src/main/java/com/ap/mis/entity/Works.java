@@ -16,62 +16,60 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tbl_sa_works")
 public class Works implements Serializable {
-	
 
 	private static final long serialVersionUID = -3465813074586302847L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", nullable = false , unique = true)
+	@Column(name = "id", nullable = false, unique = true)
 	private int id;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="typeof_work", referencedColumnName = "id")
-	private TypeOfWork  typeOfWork; 
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="natureof_work", referencedColumnName = "id")
-	private NatureOfWork  natureOfWork; 
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="District", referencedColumnName = "district_id")
-	private District  district; 
+	@JoinColumn(name = "typeof_work", referencedColumnName = "id")
+	private TypeOfWork typeOfWork;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="village", referencedColumnName = "village_id")
-	private Village  village; 
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="mandal", referencedColumnName = "mandal_id")
-	private Mandal  mandal; 
+	@JoinColumn(name = "natureof_work", referencedColumnName = "id")
+	private NatureOfWork natureOfWork;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="constituency", referencedColumnName = "constituency_id")
-	private Constituency  constituency; 
+	@JoinColumn(name = "District", referencedColumnName = "district_id")
+	private District district;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "village", referencedColumnName = "village_id")
+	private Village village;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "mandal", referencedColumnName = "mandal_id")
+	private Mandal mandal;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "constituency", referencedColumnName = "constituency_id")
+	private Constituency constituency;
 
 	@Column
 	private String location;
 
 	@Column(name = "noof_works")
 	private int noOfWorks;
-	
+
 	@Column(name = "work_username")
 	private String workUserName;
-	
+
 	@Column(name = "work_number")
 	private String workNo;
-	
+
 	@Column(name = "work_details")
 	private String workDetails;
-	
+
 	@Column(name = "estimated_cost")
 	private double cost;
-	
-	@OneToOne(targetEntity=User.class)
-	@JoinColumn(name="user_id", referencedColumnName="user_id")
+
+	@OneToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
-	
-	
+
 	public TypeOfWork getTypeOfWork() {
 		return typeOfWork;
 	}
@@ -87,7 +85,7 @@ public class Works implements Serializable {
 	public void setNatureOfWork(NatureOfWork natureOfWork) {
 		this.natureOfWork = natureOfWork;
 	}
-	
+
 	public District getDistrict() {
 		return district;
 	}
@@ -95,9 +93,8 @@ public class Works implements Serializable {
 	public void setDistrict(District district) {
 		this.district = district;
 	}
-	
-	
-	 public Village getVillage() {
+
+	public Village getVillage() {
 		return village;
 	}
 
@@ -184,5 +181,5 @@ public class Works implements Serializable {
 	public void setWorkNo(String workNo) {
 		this.workNo = workNo;
 	}
-	
+
 }

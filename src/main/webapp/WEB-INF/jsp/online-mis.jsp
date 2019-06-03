@@ -197,6 +197,7 @@ $(document).ready(function(){
 				         <option value="${typeOfWork.id}">${typeOfWork.name}</option>
 				      </c:forEach>
                      </select> 
+                     <span id="typeworkErr" class="errors" style="color:red;float:right;">
                 </ul>
                 
                 
@@ -368,9 +369,10 @@ $('#Create').on('click',function(){
 })
 
  $("#submit").click(function(){
-	if( $("#typeOfWork option:selected").val()==""){
+	 
+	if( $("#typeworkid option:selected").val()==""){
 		  $("#typeworkErr").text("Select Types of Work");
-		  $("#typeOfWork").focus();
+		  $("#typeworkid").focus();
 		  return false;
 	}else{
 		$("#typeworkErr").text("");

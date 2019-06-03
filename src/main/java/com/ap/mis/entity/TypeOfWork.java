@@ -8,16 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_sa_works_typeofwork")
+@Table(name = "tbl_sa_works_typeofwork")
 public class TypeOfWork {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id")
+	@Column(name = "id")
 	private int id;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "isactive")
 	private boolean active;
 
@@ -44,9 +44,5 @@ public class TypeOfWork {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	
-	
-	
 
 }

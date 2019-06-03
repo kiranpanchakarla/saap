@@ -8,16 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_sa_financial_year")
+@Table(name = "tbl_sa_financial_year")
 public class FinancialYear {
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
-    private int id;
 
-    @Column(name = "year")
-    private String year;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "id")
+	private int id;
+
+	@Column(name = "year")
+	private String year;
 
 	public int getId() {
 		return id;

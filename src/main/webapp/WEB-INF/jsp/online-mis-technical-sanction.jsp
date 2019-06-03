@@ -144,13 +144,13 @@ $("#amount").on('input', function () {
 $("#submit").click(function(){
 	
 	var natureOfWork=$("#natureOfWork").val();
-    if(work=="" || work==null){
+    if(natureOfWork=="" || natureOfWork==null){
         $("#workErr").html("Please Enter Nature of Work");
         return false;
     }else{
         $("#workErr").html("");
     }
-	
+
     var workNumber=$("#workNumber").val();
     if(workNumber=="" || workNumber==null){
         $("#workNumberErr").html("Please Enter Work Number");
@@ -166,7 +166,7 @@ $("#submit").click(function(){
     }else{
         $("#workNameErr").html("");
     } */
-
+    
 	var techSanction_no=$("#techSanction_no").val();
     if(techSanction_no=="" || techSanction_no==null){
         $("#techSanction_noErr").html("Please Enter Technical Sanction No");

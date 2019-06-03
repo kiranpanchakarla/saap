@@ -8,19 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_sa_tendering_agency")
+@Table(name = "tbl_sa_tendering_agency")
 public class Agency {
-	
-  	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
-    private int id;
 
-    @Column(name = "name")
-    private String name;
-    
-    @Column(name = "isactive")
-    private boolean active;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "id")
+	private int id;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "isactive")
+	private boolean active;
 
 	public int getId() {
 		return id;

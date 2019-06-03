@@ -15,40 +15,38 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_sa_land_details")
-public class LandDetails implements Serializable{
-	
+public class LandDetails implements Serializable {
+
 	private static final long serialVersionUID = -3724216488406858738L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
-	
-/*	@Column(name = "type_of_land")
-	private int typeOfLand;
-*/
+
 	@Column(name = "field_measurement_bk_details")
 	private String bookDetails;
-	
+
 	@Column(name = "survey_number")
 	private String surveyNo;
-	
+
 	@Column(name = "land_extend")
 	private String landExtend;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="type_of_land", referencedColumnName = "id")
-	private Land  typeOfLand; 
-	
-	@OneToOne(targetEntity=User.class)
-	@JoinColumn(name="user_id", referencedColumnName="user_id")
-	private User user;
-	
 
-	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "type_of_land", referencedColumnName = "id")
+	private Land typeOfLand;
+
+	@OneToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private User user;
+
+	@OneToOne(targetEntity = Works.class)
+	@JoinColumn(name = "work_id", referencedColumnName = "id")
+	private Works work;
+
 	@Column(name = "path")
 	private String path;
-	
 
 	public String getPath() {
 		return path;
@@ -65,14 +63,6 @@ public class LandDetails implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-
-/*	public int getTypeOfLand() {
-		return typeOfLand;
-	}
-
-	public void setTypeOfLand(int typeOfLand) {
-		this.typeOfLand = typeOfLand;
-	}*/
 
 	public String getBookDetails() {
 		return bookDetails;
@@ -106,11 +96,6 @@ public class LandDetails implements Serializable{
 		this.user = user;
 	}
 
-	@OneToOne(targetEntity=Works.class)
-	@JoinColumn(name="work_id", referencedColumnName="id")
-	private Works work;
-
-
 	public Land getTypeOfLand() {
 		return typeOfLand;
 	}
@@ -132,6 +117,4 @@ public class LandDetails implements Serializable{
 		return "LandDetails [id=" + id + ", typeOfLand=" + typeOfLand + ", bookDetails=" + bookDetails + ", surveyNo="
 				+ surveyNo + ", landExtend=" + landExtend + ", user=" + user + ", work=" + work + "]";
 	}
-
-
 }

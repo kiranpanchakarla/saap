@@ -6,21 +6,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 @Entity
-@Table(name="tbl_sa_WorkLineItemsList")
+@Table(name = "tbl_sa_WorkLineItemsList")
 public class WorkLineItemsList {
 
+	private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id" , nullable = false , unique = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
 	private Integer id;
-	
+
 	@Column(name = "work_details")
 	private String workDetails;
-	
+
 	@Column(name = "estimated_cost")
 	private double cost;
 
@@ -47,7 +47,5 @@ public class WorkLineItemsList {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
-	
-	
-	
+
 }

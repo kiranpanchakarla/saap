@@ -11,43 +11,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 @Entity
-@Table(name ="tbl_sa_technicalsanction")
-public class TechnicalSanction implements Serializable{
-	
+@Table(name = "tbl_sa_technicalsanction")
+public class TechnicalSanction implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	/*@Column(name="natureof_work")
-	private String work;
-	
-	@Column(name = "work_number")
-	private int workNumber;
-	
-	@Column(name = "work_name")
-	private String workName;*/
-	
-	@Column(name="techsanction_number")
+
+	@Column(name = "techsanction_number")
 	private int techSanction_no;
-	
-	@Column(name="date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
+
+	@Column(name = "date")
+	@DateTimeFormat(pattern = "yy-mm-dd")
 	private Date date;
-	
-	@Column(name="amount")
+
+	@Column(name = "amount")
 	private double amount;
-	
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="work_id", referencedColumnName = "id")
-	private Works  work; 
+	@JoinColumn(name = "work_id", referencedColumnName = "id")
+	private Works work;
 
 	public int getId() {
 		return id;
@@ -80,9 +68,6 @@ public class TechnicalSanction implements Serializable{
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-
-
-
 
 	public Works getWork() {
 		return work;

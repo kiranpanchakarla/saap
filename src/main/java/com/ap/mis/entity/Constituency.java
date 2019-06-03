@@ -8,24 +8,23 @@ import javax.persistence.*;
 @Table(name = "tbl_sa_constituency")
 
 public class Constituency implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "constituency_id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "constituency_id")
+	private int id;
 
-    @Column(name = "constituency_name")
-    private String name;
-    
+	@Column(name = "constituency_name")
+	private String name;
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="district_id", referencedColumnName = "district_id")
-	private District  districtId; 
+	@JoinColumn(name = "district_id", referencedColumnName = "district_id")
+	private District districtId;
 
-    @Column(name = "constituency_isactive")
-    private boolean active;
+	@Column(name = "constituency_isactive")
+	private boolean active;
 
-    @Column(name = "constituency_isdeleted")
-    private boolean deleted;
-
+	@Column(name = "constituency_isdeleted")
+	private boolean deleted;
 
 	public int getId() {
 		return id;
@@ -66,6 +65,5 @@ public class Constituency implements Serializable {
 	public void setDistrictId(District districtId) {
 		this.districtId = districtId;
 	}
-    
-    
+
 }
