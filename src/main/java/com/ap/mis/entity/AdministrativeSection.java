@@ -18,10 +18,11 @@ import javax.persistence.Table;
 public class AdministrativeSection implements Serializable {
 
 	private static final long serialVersionUID = -7281661295866227383L;
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "work_name")
 	private String workName;
@@ -59,8 +60,12 @@ public class AdministrativeSection implements Serializable {
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getPath() {
@@ -151,8 +156,10 @@ public class AdministrativeSection implements Serializable {
 	public String toString() {
 		return "AdministrativeSection [id=" + id + ", workName=" + workName + ", workNumber=" + workNumber
 				+ ", sanctionedDetails=" + sanctionedDetails + ", typeOfGrant=" + typeOfGrant + ", financialYear="
-				+ financialYear + ", executiveDept=" + executiveDept + ", consultant=" + consultant + ", user=" + user
-				+ "]";
+				+ financialYear + ", executiveDept=" + executiveDept + ", consultant=" + consultant + ", work=" + work
+				+ ", path=" + path + ", user=" + user + "]";
 	}
+
+
 
 }

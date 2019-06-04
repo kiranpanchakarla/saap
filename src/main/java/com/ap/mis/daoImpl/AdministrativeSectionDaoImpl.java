@@ -90,6 +90,11 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 		return adminSec;
 	}
 
+	@Override
+	public AdministrativeSection getAdminInfo(int id) {
+		return (AdministrativeSection)sessionFactory.getCurrentSession().get(AdministrativeSection.class, id);
+	}
+
 	
 	
 	

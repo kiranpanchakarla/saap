@@ -84,4 +84,11 @@ public class LandDetailServiceImpl implements LandDetailService{
 		}
 		 return landDetailDao.landDetailsSave(landDetails);
 	}
+
+
+
+	@Override
+	public LandDetails getLandinfo(int id) {
+		 return landDetailDao.getLandinfo(id);
+	}
 }

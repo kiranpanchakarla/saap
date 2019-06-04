@@ -20,9 +20,9 @@ public final class DepartmentLinkingLine implements Serializable {
 	private static final long serialVersionUID = 2498915935089096549L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "department_name")
 	private String departmentName;
@@ -62,11 +62,11 @@ public final class DepartmentLinkingLine implements Serializable {
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -157,4 +157,14 @@ public final class DepartmentLinkingLine implements Serializable {
 	public void setWork(Works work) {
 		this.work = work;
 	}
+
+	@Override
+	public String toString() {
+		return "DepartmentLinkingLine [id=" + id + ", departmentName=" + departmentName + ", workNature=" + workNature
+				+ ", circle=" + circle + ", divisionName=" + divisionName + ", subdivisionName=" + subdivisionName
+				+ ", sectionName=" + sectionName + ", sectionOfficerName=" + sectionOfficerName + ", mobileNo="
+				+ mobileNo + ", email=" + email + ", work=" + work + ", user=" + user + "]";
+	}
+	
+	
 }

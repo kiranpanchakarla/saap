@@ -38,20 +38,20 @@ public class AdministrationController {
 	@PostMapping(value = "/save")
 	public String administrativeSectionSave(@ModelAttribute AdministrativeSection adminSecObject, Model model,
 			HttpServletRequest request, @RequestParam("file") MultipartFile file, HttpSession session) {
-		
+
 		int workid = (int) session.getAttribute("workIdSession");
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		adminSecObject.setUser(loggedInUser);
 		admService.adminstrativeSection(adminSecObject, file);
-		
-		WorktoLandDetails obj = new WorktoLandDetails();
-        obj = (WorktoLandDetails) session.getAttribute("generalInfo");
-		obj.setAdministrativeesction(adminSecObject);
-		session.setAttribute("generalInfo", obj);
-		
+
 		Works workInfo = misService.getWorkInfo(workid);
 		model.addAttribute("workInfo", workInfo);
-		
+
+		WorktoLandDetails obj = new WorktoLandDetails();
+		obj = (WorktoLandDetails) session.getAttribute("generalInfo");
+		obj.setAdministrativeesction(adminSecObject);
+		session.setAttribute("generalInfo", obj);
+
 		model.addAttribute("divisionList", lineDepartmentService.getDivisionList());
 		model.addAttribute("subdivisionList", lineDepartmentService.getSubdivisionList());
 		model.addAttribute("sectionList", lineDepartmentService.getSectionList());

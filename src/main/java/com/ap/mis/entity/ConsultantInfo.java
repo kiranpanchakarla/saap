@@ -18,9 +18,9 @@ public class ConsultantInfo implements Serializable {
 	private static final long serialVersionUID = -3465813074586302847L;
 
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "consultant_firm")
 	private String consultant_firm;
@@ -61,12 +61,12 @@ public class ConsultantInfo implements Serializable {
 	@OneToOne(targetEntity = Works.class)
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
-
-	public int getId() {
+	
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -180,7 +180,9 @@ public class ConsultantInfo implements Serializable {
 				+ ", tin_number=" + tin_number + ", mobile_no=" + mobile_no + ", landline_no=" + landline_no
 				+ ", emailId=" + emailId + ", address=" + address + ", bank_name=" + bank_name + ", branch=" + branch
 				+ ", account_type=" + account_type + ", account_number=" + account_number + ", ifsc_code=" + ifsc_code
-				+ "]";
+				+ ", work=" + work + "]";
 	}
+
+
 
 }

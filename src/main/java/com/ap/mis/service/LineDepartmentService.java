@@ -16,5 +16,6 @@ public interface LineDepartmentService {
 	public List<Subdivision> getSubdivisionList();
 	public List<Section> getSectionList();
 	public DepartmentLinkingLine departmentLinkingLineSave(DepartmentLinkingLine lineDeptObj);
+	public DepartmentLinkingLine getDeptInfo(int id);
 
 }

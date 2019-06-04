@@ -150,24 +150,24 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Grant<span class="red">*</span></p></li>
-                <li><input type="text" title="1" name="grantid" class="form-control mb-md" readonly value="${typeOfGrant.name}"></li>
+                <li><input type="text"  title="1" name="grantid" class="form-control mb-md" readonly value="${adminInfo.typeOfGrant.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Financial Year <span class="red">*</span></p></li>
-                <li><input type="text" title="2017-2018" name="grantid" class="form-control mb-md" readonly value="${financialYear.year}">
+                <li><input type="text" title="2017-2018" name="grantid" class="form-control mb-md" readonly value="${adminInfo.financialYear.year}">
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Engagement of executive dept by <span class="red">*</span></p></li>
-                <li><input type="text" title="Govt" name="grantid" class="form-control mb-md" readonly value="${executiveDept.name}">
+                <li><input type="text" title="Govt" name="grantid" class="form-control mb-md" readonly value="${adminInfo.executiveDept.name}">
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Engagement of consultant by <span class="red">*</span></p></li>
-                <li><input type="text" title="SAAP" name="grantid" class="form-control mb-md" readonly value="${consultant.name}">
+                <li><input type="text" title="SAAP" name="grantid" class="form-control mb-md" readonly value="${adminInfo.consultant.name}">
                 </li>
                 </ul>
              
@@ -219,17 +219,17 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Division <span class="red">*</span></p></li>
-                <li><input type="text" title="PIU DIVISION SRIKAKULAM" name="divisionId" class="form-control mb-md" readonly value="${division.name}"></li>
+                <li><input type="text" title="PIU DIVISION SRIKAKULAM" name="divisionId" class="form-control mb-md" readonly value="${deptInfo.divisionName.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the SubDivision <span class="red">*</span></p></li>
-                <li><input type="text" title="SRIKAKULAM" name="subdivisionId" class="form-control mb-md" readonly value="${subdivisionName.name}"></li>
+                <li><input type="text" title="SRIKAKULAM" name="subdivisionId" class="form-control mb-md" readonly value="${deptInfo.subdivisionName.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Section <span class="red">*</span></p></li>
-                <li><input type="text" title="SRIKAKULAM" name="sectionId" class="form-control mb-md" readonly value="${sectionName.name}"></li>
+                <li><input type="text" title="SRIKAKULAM" name="sectionId" class="form-control mb-md" readonly value="${deptInfo.sectionName.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
@@ -293,7 +293,7 @@
                 <ul class="fs-list-details">
                 <li><p>Type Of Land  <span class="red">*</span></p></li>
                 <li><input type="text" title="Government" name="activityId" class="form-control mb-md" readonly 
-                value="${generalInfo.landdetails.typeOfLand.name}">
+                value="${landinfo.typeOfLand.name}">
                 </li>
                 </ul>
                 

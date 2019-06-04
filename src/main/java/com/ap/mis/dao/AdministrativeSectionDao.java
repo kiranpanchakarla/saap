@@ -19,6 +19,7 @@ public interface AdministrativeSectionDao {
 	public ExecutiveConsultant findByExecutiveConsultantId(int id);
 	public GrantType findByGrantId(int id);
 	public AdministrativeSection adminstrativeSectionSave(AdministrativeSection adminSecObject);
+	public AdministrativeSection getAdminInfo(int id);
 
 		
 }

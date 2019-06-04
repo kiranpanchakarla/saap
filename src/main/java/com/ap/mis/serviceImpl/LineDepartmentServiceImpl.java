@@ -38,4 +38,9 @@ public class LineDepartmentServiceImpl implements LineDepartmentService {
 		return lineDepartmentDao.departmentLinkingLineSave(departmentLink);
 	}
 
+	@Override
+	public DepartmentLinkingLine getDeptInfo(int id) {
+		return lineDepartmentDao.getDeptInfo(id);
+	}
+
 }

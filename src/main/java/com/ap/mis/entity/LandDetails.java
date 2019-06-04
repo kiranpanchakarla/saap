@@ -20,9 +20,9 @@ public class LandDetails implements Serializable {
 	private static final long serialVersionUID = -3724216488406858738L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "field_measurement_bk_details")
 	private String bookDetails;
@@ -56,11 +56,11 @@ public class LandDetails implements Serializable {
 		this.path = path;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -114,7 +114,9 @@ public class LandDetails implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LandDetails [id=" + id + ", typeOfLand=" + typeOfLand + ", bookDetails=" + bookDetails + ", surveyNo="
-				+ surveyNo + ", landExtend=" + landExtend + ", user=" + user + ", work=" + work + "]";
+		return "LandDetails [id=" + id + ", bookDetails=" + bookDetails + ", surveyNo=" + surveyNo + ", landExtend="
+				+ landExtend + ", typeOfLand=" + typeOfLand + ", user=" + user + ", work=" + work + ", path=" + path
+				+ "]";
 	}
+
 }

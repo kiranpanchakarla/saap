@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
@@ -22,6 +24,7 @@ import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.ConstituencyService;
 import com.ap.mis.service.DistrictService;
 import com.ap.mis.service.LandDetailService;
+import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.MandalService;
 import com.ap.mis.service.VillageService;
@@ -46,6 +49,8 @@ public class LandDetailsController {
 	AdministrativeSectionService administrativeSectionService;
 	@Autowired
 	LandDetailService landDetailService;
+	@Autowired
+	LineDepartmentService lineDepartmentService;
 
 	@PostMapping(value = "/save")
 	public String landDetailsSave(@ModelAttribute LandDetails landDetails, Model model, HttpServletRequest request,
@@ -62,7 +67,17 @@ public class LandDetailsController {
 
 		Works workInfo=misService.getWorkInfo(obj.getWorks().getId());
 		model.addAttribute("workInfo",workInfo);
-
+		
+		AdministrativeSection adminInfo = administrativeSectionService.getAdminInfo(obj.getAdministrativeesction().getId());
+		model.addAttribute("adminInfo",adminInfo);
+		
+		DepartmentLinkingLine deptInfo = lineDepartmentService.getDeptInfo(obj.getDepartmentlinkingine().getId());
+		model.addAttribute("deptInfo",deptInfo);
+		
+		LandDetails landinfo = landDetailService.getLandinfo(obj.getLanddetails().getId());
+		model.addAttribute("landinfo",landinfo);
+		
+		
 /*		model.addAttribute("districts", districtsService.findById(obj.getWorks().getDistrict()));
 		model.addAttribute("constituency", constituencyService.findById(obj.getWorks().getConstituency()));
 		model.addAttribute("mandal", mandalService.findById(obj.getWorks().getMandal()));

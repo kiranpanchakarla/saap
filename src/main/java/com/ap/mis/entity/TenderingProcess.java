@@ -22,9 +22,9 @@ import org.springframework.lang.Nullable;
 public class TenderingProcess {
 
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "ifb_preparation_date")
 	@DateTimeFormat(pattern = "yy-mm-dd")
@@ -135,11 +135,11 @@ public class TenderingProcess {
 		this.telUpload = telUpload;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -331,7 +331,7 @@ public class TenderingProcess {
 				+ ", dateOfEvaluationCompleted=" + dateOfEvaluationCompleted + ", contractValue=" + contractValue
 				+ ", contractValueByL1Bidder=" + contractValueByL1Bidder + ", percentageQuoted=" + percentageQuoted
 				+ ", bidStatus=" + bidStatus + ", dateOfLoaIssued=" + dateOfLoaIssued + ", angencyName=" + angencyName
-				+ ", work=" + work + "]";
+				+ ", work=" + work + ", engUpload=" + engUpload + ", telUpload=" + telUpload + "]";
 	}
 
 }

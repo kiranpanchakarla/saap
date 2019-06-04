@@ -108,6 +108,10 @@ public class AdministrativeSectionServiceImpl implements AdministrativeSectionSe
 		}
 		return administrativeSectionDao.adminstrativeSectionSave(adminSecObject);
 	}
+	@Override
+	public AdministrativeSection getAdminInfo(int id) {
+		return administrativeSectionDao.getAdminInfo(id);
+	}
 	
 	
 

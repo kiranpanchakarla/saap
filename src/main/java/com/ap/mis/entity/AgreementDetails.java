@@ -18,9 +18,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class AgreementDetails {
 
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "perf_securityAmount")
 	private double performanceSecurityAmount;
@@ -56,11 +56,11 @@ public class AgreementDetails {
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -152,5 +152,7 @@ public class AgreementDetails {
 				+ ", agreementNumber=" + agreementNumber + ", bankGuaranteeDetails=" + bankGuaranteeDetails
 				+ ", demandDraftDetails=" + demandDraftDetails + ", others=" + others + ", work=" + work + "]";
 	}
+
+
 
 }

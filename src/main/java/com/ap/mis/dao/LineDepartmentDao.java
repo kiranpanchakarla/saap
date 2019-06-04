@@ -13,5 +13,7 @@ public interface LineDepartmentDao {
 	public List<Subdivision> getSubdivisionList();
 	public List<Section> getSectionList();
 	public DepartmentLinkingLine departmentLinkingLineSave(DepartmentLinkingLine departmentLink);
+	public DepartmentLinkingLine getDeptInfo(int id);
+
 
 }

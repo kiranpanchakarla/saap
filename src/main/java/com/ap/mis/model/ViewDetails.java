@@ -68,7 +68,10 @@ public class ViewDetails {
 	public void setSurveyNo(String surveyNo) {
 		this.surveyNo = surveyNo;
 	}
-	
-	
-
+	@Override
+	public String toString() {
+		return "ViewDetails [typeOfWork=" + typeOfWork + ", natureOfWork=" + natureOfWork + ", nameOfWork=" + nameOfWork
+				+ ", workNo=" + workNo + ", surveyNo=" + surveyNo + ", workDetails=" + workDetails + ", departmentName="
+				+ departmentName + ", consultantfirm=" + consultantfirm + ", agencyName=" + agencyName + "]";
+	}
 }

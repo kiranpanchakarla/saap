@@ -12,9 +12,9 @@ import javax.persistence.Table;
 public class Section {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "name")
 	private String name;
@@ -22,11 +22,11 @@ public class Section {
 	@Column(name = "isactive")
 	private boolean active;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -45,4 +45,10 @@ public class Section {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	@Override
+	public String toString() {
+		return "Section [id=" + id + ", name=" + name + ", active=" + active + "]";
+	}
+
 }
