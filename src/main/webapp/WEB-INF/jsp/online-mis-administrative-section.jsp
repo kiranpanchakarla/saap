@@ -45,6 +45,12 @@
   
   <section id="contact" class="section-bg-con">
     <div class="container">
+    
+   <jsp:include page="online-mis-tabView.jsp" />
+    
+   <div class="tab-content">
+	
+	 <div class="tab-pane fade show" id="nav-admin" role="tabpanel" aria-labelledby="nav-admin-tab">
      <div class="row">
     <div class="col-md-12">
     <c:url value="/administrativeSection/save" var="createUrl" />
@@ -150,6 +156,9 @@
         
     </div>
 </div>
+</div>
+</div>
+
 <!-- /.MultiStep Form -->
     
 
@@ -253,6 +262,11 @@ $("#submit").click(function(){
     }
 })
 
+$(document).ready(function(){
+	$('#nav-admin-tab').addClass('active');
+	 $('#nav-admin').addClass('active');
+	});
+	
 </script>
 </body>
 </html>

@@ -8,9 +8,9 @@ import javax.persistence.*;
 @Table(name = "tbl_sa_mandals")
 public class Mandal implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "mandal_id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "mandal_id",nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "mandal_name")
 	private String name;
@@ -25,11 +25,11 @@ public class Mandal implements Serializable {
 	@Column(name = "mandal_isdeleted")
 	private boolean deleted;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -64,4 +64,11 @@ public class Mandal implements Serializable {
 	public void setConstituencyId(Constituency constituencyId) {
 		this.constituencyId = constituencyId;
 	}
+
+	@Override
+	public String toString() {
+		return "Mandal [id=" + id + ", name=" + name + ", constituencyId=" + constituencyId + ", active=" + active
+				+ ", deleted=" + deleted + "]";
+	}
+	
 }

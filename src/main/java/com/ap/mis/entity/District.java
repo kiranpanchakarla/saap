@@ -8,15 +8,15 @@ import javax.persistence.*;
 @Table(name = "tbl_sa_districts")
 public class District implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "district_id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "district_id",nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "district_name")
 	private String name;
 
 	@Column(name = "state_id")
-	private int stateId;
+	private Integer stateId;
 
 	@Column(name = "district_isactive")
 	private boolean active;
@@ -24,11 +24,11 @@ public class District implements Serializable {
 	@Column(name = "district_isdeleted")
 	private boolean deleted;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -40,11 +40,11 @@ public class District implements Serializable {
 		this.name = name;
 	}
 
-	public int getStateId() {
+	public Integer getStateId() {
 		return stateId;
 	}
 
-	public void setStateId(int stateId) {
+	public void setStateId(Integer stateId) {
 		this.stateId = stateId;
 	}
 
@@ -62,6 +62,12 @@ public class District implements Serializable {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	@Override
+	public String toString() {
+		return "District [id=" + id + ", name=" + name + ", stateId=" + stateId + ", active=" + active + ", deleted="
+				+ deleted + "]";
 	}
 
 }

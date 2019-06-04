@@ -14,18 +14,18 @@ import javax.persistence.Table;
 public class Role implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private Integer id;
 
 	@Column(name = "role_name")
 	private String roleName;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -36,4 +36,11 @@ public class Role implements Serializable {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", roleName=" + roleName + "]";
+	}
+	
+	
 }

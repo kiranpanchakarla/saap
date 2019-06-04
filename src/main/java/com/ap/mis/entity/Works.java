@@ -20,9 +20,9 @@ public class Works implements Serializable {
 	private static final long serialVersionUID = -3465813074586302847L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
-	private int id;
+	private Integer id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "typeof_work", referencedColumnName = "id")
@@ -52,10 +52,7 @@ public class Works implements Serializable {
 	private String location;
 
 	@Column(name = "noof_works")
-	private int noOfWorks;
-
-	@Column(name = "work_username")
-	private String workUserName;
+	private Integer noOfWorks;
 
 	@Column(name = "work_number")
 	private String workNo;
@@ -142,19 +139,19 @@ public class Works implements Serializable {
 		this.user = user;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getNoOfWorks() {
+	public Integer getNoOfWorks() {
 		return noOfWorks;
 	}
 
-	public void setNoOfWorks(int noOfWorks) {
+	public void setNoOfWorks(Integer noOfWorks) {
 		this.noOfWorks = noOfWorks;
 	}
 
@@ -166,13 +163,6 @@ public class Works implements Serializable {
 		this.location = location;
 	}
 
-	public String getWorkUserName() {
-		return workUserName;
-	}
-
-	public void setWorkUserName(String workUserName) {
-		this.workUserName = workUserName;
-	}
 
 	public String getWorkNo() {
 		return workNo;
@@ -180,6 +170,14 @@ public class Works implements Serializable {
 
 	public void setWorkNo(String workNo) {
 		this.workNo = workNo;
+	}
+
+	@Override
+	public String toString() {
+		return "Works [id=" + id + ", typeOfWork=" + typeOfWork + ", natureOfWork=" + natureOfWork + ", district="
+				+ district + ", village=" + village + ", mandal=" + mandal + ", constituency=" + constituency
+				+ ", location=" + location + ", noOfWorks=" + noOfWorks + ", workNo=" + workNo + ", workDetails="
+				+ workDetails + ", cost=" + cost + ", user=" + user + "]";
 	}
 
 }

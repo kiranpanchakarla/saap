@@ -9,7 +9,7 @@ public class Village {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "village_id")
-	private int id;
+	private Integer id;
 
 	@Column(name = "village_name")
 	private String name;
@@ -24,11 +24,11 @@ public class Village {
 	@Column(name = "village_isdeleted")
 	private boolean deleted;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -62,6 +62,12 @@ public class Village {
 
 	public void setMandalId(Mandal mandalId) {
 		this.mandalId = mandalId;
+	}
+
+	@Override
+	public String toString() {
+		return "Village [id=" + id + ", name=" + name + ", mandalId=" + mandalId + ", active=" + active + ", deleted="
+				+ deleted + "]";
 	}
 
 }

@@ -14,10 +14,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tbl_sa_users")
 public class User implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "user_id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id",nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "user_name")
 	private String name;
@@ -72,11 +77,11 @@ public class User implements Serializable {
 
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -151,5 +156,14 @@ public class User implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", password=" + password + ", mobile=" + mobile + ", email="
+				+ email + ", address=" + address + ", isAdmin=" + isAdmin + ", isActive=" + isActive + ", isDeleted="
+				+ isDeleted + ", role=" + role + "]";
+	}
+	
+	
 
 }

@@ -25,7 +25,7 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	 <!-- 
+	 
 	<filter>  
     	<filter-name>encodeDecodeFilter</filter-name>  
     	<filter-class>com.ap.mis.web.EncodeDecodeFilter</filter-class>  
@@ -33,7 +33,7 @@
 	<filter-mapping>  
    		<filter-name>encodeDecodeFilter</filter-name>  
     	<url-pattern>/*</url-pattern>       
-	</filter-mapping>  -->
+	</filter-mapping>   
 	
   <servlet>
     <servlet-name>spring</servlet-name>
@@ -49,6 +49,11 @@
   
   	 <error-page>
         <location>/error</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>405</error-code>
+        <location>/error?errorCode=405</location>
     </error-page>
   	
 </web-app>

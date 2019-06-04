@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,11 +176,16 @@ $(document).ready(function(){
   <section id="contact" class="section-bg-con">
     <div class="container">
     
+    <jsp:include page="online-mis-tabView.jsp" />
+    <div class="tab-content">
+	
+	<!-- <div class="tab-pane" id="work" role="tabpanel" aria-labelledby="work-tab"> -->
+     <div class="tab-pane fade show" id="nav-work" role="tabpanel" aria-labelledby="nav-work-tab">
     <div class="row">
     <div class="col-md-12">
         <c:url value="/worksCreation/save" var="createUrl" />
-        <form id="msform"  method="post" action="${createUrl}" modelAttribute="workObject">
-           
+        <%-- <form id="msform"  method="post" action="${createUrl}" modelAttribute="workObject"> --%>
+        <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="workObject" >  
              <input type="hidden" name="${_csrf.parameterName}"
             value="${_csrf.token}" /> <!-- for Spring Security -->
             
@@ -186,29 +193,42 @@ $(document).ready(function(){
             <fieldset>
                 <h2 class="fs-title">Work Creation</h2>
                 <!--<h3 class="fs-subtitle">Tell us something about you</h3>-->  
-                
-             
-                
-                   <ul class="fs-list-details">
+                 
+                <ul class="fs-list-details">
                 <li><p>Types of Work <span class="red">*</span></p></li>
-                <li><select id="typeworkid" name="typeOfWork.id">
+                <li><%-- <select id="typeworkid" name="typeOfWork.id">
                      <option value="" selected="">--select Type Of Work--</option>
 				     <c:forEach  var="typeOfWork" items="${typeOfWork}">
 				         <option value="${typeOfWork.id}">${typeOfWork.name}</option>
 				      </c:forEach>
-                     </select> 
-                     <span id="typeworkErr" class="errors" style="color:red;float:right;">
+                     </select>  --%>
+                <form:select id="typeworkid" path="typeOfWork.id" >
+					<form:option value="">--Select--</form:option>
+					<c:forEach items="${typeOfWork}" var="typeOfWork">
+
+						<form:option value="${typeOfWork.id}">${typeOfWork.name}</form:option>
+					</c:forEach>
+				</form:select>
+                     <span id="typeworkErr" class="errors" style="color:red;float:right;"></span>
                 </ul>
                 
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><select id="natureOfWork" name="natureOfWork.id" >
+                <li><%-- <select id="natureOfWork" name="natureOfWork.id" >
                <option value="" selected="">--select work--</option>
                  <c:forEach  var="natureOfWork" items="${natureOfWork}">
 				         <option value="${natureOfWork.id}">${natureOfWork.name}</option>
 				      </c:forEach>
-                </select>
+                </select> --%>
+                
+                <form:select id="natureOfWork" path="natureOfWork.id" >
+					<form:option value="">--Select--</form:option>
+					<c:forEach items="${natureOfWork}" var="natureOfWork">
+
+						<form:option value="${natureOfWork.id}">${natureOfWork.name}</form:option>
+					</c:forEach>
+				</form:select>
                		<br><span id="natureOfWorkErr" class="errors" style="color:red;float:right;"></span>
                </li>
                 </ul>
@@ -219,12 +239,19 @@ $(document).ready(function(){
                 
                 <ul class="fs-list-details">
                 <li><p>District <span class="red">*</span></p></li>
-                <li><select id="district" name="district.id" >
+                <li><%-- <select id="district" name="district.id" >
                 <option value="" selected="">--select district--</option>
                   <c:forEach  var="districts" items="${districts}">
                    <option value="${districts.id}">${districts.name}</option>
                  </c:forEach> 
-               </select>
+               </select> --%>
+               
+                <form:select id="district" path="district.id" >
+					<form:option value="">--Select--</form:option>
+					<c:forEach items="${districts}" var="district">
+						<form:option value="${district.id}">${district.name}</form:option>
+					</c:forEach>
+				</form:select>
                <br><span id="districtErr" class="errors" style="color:red;float:right;"></span>
                </li>
                 </ul>
@@ -234,9 +261,12 @@ $(document).ready(function(){
                 <ul class="fs-list-details">
                 <li><p>Constituency <span class="red">*</span></p></li>
                 <li>                
-               <select id="constituency" name="constituency.id">
+              <!--  <select id="constituency" name="constituency.id">
                 <option value="">--select constituency--</option>
-                </select>
+                </select> -->
+                <form:select id="constituency" path="constituency.id" >
+					<form:option value="">--Select--</form:option>
+				</form:select>
               <br><span id="constituencyErr" class="errors" style="color:red;float:right;"></span>
             </li>
                 </ul>
@@ -246,9 +276,12 @@ $(document).ready(function(){
                 <ul class="fs-list-details">
                 <li><p>Mandal <span class="red">*</span></p></li>
                 <li>
-	                <select id="mandal" name="mandal.id" class="form-control mb-md">
+	               <!--  <select id="mandal" name="mandal.id" class="form-control mb-md">
 	                  <option value="" >--select Mandal--</option>
-	               </select>
+	               </select> -->
+	                <form:select id="mandal" path="mandal.id" >
+					<form:option value="">--Select--</form:option>
+				   </form:select>
 		            <span id="mandalErr" class="errors" style="color:red;float:right;"></span>
 		            </li>
 		         </ul>
@@ -258,34 +291,39 @@ $(document).ready(function(){
                 
                 <ul class="fs-list-details">
                 <li><p>Village <span class="red">*</span></p></li>
-                <li><select id="village" name="village.id" class="form-control mb-md" >
+                <li>
+                <!-- <select id="village" name="village.id" class="form-control mb-md" >
                 <option value="" >--select village--</option>
-			   </select></li>
-            <span id="villageErr" class="errors" style="color:red;float:right;"></span>
-            </li>
+			    </select> -->
+			    <form:select id="village" path="village.id" >
+					<form:option value="">--Select--</form:option>
+				   </form:select>
+				   <span id="villageErr" class="errors" style="color:red;float:right;"></span>
+                  </li>
                 </ul>
                 
                
                 
                 <ul class="fs-list-details">
                 <li><p>Location <span class="red">*</span></p></li>
-                <li><input type="text" id="location" name="location" placeholder="Location"/>
+                <li> <form:input type="text" id="location" placeholder='Location' path="location" />
                 	<br><span id="locationErr" class="errors" style="color:red;float:right;"></span>  	
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Work Number <span class="red">*</span></p></li>
-                <li><input type="text" id="workNo" name="workNo" placeholder="Work Number" >
+                <li><form:input type="text" id="workNo" path="workNo" placeholder="Work Number" />
+                    
                 	<br><span id="workNoErr" class="errors" style="color:red;float:right;"></span>  
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details fs-list-full">
                 <li><p>No. of Works <span class="red">*</span></p></li>
-                <li class="work-space"><input type="text" id="noOfWorks" name="noOfWorks" placeholder="No. of Works" > 
+                <li class="work-space"><form:input type="text" id="noOfWorks" path="noOfWorks" placeholder="No. of Works" /> 
                 <span id="noOfWorksErr" class="errors" style="color:red;float:center;"></span>
-                <input type="button" name="Create" id="Create" value="Create" class="create-button createClass" >
+                <input type="button" name="Create" id="Create" value="Create" class="create-button createClass">
                 
                 </li> 
                 </ul>
@@ -313,10 +351,12 @@ $(document).ready(function(){
                 <!-- name="next" -->
             </fieldset>
             <input type="hidden" id="createval" name="createval" value="0">
-        </form>  
+        <%-- </form> --%>  </form:form>
     </div>
 </div>
 <!-- /.MultiStep Form -->
+</div>
+</div>
 </div>
 </section>
 <!-- #contact --> 
@@ -467,7 +507,13 @@ $('#Create').on('click',function(){
     }else{
     	 $("#work_detailsErr").html("");
     }
+    
 });
+ 
+$(document).ready(function(){
+	$('#nav-work-tab').addClass('active');
+	 $('#nav-work').addClass('active');
+	});
  
 </script>
 </body>

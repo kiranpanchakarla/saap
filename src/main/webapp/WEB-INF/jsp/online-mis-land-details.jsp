@@ -44,7 +44,9 @@
   
   <section id="contact" class="section-bg-con">
     <div class="container">
-    
+    <jsp:include page="online-mis-tabView.jsp" />
+      <div class="tab-content">
+	 <div class="tab-pane fade show" id="nav-land" role="tabpanel" aria-labelledby="nav-land-tab">
     <div class="row">
     <div class="col-md-12">
        <c:url value="/landDetails/save" var="createUrl" />
@@ -232,7 +234,10 @@ $("#submit").click(function(){
     }
 	
 })
-
+$(document).ready(function(){
+	$('#nav-land-tab').addClass('active');
+	 $('#nav-land').addClass('active');
+	});
 </script>
 </body>
 </html>

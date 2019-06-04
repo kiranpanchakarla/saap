@@ -9,9 +9,9 @@ import javax.persistence.*;
 
 public class Constituency implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "constituency_id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "constituency_id",nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "constituency_name")
 	private String name;
@@ -26,11 +26,11 @@ public class Constituency implements Serializable {
 	@Column(name = "constituency_isdeleted")
 	private boolean deleted;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -64,6 +64,12 @@ public class Constituency implements Serializable {
 
 	public void setDistrictId(District districtId) {
 		this.districtId = districtId;
+	}
+
+	@Override
+	public String toString() {
+		return "Constituency [id=" + id + ", name=" + name + ", districtId=" + districtId + ", active=" + active
+				+ ", deleted=" + deleted + "]";
 	}
 
 }

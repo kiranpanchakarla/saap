@@ -11,9 +11,9 @@ import javax.persistence.Table;
 @Table(name = "tbl_sa_works_typeofwork")
 public class TypeOfWork {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id",nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "name")
 	private String name;
@@ -21,11 +21,11 @@ public class TypeOfWork {
 	@Column(name = "isactive")
 	private boolean active;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -43,6 +43,11 @@ public class TypeOfWork {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	@Override
+	public String toString() {
+		return "TypeOfWork [id=" + id + ", name=" + name + ", active=" + active + "]";
 	}
 
 }

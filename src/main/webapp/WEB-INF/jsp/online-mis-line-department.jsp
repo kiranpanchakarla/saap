@@ -44,7 +44,9 @@
   
   <section id="contact" class="section-bg-con">
     <div class="container">
-    
+     <jsp:include page="online-mis-tabView.jsp" />
+      <div class="tab-content">
+	 <div class="tab-pane fade show" id="nav-department" role="tabpanel" aria-labelledby="nav-department-tab">
     <div class="row">
     <div class="col-md-12">
         <c:url value="/lineDepartment/save" var="createUrl" />
@@ -156,6 +158,9 @@
     
 
     </div>
+    </div>
+    </div>
+    
   </section>
 
  
@@ -272,6 +277,10 @@ $("#submit").click(function(){
     
 }) 
 
+$(document).ready(function(){
+	$('#nav-department-tab').addClass('active');
+	 $('#nav-department').addClass('active');
+	});
 </script>
 </body>
 </html>
