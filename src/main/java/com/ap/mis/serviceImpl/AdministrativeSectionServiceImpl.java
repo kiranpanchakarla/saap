@@ -112,6 +112,11 @@ public class AdministrativeSectionServiceImpl implements AdministrativeSectionSe
 	public AdministrativeSection getAdminInfo(int id) {
 		return administrativeSectionDao.getAdminInfo(id);
 	}
+	@Override
+	public AdministrativeSection getAdminDetails(int id) {
+		return administrativeSectionDao.getAdminDetails(id);
+		
+	}
 	
 	
 

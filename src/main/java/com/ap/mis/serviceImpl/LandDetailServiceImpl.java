@@ -91,4 +91,12 @@ public class LandDetailServiceImpl implements LandDetailService{
 	public LandDetails getLandinfo(int id) {
 		 return landDetailDao.getLandinfo(id);
 	}
+
+
+
+	@Override
+	public LandDetails getLandDetails(int id) {
+		
+		return landDetailDao.getLandDetails(id);
+	}
 }

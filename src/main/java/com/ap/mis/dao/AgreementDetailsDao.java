@@ -6,4 +6,6 @@ public interface AgreementDetailsDao {
 
 	AgreementDetails saveAgreementDetails(AgreementDetails agreementDetails);
 
+	AgreementDetails getAgreementDetails(int id);
+
 }

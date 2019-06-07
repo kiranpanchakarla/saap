@@ -6,4 +6,6 @@ public interface TechnicalSanctionService {
 
 	TechnicalSanction saveTechSanction(TechnicalSanction techsanc);
 
+	TechnicalSanction getTechDetails(int id);
+
 }

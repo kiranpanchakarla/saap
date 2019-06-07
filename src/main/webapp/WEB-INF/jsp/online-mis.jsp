@@ -65,7 +65,7 @@ $(document).ready(function(){
 			 }
 			 else{
 	        $.ajax({
-						url : "<c:url value ='/workCreationView/constituency'/>?PlaceId="+selected_value,
+						url : "<c:url value ='/worksCreation/constituency'/>?PlaceId="+selected_value,
 						error : function(xhr,status, error) {
 							alert('Exception occurred:'+ error);
 						},
@@ -94,7 +94,7 @@ $(document).ready(function(){
 			 }
 			 else{
 			  $.ajax({
-						url : "<c:url value ='/workCreationView/mandal'/>?PlaceId="+selected_value,
+						url : "<c:url value ='/worksCreation/mandal'/>?PlaceId="+selected_value,
 						error : function(xhr,status, error) {
 							alert('Exception occurred:'+ error);
 						},
@@ -119,7 +119,7 @@ $(document).ready(function(){
 			 }
 			 else{
 			  $.ajax({
-						url : "<c:url value ='/workCreationView/village'/>?PlaceId="+selected_value,
+						url : "<c:url value ='/worksCreation/village'/>?PlaceId="+selected_value,
 						error : function(xhr,status, error) {
 							alert('Exception occurred:'+ error);
 						},

@@ -90,4 +90,10 @@ public class TenderingProcessServiceImpl implements TenderingProcessService {
 		return tenderingProcessDao.getTenderingInfo(tenderingId);
 	}
 
+	@Override
+	public TenderingProcess getTenderDetails(int id) {
+		
+		return tenderingProcessDao.getTenderDetails(id);
+	}
+
 }

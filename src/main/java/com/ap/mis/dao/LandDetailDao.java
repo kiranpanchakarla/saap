@@ -22,5 +22,7 @@ public interface LandDetailDao {
 	
 	public LandDetails getLandinfo(int id);
 
+	public LandDetails getLandDetails(int id);
+
 
 }

@@ -27,17 +27,18 @@ public class ViewDetailsServiceImpl implements ViewDetailsService{
 		List<ViewDetails> detailsList=new ArrayList<>();
 		for(Object[] obj:arrayList) {
 			ViewDetails viewDetailModel=new ViewDetails();
-			viewDetailModel.setTypeOfWork(obj[0].toString());
-			viewDetailModel.setNatureOfWork(obj[1].toString());
-			viewDetailModel.setWorkDetails(obj[2].toString());
-			viewDetailModel.setWorkNo((obj[3] == null ? 0 : ((Long) obj[3]).intValue()));
-			viewDetailModel.setDepartmentName(obj[4].toString());
-			viewDetailModel.setSurveyNo(obj[5].toString());
-			viewDetailModel.setConsultantfirm(obj[6].toString());
-			viewDetailModel.setAgencyName(obj[7].toString());
+			viewDetailModel.setTypeOfWork(obj[1].toString());
+			viewDetailModel.setNatureOfWork(obj[2].toString());
+			viewDetailModel.setWorkDetails(obj[3].toString());
+			viewDetailModel.setWorkNo(obj[4].toString());
+			viewDetailModel.setDepartmentName(obj[5]==null?"":obj[5].toString());
+			viewDetailModel.setSurveyNo(obj[6]==null?"":obj[6].toString());	
+			viewDetailModel.setConsultantfirm(obj[7]==null?"":obj[7].toString());
+			viewDetailModel.setAgencyName(obj[8]==null?"":obj[8].toString());
+			viewDetailModel.setId((obj[9] == null ? 0 : ((Integer) obj[9]).intValue()));
 			detailsList.add(viewDetailModel);
 		}
-		/* a.typeof_work ,a.natureof_work a,a.work_details,a.work_number,b.department_name,d.survey_number,e.consultant_firm,g.agency_name*/
+		
 		return detailsList;
 	}
 

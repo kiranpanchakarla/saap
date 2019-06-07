@@ -80,7 +80,7 @@
 <div id="preloader"></div>
 
 <!-- JavaScript Libraries --> 
-<script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery.min.js"></script> 
+<%--  <script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery.min.js"></script>   --%>
 <script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery-migrate.min.js"></script> 
 <script src="${pageContext.request.contextPath}/resources/lib/bootstrap/js/bootstrap.bundle.min.js"></script> 
 <script src="${pageContext.request.contextPath}/resources/lib/easing/easing.min.js"></script> 

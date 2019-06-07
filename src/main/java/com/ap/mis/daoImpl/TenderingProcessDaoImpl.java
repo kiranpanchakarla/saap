@@ -65,4 +65,10 @@ public class TenderingProcessDaoImpl implements TenderingProcessDao  {
 		return tenderingInfo;
 	}
 
+	@Override
+	public TenderingProcess getTenderDetails(int id) {
+		TenderingProcess tenderInfo=(TenderingProcess) sessionFactory.getCurrentSession().createQuery("from TenderingProcess where work.id="+id).getSingleResult();
+		return tenderInfo;
+	}
+
 }

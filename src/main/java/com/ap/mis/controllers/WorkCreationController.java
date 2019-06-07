@@ -64,9 +64,16 @@ public class WorkCreationController {
 	    return "online-mis";
 	}
 	
+	@GetMapping(value = "/view")
+	public String view(Model model, String workId) {
+		Works workInfo=misService.getWorkInfo(Integer.parseInt(workId));
+		model.addAttribute("workInfo",workInfo);
+	    return "online-mis-workCreationView";
+	}
+	
 	@GetMapping(value = "/edit")
-	public String GetInfo(Model model, String id) {
-		model.addAttribute("workObject",misService.getWorkInfo(1));
+	public String GetInfo(Model model, String workId) {
+		model.addAttribute("workObject",misService.getWorkInfo(Integer.parseInt(workId)));
 		List<TypeOfWork> typeOfWork=misService.findAll();
 		model.addAttribute("typeOfWork", typeOfWork);
 		List<NatureOfWork> natureOfWork=misService.natureOfDetails();

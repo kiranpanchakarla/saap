@@ -6,4 +6,6 @@ public interface AgreementDetailService {
 
 	AgreementDetails saveAgreementDetails(AgreementDetails agreementDetailsObj);
 
+	AgreementDetails getAgreementDetails(int id);
+
 }

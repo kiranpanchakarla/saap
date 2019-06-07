@@ -21,6 +21,7 @@ import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
+import com.ap.mis.util.ContextUtil;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -72,6 +73,19 @@ public class AdministrationController {
 		model.addAttribute("executiveDeptList", admService.getExecutiveDeptList());
 		model.addAttribute("executiveConsultantList", admService.getExecutiveConsultantList());
 	    return "online-mis-administrative-section";
+	}
+	
+	@GetMapping(value = "/view")
+	public String view(Model model, String workId,HttpServletRequest request) {
+		AdministrativeSection adminInfo = admService.getAdminDetails(Integer.parseInt(workId));
+		
+		if (adminInfo.getPath() != null && !adminInfo.getPath().equals("")) {
+			model.addAttribute("filePath",ContextUtil.populateContext(request) + adminInfo.getPath());
+		} else {
+			model.addAttribute("filePath", null);
+		}
+		model.addAttribute("adminInfo",adminInfo);
+	    return "online-mis-adminView";
 	}
 	
 	

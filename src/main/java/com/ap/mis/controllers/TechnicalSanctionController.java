@@ -65,4 +65,11 @@ public class TechnicalSanctionController {
 		session.setAttribute("loggedInUserObj", userObject);
 	    return "online-mis-technical-sanction";
 	}
+	
+	@GetMapping(value = "/view")
+	public String view(Model model, String workId) {
+		TechnicalSanction techInfo = techSanction.getTechDetails(Integer.parseInt(workId));
+		model.addAttribute("techInfo",techInfo);
+	    return "online-mis-techSanctionView";
+	}
 }

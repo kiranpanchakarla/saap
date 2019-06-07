@@ -6,4 +6,6 @@ public interface ConsultantInfoDao {
 
 	ConsultantInfo saveConsultantInfo(ConsultantInfo consultantInfoObject);
 
+	ConsultantInfo getConsultDetails(int id);
+
 }

@@ -6,4 +6,6 @@ public interface ConsultantInfoService {
 
 	ConsultantInfo saveConsultantInfo(ConsultantInfo consultantInfoObject);
 
+	ConsultantInfo getConsultDetails(int id);
+
 }

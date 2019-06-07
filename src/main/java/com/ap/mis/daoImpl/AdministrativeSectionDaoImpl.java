@@ -54,9 +54,8 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 
 	@Override
 	public FinancialYear findById(int id) {
-		FinancialYear  financialYear=new FinancialYear();
-		financialYear=(FinancialYear) sessionFactory.getCurrentSession().get(FinancialYear.class, id);
-		return financialYear;
+		
+		return (FinancialYear) sessionFactory.getCurrentSession().get(FinancialYear.class, id);
 	}
 
 	@Override
@@ -94,6 +93,30 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 	public AdministrativeSection getAdminInfo(int id) {
 		return (AdministrativeSection)sessionFactory.getCurrentSession().get(AdministrativeSection.class, id);
 	}
+
+	@Override
+	public AdministrativeSection getAdminDetails(int id) {
+		
+		/*AdministrativeSection adminInfo = null;
+		List adminList = sessionFactory.getCurrentSession()
+		        .createQuery( "from AdministrativeSection where work.id=:vallll")
+		        .setParameter("id",id)
+		       .list();
+		
+		if(adminList.size() != 0){
+			adminInfo=(AdministrativeSection) adminList.get(0);
+		}else
+			adminInfo = null;
+		return adminInfo;*/
+		
+		return (AdministrativeSection) sessionFactory.getCurrentSession()
+		        .createQuery("from AdministrativeSection where work.id="+id)
+		       .getSingleResult();
+		
+		
+	}
+	
+	
 
 	
 	

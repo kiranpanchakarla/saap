@@ -28,4 +28,11 @@ public class TechnicalSanctionDaoImpl implements TechnicalSanctionDao {
 		return techsanc;
 	}
 
+	@Override
+	public TechnicalSanction getTechDetails(int id) {
+		TechnicalSanction techDetails=null;
+		techDetails=(TechnicalSanction) sessionFactory.getCurrentSession().createQuery("from TechnicalSanction where work.id="+id).getSingleResult();
+		return techDetails;
+	}
+
 }

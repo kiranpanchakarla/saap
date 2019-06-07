@@ -20,4 +20,10 @@ public class ConsultantInfoServiceImpl implements ConsultantInfoService {
 		return constInfDao.saveConsultantInfo(consultantInfoObject);
 	}
 
+	@Override
+	public ConsultantInfo getConsultDetails(int id) {
+		
+		return constInfDao.getConsultDetails(id);
+	}
+
 }

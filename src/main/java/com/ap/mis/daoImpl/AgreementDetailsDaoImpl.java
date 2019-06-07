@@ -28,4 +28,10 @@ public class AgreementDetailsDaoImpl implements AgreementDetailsDao{
 		return agreementDetails;
 	}
 
+	@Override
+	public AgreementDetails getAgreementDetails(int id) {
+		AgreementDetails agreementDetails=(AgreementDetails) sessionFactory.getCurrentSession().createQuery("from AgreementDetails where work.id="+id).getSingleResult();
+		return agreementDetails;
+	}
+
 }

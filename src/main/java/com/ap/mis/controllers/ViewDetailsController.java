@@ -28,8 +28,8 @@ public class ViewDetailsController {
 	public String viewDetails(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
 		
 		
-		/*List<ViewDetails> viewList = viewDetailsService.getViewDetials();
-		model.addAttribute("viewList", viewList); */
+		List<ViewDetails> viewList = viewDetailsService.getViewDetials();
+		model.addAttribute("viewList", viewList); 
 		
 		return "online-mis-view";
 	}

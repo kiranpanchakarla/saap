@@ -4,16 +4,23 @@ public class ViewDetails {
 	private String typeOfWork;
 	private String natureOfWork;
 	private String nameOfWork;
-	private int workNo;
+	private String  workNo;
 	private String surveyNo;
 	private String workDetails;
 	private String departmentName;
 	private String consultantfirm;
 	private String agencyName;
-	/* a.typeof_work ,a.natureof_work a,a.work_details,a.work_number,b.department_name,d.survey_number,e.consultant_firm,g.agency_name*/
+	private Integer id;
 	
 	
 	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getTypeOfWork() {
 		return typeOfWork;
 	}
@@ -56,10 +63,11 @@ public class ViewDetails {
 	public void setNameOfWork(String nameOfWork) {
 		this.nameOfWork = nameOfWork;
 	}
-	public int getWorkNo() {
+	
+	public String getWorkNo() {
 		return workNo;
 	}
-	public void setWorkNo(int workNo) {
+	public void setWorkNo(String workNo) {
 		this.workNo = workNo;
 	}
 	public String getSurveyNo() {
@@ -68,10 +76,7 @@ public class ViewDetails {
 	public void setSurveyNo(String surveyNo) {
 		this.surveyNo = surveyNo;
 	}
-	@Override
-	public String toString() {
-		return "ViewDetails [typeOfWork=" + typeOfWork + ", natureOfWork=" + natureOfWork + ", nameOfWork=" + nameOfWork
-				+ ", workNo=" + workNo + ", surveyNo=" + surveyNo + ", workDetails=" + workDetails + ", departmentName="
-				+ departmentName + ", consultantfirm=" + consultantfirm + ", agencyName=" + agencyName + "]";
-	}
+	
+	
+
 }

@@ -53,4 +53,11 @@ public class ConsultantInfoController {
 		session.setAttribute("loggedInUserObj", userObject);
 	    return "online-mis-consultant-information";
 	}
+	
+	@GetMapping(value = "/view")
+	public String view(Model model, String workId) {
+		ConsultantInfo consultInfo = constInfoService.getConsultDetails(Integer.parseInt(workId));
+		model.addAttribute("consultInfo",consultInfo);
+	    return "online-mis-consultInfoView";
+	}
 }

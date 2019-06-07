@@ -18,7 +18,17 @@ public class ViewDetailsDaoImpl implements  ViewDetailsDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getViewDetials() {
-	List<Object[]> details=sessionFactory.getCurrentSession().createQuery("select a.typeof_work,a.natureof_work,a.work_details,a.work_number,b.department_name,d.survey_number,e.consultant_firm,g.agency_name from Works a,administrative_section b,department_linking_line c,land_details d,consultant_info e,technicalsanction f,tendering_process g where a.id=b.work_id and a.id=c.work_id and a.id=d.work_id and a.id=e.work_id and a.id=f.work_id and a.id=g.work_id").list();
+	List<Object[]> details=sessionFactory.getCurrentSession().
+			createQuery("select distinct(a.id),d.name,e.name,a.workDetails,a.workNo,f.departmentName,g.surveyNo,h.consultant_firm,j.name,a.id from Works a\r\n" + 
+			"left join AdministrativeSection b on a.id = b.work\r\n" + 
+			"left join TypeOfWork d on a.typeOfWork = d.id\r\n" + 
+			"left join NatureOfWork e on a.natureOfWork=e.id\r\n" + 
+			"left join DepartmentLinkingLine f on a.id=f.work\r\n" + 
+			"left join LandDetails g on a.id=g.work\r\n" + 
+			"left join ConsultantInfo h on a.id=h.work\r\n" + 
+			"left join TenderingProcess i on a.id=i.work\r\n" + 
+			"left join Agency j on  i.angencyName=j.id order by a.id desc").list();
+
 		return details;
 	}
 

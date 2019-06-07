@@ -29,4 +29,11 @@ public class ConsultantInfoDaoImpl implements ConsultantInfoDao{
 		return consultantInfo;
 	}
 
+	@Override
+	public ConsultantInfo getConsultDetails(int id) {
+		ConsultantInfo consultInfo=null;
+		consultInfo=(ConsultantInfo) sessionFactory.getCurrentSession().createQuery("from ConsultantInfo where work.id="+id).getSingleResult();
+		return consultInfo;
+	}
+
 }

@@ -60,6 +60,13 @@ public class LineDepartmentDaoImpl implements LineDepartmentDao {
 	public DepartmentLinkingLine getDeptInfo(int id) {
 		return (DepartmentLinkingLine)sessionFactory.getCurrentSession().get(DepartmentLinkingLine.class, id);
 	}
+
+	@Override
+	public DepartmentLinkingLine getdepartDetails(int id) {
+		DepartmentLinkingLine departInfo=null;
+		departInfo=(DepartmentLinkingLine) sessionFactory.getCurrentSession().createQuery("from DepartmentLinkingLine where work.id="+id).getSingleResult();
+		return departInfo;
+	}
 	
 
 }

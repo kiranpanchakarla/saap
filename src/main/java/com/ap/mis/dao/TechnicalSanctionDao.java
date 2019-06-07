@@ -6,4 +6,6 @@ public interface TechnicalSanctionDao {
 
 	TechnicalSanction saveTechSanction(TechnicalSanction techsanc);
 
+	TechnicalSanction getTechDetails(int id);
+
 }

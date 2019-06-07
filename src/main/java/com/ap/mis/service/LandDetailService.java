@@ -20,5 +20,6 @@ public interface LandDetailService {
 	public  Section findBySectionId(int id);
 	public LandDetails landDetailsSave(LandDetails landDetails, MultipartFile file);
 	public LandDetails getLandinfo(int id);
+	public LandDetails getLandDetails(int id);
 
 }

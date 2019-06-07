@@ -16,4 +16,10 @@ public class AgreementDetailServiceImpl implements AgreementDetailService{
 		return agreeDetailsDao.saveAgreementDetails(agreementDetails);
 	}
 
+	@Override
+	public AgreementDetails getAgreementDetails(int id) {
+		
+		return agreeDetailsDao.getAgreementDetails(id);
+	}
+
 }

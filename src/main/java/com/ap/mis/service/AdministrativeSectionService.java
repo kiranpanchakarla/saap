@@ -35,4 +35,6 @@ public interface AdministrativeSectionService {
 
 	public AdministrativeSection getAdminInfo(int id);
 
+	public AdministrativeSection getAdminDetails(int id);
+
 }

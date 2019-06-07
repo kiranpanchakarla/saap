@@ -62,4 +62,12 @@ public class AgreementDetailsController {
 		return "online-mis-agreement-details";
 	}
 	
+	@GetMapping(value = "/view")
+	public String view(Model model, String workId) {
+		AgreementDetails  agreementInfo = agreeDetailsService.getAgreementDetails(Integer.parseInt(workId));
+		model.addAttribute("agreementInfo",agreementInfo);
+	    return "online-mis-agreementView";
+		 
+	}
+	
 }

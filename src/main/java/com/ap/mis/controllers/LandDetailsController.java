@@ -132,4 +132,17 @@ public class LandDetailsController {
 		model.addAttribute("LandTypeList", landDetailService.getLandTypeList());
 		return "online-mis-land-details";
 	}
+	
+	
+	@GetMapping(value = "/view")
+	public String view(Model model, String workId,HttpServletRequest request) {
+		LandDetails landInfo = landDetailService.getLandDetails(Integer.parseInt(workId));
+		if (landInfo.getPath() != null && !landInfo.getPath().equals("")) {
+			model.addAttribute("filePath",ContextUtil.populateContext(request) + landInfo.getPath());
+		} else {
+			model.addAttribute("filePath", null);
+		}
+		model.addAttribute("landInfo",landInfo);
+	    return "online-mis-landDetailsView";
+	}
 }

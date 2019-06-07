@@ -17,4 +17,10 @@ public class TechnicalSanctionServiceimpl implements TechnicalSanctionService{
 		return techsancDao.saveTechSanction(techsanc);
 	}
 
+	@Override
+	public TechnicalSanction getTechDetails(int id) {
+		
+		return techsancDao.getTechDetails(id);
+	}
+
 }

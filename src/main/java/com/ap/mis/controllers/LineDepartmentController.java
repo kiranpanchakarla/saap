@@ -30,7 +30,7 @@ public class LineDepartmentController {
 	@Autowired
 	LandDetailService landDetailService;
 	@Autowired
-	LineDepartmentService LineDepartService;
+	LineDepartmentService lineDepartService;
 
 	@PostMapping(value = "/save")
 	public String lineDepatmentSave(@ModelAttribute DepartmentLinkingLine lineDeptObj, Model model,
@@ -42,7 +42,7 @@ public class LineDepartmentController {
 		session.setAttribute("workInfo", workInfo);
 		
 		lineDeptObj.setUser(loggedInUser);
-		LineDepartService.departmentLinkingLineSave(lineDeptObj);
+		lineDepartService.departmentLinkingLineSave(lineDeptObj);
 		
 		WorktoLandDetails obj = new WorktoLandDetails();
         obj = (WorktoLandDetails) session.getAttribute("generalInfo");
@@ -59,9 +59,16 @@ public class LineDepartmentController {
 	    model.addAttribute("lineDeptObj", new DepartmentLinkingLine());
 		session.setAttribute("loggedInUserObj", userObject);
 		session.getAttribute("workInfo");
-		model.addAttribute("divisionList", LineDepartService.getDivisionList());
-		model.addAttribute("subdivisionList", LineDepartService.getSubdivisionList());
-		model.addAttribute("sectionList", LineDepartService.getSectionList());
+		model.addAttribute("divisionList", lineDepartService.getDivisionList());
+		model.addAttribute("subdivisionList", lineDepartService.getSubdivisionList());
+		model.addAttribute("sectionList", lineDepartService.getSectionList());
 	    return "online-mis-line-department";
+	}
+	
+	@GetMapping(value = "/view")
+	public String view(Model model, String workId) {
+		DepartmentLinkingLine departInfo = lineDepartService.getdepartDetails(Integer.parseInt(workId));
+		model.addAttribute("deptInfo",departInfo);
+	    return "online-mis-departView";
 	}
 }

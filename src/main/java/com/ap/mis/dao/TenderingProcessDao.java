@@ -12,4 +12,5 @@ public interface TenderingProcessDao {
 	public List<Agency> getAgencyList();
 	public TenderingProcess saveTenderingProcess(TenderingProcess tenderingProcess);
 	public TenderingProcess getTenderingInfo(int tenderingId);
+	public TenderingProcess getTenderDetails(int id);
 }

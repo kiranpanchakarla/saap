@@ -64,4 +64,11 @@ public class LandDetailDaoImpl implements LandDetailDao {
 
 	}
 
+	@Override
+	public LandDetails getLandDetails(int id) {
+		LandDetails landInfo=null;
+		landInfo=(LandDetails)sessionFactory.getCurrentSession().createQuery("from LandDetails where work.id="+id).getSingleResult();
+		return landInfo;
+	}
+
 }
