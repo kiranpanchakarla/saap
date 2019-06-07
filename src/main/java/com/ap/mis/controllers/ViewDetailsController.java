@@ -33,6 +33,9 @@ public class ViewDetailsController {
 		
 		return "online-mis-view";
 	}
+	
+	
+	
 
 }
 

@@ -36,6 +36,7 @@ public interface MISService {
 	public List<Mandal> mandalDetails(int PlaceId);
 	public List<Village> villageDetails(int PlaceId);
 
+	public Works updateWork(Works work);
 
 	/*public TenderingProcess getTenderingInfo(int tenderingId);*/
 	

@@ -212,6 +212,17 @@ public class MISDaoImpl implements MISdao {
 		}
 		return workInfo;
 	}
+
+
+
+
+
+
+	@Override
+	public Works updateWork(Works work) {
+		sessionFactory.getCurrentSession().update(work);
+		return  work; 
+	}
 	
 	
 	/*@Override

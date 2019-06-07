@@ -27,7 +27,7 @@ public class ViewDetailsDaoImpl implements  ViewDetailsDao{
 			"left join LandDetails g on a.id=g.work\r\n" + 
 			"left join ConsultantInfo h on a.id=h.work\r\n" + 
 			"left join TenderingProcess i on a.id=i.work\r\n" + 
-			"left join Agency j on  i.angencyName=j.id order by a.id desc").list();
+			"left join Agency j on  i.angencyName=j.id where a.isActive='true' order by a.id desc").list();
 
 		return details;
 	}

@@ -80,4 +80,11 @@ public class WorkCreationController {
 		model.addAttribute("natureOfWork", natureOfWork);
 		return "online-mis";
 	}
+	
+	@GetMapping(value = "/delete")
+	public String delete(Model model, String workId) {
+		Works workInfo=misService.getWorkInfo(Integer.parseInt(workId));
+		misService.updateWork(workInfo);
+	    return "redirect:/adminloggedin";
+	}
 }

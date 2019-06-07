@@ -66,6 +66,18 @@ public class Works implements Serializable {
 	@OneToOne(targetEntity = User.class)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
+	
+	@Column(name="is_active")
+	private Boolean isActive = true;
+	
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 
 	public TypeOfWork getTypeOfWork() {
 		return typeOfWork;

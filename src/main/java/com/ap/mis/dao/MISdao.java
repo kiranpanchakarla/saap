@@ -35,6 +35,8 @@ public interface MISdao {
 	public List<Constituency> constituencyDetails(int placeId);
 	public List<Mandal> mandalDetails(int placeId);
 	public List<Village> villageDetails(int placeId);
+	
+	public Works updateWork(Works work);
 
 	
 	

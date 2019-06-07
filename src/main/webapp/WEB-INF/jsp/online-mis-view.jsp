@@ -79,7 +79,7 @@
 														    <td>${viewDetails.agencyName}</td>
 														   <td> <a class="btn btn-edit"  href="<c:url value="/worksCreation/edit?workId=${viewDetails.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
                                                                                 class="glyphicon glyphicon-pencil left"></i></a>
-                                                                 <a class="btn btn-delete" href="#"
+                                                                 <a class="btn btn-delete" href="<c:url value="/worksCreation/delete?workId=${viewDetails.id}"/>"
                                                                         onclick="" data-toggle="tooltip" data-placement="top" title="Delete"><i
                                                                             class="glyphicon glyphicon-trash left"></i></a> 
                                                                   <a class="btn btn-view"
