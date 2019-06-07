@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +50,8 @@
     <div class="col-md-12">
     
      <c:url value="/technicalSanction/save" var="createUrl" />
-      <form id="msform" method="POST" action="${createUrl}"  modelAttribute="techsanc" >
+      <%-- <form id="msform" method="POST" action="${createUrl}"  modelAttribute="techsanc" > --%>
+      <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="techsanc" >  
       <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />   
             
             <!-- fieldsets -->
@@ -58,35 +61,35 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of Work <span class="red">*</span></p></li>
-                <li><input type="text" id="natureOfWork" name="natureOfWork" placeholder="Nature of Work" class="form-control mb-md" readonly value="${workInfo.natureOfWork.name}">
+                <li><form:input type="text" id="natureOfWork" path="natureOfWork" placeholder="Nature of Work" class="form-control mb-md" readOnly="true" value="${workInfo.natureOfWork.name}"/>
                 <span id="workErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Work Number <span class="red">*</span></p></li>
-                <li><input type="text" id="workNumber" name="workNumber" class="form-control mb-md" readonly value="${workInfo.workNo}">
+                <li><form:input type="text" id="workNumber" path="workNumber" class="form-control mb-md" readOnly="true" value="${workInfo.workNo}"/>
                 <span id="workNumberErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Work<span class="red">*</span></p></li>
-                <li><input type="text" id="workName" name="workName" class="form-control mb-md" readonly value="${workInfo.workDetails}">
+                <li><form:input type="text" id="workName" path="workName" class="form-control mb-md" readOnly="true" value="${workInfo.workDetails}"/>
                 <span id="workNameErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Technical Sanction No <span class="red">*</span></p></li>
-                <li><input type="text" id="techSanction_no"name="techSanction_no" placeholder="Transaction Number" maxlength="9">
+                <li><form:input type="text" id="techSanction_no" path="techSanction_no" placeholder="Transaction Number" maxlength="9"/>
                 <span id="techSanction_noErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Date <span class="red">*</span></p></li>
-				<li><input  type="date" name="date" id="date" placeholder="DD/MM/YYYY" >               	
+				<li><form:input  type="date" path="date" id="date" placeholder="DD/MM/YYYY" />               	
  				<span id="dateErr" class="errors" style="color:red;float:right;"></span>
                	</li>
                	</ul>
@@ -94,7 +97,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Amount<span class="red">*</span></p></li>
-                <li><input type="text" id="amount" name="amount"  placeholder="Amount" maxlength="9">
+                <li><form:input type="text" id="amount" path="amount"  placeholder="Amount" maxlength="9"/>
                 <span id="amountErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -105,7 +108,7 @@
                 
             </fieldset>
              <input type="hidden" id="workid" name="work.id" value="${workInfo.id}"> 
-        </form>
+        </form:form>
         
         
     </div>

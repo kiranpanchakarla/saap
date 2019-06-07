@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -46,7 +48,8 @@
     <div class="col-md-12">
    
     <c:url value="/tenderProcess/save" var="createUrl" />
-      <form id="msform" method="POST" action="${createUrl}" modelAttribute="tenderingProcessObj"  enctype="multipart/form-data" >
+      <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="tenderingProcessObj"  enctype="multipart/form-data" >
+      
       <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />   
      
             <!-- fieldsets -->
@@ -56,35 +59,35 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Work <span class="red">*</span></p></li>
-                <li><input type="text" id="workName" name="workName" class="form-control mb-md" readonly value="${workInfo.workDetails}">
+                <li><form:input type="text" id="workName" path="workName" class="form-control mb-md" readonly="true" value="${workInfo.workDetails}"/>
                 <span id="workNameErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Work Number <span class="red">*</span></p></li>
-                <li><input type="text" id="workNumber" name="workNumber" class="form-control mb-md" readonly value="${workInfo.workNo}">
+                <li><form:input type="text" id="workNumber" path="workNumber" class="form-control mb-md" readonly="true" value="${workInfo.workNo}"/>
                 <span id="workNumberErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Date of Preparation of IFB<span class="red">*</span></p></li>
-                <li><input type="date" id="ifbPreperationDate" name="ifbPreperationDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
+                <li><form:input type="date" id="ifbPreperationDate" path="ifbPreperationDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
                 <span id="ifbPreperationDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Tender Notice Number<span class="red">*</span></p></li>
-                <li><input type="text" id="tenderNoticeNumber" name="tenderNoticeNumber" class="form-control mb-md" placeholder="Tender Notice Number">
+                <li><form:input type="text" id="tenderNoticeNumber" path="tenderNoticeNumber" class="form-control mb-md" placeholder="Tender Notice Number"/>
                 <span id="tenderNoticeNumberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Tender Notice Issued date   <span class="red">*</span></p></li>
-                <li><input type="date" id="tenderNoticeIssuedDate" name="tenderNoticeIssuedDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
+                <li><form:input type="date" id="tenderNoticeIssuedDate" path="tenderNoticeIssuedDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
                <span id="tenderNoticeIssuedDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -92,12 +95,12 @@
                <ul class="fs-list-details">
                 <li><p>Notice issuing authorities (SE/CE/ENC)  <span class="red">*</span></p></li>
                 <li>                                          
-                 <select id="noticeIssuingAuthorities" name="noticeIssuingAuthorities.id">
-					<option value="" selected="" disabled="">--Select Authorities --</option>
+                 <form:select id="noticeIssuingAuthorities" path="noticeIssuingAuthorities.id">
+					<form:option value="" selected="" disabled="">--Select Authorities --</form:option>
 					<c:forEach  var="auth" items="${authoritiesTypeList}">
-					<option value="${auth.id}">${auth.name}</option>
+					<form:option value="${auth.id}">${auth.name}</form:option>
 					</c:forEach>
-				</select>	       
+				</form:select>	       
 				<span id="noticeIssuingAuthoritiesErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -111,21 +114,21 @@
                 
                 <ul class="fs-list-details">
                 <li><p>English Newspaper name </p></li>
-                <li><input type="text" name="englishNewspaperName" id="englishNewspaperName" class="charcterId form-control mb-md" placeholder="English Newspaper name">
+                <li><form:input type="text" path="englishNewspaperName" id="englishNewspaperName" class="charcterId form-control mb-md" placeholder="English Newspaper name"/>
                <span id="englishNewspaperNameErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul> 
                
                <ul class="fs-list-details">
                 <li><p>Date </p></li>
-                <li><input type="date" name="engNewsPaperDate" id="engNewsPaperDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
+                <li><form:input type="date" path="engNewsPaperDate" id="engNewsPaperDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
                 <span id="engNewsPaperDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - English (pdf/jpg/png) </p></li>
-                <li><input type="file" name="engfile" id="englishPaperCopyLocationFile" class="form-control mb-md"  >
+                <li><input type="file" name="engfile" id="englishPaperCopyLocationFile" class="form-control mb-md">
                  <span id="file_error1" class="errors" style="color:red;float:right;"></span>
                 
                </li>
@@ -134,14 +137,14 @@
                
                <ul class="fs-list-details">
                 <li><p>Telugu Newspaper name </p></li>
-                <li><input type="text" name="teluguNewspaperName" id="teluguNewspaperName" class="charcterId form-control mb-md" placeholder="Telugu Newspaper name">
+                <li><form:input type="text" path="teluguNewspaperName" id="teluguNewspaperName" class="charcterId form-control mb-md" placeholder="Telugu Newspaper name"/>
                <span id="teluguNewspaperNameErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                 <ul class="fs-list-details">
                 <li><p>Date </p></li>
-                <li><input type="date" name="telNewspaperDate" id="telNewspaperDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
+                <li><form:input type="date" path="telNewspaperDate" id="telNewspaperDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
                <span id="telNewspaperDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -149,56 +152,56 @@
             
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - Telugu (pdf/jpg/png)</p></li>
-                <li><input type="file" name="telugufile" id="teluguPaperCopyLocationFile" class="form-control mb-md">
+                <li><input type="file" name="telugufile" id="teluguPaperCopyLocationFile" class="form-control mb-md"/>
                <span id="file_error2" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                  <ul class="fs-list-details">
                 <li><p>Bid Start Date</p></li>
-                <li><input type="date" name="bidStrartDate" id="bidStrartDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
+                <li><form:input type="date" path="bidStrartDate" id="bidStrartDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
                <span id="bidStrartDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Bid Closing Date</p></li>
-                <li><input type="date" name="bidClosingDate" id="bidClosingDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
+                <li><form:input type="date" path="bidClosingDate" id="bidClosingDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
                <span id="bidClosingDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Bid Opening Date </p></li>
-                <li><input type="date" name="bidOpeningDate" id="bidOpeningDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
+                <li><form:input type="date" path="bidOpeningDate" id="bidOpeningDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
                 <span id="bidOpeningDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
               
                <ul class="fs-list-details">
                 <li><p>No of Bids received through Online</p></li>
-                <li><input type="text" id="bidsReceived" name="bidsReceived"  class="numberId form-control mb-md" placeholder="No of Bids">
+                <li><form:input type="text" id="bidsReceived" path="bidsReceived"  class="numberId form-control mb-md" placeholder="No of Bids"/>
                 <span id="bidsReceivedErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>No of Bidders Submitted Hard Copy</p></li>
-                <li><input type="text" id="hardCopiesSubmitted" name="hardCopiesSubmitted"  class="numberId form-control mb-md" placeholder="No of Bidders">
+                <li><form:input type="text" id="hardCopiesSubmitted" path="hardCopiesSubmitted"  class="numberId form-control mb-md" placeholder="No of Bidders"/>
                 <span id="hardCopiesSubmittedErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>No of Bids qualified for Opening of Price Bid</p></li>
-                <li><input type="text" name="bidsForPriceBid"  class="numberId form-control mb-md" id="noofBidsQualified" placeholder="No of Bids">
+                <li><form:input type="text" path="bidsForPriceBid"  class="numberId form-control mb-md" id="noofBidsQualified" placeholder="No of Bids"/>
                  <span id="bidsForPriceBidErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                 <ul class="fs-list-details">
                 <li><p>Date of Evaluation Completed</p></li>
-                <li><input type="date"  id="dateOfEvaluationCompleted" name="dateOfEvaluationCompleted" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
+                <li><form:input type="date"  id="dateOfEvaluationCompleted" path="dateOfEvaluationCompleted" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
                 <span id="dateOfEvaluationCompletedErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -207,37 +210,37 @@
                
                <ul class="fs-list-details">
                 <li><p>Estimated Contract Value (in Rs.)<span class="red">*</span></p></li>
-                <li><input type="text"  id="contractValue" name="contractValue" class="form-control mb-md" maxlength="9" value="" placeholder="Estimated Contract Value">
+                <li><form:input type="text"  id="contractValue" path="contractValue" class="form-control mb-md" maxlength="9" value="" placeholder="Estimated Contract Value"/>
                 <span id="contractValueErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Contract Value quoted By L1 Bidder<span class="red">*</span></p></li>
-                <li><input type="text" id="contractValueByL1Bidder"  name="contractValueByL1Bidder" maxlength="9" value="" class="form-control mb-md" >
+                <li><form:input type="text" id="contractValueByL1Bidder"  path="contractValueByL1Bidder" maxlength="9" value="" class="form-control mb-md" />
                 <span id="contractValueByL1BidderErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                   <ul class="fs-list-details">
                 <li><p>Percentage quoted Less / Excess<span class="red">*</span></p></li>
-                <li><input type="text"  id="percentageQuoted" name="percentageQuoted" maxlength="9" value="" class="charcterId form-control mb-md">
+                <li><form:input type="text"  id="percentageQuoted" path="percentageQuoted" maxlength="9" value="" class="charcterId form-control mb-md"/>
                 <span id="percentageQuotedErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                    <ul class="fs-list-details fs-list-full">
                 <li><p>Check Bid Status</p></li>
-                <li><p><input type="radio" checked="checked" name="bidStatus" value="In Process">In Process</p>
-                <p><input type="radio" name="bidStatus"  value="Bid Accepted">Bid Accepted</p>
-                <p><input type="radio" name="bidStatus"  value="Bid Rejected">Bid Rejected</p>
+                <li><p><form:radiobutton checked="checked" path="bidStatus" value="In Process"/>In Process</p>
+                <p><form:radiobutton path="bidStatus"  value="Bid Accepted"/>Bid Accepted</p>
+                <p><form:radiobutton path="bidStatus"  value="Bid Rejected"/>Bid Rejected</p>
                  <span id="bidStatusErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Date of LOA Issued to Contractor</p></li>
-                <li><input type="date" name="dateOfLoaIssued" id="dateOfLoaIssued"  class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY">
+                <li><form:input type="date" path="dateOfLoaIssued" id="dateOfLoaIssued"  class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
                 <span id="dateOfLoaIssuedErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -246,61 +249,14 @@
                <ul class="fs-list-details">
                 <li><p> Name of the agency <span class="red">*</span> </p></li>
                 <li>
-<!--                 <select id="agencyName" name="angencyName" class="form-control mb-md">
-                     <option disabled="" selected="" value=""> -- select Agency -- </option>
-			              <option value="M/s Sundeep Ravindra Engineers and Contractors">M/s Sundeep Ravindra Engineers and Contractors</option>
-			              <option value="M/s GDR Infratech formerly M/s Dorayya & co">M/s GDR Infratech formerly M/s Dorayya &amp; co</option>
-			              <option value="M/s Vinayaka Constructions, Ubalanka">M/s Vinayaka Constructions, Ubalanka</option>
-			              <option value="M/s Jakson Limited in JV with M/s Jakson Engineers Limited">M/s Jakson Limited in JV with M/s Jakson Engineers Limited</option>
-			              <option value="M/s Sri Maruthi Constructions">M/s Sri Maruthi Constructions</option>
-			              <option value="Sri G. Hemanth Reddy">Sri G. Hemanth Reddy</option>
-			              <option value="M/S G R CONSTRUCTIONS">M/S G R CONSTRUCTIONS</option>
-			              <option value="M/s Sri Srinivasa Constructions  Alwar Street Bobbili VZNM Dist.">M/s Sri Srinivasa Constructions  Alwar Street Bobbili VZNM Dist.</option>
-			              <option value="Sri. K. Sekhar Babu">Sri. K. Sekhar Babu</option>
-			              <option value="M/S IR Constructions">M/S IR Constructions</option>
-			              <option value="A.Kasivisweswara Rao">A.Kasivisweswara Rao</option>
-			              <option value="NSN Reddy & Co">NSN Reddy&amp;Co</option>
-			              <option value="P Nageswara Rao">P Nageswara Rao</option>
-			              <option value="M/s Ramanaiah Constructions">M/s Ramanaiah Constructions</option>
-			              <option value="Sri G. Hemanth Reddy of Tirupati">Sri G. Hemanth Reddy of Tirupati</option>
-			              <option value="M/s Vyshno Construction">M/s Vyshno Construction</option>
-			              <option value="T.Ramakrishna Raju">T.Ramakrishna Raju</option>
-			              <option value="M/s Sri Rajyalakshmi Constructions">M/s Sri Rajyalakshmi Constructions</option>
-			              <option value="M/S GRG Projects">M/S GRG Projects</option>
-			              <option value="M/s K.L.R. Constructions of Rajahmundry">M/s K.L.R. Constructions of Rajahmundry</option>
-			              <option value="M/s K.S.R. Constructions of Srikakulam">M/s K.S.R. Constructions of Srikakulam</option>
-			              <option value="P Satyanarayana Reddy">P Satyanarayana Reddy</option>
-			              <option value="A Kasivisweswara Rao">A Kasivisweswara Rao</option>
-			              <option value="M/s Kalyani Constructions">M/s Kalyani Constructions</option>
-			              <option value="N.CH. Pulla Rao">N.CH. Pulla Rao</option>
-			              <option value="Sri. K. Jagannadham">Sri. K. Jagannadham</option>
-			              <option value="M/s Larsen & Toubro Limited, Chennai">M/s Larsen &amp; Toubro Limited, Chennai</option>
-			              <option value="M/s SVS Mookambika Constructions Pvt. Ltd.,">M/s SVS Mookambika Constructions Pvt. Ltd.,</option>
-			              <option value="M/s Sri Shiridi Sai Balaji Constructions of Srikakulam">M/s Sri Shiridi Sai Balaji Constructions of Srikakulam</option>
-			              <option value="M Anjaneya Reddy">M Anjaneya Reddy</option>
-			              <option value="Sri G.Chinnam Naidu Special Class ( Civil) Contractor">Sri G.Chinnam Naidu Special Class ( Civil) Contractor </option>
-			              <option value="M/s Tirumala Constructions">M/s Tirumala Constructions</option>
-			              <option value="T Rama krishna Raju">T Rama krishna Raju</option>
-			              <option value="M/s Vijai Electricals Limited, Hyderabad">M/s Vijai Electricals Limited, Hyderabad</option>
-			              <option value="M/s IR Constructions of Visakhapatnam">M/s IR Constructions of Visakhapatnam</option>
-			              <option value="M/s Vijayalakshmi Constructions of Srikakulam">M/s Vijayalakshmi Constructions of Srikakulam</option>
-			              <option value="M/s Sri Venkateswara Constructions">M/s Sri Venkateswara Constructions</option>
-			              <option value="Srinivasa Infrastructure Private Ltd.">Srinivasa Infrastructure Private Ltd.</option>
-			              <option value="M/s Srinivasareddy Constructions">M/s Srinivasareddy Constructions</option>
-			              <option value="M/s K.A.Prasada Raju, Special Class  Civil Contractor">M/s K.A.Prasada Raju, Special Class  Civil Contractor </option>
-			              <option value="M/S Blossom Infraventures Pvt Ltd Hyderabad">M/S Blossom Infraventures Pvt Ltd Hyderabad</option>
-			              <option value="K Koteswara Reddy">K Koteswara Reddy</option>
-			              <option value="M/s Srinivasa Edifice Private Limited of Vijayawada">M/s Srinivasa Edifice Private Limited of Vijayawada</option>
-			              <option value="M/s Bhavani Constructions">M/s Bhavani Constructions</option>
-			          
-                     </select>
- -->                     
-                <select id="agencyName" name="angencyName.id" class="form-control mb-md">
-					<option value="" selected="" disabled="">--Select Agency --</option>
+                     
+                <form:select id="agencyName" path="angencyName.id" class="form-control mb-md">
+					<form:option value="" selected="" disabled="">--Select Agency --</form:option>
 					<c:forEach  var="agency" items="${agencyList}">
-					<option value="${agency.id}">${agency.name}</option>
+					<form:option value="${agency.id}">${agency.name}</form:option>
 					</c:forEach>
-				</select>
+				</form:select>
+				
 				<span id="agencyNameErr" class="errors" style="color:red;float:right;"></span>
                	</li>
                	</ul>
@@ -309,7 +265,7 @@
                 
             </fieldset>
             <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">
-        </form>
+         </form:form>
     </div>
 </div>
 <!-- /.MultiStep Form -->

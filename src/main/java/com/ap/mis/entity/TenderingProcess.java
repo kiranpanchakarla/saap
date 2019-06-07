@@ -118,6 +118,27 @@ public class TenderingProcess {
 
 	@Column(name = "telUpload")
 	private String telUpload;
+	
+	private transient String workNumber;
+	
+	private transient String workName;
+
+	
+	public String getWorkNumber() {
+		return workNumber;
+	}
+
+	public void setWorkNumber(String workNumber) {
+		this.workNumber = workNumber;
+	}
+
+	public String getWorkName() {
+		return workName;
+	}
+
+	public void setWorkName(String workName) {
+		this.workName = workName;
+	}
 
 	public String getEngUpload() {
 		return engUpload;

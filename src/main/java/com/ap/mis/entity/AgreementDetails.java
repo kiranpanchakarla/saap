@@ -55,6 +55,59 @@ public class AgreementDetails {
 	@OneToOne(targetEntity = Works.class)
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
+	
+    private transient String natureOfWork;
+	
+	private transient String workNo;
+	
+	private transient String contratorName;
+	
+	private transient double bgAmount;
+	
+	@OneToOne(targetEntity = TenderingProcess.class)
+	   @JoinColumn(name = "tender_id", referencedColumnName = "id")
+	   private TenderingProcess tenderingProcess;
+
+	   public TenderingProcess getTenderingProcess() {
+	       return tenderingProcess;
+	   }
+
+	   public void setTenderingProcess(TenderingProcess tenderingProcess) {
+	       this.tenderingProcess = tenderingProcess;
+	   }
+	
+
+	public String getNatureOfWork() {
+		return natureOfWork;
+	}
+
+	public void setNatureOfWork(String natureOfWork) {
+		this.natureOfWork = natureOfWork;
+	}
+
+	public String getWorkNo() {
+		return workNo;
+	}
+
+	public void setWorkNo(String workNo) {
+		this.workNo = workNo;
+	}
+
+	public String getContratorName() {
+		return contratorName;
+	}
+
+	public void setContratorName(String contratorName) {
+		this.contratorName = contratorName;
+	}
+
+	public double getBgAmount() {
+		return bgAmount;
+	}
+
+	public void setBgAmount(double bgAmount) {
+		this.bgAmount = bgAmount;
+	}
 
 	public Integer getId() {
 		return id;

@@ -37,6 +37,38 @@ public class TechnicalSanction implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
+	
+	private transient String natureOfWork;
+	
+	private transient String workNumber;
+	
+	private transient String workName;
+	
+	
+
+	public String getNatureOfWork() {
+		return natureOfWork;
+	}
+
+	public void setNatureOfWork(String natureOfWork) {
+		this.natureOfWork = natureOfWork;
+	}
+
+	public String getWorkNumber() {
+		return workNumber;
+	}
+
+	public void setWorkNumber(String workNumber) {
+		this.workNumber = workNumber;
+	}
+
+	public String getWorkName() {
+		return workName;
+	}
+
+	public void setWorkName(String workName) {
+		this.workName = workName;
+	}
 
 	public Integer getId() {
 		return id;
