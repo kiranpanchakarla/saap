@@ -23,7 +23,13 @@ public class LandDetails implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	private Integer id;
-
+ 
+	private transient String natureofwork;
+	
+	private transient String worknum;
+	
+	private transient String nameofwork;
+	
 	@Column(name = "field_measurement_bk_details")
 	private String bookDetails;
 
@@ -110,6 +116,30 @@ public class LandDetails implements Serializable {
 
 	public void setWork(Works work) {
 		this.work = work;
+	}
+
+	public String getNatureofwork() {
+		return natureofwork;
+	}
+
+	public void setNatureofwork(String natureofwork) {
+		this.natureofwork = natureofwork;
+	}
+
+	public String getWorknum() {
+		return worknum;
+	}
+
+	public void setWorknum(String worknum) {
+		this.worknum = worknum;
+	}
+
+	public String getNameofwork() {
+		return nameofwork;
+	}
+
+	public void setNameofwork(String nameofwork) {
+		this.nameofwork = nameofwork;
 	}
 
 	@Override

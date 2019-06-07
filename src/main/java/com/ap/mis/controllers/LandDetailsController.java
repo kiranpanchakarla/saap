@@ -120,4 +120,16 @@ public class LandDetailsController {
 		return "online-mis-consultant-information";
 
 	}
+	
+	@GetMapping(value = "/create")
+	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		userObject = SecurityUtil.getLoggedUser();
+	    userObject =misService.verifyUser(userObject);
+	    model.addAttribute("landDetails", new LandDetails());
+		session.setAttribute("loggedInUserObj", userObject);
+		session.getAttribute("workInfo");
+		model.addAttribute("LandTypeList", landDetailService.getLandTypeList());
+		return "online-mis-land-details";
+	}
 }

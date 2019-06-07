@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +56,7 @@
      <div class="row">
     <div class="col-md-12">
     <c:url value="/administrativeSection/save" var="createUrl" />
-        <form id="msform" method="post" action="${createUrl}"  modelAttribute="adminSecObject" enctype="multipart/form-data">
+        <form:form id="msform" method="POST" action="${createUrl}"  modelAttribute="adminSecObject" enctype="multipart/form-data">
            
            <input type="hidden" name="${_csrf.parameterName}"
             value="${_csrf.token}" />
@@ -65,46 +67,46 @@
                 <h2 class="fs-title">Administrative Section</h2>
                 <ul class="fs-list-details">
                 <li><p>Name of Work <span class="red">*</span></p></li>
-                <li><input type="text" id="workName" name="workName"  class="form-control mb-md" readonly value="${workInfo.workDetails}">
+                <li>
+                <form:input type="text" id="workName" path="workName"  class="form-control mb-md" readonly="true" value="${workInfo.workDetails}"/>
                 <span id="workNameErr" class="errors" style="color:red;float:right;"></span> </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Work Number <span class="red">*</span></p></li>
-                <li><input type="text" id="workNumber" name="workNumber"  class="form-control mb-md" readonly value="${workInfo.workNo}">                
+                <li><form:input type="text" id="workNumber" path="workNumber"  class="form-control mb-md" readonly="true" value="${workInfo.workNo}"/>                
                 <span id="workNumberErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>AS Sanctioned Details <span class="red">*</span></p></li>
-                <li><input type="text" name="sanctionedDetails" id="sanctionedDetails" placeholder="AS Sanctioned Details "/>
+                <li><form:input type="text" path="sanctionedDetails" id="sanctionedDetails" placeholder="AS Sanctioned Details "/>
                 	<br><span id="sanctionedDetailsErr" class="errors" style="color:red;float:right;"></span> </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Grant<span class="red">*</span></p></li>
                 <li>
-                <select id="typeOfGrant" name="typeOfGrant.id">
-					<option value="" selected="" disabled="">--Select Grant --</option>
+                <form:select id="typeOfGrant" path="typeOfGrant.id">
+					<form:option value="" selected="" disabled="">--Select Grant --</form:option>
 					<c:forEach  var="grant" items="${grantTypeList}">
-					<option value="${grant.id}">${grant.name}</option>
+					<form:option value="${grant.id}">${grant.name}</form:option>
 					</c:forEach>
-				</select>
-                
-                	<br><span id="typeOfGrantErr" class="errors" style="color:red;float:right;"></span> 
+				</form:select>
+                <br><span id="typeOfGrantErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Financial Year <span class="red">*</span></p></li>
                 <li>
-                <select id="financialYear" name="financialYear.id">
-					<option value="" selected="" disabled="">--Select Year --</option>
+                <form:select id="financialYear" path="financialYear.id">
+					<form:option value="" selected="" disabled="">--Select Year --</form:option>
 					<c:forEach  var="fyear" items="${finYearList}">
-					<option value="${fyear.id}">${fyear.year}</option>
+					<form:option value="${fyear.id}">${fyear.year}</form:option>
 					</c:forEach>
-				</select>
+				</form:select>
                 	<br><span id="financialYearErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
@@ -112,28 +114,25 @@
                 <ul class="fs-list-details">
                 <li><p>Engagement of executive dept by <span class="red">*</span></p></li>
                 <li>
-               <select id="executiveDept" name="executiveDept.id">
-					<option value="" selected="" disabled="">--Select Executive Dept --</option>
+                <form:select id="executiveDept" path="executiveDept.id">
+					<form:option value="" selected="" disabled="">--Select Executive Dept --</form:option>
 					<c:forEach  var="dpt" items="${executiveDeptList}">
-					<option value="${dpt.id}">${dpt.name}</option>
+					<form:option value="${dpt.id}">${dpt.name}</form:option>
 					</c:forEach>
-				</select>
-                
-                	<br><span id="executiveDeptErr" class="errors" style="color:red;float:right;"></span> 
+				</form:select>
+                <br><span id="executiveDeptErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Engagement of consultant by <span class="red">*</span></p></li>
                 <li>
-                <select id="consultant" name="consultant.id">
-					<option value="" selected="" disabled="">--Select Executive Consultant --</option>
+                <form:select id="consultant" path="consultant.id">
+					<form:option value="" selected="" disabled="">--Select Executive Consultant --</form:option>
 					<c:forEach  var="cons" items="${executiveConsultantList}">
-					<option value="${cons.id}">${cons.name}</option>
+					<form:option value="${cons.id}">${cons.name}</form:option>
 					</c:forEach>
-				</select>
-                
-                
+				</form:select>
                 <br><span id="consultantErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -141,8 +140,7 @@
                 <ul class="fs-list-details">
                 <li><p>Upload Adminstrative Details Document(pdf/jpg/png)  <span class="red">*</span></p></li>
                 <li><input type="file" name="file" id="file"  placeholder="Adminstrative Details"></li>
-                 <br><span id="file_error" class="errors" style="color:red;float:right;"></span>
-              
+                <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
                 
                 
@@ -151,8 +149,8 @@
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue"/>
                
             </fieldset>
-                            <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">
-        </form>
+            <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}"/>
+        </form:form>
         
     </div>
 </div>

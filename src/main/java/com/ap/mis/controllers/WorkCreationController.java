@@ -36,26 +36,20 @@ public class WorkCreationController {
 	@PostMapping(value = "/save")
 	public String workCreationSave(@ModelAttribute Works workObject, Model model, HttpServletRequest request,HttpSession session) {
 
-		
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		workObject.setUser(loggedInUser);
 		misService.saveWorks(workObject);
-
 				
 		WorktoLandDetails obj = new WorktoLandDetails();
 		obj.setWorks(workObject);
 		session.setAttribute("generalInfo", obj);
 		session.setAttribute("workIdSession", workObject.getId());
-		model.addAttribute("workInfo", workObject);
-		model.addAttribute("grantTypeList", administrativeSectionService.findAll());
-		model.addAttribute("finYearList", administrativeSectionService.getfinancialYearList());
-		model.addAttribute("executiveDeptList", administrativeSectionService.getExecutiveDeptList());
-		model.addAttribute("executiveConsultantList", administrativeSectionService.getExecutiveConsultantList());
-		return "online-mis-administrative-section";
+		session.setAttribute("workInfo", workObject);
+		return "redirect:/administrativeSection/create";
 
 	}
 	
-	/*@GetMapping(value = "/create")
+	@GetMapping(value = "/create")
 	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userObject = SecurityUtil.getLoggedUser();
@@ -78,5 +72,5 @@ public class WorkCreationController {
 		List<NatureOfWork> natureOfWork=misService.natureOfDetails();
 		model.addAttribute("natureOfWork", natureOfWork);
 		return "online-mis";
-	}*/
+	}
 }

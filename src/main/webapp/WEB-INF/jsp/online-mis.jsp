@@ -41,7 +41,7 @@ $(document).ready(function(){
 				    		/* + '<input type="text" name="WorkLineItemsList['+i+'].workDetails" id="work_details'+i+'"  onkeyup="return isText(this)" class="form-control mb-md" />' */
 				    		+ '</td>'
 				    		+ '<td>'
-				    		 + '<input type="text" name="cost" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' 
+				    		 + '<input type="text" name="cost1" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' 
 				    		/* + '<input type="text" name="WorkLineItemsList['+i+'].cost" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' */
 				    		+ '</td>'
 				            +'</tr>');
@@ -185,6 +185,7 @@ $(document).ready(function(){
     <div class="col-md-12">
         <c:url value="/worksCreation/save" var="createUrl" />
         <%-- <form id="msform"  method="post" action="${createUrl}" modelAttribute="workObject"> --%>
+        
         <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="workObject" >  
              <input type="hidden" name="${_csrf.parameterName}"
             value="${_csrf.token}" /> <!-- for Spring Security -->
@@ -205,37 +206,30 @@ $(document).ready(function(){
                 <form:select id="typeworkid" path="typeOfWork.id" >
 					<form:option value="">--Select--</form:option>
 					<c:forEach items="${typeOfWork}" var="typeOfWork">
-
-						<form:option value="${typeOfWork.id}">${typeOfWork.name}</form:option>
+					<form:option value="${typeOfWork.id}">${typeOfWork.name}</form:option>
 					</c:forEach>
 				</form:select>
-                     <span id="typeworkErr" class="errors" style="color:red;float:right;"></span>
+                <span id="typeworkErr" class="errors" style="color:red;float:right;"></span>
                 </ul>
-                
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
                 <li><%-- <select id="natureOfWork" name="natureOfWork.id" >
-               <option value="" selected="">--select work--</option>
+               	<option value="" selected="">--select work--</option>
                  <c:forEach  var="natureOfWork" items="${natureOfWork}">
 				         <option value="${natureOfWork.id}">${natureOfWork.name}</option>
 				      </c:forEach>
                 </select> --%>
-                
                 <form:select id="natureOfWork" path="natureOfWork.id" >
 					<form:option value="">--Select--</form:option>
 					<c:forEach items="${natureOfWork}" var="natureOfWork">
-
-						<form:option value="${natureOfWork.id}">${natureOfWork.name}</form:option>
+					<form:option value="${natureOfWork.id}">${natureOfWork.name}</form:option>
 					</c:forEach>
 				</form:select>
-               		<br><span id="natureOfWorkErr" class="errors" style="color:red;float:right;"></span>
-               </li>
+               	<br><span id="natureOfWorkErr" class="errors" style="color:red;float:right;"></span>
+               	</li>
                 </ul>
                 
-                
-                
-               
                 
                 <ul class="fs-list-details">
                 <li><p>District <span class="red">*</span></p></li>
@@ -245,18 +239,15 @@ $(document).ready(function(){
                    <option value="${districts.id}">${districts.name}</option>
                  </c:forEach> 
                </select> --%>
-               
                 <form:select id="district" path="district.id" >
 					<form:option value="">--Select--</form:option>
 					<c:forEach items="${districts}" var="district">
 						<form:option value="${district.id}">${district.name}</form:option>
 					</c:forEach>
 				</form:select>
-               <br><span id="districtErr" class="errors" style="color:red;float:right;"></span>
-               </li>
+               	<br><span id="districtErr" class="errors" style="color:red;float:right;"></span>
+               	</li>
                 </ul>
-                
-            
                 
                 <ul class="fs-list-details">
                 <li><p>Constituency <span class="red">*</span></p></li>
@@ -267,27 +258,22 @@ $(document).ready(function(){
                 <form:select id="constituency" path="constituency.id" >
 					<form:option value="">--Select--</form:option>
 				</form:select>
-              <br><span id="constituencyErr" class="errors" style="color:red;float:right;"></span>
-            </li>
+              	<br><span id="constituencyErr" class="errors" style="color:red;float:right;"></span>
+            	</li>
                 </ul>
-                
                   
-                
                 <ul class="fs-list-details">
                 <li><p>Mandal <span class="red">*</span></p></li>
                 <li>
 	               <!--  <select id="mandal" name="mandal.id" class="form-control mb-md">
 	                  <option value="" >--select Mandal--</option>
 	               </select> -->
-	                <form:select id="mandal" path="mandal.id" >
+	            <form:select id="mandal" path="mandal.id" >
 					<form:option value="">--Select--</form:option>
-				   </form:select>
-		            <span id="mandalErr" class="errors" style="color:red;float:right;"></span>
-		            </li>
-		         </ul>
-                
-                
-                
+				</form:select>
+		        <span id="mandalErr" class="errors" style="color:red;float:right;"></span>
+		        </li>
+		        </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Village <span class="red">*</span></p></li>
@@ -297,53 +283,52 @@ $(document).ready(function(){
 			    </select> -->
 			    <form:select id="village" path="village.id" >
 					<form:option value="">--Select--</form:option>
-				   </form:select>
-				   <span id="villageErr" class="errors" style="color:red;float:right;"></span>
-                  </li>
+				</form:select>
+				<span id="villageErr" class="errors" style="color:red;float:right;"></span>
+                </li>
                 </ul>
-                
-               
                 
                 <ul class="fs-list-details">
                 <li><p>Location <span class="red">*</span></p></li>
                 <li> <form:input type="text" id="location" placeholder='Location' path="location" />
-                	<br><span id="locationErr" class="errors" style="color:red;float:right;"></span>  	
+                <br><span id="locationErr" class="errors" style="color:red;float:right;"></span>  	
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Work Number <span class="red">*</span></p></li>
                 <li><form:input type="text" id="workNo" path="workNo" placeholder="Work Number" />
-                    
-                	<br><span id="workNoErr" class="errors" style="color:red;float:right;"></span>  
+                <br><span id="workNoErr" class="errors" style="color:red;float:right;"></span>  
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details fs-list-full">
                 <li><p>No. of Works <span class="red">*</span></p></li>
-                <li class="work-space"><form:input type="text" id="noOfWorks" path="noOfWorks" placeholder="No. of Works" /> 
+                <li class="work-space">
+                <form:input type="text" id="noOfWorks" path="noOfWorks" placeholder="No. of Works" /> 
                 <span id="noOfWorksErr" class="errors" style="color:red;float:center;"></span>
-                <input type="button" name="Create" id="Create" value="Create" class="create-button createClass">
                 
+                <input type="button" name="Create" id="Create" value="Create" class="create-button createClass">
                 </li> 
                 </ul>
-                 <span id="work_detailsErr" class="errors" style="color:red;float:center;"></span>
-            <div id="work_table_div">
-	        <table id="work_table" class=" table table-bordered  table-striped mb-none table_head animated fadeInUp">
-	           <!--<tbody>
-            	<tr>
-                  <th>S.No</th> 
-            	  <th>Work Detail</th> 
-            	  <th>Estimated Cost (in Lakhs)</th>
-            	</tr>
-            	<!-- <tr>
-            	  <td><b>1</b></td>
-                  <td><input type="text" class="form-control mb-md" id="s.no" name="s.no" value=""> </td> 
-            	  <td><input type="text" class="form-control mb-md" id="work-details-new" maxlength="10" name="work-details-new"></td>
-            	</tr> -->
-              </tbody>
-            </table>
-        </div> 
+                
+                <span id="work_detailsErr" class="errors" style="color:red;float:center;"></span>
+            	<div id="work_table_div">
+		        <table id="work_table" class=" table table-bordered  table-striped mb-none table_head animated fadeInUp">
+		           <!--<tbody>
+	            	<tr>
+	                  <th>S.No</th> 
+	            	  <th>Work Detail</th> 
+	            	  <th>Estimated Cost (in Lakhs)</th>
+	            	</tr>
+	            	<!-- <tr>
+	            	  <td><b>1</b></td>
+	                  <td><input type="text" class="form-control mb-md" id="s.no" name="s.no" value=""> </td> 
+	            	  <td><input type="text" class="form-control mb-md" id="work-details-new" maxlength="10" name="work-details-new"></td>
+	            	</tr> -->
+	              </tbody>
+	            </table>
+	        	</div> 
                 
                 <div id="saveDiv" style="display:none">
                 <input type="submit" id="submit" name="submit" class="next action-button float-right" value="Save and Continue"/>
@@ -351,6 +336,7 @@ $(document).ready(function(){
                 <!-- name="next" -->
             </fieldset>
             <input type="hidden" id="createval" name="createval" value="0">
+            <input type="hidden" id="cost" name="cost" value ="0">
         <%-- </form> --%>  </form:form>
     </div>
 </div>
@@ -498,8 +484,11 @@ $('#Create').on('click',function(){
             		$("#work_detailsErr").html("Please Enter Estimated Cost");  		
             		$('#estimated_cost'+i+'').focus();
             		 return false;
+            	}else{
+            		var cost =  parseInt($('#cost').val()) + parseInt($('#estimated_cost'+i+'').val());            		
+            		$('#cost').val( cost ); //adding estimated cost
             	}   		
-        	}    		
+        	}  
     	}else{
     		$("#work_detailsErr").html("Create Work Details"); 
     		return false;

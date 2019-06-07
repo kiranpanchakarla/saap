@@ -260,7 +260,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Work <span class="red">*</span></p></li>
-                <li><input type="text" title="NTR KVK (Constituency KVKs)" name="activityName" class="form-control mb-md" readonly value="NTR KVK (Constituency KVKs)"></li>
+                <li><input type="text"  name="activityName" class="form-control mb-md" readonly value="${generalInfo.landdetails.natureofwork}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">

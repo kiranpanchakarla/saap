@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,18 +46,33 @@ public class AdministrationController {
 		admService.adminstrativeSection(adminSecObject, file);
 
 		Works workInfo = misService.getWorkInfo(workid);
-		model.addAttribute("workInfo", workInfo);
+		//model.addAttribute("workInfo", workInfo);
+		session.setAttribute("workInfo", workInfo);
 
 		WorktoLandDetails obj = new WorktoLandDetails();
 		obj = (WorktoLandDetails) session.getAttribute("generalInfo");
 		obj.setAdministrativeesction(adminSecObject);
 		session.setAttribute("generalInfo", obj);
 
-		model.addAttribute("divisionList", lineDepartmentService.getDivisionList());
-		model.addAttribute("subdivisionList", lineDepartmentService.getSubdivisionList());
-		model.addAttribute("sectionList", lineDepartmentService.getSectionList());
-		model.addAttribute("wrokid", workid);
-		return "online-mis-line-department";
+//		model.addAttribute("wrokid", workid);
+		return "redirect:/lineDepartment/create";
 
 	}
+	
+	@GetMapping(value = "/create")
+	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		userObject = SecurityUtil.getLoggedUser();
+	    userObject =misService.verifyUser(userObject);
+	    model.addAttribute("adminSecObject", new AdministrativeSection());
+		session.setAttribute("loggedInUserObj", userObject);
+		session.getAttribute("workInfo");
+		model.addAttribute("grantTypeList", admService.findAll());
+		model.addAttribute("finYearList", admService.getfinancialYearList());
+		model.addAttribute("executiveDeptList", admService.getExecutiveDeptList());
+		model.addAttribute("executiveConsultantList", admService.getExecutiveConsultantList());
+	    return "online-mis-administrative-section";
+	}
+	
+	
 }
