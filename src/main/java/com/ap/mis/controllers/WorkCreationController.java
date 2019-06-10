@@ -114,4 +114,22 @@ public class WorkCreationController {
 		misService.updateWork(workInfo);
 	    return "redirect:/adminloggedin";
 	}
+	
+	@RequestMapping(value="/constituency", method=RequestMethod.GET)
+    public @ResponseBody String constituencyInfo(String PlaceId) {
+        List<Constituency> constituencyDetails=misService.constituencyDetails(Integer.parseInt(PlaceId));
+        return new Gson().toJson(constituencyDetails);
+    }
+    
+    @RequestMapping(value="/mandal", method=RequestMethod.GET)
+    public @ResponseBody String mandalInfo(String PlaceId) {
+        List<Mandal> mandalDetails=misService.mandalDetails(Integer.parseInt(PlaceId));
+        return new Gson().toJson(mandalDetails);
+    }
+    
+    @RequestMapping(value="/village", method=RequestMethod.GET)
+    public @ResponseBody String villageInfo(String PlaceId) {
+        List<Village> villageDetails=misService.villageDetails(Integer.parseInt(PlaceId));
+        return new Gson().toJson(villageDetails);
+    }
 }
