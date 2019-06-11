@@ -38,6 +38,8 @@ public interface MISdao {
 	
 	public Works updateWork(Works work);
 
+	public Works deleteWork(Works work);
+
 	
 	
 	

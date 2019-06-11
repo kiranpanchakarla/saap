@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,12 +41,17 @@ public class AdministrationController {
 	@PostMapping(value = "/save")
 	public String administrativeSectionSave(@ModelAttribute AdministrativeSection adminSecObject, Model model,
 			HttpServletRequest request, @RequestParam("file") MultipartFile file, HttpSession session) {
-
+		boolean isSave=false;
 		int workid = (int) session.getAttribute("workIdSession");
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		adminSecObject.setUser(loggedInUser);
+		if(adminSecObject.getId()==null) {
+			isSave=true;
 		admService.adminstrativeSection(adminSecObject, file);
-
+		}
+		else {
+		admService.adminstrativeSectionUpdate(adminSecObject, file);
+		}
 		Works workInfo = misService.getWorkInfo(workid);
 		//model.addAttribute("workInfo", workInfo);
 		session.setAttribute("workInfo", workInfo);
@@ -56,7 +62,14 @@ public class AdministrationController {
 		session.setAttribute("generalInfo", obj);
 
 //		model.addAttribute("wrokid", workid);
-		return "redirect:/lineDepartment/create";
+		Integer idVal=adminSecObject.getWork().getId();
+		log.info("==idVal===:"+idVal);
+		if(isSave==true) {
+			return "redirect:/lineDepartment/create";
+		}else {
+			return "redirect:/lineDepartment/edit/"+idVal;
+		}
+		
 
 	}
 	
@@ -87,6 +100,26 @@ public class AdministrationController {
 		model.addAttribute("adminInfo",adminInfo);
 	    return "online-mis-adminView";
 	}
+	
+	@GetMapping(value = "/edit/{id}")
+	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+		AdministrativeSection adminInfo = admService.getAdminDetails(id);
+		if (adminInfo.getPath() != null && !adminInfo.getPath().equals("")) {
+			model.addAttribute("filePath",ContextUtil.populateContext(request) + adminInfo.getPath());
+		} else {
+			model.addAttribute("filePath", null);
+		}
+		model.addAttribute("grantTypeList", admService.findAll());
+		model.addAttribute("finYearList", admService.getfinancialYearList());
+		model.addAttribute("executiveDeptList", admService.getExecutiveDeptList());
+		model.addAttribute("executiveConsultantList", admService.getExecutiveConsultantList());
+		model.addAttribute("adminSecObject",adminInfo);
+		
+		return "online-mis-administrative-section";
+	}
+	
+	
+	
 	
 	
 }

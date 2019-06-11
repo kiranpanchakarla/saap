@@ -52,6 +52,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>S.No</th>
+                                                                <th>ID</th>
                                                                 <th>Type of Work</th>
                                                                 <th>Nature Of Work</th>
                                                                 <th>Work No</th>
@@ -69,6 +70,7 @@
 														  <tr>
 														    <td><c:set var="count" value="${count + 1}"
 															scope="page" /> <c:out value="${count}" /></td>
+															<td>${viewDetails.id}</td>
 														    <td>${viewDetails.typeOfWork}</td>
 														    <td>${viewDetails.natureOfWork}</td>
 														    <td>${viewDetails.workNo}</td>
@@ -107,7 +109,7 @@
  $(document).ready(function() {
 /* 	 alert( $.fn.jquery ) */
      $('#viewTable').DataTable({
-         "scrollX" : true,
+         "scrollX" : false,
          "searching": false,
 			"info": false,
 			"dom": '<"top"i>rt<"bottom"flp><"clear">'

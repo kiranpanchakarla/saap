@@ -196,8 +196,13 @@ public class MISServiceImpl implements MISService {
 
 	@Override
 	public Works updateWork(Works work) {
+		return misDao.updateWork(work);
+	}
+
+	@Override
+	public Works deleteWork(Works work) {
 		work.setIsActive(false);
-	    return misDao.updateWork(work);
+		return misDao.deleteWork(work);
 	}
 	
 	

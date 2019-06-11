@@ -55,7 +55,11 @@
        <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="landDetails" enctype="multipart/form-data">
             <input type="hidden" name="${_csrf.parameterName}"
            value="${_csrf.token}" />
-            
+             <c:choose>
+			<c:when test="${!empty landDetails.id}">
+				<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+			</c:when>
+		</c:choose> 
             <!-- fieldsets -->
             <fieldset>
             <div class="fs-list-full"> 
@@ -124,8 +128,12 @@
                 </ul>
                 
                 </div>
+                 <c:if test="${landDetails.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
-                
+                </c:if>
+                 <c:if test="${landDetails.id!=null}">
+                    <input type="submit" id="submit" name="next" class="next action-button" value="update and Continue">
+                  </c:if>
             </fieldset>
             <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}" />
        </form:form>

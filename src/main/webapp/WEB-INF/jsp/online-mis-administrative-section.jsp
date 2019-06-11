@@ -57,9 +57,12 @@
     <div class="col-md-12">
     <c:url value="/administrativeSection/save" var="createUrl" />
         <form:form id="msform" method="POST" action="${createUrl}"  modelAttribute="adminSecObject" enctype="multipart/form-data">
-           
-           <input type="hidden" name="${_csrf.parameterName}"
-            value="${_csrf.token}" />
+           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+         <c:choose>
+			<c:when test="${!empty adminSecObject.id}">
+				<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+			</c:when>
+		</c:choose> 
 
             <!-- fieldsets -->  
             <fieldset>
@@ -89,7 +92,7 @@
                 <li><p>Grant<span class="red">*</span></p></li>
                 <li>
                 <form:select id="typeOfGrant" path="typeOfGrant.id">
-					<form:option value="" selected="" disabled="">--Select Grant --</form:option>
+					<form:option value="" >--Select Grant --</form:option>
 					<c:forEach  var="grant" items="${grantTypeList}">
 					<form:option value="${grant.id}">${grant.name}</form:option>
 					</c:forEach>
@@ -137,17 +140,28 @@
                 </li>
                 </ul>
                 
+                 <c:if test="${adminSecObject.id==null}">
                 <ul class="fs-list-details">
                 <li><p>Upload Adminstrative Details Document(pdf/jpg/png)  <span class="red">*</span></p></li>
-                <li><input type="file" name="file" id="file"  placeholder="Adminstrative Details"></li>
+                <li><input type="file" name="file" id="file"  ></li>
                 <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
-                
-                
-                </div>
-                
+                </c:if>
+                 <c:if test="${adminSecObject.id!=null}">
+                 <ul class="fs-list-details">
+                <li><p>Upload Adminstrative Details Document(pdf/jpg/png)  <span class="red">*</span></p></li>
+                <li><input type="file" name="file" id="file">${filePath}</li>
+                 <li> <img  src="${filePath}"    width="100" height="70"/>  </li>
+                <span id="file_error" class="errors" style="color:red;float:right;"></span>
+                </ul>
+                </c:if>
+               </div>
+               <c:if test="${adminSecObject.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue"/>
-               
+               </c:if>
+                <c:if test="${adminSecObject.id!=null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="Update and Continue"/>
+               </c:if>
             </fieldset>
             <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}"/>
         </form:form>

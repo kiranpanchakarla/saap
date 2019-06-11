@@ -38,6 +38,9 @@ public interface MISService {
 
 	public Works updateWork(Works work);
 
+
+	public Works deleteWork(Works workInfo);
+
 	/*public TenderingProcess getTenderingInfo(int tenderingId);*/
 	
 	

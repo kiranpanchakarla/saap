@@ -56,6 +56,11 @@
        <input type="hidden" name="${_csrf.parameterName}"
            value="${_csrf.token}" />
           
+          <c:choose>
+			<c:when test="${!empty lineDeptObj.id}">
+				<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+			</c:when>
+		</c:choose> 
             <!-- fieldsets -->
             <fieldset>
             <div class="fs-list-full"> 
@@ -146,7 +151,14 @@
                 </ul>
                 
                 </div>
+                
+                  <c:if test="${lineDeptObj.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
+                </c:if>
+                <c:if test="${lineDeptObj.id!=null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="Update and Continue">
+                </c:if>
+                
             </fieldset>
             <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}"/>
         </form:form>

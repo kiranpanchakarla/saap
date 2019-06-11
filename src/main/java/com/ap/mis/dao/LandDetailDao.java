@@ -24,5 +24,7 @@ public interface LandDetailDao {
 
 	public LandDetails getLandDetails(int id);
 
+	public LandDetails landDetailsUpdate(LandDetails landDetails);
+
 
 }

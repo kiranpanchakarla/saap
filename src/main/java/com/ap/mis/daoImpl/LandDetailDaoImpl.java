@@ -71,4 +71,14 @@ public class LandDetailDaoImpl implements LandDetailDao {
 		return landInfo;
 	}
 
+	@Override
+	public LandDetails landDetailsUpdate(LandDetails landDetails) {
+		try {
+			sessionFactory.getCurrentSession().update(landDetails);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return landDetails;
+	}
+
 }

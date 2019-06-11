@@ -21,5 +21,6 @@ public interface LandDetailService {
 	public LandDetails landDetailsSave(LandDetails landDetails, MultipartFile file);
 	public LandDetails getLandinfo(int id);
 	public LandDetails getLandDetails(int id);
+	public LandDetails landDetailsUpdate(LandDetails landDetails, MultipartFile file);
 
 }

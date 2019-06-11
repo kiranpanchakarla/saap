@@ -21,6 +21,7 @@ public interface AdministrativeSectionDao {
 	public AdministrativeSection adminstrativeSectionSave(AdministrativeSection adminSecObject);
 	public AdministrativeSection getAdminInfo(int id);
 	public AdministrativeSection getAdminDetails(int id);
+	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSecObject);
 
 		
 }

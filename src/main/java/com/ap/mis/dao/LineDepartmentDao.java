@@ -15,6 +15,7 @@ public interface LineDepartmentDao {
 	public DepartmentLinkingLine departmentLinkingLineSave(DepartmentLinkingLine departmentLink);
 	public DepartmentLinkingLine getDeptInfo(int id);
 	public DepartmentLinkingLine getdepartDetails(int id);
+	public DepartmentLinkingLine departmentLinkingLineUpdate(DepartmentLinkingLine lineDept);
 
 
 }

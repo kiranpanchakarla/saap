@@ -18,5 +18,6 @@ public interface LineDepartmentService {
 	public DepartmentLinkingLine departmentLinkingLineSave(DepartmentLinkingLine lineDeptObj);
 	public DepartmentLinkingLine getDeptInfo(int id);
 	public DepartmentLinkingLine getdepartDetails(int id);
+	public DepartmentLinkingLine departmentLinkingLineUpdate(DepartmentLinkingLine lineDeptObj);
 
 }

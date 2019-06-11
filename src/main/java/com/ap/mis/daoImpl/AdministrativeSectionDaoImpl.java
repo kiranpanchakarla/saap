@@ -96,24 +96,22 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 
 	@Override
 	public AdministrativeSection getAdminDetails(int id) {
-		
-		/*AdministrativeSection adminInfo = null;
-		List adminList = sessionFactory.getCurrentSession()
-		        .createQuery( "from AdministrativeSection where work.id=:vallll")
-		        .setParameter("id",id)
-		       .list();
-		
-		if(adminList.size() != 0){
-			adminInfo=(AdministrativeSection) adminList.get(0);
-		}else
-			adminInfo = null;
-		return adminInfo;*/
-		
 		return (AdministrativeSection) sessionFactory.getCurrentSession()
 		        .createQuery("from AdministrativeSection where work.id="+id)
 		       .getSingleResult();
 		
 		
+	}
+
+	@Override
+	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSec) {
+		try{
+			sessionFactory.getCurrentSession().update(adminSec);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return adminSec;
 	}
 	
 	

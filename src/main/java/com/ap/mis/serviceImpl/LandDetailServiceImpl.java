@@ -99,4 +99,31 @@ public class LandDetailServiceImpl implements LandDetailService{
 		
 		return landDetailDao.getLandDetails(id);
 	}
+
+
+
+	@Override
+	public LandDetails landDetailsUpdate(LandDetails landDetails, MultipartFile file) {
+		 try
+		 {
+			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			
+				if (!file.getOriginalFilename().isEmpty()) {
+					File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
+					log.info("==rootFolder=="+rootFolder);
+					if (!rootFolder.exists()) {
+						rootFolder.mkdirs();
+					}
+				    String  filepath=rootFolder + File.separator+ file.getOriginalFilename();
+					file.transferTo(new File(filepath));
+					log.info("===filepath==:"+filepath);
+						  landDetails.setPath(filepath);	
+					 
+				}
+		 }
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		 return landDetailDao.landDetailsUpdate(landDetails);
+	}
 }

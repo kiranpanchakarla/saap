@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,8 +59,13 @@ public class LandDetailsController {
 
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		landDetails.setUser(loggedInUser);
-		landDetailService.landDetailsSave(landDetails, file);
 		
+		if(landDetails.getId()==null) {
+		landDetailService.landDetailsSave(landDetails, file);
+		}
+		else {
+		landDetailService.landDetailsUpdate(landDetails, file);
+		}
 		WorktoLandDetails obj = new WorktoLandDetails();
 		obj = (WorktoLandDetails) session.getAttribute("generalInfo");
 		obj.setLanddetails(landDetails);
@@ -145,4 +151,24 @@ public class LandDetailsController {
 		model.addAttribute("landInfo",landInfo);
 	    return "online-mis-landDetailsView";
 	}
+	
+	
+	@GetMapping(value = "/edit/{id}")
+	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+		LandDetails landInfo = landDetailService.getLandDetails(id);
+		log.info("===landInfo===:"+landInfo);
+		model.addAttribute("landDetails",landInfo);
+		model.addAttribute("LandTypeList", landDetailService.getLandTypeList());
+		if (landInfo.getPath() != null && !landInfo.getPath().equals("")) {
+			model.addAttribute("filePath",ContextUtil.populateContext(request) + landInfo.getPath());
+		} else {
+			model.addAttribute("filePath", null);
+		}
+		return "online-mis-land-details";
+		
+	}
+	
+	
+	
+	
 }

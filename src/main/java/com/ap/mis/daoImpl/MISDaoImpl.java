@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ap.mis.dao.MISdao;
+import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Constituency;
 import com.ap.mis.entity.Mandal;
 import com.ap.mis.entity.NatureOfWork;
@@ -211,6 +212,9 @@ public class MISDaoImpl implements MISdao {
 			workInfo=work;
 		}
 		return workInfo;
+		/*return (Works) sessionFactory.getCurrentSession()
+			   .createQuery("from Works where id="+workId)
+		       .getSingleResult();*/
 	}
 
 
@@ -222,6 +226,17 @@ public class MISDaoImpl implements MISdao {
 	public Works updateWork(Works work) {
 		sessionFactory.getCurrentSession().update(work);
 		return  work; 
+	}
+
+
+
+
+
+
+	@Override
+	public Works deleteWork(Works work) {
+		sessionFactory.getCurrentSession().update(work);
+		return work;
 	}
 	
 	
