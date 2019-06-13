@@ -5,7 +5,7 @@ import com.ap.mis.entity.AgreementDetails;
 public interface AgreementDetailService {
 
 	AgreementDetails saveAgreementDetails(AgreementDetails agreementDetailsObj);
-
+	AgreementDetails updateAgreementDetails(AgreementDetails agreementDetailsObj);
 	AgreementDetails getAgreementDetails(int id);
 
 }

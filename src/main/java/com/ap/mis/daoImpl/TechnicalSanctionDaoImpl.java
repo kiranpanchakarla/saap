@@ -35,4 +35,14 @@ public class TechnicalSanctionDaoImpl implements TechnicalSanctionDao {
 		return techDetails;
 	}
 
+	@Override
+	public TechnicalSanction updateTechSanction(TechnicalSanction techsanc) {
+		try {
+			sessionFactory.getCurrentSession().update(techsanc);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return techsanc;
+	}
+
 }

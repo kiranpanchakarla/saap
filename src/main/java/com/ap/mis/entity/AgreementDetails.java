@@ -24,6 +24,9 @@ public class AgreementDetails {
 
 	@Column(name = "perf_securityAmount")
 	private double performanceSecurityAmount;
+	
+	@Column(name = "bgAmount")
+	private double bgAmount;
 
 	@Column(name = "sitehandover_date")
 	@DateTimeFormat(pattern = "yy-mm-dd")
@@ -62,7 +65,7 @@ public class AgreementDetails {
 	
 	private transient String contratorName;
 	
-	private transient double bgAmount;
+	//private transient double bgAmount;
 	
 	@OneToOne(targetEntity = TenderingProcess.class)
 	   @JoinColumn(name = "tender_id", referencedColumnName = "id")

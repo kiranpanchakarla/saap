@@ -8,11 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
@@ -34,15 +36,30 @@ public class TenderProcessController {
 	@PostMapping(value = "/save")
 	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj ,Model model,HttpServletRequest request,@RequestParam("engfile") MultipartFile engfile,@RequestParam("telugufile") MultipartFile telugufile,HttpSession session) {	
 		
+		boolean isSave=false;
 		int wrokid =(int) session.getAttribute("workIdSession");
-		tenderProcess.saveTenderingProcess(tenderingProcessObj,engfile,telugufile);
+//		tenderProcess.saveTenderingProcess(tenderingProcessObj,engfile,telugufile);
+		
+		if (tenderingProcessObj.getId() == null) {
+			tenderProcess.saveTenderingProcess(tenderingProcessObj,engfile,telugufile);
+			isSave = true;
+		} else {
+			tenderProcess.updateTenderingProcess(tenderingProcessObj,engfile,telugufile);
+		}
 		
 		Works workInfo=misService.getWorkInfo(wrokid);
 		model.addAttribute("workInfo", workInfo);
 		
 		   session.setAttribute("tenderingIdSession", tenderingProcessObj.getId());
 		    
-		   return "redirect:/agreementDetails/create";
+		   //return "redirect:/agreementDetails/create";
+		   
+			if(isSave==true) {
+				 return "redirect:/agreementDetails/create";
+			}else {
+				return "redirect:/agreementDetails/edit/"+wrokid;
+			}
+
 
    }
 	
@@ -74,7 +91,26 @@ public class TenderProcessController {
 			model.addAttribute("telUpload", null);
 		}
 		model.addAttribute("tenderInfo",tenderInfo);
-	    return "online-mis-tenderView";
-		 
+	    return "online-mis-tenderView";		 
 	}
+	
+	@GetMapping(value = "/edit/{id}")
+	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+		TenderingProcess tenderInfo = tenderProcess.getTenderDetails(id);
+		if (tenderInfo.getEngUpload() != null && !tenderInfo.getEngUpload().equals("")) {
+			model.addAttribute("engUpload",ContextUtil.populateContext(request) + tenderInfo.getEngUpload());
+		} else {
+			model.addAttribute("engUpload", null);
+		}
+		if (tenderInfo.getTelUpload() != null && !tenderInfo.getTelUpload().equals("")) {
+			model.addAttribute("telUpload",ContextUtil.populateContext(request) + tenderInfo.getTelUpload());
+		} else {
+			model.addAttribute("telUpload", null);
+		}
+		model.addAttribute("authoritiesTypeList", tenderProcess.getAuthoritiesList());
+		model.addAttribute("agencyList", tenderProcess.getAgencyList());
+		model.addAttribute("tenderingProcessObj",tenderInfo);
+		return "online-mis-tendering-process";
+	}
+
 }

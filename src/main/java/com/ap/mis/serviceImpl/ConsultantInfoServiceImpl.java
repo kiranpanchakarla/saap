@@ -26,4 +26,9 @@ public class ConsultantInfoServiceImpl implements ConsultantInfoService {
 		return constInfDao.getConsultDetails(id);
 	}
 
+	@Override
+	public ConsultantInfo updateConsultantInfo(ConsultantInfo consultantInfoObject) {
+		return constInfDao.updateConsultantInfo(consultantInfoObject);
+	}
+
 }

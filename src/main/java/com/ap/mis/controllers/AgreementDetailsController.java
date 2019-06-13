@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -36,8 +37,13 @@ public class AgreementDetailsController {
 	@PostMapping(value = "/save")
 	public String saveAgreementDetails(@ModelAttribute AgreementDetails agreementDetailsObj ,Model model,HttpServletRequest request,HttpSession session) {	
 
-		agreeDetailsService.saveAgreementDetails(agreementDetailsObj);
-		 
+		boolean isSave=false;
+		if (agreementDetailsObj.getId() == null) {
+			agreeDetailsService.saveAgreementDetails(agreementDetailsObj);
+			isSave = true;
+		} else {
+			agreeDetailsService.updateAgreementDetails(agreementDetailsObj);
+		}
 		return "redirect:/misDetails/list";
 	}	
 	
@@ -68,6 +74,20 @@ public class AgreementDetailsController {
 		model.addAttribute("agreementInfo",agreementInfo);
 	    return "online-mis-agreementView";
 		 
+	}
+	
+	@GetMapping(value = "/edit/{id}")
+	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		AgreementDetails  agreementInfo = agreeDetailsService.getAgreementDetails(id);
+		
+		int tenderingId =(int) session.getAttribute("tenderingIdSession");
+		System.out.println("TENDER ID ::: "+tenderingId);
+		   TenderingProcess tenderingInfo=tenderProcess.getTenderingInfo(tenderingId);
+		   model.addAttribute("tenderingInfo", tenderingInfo);
+		   
+		model.addAttribute("agreementDetailsObj",agreementInfo);
+		return "online-mis-agreement-details";
 	}
 	
 }

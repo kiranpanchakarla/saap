@@ -22,4 +22,9 @@ public class AgreementDetailServiceImpl implements AgreementDetailService{
 		return agreeDetailsDao.getAgreementDetails(id);
 	}
 
+	@Override
+	public AgreementDetails updateAgreementDetails(AgreementDetails agreementDetailsObj) {
+		return agreeDetailsDao.updateAgreementDetails(agreementDetailsObj);
+	}
+
 }

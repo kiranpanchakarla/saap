@@ -50,7 +50,12 @@
     <div class="col-md-12">
        		   <c:url value="/ConsultantInfo/save" var="createUrl" />
 		 <%--   <form id="msform" method="post" action="${createUrl}" modelAttribute="consultantInfoObject"> --%>
-		       <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="workObject" >  
+		       <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="consultantInfoObject" >  
+		       <c:choose>
+				<c:when test="${!empty consultantInfoObject.id}">
+					<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+				</c:when>
+				</c:choose> 
             
             <!-- fieldsets -->
             <fieldset>
@@ -148,7 +153,14 @@
                </ul>
                 
                 </div>
+                <!-- <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue"> -->
+                <c:if test="${consultantInfoObject.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
+                </c:if>
+                <c:if test="${consultantInfoObject.id!=null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="update and Continue">
+                </c:if>
+                
                 
             </fieldset>
             <input type="hidden" id="work.id" name="work.id" value="${workIdSession}">

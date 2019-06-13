@@ -4,14 +4,24 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix ="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>SAAP : Technical Sanction</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
+
 </head>
 
+ <script type="text/javascript"> 
+ $(document).ready(function() {  
+	    $('#date').datepicker({dateFormat: 'yy-mm-dd'});
+	    var dateValue = $('#dateid').val();
+	    $('#date').datepicker('setDate', dateValue);
+	 }); 
+ </script>                  
 <body>
 
 <!--=== Header ====-->
@@ -52,7 +62,15 @@
      <c:url value="/technicalSanction/save" var="createUrl" />
       <%-- <form id="msform" method="POST" action="${createUrl}"  modelAttribute="techsanc" > --%>
       <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="techsanc" >  
-      <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />   
+      <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />  
+      
+		<c:choose>
+		<c:when test="${!empty techsanc.id}">
+			<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+			<input type="hidden" name="datename" id ="dateid" value="${techsanc.date}"   > 	
+		</c:when>
+		</c:choose> 
+       
             
             <!-- fieldsets -->
             <fieldset>
@@ -89,11 +107,10 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Date <span class="red">*</span></p></li>
-				<li><form:input  type="date" path="date" id="date" placeholder="DD/MM/YYYY" />               	
+				<li>  <form:input  type="date" path="date" id="date"/> 														   		
  				<span id="dateErr" class="errors" style="color:red;float:right;"></span>
                	</li>
                	</ul>
-                
                 
                 <ul class="fs-list-details">
                 <li><p>Amount<span class="red">*</span></p></li>
@@ -102,9 +119,14 @@
                 </li>
                 </ul>
                 
-            
                 </div>
+                
+                <c:if test="${techsanc.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
+                </c:if>
+                <c:if test="${techsanc.id!=null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="update and Continue">
+                </c:if>
                 
             </fieldset>
              <input type="hidden" id="workid" name="work.id" value="${workInfo.id}"> 
@@ -131,10 +153,12 @@
 
 <script type="text/javascript">
 
-  $(document).ready(function () {
+
+
+/*   $(document).ready(function () {
     $( "#date" ).datepicker({dateFormat: 'dd/mm/yy'})
   });  
-  
+   */
  
 $("#techSanction_no").on('input', function () {
     this.value = this.value.match(/^\d+/);

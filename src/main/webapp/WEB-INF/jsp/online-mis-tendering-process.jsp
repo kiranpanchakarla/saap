@@ -10,7 +10,38 @@
 <title>SAAP : Tendering Process</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 </head>
+ <script type="text/javascript"> 
+ $(document).ready(function() {
 
+	    $('#ifbPreperationDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#ifbPreperationDate').datepicker('setDate', $('#ifbDate').val());
+	    
+	    $('#tenderNoticeIssuedDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#tenderNoticeIssuedDate').datepicker('setDate', $('#tendDate').val());
+	    
+	    $('#engNewsPaperDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#engNewsPaperDate').datepicker('setDate', $('#engDate').val());
+	    
+	    $('#telNewspaperDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#telNewspaperDate').datepicker('setDate', $('#telDate').val());
+	    
+	    $('#bidStrartDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#bidStrartDate').datepicker('setDate', $('#bsDate').val());
+	    
+	    $('#bidClosingDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#bidClosingDate').datepicker('setDate', $('#bcDate').val());
+	    
+	    $('#bidOpeningDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#bidOpeningDate').datepicker('setDate', $('#boDate').val());
+	    
+	    $('#dateOfEvaluationCompleted').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#dateOfEvaluationCompleted').datepicker('setDate', $('#evalDate').val());
+	    
+	    $('#dateOfLoaIssued').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#dateOfLoaIssued').datepicker('setDate', $('#loaDate').val());
+	    	    
+	 }); 
+ </script>
 <body>
 
 <!--=== Header ====-->
@@ -51,7 +82,20 @@
       <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="tenderingProcessObj"  enctype="multipart/form-data" >
       
       <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />   
-     
+		<c:choose>
+		<c:when test="${!empty tenderingProcessObj.id}">
+			<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+			<input type="hidden" name="ifbDate" id ="ifbDate" value="${tenderingProcessObj.ifbPreperationDate}">
+			<input type="hidden" name="tendDate" id ="tendDate" value="${tenderingProcessObj.tenderNoticeIssuedDate}"> 
+			<input type="hidden" name="engDate" id ="engDate" value="${tenderingProcessObj.engNewsPaperDate}"> 
+			<input type="hidden" name="telDate" id ="telDate" value="${tenderingProcessObj.telNewspaperDate}"> 
+			<input type="hidden" name="bsDate" id ="bsDate" value="${tenderingProcessObj.bidStrartDate}"> 
+			<input type="hidden" name="bcDate" id ="bcDate" value="${tenderingProcessObj.bidClosingDate}"> 
+			<input type="hidden" name="boDate" id ="boDate" value="${tenderingProcessObj.bidOpeningDate}"> 
+			<input type="hidden" name="evalDate" id ="evalDate" value="${tenderingProcessObj.dateOfEvaluationCompleted}"> 
+			<input type="hidden" name="loaDate" id ="loaDate" value="${tenderingProcessObj.dateOfLoaIssued}"> 
+		</c:when>
+		</c:choose> 
             <!-- fieldsets -->
             <fieldset>
             <div class="fs-list-full"> 
@@ -73,7 +117,7 @@
                
                <ul class="fs-list-details">
                 <li><p>Date of Preparation of IFB<span class="red">*</span></p></li>
-                <li><form:input type="date" id="ifbPreperationDate" path="ifbPreperationDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
+                <li><form:input type="date" id="ifbPreperationDate" path="ifbPreperationDate"  /> <!-- class="form-control mb-md hasDatepicker" -->
                 <span id="ifbPreperationDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -87,7 +131,7 @@
                
                <ul class="fs-list-details">
                 <li><p>Tender Notice Issued date   <span class="red">*</span></p></li>
-                <li><form:input type="date" id="tenderNoticeIssuedDate" path="tenderNoticeIssuedDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
+                <li><form:input type="date" id="tenderNoticeIssuedDate" path="tenderNoticeIssuedDate" placeholder="DD/MM/YYYY"/>
                <span id="tenderNoticeIssuedDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -121,18 +165,21 @@
                
                <ul class="fs-list-details">
                 <li><p>Date </p></li>
-                <li><form:input type="date" path="engNewsPaperDate" id="engNewsPaperDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
+                <li><form:input type="date" path="engNewsPaperDate" id="engNewsPaperDate"/>
                 <span id="engNewsPaperDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
-                 <ul class="fs-list-details">
+                <ul class="fs-list-details">
                 <li><p>soft copy upload - English (pdf/jpg/png) </p></li>
-                <li><input type="file" name="engfile" id="englishPaperCopyLocationFile" class="form-control mb-md">
+                <li><input type="file" name="engfile" id="englishPaperCopyLocationFile" value="${engUpload}"  onchange="document.getElementById('image').src = window.URL.createObjectURL(this.files[0])" class="form-control mb-md">
+                 <li> <img id="image" src="${engUpload}"   width="100" height="70"/> </li>
+                  <form:input type="hidden" path="engUpload" class="form-control" id="engfileName" value="${tenderingProcessObj.engUpload}"></form:input>
                  <span id="file_error1" class="errors" style="color:red;float:right;"></span>
-                
                </li>
                </ul>
+               
+             
                                            
                
                <ul class="fs-list-details">
@@ -144,7 +191,7 @@
                
                 <ul class="fs-list-details">
                 <li><p>Date </p></li>
-                <li><form:input type="date" path="telNewspaperDate" id="telNewspaperDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
+                <li><form:input type="date" path="telNewspaperDate" id="telNewspaperDate"/>
                <span id="telNewspaperDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -152,28 +199,33 @@
             
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - Telugu (pdf/jpg/png)</p></li>
-                <li><input type="file" name="telugufile" id="teluguPaperCopyLocationFile" class="form-control mb-md"/>
+                <li><input type="file" name="telugufile" id="teluguPaperCopyLocationFile" value="${telUpload}" class="form-control mb-md" onchange="document.getElementById('telimage').src = window.URL.createObjectURL(this.files[0])" class="form-control mb-md"/>
+               <li> <img id="telimage" src="${telUpload}"   width="100" height="70"/> </li>
+                  <form:input type="hidden" path="telUpload" class="form-control" id="telfileName" value="${tenderingProcessObj.telUpload}"></form:input>
                <span id="file_error2" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
+               
+               
+               
                  <ul class="fs-list-details">
                 <li><p>Bid Start Date</p></li>
-                <li><form:input type="date" path="bidStrartDate" id="bidStrartDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
+                <li><form:input type="date" path="bidStrartDate" id="bidStrartDate"/>
                <span id="bidStrartDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Bid Closing Date</p></li>
-                <li><form:input type="date" path="bidClosingDate" id="bidClosingDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
+                <li><form:input type="date" path="bidClosingDate" id="bidClosingDate" />
                <span id="bidClosingDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Bid Opening Date </p></li>
-                <li><form:input type="date" path="bidOpeningDate" id="bidOpeningDate" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
+                <li><form:input type="date" path="bidOpeningDate" id="bidOpeningDate" />
                 <span id="bidOpeningDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -201,7 +253,7 @@
                
                 <ul class="fs-list-details">
                 <li><p>Date of Evaluation Completed</p></li>
-                <li><form:input type="date"  id="dateOfEvaluationCompleted" path="dateOfEvaluationCompleted" class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
+                <li><form:input type="date"  id="dateOfEvaluationCompleted" path="dateOfEvaluationCompleted" />
                 <span id="dateOfEvaluationCompletedErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -229,7 +281,7 @@
                </li>
                </ul>
                
-                   <ul class="fs-list-details fs-list-full">
+                <ul class="fs-list-details fs-list-full">
                 <li><p>Check Bid Status</p></li>
                 <li><p><form:radiobutton checked="checked" path="bidStatus" value="In Process"/>In Process</p>
                 <p><form:radiobutton path="bidStatus"  value="Bid Accepted"/>Bid Accepted</p>
@@ -240,28 +292,31 @@
                
                <ul class="fs-list-details">
                 <li><p>Date of LOA Issued to Contractor</p></li>
-                <li><form:input type="date" path="dateOfLoaIssued" id="dateOfLoaIssued"  class="form-control mb-md hasDatepicker" placeholder="DD/MM/YYYY"/>
+                <li><form:input type="date" path="dateOfLoaIssued" id="dateOfLoaIssued"  />
                 <span id="dateOfLoaIssuedErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
-               
- 
-               <ul class="fs-list-details">
+                
+                <ul class="fs-list-details">
                 <li><p> Name of the agency <span class="red">*</span> </p></li>
-                <li>
-                     
-                <form:select id="agencyName" path="angencyName.id" class="form-control mb-md">
+                <li>                    
+                <form:select id="agencyName" path="angencyName.id" >
 					<form:option value="" selected="" disabled="">--Select Agency --</form:option>
 					<c:forEach  var="agency" items="${agencyList}">
 					<form:option value="${agency.id}">${agency.name}</form:option>
 					</c:forEach>
-				</form:select>
-				
+				</form:select>				
 				<span id="agencyNameErr" class="errors" style="color:red;float:right;"></span>
                	</li>
                	</ul>
-                </div>
+                </div> 
+                
+                <c:if test="${tenderingProcessObj.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
+                </c:if>
+                <c:if test="${tenderingProcessObj.id!=null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="update and Continue">
+                </c:if> 
                 
             </fieldset>
             <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">

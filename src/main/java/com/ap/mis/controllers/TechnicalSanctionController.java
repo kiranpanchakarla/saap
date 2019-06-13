@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -37,21 +38,34 @@ public class TechnicalSanctionController {
 	public String technicalSanctionSave(@ModelAttribute TechnicalSanction techsanc, Model model,
 			HttpServletRequest request, HttpSession session) {
 
-		if (session.getAttribute("loggedInUserObj") == null) {
+		boolean isSave=false;
+/*		if (session.getAttribute("loggedInUserObj") == null) {
 			model.addAttribute("sessionTimeout", "sessionTimeout");
 			return "online-admin";
-		}
+		}*/
 
 		int wrokid = (int) session.getAttribute("workIdSession");
 //		techsanc.setWorkId(wrokid);
-		techSanction.saveTechSanction(techsanc);
+//		techSanction.saveTechSanction(techsanc);
+		
+		if (techsanc.getId() == null) {
+			techSanction.saveTechSanction(techsanc);
+			isSave = true;
+		} else {
+			techSanction.updateTechSanction(techsanc);
+		}
 
 		Works workInfo = misService.getWorkInfo(wrokid);
 		model.addAttribute("workInfo", workInfo);
 		model.addAttribute("authoritiesTypeList", tenderingProcessService.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderingProcessService.getAgencyList());
 
-		return "redirect:/tenderProcess/create";
+		if(isSave==true) {
+			return "redirect:/tenderProcess/create";
+		}else {
+			return "redirect:/tenderProcess/edit/"+wrokid;
+		}
+
 
 	}
 	
@@ -72,4 +86,14 @@ public class TechnicalSanctionController {
 		model.addAttribute("techInfo",techInfo);
 	    return "online-mis-techSanctionView";
 	}
+	
+	@GetMapping(value = "/edit/{id}")
+	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		TechnicalSanction techInfo = techSanction.getTechDetails(id);
+		session.getAttribute("workInfo");
+		model.addAttribute("techsanc",techInfo);
+		return "online-mis-technical-sanction";
+	}
+
 }

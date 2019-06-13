@@ -10,7 +10,20 @@
 <title>SAAP : Agreement Details</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 </head>
+ <script type="text/javascript"> 
 
+ $(document).ready(function() {  
+	    
+	    $('#siteHandOverDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#siteHandOverDate').datepicker('setDate', $('#shDate').val());
+	    
+	    $('#agreementCouncludedDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#agreementCouncludedDate').datepicker('setDate', $('#agreDate').val());
+	    
+	    $('#expectedCompletionDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#expectedCompletionDate').datepicker('setDate', $('#ecDate').val());
+	 }); 
+ </script>   
 <body>
 
 <!--=== Header ====-->
@@ -52,6 +65,17 @@
       <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="agreementDetailsObj"  >
       <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />     
             
+        <c:choose>
+		<c:when test="${!empty agreementDetailsObj.id}">
+			<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+			<input type="hidden" name="shDate" id ="shDate" value="${agreementDetailsObj.siteHandOverDate}"> 
+			<input type="hidden" name="agreDate" id ="agreDate" value="${agreementDetailsObj.agreementCouncludedDate}"> 
+			<input type="hidden" name="ecDate" id ="ecDate" value="${agreementDetailsObj.expectedCompletionDate}"> 
+			
+			
+		</c:when>
+		</c:choose>
+		
             <!-- fieldsets -->
             <fieldset>
             <div class="fs-list-full"> 
@@ -94,14 +118,16 @@
                
                <ul class="fs-list-details">
                 <li><p>Site Hand Over Date: <span class="red">*</span></p></li>
-                <li><form:input type="date" path="siteHandOverDate" id="siteHandOverDate" placeholder="DD/MM/YYYY" class="datepicker form-control mb-md hasDatepicker"/>
+                <li>
+                <form:input type="date" path="siteHandOverDate" id="siteHandOverDate" placeholder="DD/MM/YYYY" />
+                
                 <span id="siteHandOverDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Agreement Concluded Date: <span class="red">*</span></p></li>
-                <li><form:input type="date" path="agreementCouncludedDate" id="agreementCouncludedDate" placeholder="DD/MM/YYYY" class="form-control mb-md hasDatepicker"/>
+                <li><form:input type="date" path="agreementCouncludedDate" id="agreementCouncludedDate" placeholder="DD/MM/YYYY" />
                 <span id="agreementCouncludedDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -115,7 +141,7 @@
                
                <ul class="fs-list-details">
                 <li><p>Expected date of Completion as per Agreement: <span class="red">*</span></p></li>
-                <li><form:input type="date" path="expectedCompletionDate" id="expectedCompletionDate" placeholder="DD/MM/YYYY" class="form-control mb-md" /><!-- readonly -->
+                <li><form:input type="date" path="expectedCompletionDate" id="expectedCompletionDate" placeholder="DD/MM/YYYY"  />
                <span id="expectedCompletionDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -157,7 +183,13 @@
                </ul>
                
                </div>
-               <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
+                <c:if test="${agreementDetailsObj.id==null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
+                </c:if>
+                <c:if test="${agreementDetailsObj.id!=null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="update and Continue">
+                </c:if>
+               
                </fieldset>
                <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">
         </form:form>>

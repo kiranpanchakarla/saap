@@ -36,4 +36,15 @@ public class ConsultantInfoDaoImpl implements ConsultantInfoDao{
 		return consultInfo;
 	}
 
+	@Override
+	public ConsultantInfo updateConsultantInfo(ConsultantInfo consultantInfoObject) {
+		try{
+			sessionFactory.getCurrentSession().update(consultantInfoObject);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return consultantInfoObject;
+	}
+
 }

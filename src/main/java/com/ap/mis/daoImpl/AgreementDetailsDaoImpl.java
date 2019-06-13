@@ -34,4 +34,13 @@ public class AgreementDetailsDaoImpl implements AgreementDetailsDao{
 		return agreementDetails;
 	}
 
+	@Override
+	public AgreementDetails updateAgreementDetails(AgreementDetails agreementDetailsObj) {
+		try {
+			sessionFactory.getCurrentSession().update(agreementDetailsObj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return agreementDetailsObj;
+	}
 }

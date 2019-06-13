@@ -56,15 +56,16 @@ public class LandDetailsController {
 	@PostMapping(value = "/save")
 	public String landDetailsSave(@ModelAttribute LandDetails landDetails, Model model, HttpServletRequest request,
 			@RequestParam("file") MultipartFile file, HttpSession session) {
-
+		
+		boolean isSave=false;
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		landDetails.setUser(loggedInUser);
 		
-		if(landDetails.getId()==null) {
-		landDetailService.landDetailsSave(landDetails, file);
-		}
-		else {
-		landDetailService.landDetailsUpdate(landDetails, file);
+		if (landDetails.getId() == null) {
+			landDetailService.landDetailsSave(landDetails, file);
+			isSave = true;
+		} else {
+			landDetailService.landDetailsUpdate(landDetails, file);
 		}
 		WorktoLandDetails obj = new WorktoLandDetails();
 		obj = (WorktoLandDetails) session.getAttribute("generalInfo");
@@ -103,21 +104,27 @@ public class LandDetailsController {
 		model.addAttribute("sectionName",
 				landDetailService.findBySectionId(obj.getDepartmentlinkingine().getSectionName()));
 */
-		if (obj.getAdministrativeesction().getPath() != null && !obj.getAdministrativeesction().getPath().equals("")) {
-			model.addAttribute("filePath",
-					ContextUtil.populateContext(request) + obj.getAdministrativeesction().getPath());
+		
+		if (isSave == true) {
+			if (obj.getAdministrativeesction().getPath() != null && !obj.getAdministrativeesction().getPath().equals("")) {
+				model.addAttribute("filePath",
+						ContextUtil.populateContext(request) + obj.getAdministrativeesction().getPath());
+			} else {
+				model.addAttribute("filePath", null);
+			}
+	
+			if (obj.getLanddetails().getPath() != null && !obj.getLanddetails().getPath().equals("")) {
+	
+				model.addAttribute("landfilePath", ContextUtil.populateContext(request) + obj.getLanddetails().getPath());
+			} else {
+				model.addAttribute("landfilePath", null);
+			}		
+		
+			return "online-mis-general-information";
 		} else {
-			model.addAttribute("filePath", null);
+			return "redirect:/ConsultantInfo/edit/" + landDetails.getWork().getId();
 		}
 
-		if (obj.getLanddetails().getPath() != null && !obj.getLanddetails().getPath().equals("")) {
-
-			model.addAttribute("landfilePath", ContextUtil.populateContext(request) + obj.getLanddetails().getPath());
-		} else {
-			model.addAttribute("landfilePath", null);
-		}
-
-		return "online-mis-general-information";
 
 	}
 

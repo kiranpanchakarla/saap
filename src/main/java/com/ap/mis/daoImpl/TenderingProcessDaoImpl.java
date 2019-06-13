@@ -71,4 +71,14 @@ public class TenderingProcessDaoImpl implements TenderingProcessDao  {
 		return tenderInfo;
 	}
 
+	@Override
+	public TenderingProcess updateTenderingProcess(TenderingProcess tenderingProcess) {
+		try {
+			sessionFactory.getCurrentSession().update(tenderingProcess);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tenderingProcess;
+	}
+
 }

@@ -16,6 +16,7 @@ public interface TenderingProcessService {
 	public List<NoticeIssuingAuthorities> getAuthoritiesList();
 	public List<Agency> getAgencyList();
 	public TenderingProcess saveTenderingProcess(TenderingProcess tenderingProcessObj, MultipartFile engfile,MultipartFile telugufile);
+	public TenderingProcess updateTenderingProcess(TenderingProcess tenderingProcessObj, MultipartFile engfile,MultipartFile telugufile);
 	public TenderingProcess getTenderingInfo(int tenderingId);
 	public TenderingProcess getTenderDetails(int id);
 	
