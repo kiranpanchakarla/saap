@@ -164,11 +164,11 @@ figure img {
 	z-index: -1;
 }
 .social-links {
-	max-width: 767px;
-	float: right;
-	margin-right: 30px;
-	margin-top: 5px;
-	margin-bottom: 5px;
+	max-width: 73%;
+    float: right;
+    margin-right: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .social-links a {
 	color: rgba(255, 255, 255, 0.5);
@@ -2269,10 +2269,6 @@ table>tbody>tr.info>td em {
 
 .main-header{
 	display: inline-block;
-    float: right;
-    position: absolute;
-    right: 35px;
-    top: 5px;
 }
 .main-header h1 {
     color: #fff;
@@ -2281,4 +2277,13 @@ table>tbody>tr.info>td em {
     text-align: left;
     margin-bottom: 5px;
 }
+.main-header h1 span {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+}
 #viewTable .btn{padding: 6px 0px !important;}
+
+@media (min-width: 767px){
+	
+}

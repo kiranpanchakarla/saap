@@ -7,11 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!--==========================
+<!-- ==========================
     Footer
   ============================-->
 <footer id="footer">
-  <div class="footer-connect">
+  <!-- <div class="footer-connect">
     <div class="container">
       <div class="footer-social">
         <label class="font-heading" for="">Follow us</label>
@@ -20,7 +20,7 @@
         <a target="_blank" href="https://www.linkedin.com/company/sports-authority-of-ap/" href="#" title="Linkedin"><i class="fa fa-linkedin-square"></i></a> 
         <a target="_blank" href="https://www.youtube.com/channel/UCy3mdgAFCimIxl60stdXopQ" href="#" title="Youtube"><i class="fa fa-youtube"></i></a></div>
     </div>
-  </div>
+  </div> -->
   <div class="footer-top">
     <div class="container">
       <div class="row">

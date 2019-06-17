@@ -16,8 +16,6 @@
 <jsp:include page="online-mis-header.jsp" />
 <script src="<c:url value="/resources/lib/jquery/jquery.min.js"/>" type="text/javascript"></script>
 
-
-
 </head>
 
 <body>
@@ -48,7 +46,9 @@
           <button type="submit" class="btn btn-info">Create New Work</button>
          </div>  
       </c:if>
-        <table id="viewTable" class="table table-striped table-bordered" style="width:100%">
+      
+      <div class="col-md-12">
+        <table id="example" class="display nowrap table table_padding_custom table-hover table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th>S.No</th>
@@ -103,7 +103,7 @@
 		  </tbody>
 			                                       
 	 </table>
-                     
+      </div>               
                                  
 
 </form>
