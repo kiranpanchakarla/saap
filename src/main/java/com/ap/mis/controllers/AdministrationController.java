@@ -41,6 +41,8 @@ public class AdministrationController {
 	@PostMapping(value = "/save")
 	public String administrativeSectionSave(@ModelAttribute AdministrativeSection adminSecObject, Model model,
 			HttpServletRequest request, @RequestParam("file") MultipartFile file, HttpSession session) {
+		
+		
 		boolean isSave=false;
 		int workid = (int) session.getAttribute("workIdSession");
 		User loggedInUser = SecurityUtil.getLoggedUser();
@@ -73,6 +75,8 @@ public class AdministrationController {
 
 	}
 	
+	
+	
 	@GetMapping(value = "/create")
 	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -81,6 +85,9 @@ public class AdministrationController {
 	    model.addAttribute("adminSecObject", new AdministrativeSection());
 		session.setAttribute("loggedInUserObj", userObject);
 		session.getAttribute("workInfo");
+		int workid = (int) session.getAttribute("workIdSession");
+		Works workInfo = misService.getWorkInfo(workid);
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("grantTypeList", admService.findAll());
 		model.addAttribute("finYearList", admService.getfinancialYearList());
 		model.addAttribute("executiveDeptList", admService.getExecutiveDeptList());
@@ -102,13 +109,19 @@ public class AdministrationController {
 	}
 	
 	@GetMapping(value = "/edit/{id}")
-	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request,HttpSession session) {
+		
 		AdministrativeSection adminInfo = admService.getAdminDetails(id);
-		if (adminInfo.getPath() != null && !adminInfo.getPath().equals("")) {
+	   if (adminInfo.getPath() != null && !adminInfo.getPath().equals("")) {
 			model.addAttribute("filePath",ContextUtil.populateContext(request) + adminInfo.getPath());
+			/*model.addAttribute("fileName",adminInfo.getPath().substring(adminInfo.getPath().lastIndexOf('\\') + 1));*/
+			
 		} else {
 			model.addAttribute("filePath", null);
 		}
+	  
+		Works workInfo = misService.getWorkInfo(adminInfo.getWork().getId());
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("grantTypeList", admService.findAll());
 		model.addAttribute("finYearList", admService.getfinancialYearList());
 		model.addAttribute("executiveDeptList", admService.getExecutiveDeptList());

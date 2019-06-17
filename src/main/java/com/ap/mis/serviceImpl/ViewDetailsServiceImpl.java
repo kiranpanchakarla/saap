@@ -29,7 +29,7 @@ public class ViewDetailsServiceImpl implements ViewDetailsService{
 			ViewDetails viewDetailModel=new ViewDetails();
 			viewDetailModel.setTypeOfWork(obj[1].toString());
 			viewDetailModel.setNatureOfWork(obj[2].toString());
-			viewDetailModel.setWorkDetails(obj[3].toString());
+			viewDetailModel.setWorkDetails(obj[3]==null?"":obj[3].toString());
 			viewDetailModel.setWorkNo(obj[4].toString());
 			viewDetailModel.setDepartmentName(obj[5]==null?"":obj[5].toString());
 			viewDetailModel.setSurveyNo(obj[6]==null?"":obj[6].toString());	

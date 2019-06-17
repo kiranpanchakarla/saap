@@ -30,121 +30,130 @@ import com.ap.mis.util.UploadUtil;
 public class AdministrativeSectionServiceImpl implements AdministrativeSectionService {
 	private static final Logger log = Logger.getLogger(AdministrativeSectionServiceImpl.class);
 
-	@Autowired AdministrativeSectionDao administrativeSectionDao;
-	
+	@Autowired
+	AdministrativeSectionDao administrativeSectionDao;
+
 	@Autowired
 	UploadUtil uploadUtil;
-	
+
 	@Autowired
 	private ServletContext servletContext;
-	
+
 	@Override
 	public List<GrantType> findAll() {
 		return administrativeSectionDao.findAll();
 	}
+
 	@Override
 	public List<FinancialYear> getfinancialYearList() {
 		return administrativeSectionDao.getfinancialYearList();
 	}
+
 	@Override
 	public List<ExecutiveDept> getExecutiveDeptList() {
 		return administrativeSectionDao.getExecutiveDeptList();
 	}
+
 	@Override
 	public List<ExecutiveConsultant> getExecutiveConsultantList() {
 		return administrativeSectionDao.getExecutiveConsultantList();
 	}
+
 	@Override
 	public FinancialYear findById(int id) {
-		
+
 		return administrativeSectionDao.findById(id);
 	}
+
 	@Override
 	public ExecutiveDept findByExecutiveDeptId(int id) {
 		return administrativeSectionDao.findByExecutiveDeptId(id);
 	}
+
 	@Override
 	public ExecutiveConsultant findByExecutiveConsultantId(int id) {
 		// TODO Auto-generated method stub
 		return administrativeSectionDao.findByExecutiveConsultantId(id);
 	}
+
 	@Override
 	public GrantType findByGrantId(int id) {
 		// TODO Auto-generated method stub
 		return administrativeSectionDao.findByGrantId(id);
 	}
+
 	@Override
 	public AdministrativeSection adminstrativeSection(AdministrativeSection adminSecObject, MultipartFile file) {
-		try
-		 {
+		try {
 			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 			String saveDirectory = servletContext.getRealPath("/");
-			String uploadfile="";
-			 byte[] data = null;
-		        Blob encodstring =null;  
-				if (!file.getOriginalFilename().isEmpty()) {
-					File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-					log.info("==rootFolder=="+rootFolder);
-					if (!rootFolder.exists()) {
-						rootFolder.mkdirs();
-					}
-				    String  filepath=rootFolder + File.separator+ file.getOriginalFilename();
-					file.transferTo(new File(filepath));
-					log.info("===filepath==:"+filepath);
-					 adminSecObject.setPath(filepath);	
-					/* if ((!(" ".equals(uploadfile)) || uploadfile == null)) {
-                          InputStream stream = (InputStream) file.getInputStream();
-			                data = new byte[50000];
-			                stream.read(data);
-			               System.out.println("file is*********************" + data);
-			            } 
-					 encodstring = (Blob) Hibernate.getLobCreator((Session) sessionFactory).createBlob(data);
+			String uploadfile = "";
+			byte[] data = null;
+			Blob encodstring = null;
+			if (!file.getOriginalFilename().isEmpty()) {
+				File rootFolder = new File(
+						uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
+				log.info("==rootFolder==" + rootFolder);
+				if (!rootFolder.exists()) {
+					rootFolder.mkdirs();
 				}
-				 adminSecObject.setContent(encodstring);*/
-		 }
-		 }
-		catch(Exception e){
+				String filepath = rootFolder + File.separator + file.getOriginalFilename();
+				file.transferTo(new File(filepath));
+				log.info("===filepath==:" + filepath);
+				adminSecObject.setPath(filepath);
+				/*
+				 * if ((!(" ".equals(uploadfile)) || uploadfile == null)) { InputStream stream =
+				 * (InputStream) file.getInputStream(); data = new byte[50000];
+				 * stream.read(data); System.out.println("file is*********************" + data);
+				 * } encodstring = (Blob) Hibernate.getLobCreator((Session)
+				 * sessionFactory).createBlob(data); } adminSecObject.setContent(encodstring);
+				 */
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return administrativeSectionDao.adminstrativeSectionSave(adminSecObject);
 	}
+
 	@Override
 	public AdministrativeSection getAdminInfo(int id) {
 		return administrativeSectionDao.getAdminInfo(id);
 	}
+
 	@Override
 	public AdministrativeSection getAdminDetails(int id) {
 		return administrativeSectionDao.getAdminDetails(id);
-		
+
 	}
+
 	@Override
-	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSecObject, MultipartFile file) {
-		try
-		 {
+	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSecObject,
+			MultipartFile file) {
+		try {
 			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			String saveDirectory = servletContext.getRealPath("/");
-			String uploadfile="";
-			 byte[] data = null;
-		        Blob encodstring =null;  
-				if (!file.getOriginalFilename().isEmpty()) {
-					File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-					log.info("==rootFolder=="+rootFolder);
-					if (!rootFolder.exists()) {
-						rootFolder.mkdirs();
-					}
-				    String  filepath=rootFolder + File.separator+ file.getOriginalFilename();
-					file.transferTo(new File(filepath));
-					log.info("===filepath==:"+filepath);
-					 adminSecObject.setPath(filepath);	
-				
-		 }
-		 }
-		catch(Exception e){
+			String path = adminSecObject.getPath();
+			log.info("==path==" + path);
+			if (!file.getOriginalFilename().isEmpty()) {
+				File rootFolder = new File(
+						uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
+				log.info("==rootFolder==" + rootFolder);
+				if (!rootFolder.exists()) {
+					rootFolder.mkdirs();
+				}
+				String filepath = rootFolder + File.separator + file.getOriginalFilename();
+				file.transferTo(new File(filepath));
+				log.info("===filepath==:" + filepath);
+				adminSecObject.setPath(filepath);
+
+			} else {
+				adminSecObject.setPath(path);
+			}
+		}
+
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return administrativeSectionDao.adminstrativeSectionUpdate(adminSecObject);
 	}
-	
-	
 
 }

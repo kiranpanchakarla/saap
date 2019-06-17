@@ -81,7 +81,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Work <span class="red">*</span></p></li>
-                <li><form:input type="text" id="nameofwork" path="nameofwork" title="Land work" class="form-control mb-md" readonly="true" value="${workInfo.workDetails}" />
+                <li><form:input type="text" id="nameofwork" path="nameofwork" title="Land work" class="form-control mb-md" readonly="true" value="${workLineItems.workDetails}" />
                 <span id="nameofworkErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -122,9 +122,10 @@
                 
                <ul class="fs-list-details">
                 <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li><input type="file" name="file" id="file" class="form-control mb-md"></li>
+                <li><input type="file" name="file" id="file"  value="${filePath}" class="form-control mb-md" onchange="document.getElementById('image').src = window.URL.createObjectURL(this.files[0])"></li>
+                <li> <img id="image" src="${filePath}"   width="100" height="70"/> </li>
+                <form:input type="hidden" path="path" class="form-control" id="fileName" value="${landDetails.path}"></form:input>
                 <span id="file_error" class="errors" style="color:red;float:right;"></span>
-                 
                 </ul>
                 
                 </div>
@@ -234,13 +235,19 @@ $("#submit").click(function(){
 	}else{
 		$("#typeOfLandErr").text("");
 	}
-	var file=$("#file").val();
-    if(file=="" || file==null){
+	
+	
+	var fileName=$("#fileName").val();
+	if(fileName==""){
+		fileName=$("#file").val();
+	}
+    if(fileName=="" || fileName==null){
         $("#file_error").html("Please Upload a file ");
         $("#file").focus();
         return false;
     }else{
         $("#file_error").html("");
+        return true
     }
 	
 })

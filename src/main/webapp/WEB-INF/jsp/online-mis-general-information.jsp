@@ -112,13 +112,13 @@
                 <ul class="fs-list-details">
                 <li><p>Work Detail <span class="red">*</span></p></li>
                 <li><input type="text" title="SAAP" name="s.no" class="form-control mb-md" readonly 
-               value="${generalInfo.works.workDetails}"></li>
+               value="${workLineItems.workDetails}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Estimated Cost <span class="red">*</span></p></li>
                 <li><input type="text" title="SAAP" name="work-details-new" class="form-control mb-md" readonly 
-               value="${generalInfo.works.cost}"></li>
+               value="${workLineItems.cost}"></li>
                 </ul>
                 
                
@@ -132,7 +132,7 @@
                 <ul class="fs-list-details">
                 <li><p>Name of Work <span class="red">*</span></p></li>
                 <li><input type="text" title="SAAP" name="work-name" class="form-control mb-md" readonly 
-                value="${generalInfo.administrativeesction.workName}">
+                value="${workLineItems.workDetails}">
                 </li>
                 </ul>
                 
@@ -207,7 +207,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><input type="text" title="work" name="dept-work-nature" class="form-control mb-md" readonly value="${generalInfo.departmentlinkingine.workNature}">
+                <li><input type="text" title="work" name="dept-work-nature" class="form-control mb-md" readonly value="${workLineItems.workDetails}">
                 </li>
                 </ul>
                 

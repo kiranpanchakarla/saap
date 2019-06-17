@@ -71,7 +71,7 @@
                 <ul class="fs-list-details">
                 <li><p>Name of Work <span class="red">*</span></p></li>
                 <li>
-                <form:input type="text" id="workName" path="workName"  class="form-control mb-md" readonly="true" value="${workInfo.workDetails}"/>
+                <form:input type="text" id="workName" path="workName"  class="form-control mb-md" readonly="true" value="${workLineItems.workDetails}"/>
                 <span id="workNameErr" class="errors" style="color:red;float:right;"></span> </li>
                 </ul>
                 
@@ -140,21 +140,15 @@
                 </li>
                 </ul>
                 
-                 <c:if test="${adminSecObject.id==null}">
-                <ul class="fs-list-details">
-                <li><p>Upload Adminstrative Details Document(pdf/jpg/png)  <span class="red">*</span></p></li>
-                <li><input type="file" name="file" id="file"  ></li>
-                <span id="file_error" class="errors" style="color:red;float:right;"></span>
-                </ul>
-                </c:if>
-                 <c:if test="${adminSecObject.id!=null}">
+                 
                  <ul class="fs-list-details">
-                <li><p>Upload Adminstrative Details Document(pdf/jpg/png)  <span class="red">*</span></p></li>
-                <li><input type="file" name="file" id="file">${filePath}</li>
-                 <li> <img  src="${filePath}"    width="100" height="70"/>  </li>
-                <span id="file_error" class="errors" style="color:red;float:right;"></span>
+                <li><p>Upload Adminstrative Details Document(pdf/jpg/png)<span class="red">*</span></p>
+                <input type="file" name="file" id="file" value="${filePath}" onchange="document.getElementById('image').src = window.URL.createObjectURL(this.files[0])"></li>
+                <li> <img id="image" src="${filePath}"   width="100" height="70"/> </li>
+                <form:input type="hidden" path="path" class="form-control" id="fileName" value="${adminSecObject.path}"></form:input>
+                 <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
-                </c:if>
+                
                </div>
                <c:if test="${adminSecObject.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue"/>
@@ -190,13 +184,14 @@
 <script type="text/javascript">
 $(document).ready(function(){
 $("input[type='file']").on("change", function () {
-	  $("#file_error").html("");
+		  $("#file_error").html("");
 	     if(this.files[0].size > 2000000) {
 	    	 $("#file_error").html("File size is greater than 2MB");
-	      /*  alert("Please upload file less than 2MB. Thanks!!"); */
+	        alert("Please upload file less than 2MB. Thanks!!"); 
 	       $(this).val('');
 	     }
-	    });
+	    }); 
+	
 });
 
 $('input').on('input', function() {
@@ -264,15 +259,21 @@ $("#submit").click(function(){
 		$("#consultantErr").text("");
 	}
 	
-	var file=$("#file").val();
-    if(file=="" || file==null){
+	
+    var fileName=$('#fileName').val();
+	if(fileName==""){
+		fileName=$('#file').val();
+	}
+	if(fileName=="" || fileName==null){
         $("#file_error").html("Please Upload a file ");
         $("#file").focus();
         return false;
     }else{
-        $("#file_error").html("");
+    	 $("#file_error").html("");
+    	return true;
     }
-})
+	
+});
 
 $(document).ready(function(){
 	$('#nav-admin-tab').addClass('active');

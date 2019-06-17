@@ -93,7 +93,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Work<span class="red">*</span></p></li>
-                <li><form:input type="text" id="workName" path="workName" class="form-control mb-md" readOnly="true" value="${workInfo.workDetails}"/>
+                <li><form:input type="text" id="workName" path="workName" class="form-control mb-md" readOnly="true" value="${workLineItems.workDetails}"/>
                 <span id="workNameErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>

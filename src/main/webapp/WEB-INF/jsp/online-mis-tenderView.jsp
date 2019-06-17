@@ -40,7 +40,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Work <span class="red">*</span></p></li>
-                <li><input type="text" id="workName" name="workName" class="form-control mb-md" readonly value="${tenderInfo.work.workDetails}">
+                <li><input type="text" id="workName" name="workName" class="form-control mb-md" readonly value="${workLineItems.workDetails}">
                  </li>
                </ul>
                

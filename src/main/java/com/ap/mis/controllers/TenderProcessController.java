@@ -70,6 +70,9 @@ public class TenderProcessController {
 	    userObject =misService.verifyUser(userObject);
 	    model.addAttribute("tenderingProcessObj", new TenderingProcess());
 	    session.getAttribute("workInfo");
+	    int workid = (int) session.getAttribute("workIdSession");
+		Works workInfo = misService.getWorkInfo(workid);
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		session.setAttribute("loggedInUserObj", userObject);
 		model.addAttribute("authoritiesTypeList", tenderProcess.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderProcess.getAgencyList());
@@ -91,6 +94,8 @@ public class TenderProcessController {
 			model.addAttribute("telUpload", null);
 		}
 		model.addAttribute("tenderInfo",tenderInfo);
+		Works workInfo = misService.getWorkInfo(tenderInfo.getWork().getId());
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 	    return "online-mis-tenderView";		 
 	}
 	
@@ -107,6 +112,8 @@ public class TenderProcessController {
 		} else {
 			model.addAttribute("telUpload", null);
 		}
+		Works workInfo = misService.getWorkInfo(tenderInfo.getWork().getId());
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("authoritiesTypeList", tenderProcess.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderProcess.getAgencyList());
 		model.addAttribute("tenderingProcessObj",tenderInfo);

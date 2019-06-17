@@ -120,6 +120,9 @@ public class LandDetailServiceImpl implements LandDetailService{
 						  landDetails.setPath(filepath);	
 					 
 				}
+				else{
+					landDetails.setPath(landDetails.getPath());
+				}
 		 }
 		catch(Exception e){
 			e.printStackTrace();

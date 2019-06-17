@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ap.mis.dao.MISdao;
-import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Constituency;
 import com.ap.mis.entity.Mandal;
 import com.ap.mis.entity.NatureOfWork;
 import com.ap.mis.entity.TypeOfWork;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Village;
+import com.ap.mis.entity.WorkLineItemsList;
 import com.ap.mis.entity.Works;
 
 @Repository
@@ -40,20 +40,6 @@ public class MISDaoImpl implements MISdao {
 	
 	
 
-	
-	
-	/*@Override
-	public int saveWorks(Works work) {
-		int i = 0;
-		try{
-			i =(int) sessionFactory.getCurrentSession().save(work);	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			
-		}
-		return i;
-	}*/
 
 
 
@@ -82,83 +68,7 @@ public class MISDaoImpl implements MISdao {
 
 	
 	
-	/*@Override
-	public int saveConsultantInfo(ConsultantInfo consultantInfo) {
-		int i = 0;
-		// TODO Auto-generated method stub
-		try{
-			i =(int) sessionFactory.getCurrentSession().save(consultantInfo);	
-			System.out.println("i is:"+i);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			
-		}
-		return i;
-	}*/
-
-	/*@Override
-	public int saveTechSanction(TechnicalSanction technicalSanction) {
-		int i = 0;
-		// TODO Auto-generated method stub
-		try{
-			i =(int) sessionFactory.getCurrentSession().save(technicalSanction);	
-			System.out.println("saveTechSanction() --- i is:"+i);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			
-		}
-		return i;
-	}*/
-
 	
-
-	/*@Override
-	public int saveAgreementDetails(AgreementDetails agreementDetails) {
-		int i = 0;
-		// TODO Auto-generated method stub
-		try{
-			i =(int) sessionFactory.getCurrentSession().save(agreementDetails);	
-			System.out.println("saveAgreementDetails() --- i is:"+i);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			
-		}
-		return i;
-	}*/
-	
-	/*public TenderingProcess getTenderingInfo(int tenderingId){
-		List<TenderingProcess> tenderingList=new ArrayList<TenderingProcess>();
-		TenderingProcess tenderingInfo = new TenderingProcess();
-		String hql="from TenderingProcess where id=:tenderingId";
-		Query query=sessionFactory.getCurrentSession().createQuery(hql);
-		query.setParameter("tenderingId", tenderingId);
-		System.out.println("q.list() :"+query.list());
-		if(query.list().size() !=0) {
-			tenderingList =  query.list();
-		}
-		for(TenderingProcess tender :tenderingList) {
-			tenderingInfo=tender;
-		}
-		return tenderingInfo;
-	}*/
-
-	/*@Override
-	public int saveTenderingProcess(TenderingProcess tenderingProcess) {
-		int i = 0;
-		// TODO Auto-generated method stub
-		try{
-			i =(int) sessionFactory.getCurrentSession().save(tenderingProcess);	
-			System.out.println("saveTenderingProcess() --- i is:"+i);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			
-		}
-		return i;
-	}*/
 
 	@Override
 	public List<TypeOfWork> findAll() {
@@ -238,48 +148,21 @@ public class MISDaoImpl implements MISdao {
 		sessionFactory.getCurrentSession().update(work);
 		return work;
 	}
-	
-	
-	/*@Override
-	public int adminstrativeSectionSave(AdministrativeSection adminSec) {
-		int i=0;
-		  Blob encodstring =null;  
-		try{
-			
-			encodstring = (Blob) Hibernate.getLobCreator((Session) sessionFactory).createBlob(data);
-		    i =(int) sessionFactory.getCurrentSession().save(adminSec);	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return i;
-	}*/
-	
-	/*@Override
-	public int departmentLinkingLineSave(DepartmentLinkingLine departmentLink) {
-		int i=0;
-		try{
-		    i =(int) sessionFactory.getCurrentSession().save(departmentLink);	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return i;
+
+
+
+
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<WorkLineItemsList> lineItemDetails(int workId) {
+		List<WorkLineItemsList> lineitems=sessionFactory.getCurrentSession().createQuery("select b.workDetails,b.cost from Works a,WorkLineItemsList b where a.id=b.WorkLineItemsList and a.id="+workId).list();
+		return lineitems;
+		
 	}
-	*/
 	
 	
-	/*@Override
-	public int landDetailsSave(LandDetails landDetails) {
-		int i=0;
-		try{
-		    i =(int) sessionFactory.getCurrentSession().save(landDetails);	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return i;
-	}*/
 	
 	
 	}

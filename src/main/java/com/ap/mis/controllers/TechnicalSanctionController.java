@@ -70,19 +70,24 @@ public class TechnicalSanctionController {
 	}
 	
 	@GetMapping(value = "/create")
-	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request,HttpSession session) {
 		userObject = SecurityUtil.getLoggedUser();
 	    userObject =misService.verifyUser(userObject);
 	    model.addAttribute("techsanc", new TechnicalSanction());
 	    session.getAttribute("workInfo");
 		session.setAttribute("loggedInUserObj", userObject);
+		int workid = (int) session.getAttribute("workIdSession");
+		Works workInfo = misService.getWorkInfo(workid);
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
+		
 	    return "online-mis-technical-sanction";
 	}
 	
 	@GetMapping(value = "/view")
 	public String view(Model model, String workId) {
 		TechnicalSanction techInfo = techSanction.getTechDetails(Integer.parseInt(workId));
+		Works workInfo = misService.getWorkInfo(techInfo.getWork().getId());
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("techInfo",techInfo);
 	    return "online-mis-techSanctionView";
 	}
@@ -92,6 +97,8 @@ public class TechnicalSanctionController {
 		HttpSession session = request.getSession();
 		TechnicalSanction techInfo = techSanction.getTechDetails(id);
 		session.getAttribute("workInfo");
+		Works workInfo = misService.getWorkInfo(techInfo.getWork().getId());
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("techsanc",techInfo);
 		return "online-mis-technical-sanction";
 	}

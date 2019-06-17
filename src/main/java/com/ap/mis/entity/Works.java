@@ -1,7 +1,9 @@
 package com.ap.mis.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -47,6 +50,18 @@ public class Works implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "constituency", referencedColumnName = "constituency_id")
 	private Constituency constituency;
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER )
+	@JoinColumn(name = "worklineitems_id", referencedColumnName = "id")
+    private List<WorkLineItemsList> WorkLineItemsList;
+	
+	
+/*	@OneToMany(cascade = CascadeType.ALL,mappedBy="works")
+	private List<WorkLineItemsList> WorkLineItemsList;*/
+	
+	
+	
 
 	@Column
 	private String location;
@@ -183,13 +198,30 @@ public class Works implements Serializable {
 	public void setWorkNo(String workNo) {
 		this.workNo = workNo;
 	}
+	
+	public List<WorkLineItemsList> getWorkLineItemsList() {
+		return WorkLineItemsList;
+	}
+
+	public void setWorkLineItemsList(List<WorkLineItemsList> workLineItemsList) {
+		WorkLineItemsList = workLineItemsList;
+	}
 
 	@Override
 	public String toString() {
 		return "Works [id=" + id + ", typeOfWork=" + typeOfWork + ", natureOfWork=" + natureOfWork + ", district="
 				+ district + ", village=" + village + ", mandal=" + mandal + ", constituency=" + constituency
-				+ ", location=" + location + ", noOfWorks=" + noOfWorks + ", workNo=" + workNo + ", workDetails="
-				+ workDetails + ", cost=" + cost + ", user=" + user + "]";
+				+ ", WorkLineItemsList=" + WorkLineItemsList + ", location=" + location + ", noOfWorks=" + noOfWorks
+				+ ", workNo=" + workNo + ", workDetails=" + workDetails + ", cost=" + cost + ", user=" + user
+				+ ", isActive=" + isActive + "]";
 	}
+
+	
+
+	
+
+	
+
+	
 
 }

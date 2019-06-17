@@ -47,7 +47,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Work <span class="red">*</span></p></li>
-                <li><input type="text" title="Land work" name="fullLand" class="form-control mb-md" readonly value="${landInfo.work.workDetails}"></li> 
+                <li><input type="text" title="Land work" name="fullLand" class="form-control mb-md" readonly value="${workLineItems.workDetails}"></li> 
                 </ul>
                 
                 <ul class="fs-list-details">

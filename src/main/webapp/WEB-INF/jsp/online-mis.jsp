@@ -14,11 +14,12 @@
                     </head>
                     <script>
                         $(document).ready(function() {
+                        	
                             $(".createClass").click(function() {
 
                                 $("#work_detailsErr").html("");
                                 var count = $("#noOfWorks").val();
-                                //alert(count);
+                               /*  alert(count); */
                                 if (count > 0) {
                                     $("#createval").val(1);
                                     $("#work_table tr").remove();
@@ -28,15 +29,14 @@
                                     $('#work_table')
                                         .append(
                                             '<tr>' + ' <th>S.No</th>' + ' <th>Work Detail</th>' + ' <th>Estimated Cost (in Lakhs)</th>' + '</tr>');
-
                                     for (var i = 1; i <= count; i++) {
                                         $('#work_table')
                                             .append(
-                                                '<tr><td><b>' + sno + '<b></td>' + '<td>' + '<input type="text" name="workDetails" id="work_details' + i + '"  onkeyup="return isText(this)" class="form-control mb-md" />'
-                                                /* + '<input type="text" name="WorkLineItemsList['+i+'].workDetails" id="work_details'+i+'"  onkeyup="return isText(this)" class="form-control mb-md" />' */
-                                                + '</td>' + '<td>' + '<input type="text" name="cost1" id="estimated_cost' + i + '" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />'
-                                                /* + '<input type="text" name="WorkLineItemsList['+i+'].cost" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' */
-                                                + '</td>' + '</tr>');
+                                                '<tr><td><b>' + sno + '<b></td>' + '<td>'
+                                                /* + '<input type="text" name="workDetails" id="work_details'+i+'"  onkeyup="return isText(this)" class="form-control mb-md" />' */
+                                                + '<input type="text" name="WorkLineItemsList[' + i + '].workDetails" id="work_details' + i + '"  onkeyup="return isText(this)" class="form-control mb-md" />' + '</td>' + '<td>'
+                                                /* + '<input type="text" name="cost" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' */
+                                                + '<input type="text" name="WorkLineItemsList[' + i + '].cost" id="estimated_cost' + i + '" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' + '</td>' + '</tr>');
                                         sno = sno + 1;
                                     }
                                     $("#work_table_div").toggle();
@@ -47,19 +47,32 @@
                                 }
 
                             });
-                            
-                            var workDetails =$('#workDetails').val();
-                            if(workDetails != ''){
-                                 $('.createClass').trigger('click');
-                                  var wkVal=workDetails.split(',');
-                                  var i = 1;
-                                  for(j=0;i<= wkVal.length;j++){
-                                   $('#work_details'+i+'').val(wkVal[j]);
-                                   i++;
-                                  }
-                                  $('#workDetails').val('');
-                            }
+                           
+                           
+                          var workIdVal=$('#id').val();
+                          if(workIdVal == undefined){
+                        	 
+                          }else{
+                           $.ajax({
+                          	   url: "<c:url value ='/worksCreation/worklineitems'/>?workId=" + workIdVal,
+                               error: function(xhr, status, error) {
+                                   alert('Exception occurred:' + error);
+                               },
+                               success: function(data) {
+                                    var dataVal = JSON.parse(data); 
+                                $('.createClass').trigger('click');
+                                var i = 1;
+                                for(j=0;i<= dataVal.length;j++){
+                              	 $('#work_details'+i+'').val(dataVal[j].workDetails);
+                                 $('#estimated_cost'+i+'').val(dataVal[j].cost);  
+                                 i++;
+                                } 
 
+                               }
+                           });
+                          }
+                         
+                          
                             $(document).on("change", "#district", function() {
                                 var selected_value = $(this).val();
                                 if ("" === selected_value) {
@@ -187,8 +200,10 @@
 
                                                         <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="workObject">
                                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                            
+                                                            
+                                                            
                                                             <!-- for Spring Security -->
-                                                            <form:input type="hidden" path="workDetails" id = "workDetails" value="" />
                                                             <c:choose>
                                                                 <c:when test="${!empty workObject.id}">
                                                                     <form:input type="hidden" path="id" class="form-control" id="id" name="id"></form:input>
@@ -342,7 +357,6 @@
                                                                 <!-- name="next" -->
                                                             </fieldset>
                                                             <input type="hidden" id="createval" name="createval" value="0">
-                                                            <input type="hidden" id="cost" name="cost" value="0">
                                                             <%-- </form> --%>
                                                         </form:form>
                                                 </div>
@@ -488,9 +502,6 @@
                                                 $("#work_detailsErr").html("Please Enter Estimated Cost");
                                                 $('#estimated_cost' + i + '').focus();
                                                 return false;
-                                            } else {
-                                                var cost = parseInt($('#cost').val()) + parseInt($('#estimated_cost' + i + '').val());
-                                                $('#cost').val(cost); //adding estimated cost
                                             }
                                         }
                                     } else {

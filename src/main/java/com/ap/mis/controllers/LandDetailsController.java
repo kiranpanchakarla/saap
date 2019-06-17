@@ -74,6 +74,7 @@ public class LandDetailsController {
 
 		Works workInfo=misService.getWorkInfo(obj.getWorks().getId());
 		model.addAttribute("workInfo",workInfo);
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		
 		AdministrativeSection adminInfo = administrativeSectionService.getAdminInfo(obj.getAdministrativeesction().getId());
 		model.addAttribute("adminInfo",adminInfo);
@@ -139,6 +140,9 @@ public class LandDetailsController {
 		HttpSession session = request.getSession();
 		userObject = SecurityUtil.getLoggedUser();
 	    userObject =misService.verifyUser(userObject);
+		int workid = (int) session.getAttribute("workIdSession");
+		Works workInfo = misService.getWorkInfo(workid);
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 	    model.addAttribute("landDetails", new LandDetails());
 		session.setAttribute("loggedInUserObj", userObject);
 		session.getAttribute("workInfo");
@@ -155,7 +159,10 @@ public class LandDetailsController {
 		} else {
 			model.addAttribute("filePath", null);
 		}
+		Works workInfo = misService.getWorkInfo(landInfo.getWork().getId());
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("landInfo",landInfo);
+		
 	    return "online-mis-landDetailsView";
 	}
 	
@@ -166,6 +173,8 @@ public class LandDetailsController {
 		log.info("===landInfo===:"+landInfo);
 		model.addAttribute("landDetails",landInfo);
 		model.addAttribute("LandTypeList", landDetailService.getLandTypeList());
+		Works workInfo = misService.getWorkInfo(landInfo.getWork().getId());
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		if (landInfo.getPath() != null && !landInfo.getPath().equals("")) {
 			model.addAttribute("filePath",ContextUtil.populateContext(request) + landInfo.getPath());
 		} else {

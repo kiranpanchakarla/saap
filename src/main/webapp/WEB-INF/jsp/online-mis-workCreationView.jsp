@@ -86,12 +86,12 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Work Detail <span class="red">*</span></p></li>
-                <li><input type="text" title="SAAP" name="s.no" class="form-control mb-md" readonly value="${workInfo.workDetails}"></li>
+                <li><input type="text" title="SAAP" name="s.no" class="form-control mb-md" readonly value="${workLineItems.workDetails}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Estimated Cost <span class="red">*</span></p></li>
-                <li><input type="text" title="SAAP" name="work-details-new" class="form-control mb-md" readonly value="${workInfo.cost}"></li>
+                <li><input type="text" title="SAAP" name="work-details-new" class="form-control mb-md" readonly value="${workLineItems.cost}"></li>
                 </ul>
             </fieldset>
             

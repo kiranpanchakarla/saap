@@ -22,6 +22,7 @@ import com.ap.mis.entity.NatureOfWork;
 import com.ap.mis.entity.TypeOfWork;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Village;
+import com.ap.mis.entity.WorkLineItemsList;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.AdministrativeSectionService;
@@ -92,6 +93,7 @@ public class WorkCreationController {
    @GetMapping(value = "/view")
 	public String view(Model model, String workId) {
 		Works workInfo=misService.getWorkInfo(Integer.parseInt(workId));
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("workInfo",workInfo);
 	    return "online-mis-workCreationView";
 	}
@@ -101,7 +103,7 @@ public class WorkCreationController {
 		
 		Works work = misService.getWorkInfo(Integer.parseInt(workId));
 	    model.addAttribute("workObject",work);
-		model.addAttribute("districts", districtsService.findAll());
+	    model.addAttribute("districts", districtsService.findAll());
 		model.addAttribute("constituency",constituencyService.findById(work.getConstituency().getId()));
 		model.addAttribute("mandal", mandalService.findById(work.getMandal().getId()));
 		model.addAttribute("village", villageService.findById(work.getVillage().getId()));
@@ -109,6 +111,8 @@ public class WorkCreationController {
 		model.addAttribute("typeOfWork", typeOfWork);
 		List<NatureOfWork> natureOfWork=misService.natureOfDetails();
 		model.addAttribute("natureOfWork", natureOfWork);
+		
+		
 		return "online-mis";
 	}
 	
@@ -139,5 +143,14 @@ public class WorkCreationController {
     public @ResponseBody String villageInfo(String PlaceId) {
         List<Village> villageDetails=misService.villageDetails(Integer.parseInt(PlaceId));
         return new Gson().toJson(villageDetails);
+    }
+    
+    
+    @RequestMapping(value="/worklineitems", method=RequestMethod.GET)
+    public @ResponseBody String worklineitems(String workId) {
+        Works work = misService.getWorkInfo(Integer.parseInt(workId));
+    	List<WorkLineItemsList> workLineItemsList=work.getWorkLineItemsList();
+        Gson gson = new Gson();
+    	return new Gson().toJson(workLineItemsList);
     }
 }
