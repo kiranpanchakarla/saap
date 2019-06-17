@@ -84,28 +84,7 @@ public class LandDetailsController {
 		
 		LandDetails landinfo = landDetailService.getLandinfo(obj.getLanddetails().getId());
 		model.addAttribute("landinfo",landinfo);
-		
-		
-/*		model.addAttribute("districts", districtsService.findById(obj.getWorks().getDistrict()));
-		model.addAttribute("constituency", constituencyService.findById(obj.getWorks().getConstituency()));
-		model.addAttribute("mandal", mandalService.findById(obj.getWorks().getMandal()));
-		model.addAttribute("village", villageService.findById(obj.getWorks().getVillage()));
-		model.addAttribute("typeOfGrant",
-				administrativeSectionService.findByGrantId(obj.getAdministrativeesction().getTypeOfGrant()));
-		model.addAttribute("financialYear",
-				administrativeSectionService.findById(obj.getAdministrativeesction().getFinancialYear()));
-		model.addAttribute("executiveDept",
-				administrativeSectionService.findByExecutiveDeptId(obj.getAdministrativeesction().getExecutiveDept()));
-		model.addAttribute("consultant", administrativeSectionService
-				.findByExecutiveConsultantId(obj.getAdministrativeesction().getConsultant()));
-		model.addAttribute("division",
-				landDetailService.findByDivisionId(obj.getDepartmentlinkingine().getDivisionName()));
-		model.addAttribute("subdivisionName",
-				landDetailService.findBySubDivision(obj.getDepartmentlinkingine().getSubdivisionName()));
-		model.addAttribute("sectionName",
-				landDetailService.findBySectionId(obj.getDepartmentlinkingine().getSectionName()));
-*/
-		
+				
 		if (isSave == true) {
 			if (obj.getAdministrativeesction().getPath() != null && !obj.getAdministrativeesction().getPath().equals("")) {
 				model.addAttribute("filePath",
@@ -121,6 +100,8 @@ public class LandDetailsController {
 				model.addAttribute("landfilePath", null);
 			}		
 		
+			model.addAttribute("userRole", loggedInUser.getRole().getRoleName());
+			
 			return "online-mis-general-information";
 		} else {
 			return "redirect:/ConsultantInfo/edit/" + landDetails.getWork().getId();

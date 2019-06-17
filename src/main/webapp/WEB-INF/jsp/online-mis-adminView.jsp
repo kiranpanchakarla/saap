@@ -8,9 +8,10 @@
 <meta charset="utf-8">
 <title>SAAP : Administrative Section</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
+<jsp:include page="online-mis-header.jsp" />
 </head>
 <body>
-<section id="intro-inner">
+<!-- <section id="intro-inner">
   <div class="page-header">
     <section id="page-title" class="parralax">
       <div class="container rel">
@@ -24,7 +25,7 @@
       </div>
     </section>
   </div>
-</section>
+</section> -->
 <main id="main"> 
     <section id="contact" class="section-bg-con">
     <div class="container">

@@ -19,6 +19,7 @@ import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.Section;
 import com.ap.mis.entity.Subdivision;
 import com.ap.mis.service.LandDetailService;
+import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.UploadUtil;
 
 @Service
@@ -82,6 +83,7 @@ public class LandDetailServiceImpl implements LandDetailService{
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		 landDetails.getWork().setStatus(EnumFilter.CONST_INPROGRESS.getStatus());
 		 return landDetailDao.landDetailsSave(landDetails);
 	}
 
@@ -127,6 +129,7 @@ public class LandDetailServiceImpl implements LandDetailService{
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		 landDetails.getWork().setStatus(EnumFilter.CONST_INPROGRESS.getStatus());
 		 return landDetailDao.landDetailsUpdate(landDetails);
 	}
 }

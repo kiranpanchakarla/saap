@@ -36,6 +36,7 @@ public class ViewDetailsServiceImpl implements ViewDetailsService{
 			viewDetailModel.setConsultantfirm(obj[7]==null?"":obj[7].toString());
 			viewDetailModel.setAgencyName(obj[8]==null?"":obj[8].toString());
 			viewDetailModel.setId((obj[9] == null ? 0 : ((Integer) obj[9]).intValue()));
+			viewDetailModel.setStatus((obj[10]==null?"":obj[10].toString()));
 			detailsList.add(viewDetailModel);
 		}
 		

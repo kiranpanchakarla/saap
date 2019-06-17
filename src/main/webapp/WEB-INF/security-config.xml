@@ -8,6 +8,8 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 		
+		<http pattern="/resources/img/logo.png" security="none" />
+		
     <!-- <http pattern="/styles/**" security="none" />
     <http pattern="/css_1/**" security="none" />
     <http pattern="/css/**" security="none" />
@@ -30,11 +32,14 @@
     
 	<http auto-config="true" use-expressions="true" create-session="always" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
 		  
-		  <intercept-url pattern="/*.*" access="permitAll" />
-		  <intercept-url pattern="/*" access="permitAll" /> 
-		    
-		   <!-- <intercept-url pattern="/adminloggedin" access="hasAnyRole('ROLE_ADMIN','ROLE_SAAP','DEPARTMENT','CONSULTANT')" />
-		   <intercept-url pattern="/worksCreation/save" access="hasAnyRole('ROLE_SAAP')" /> -->
+		  <!-- <intercept-url pattern="/*.*" access="permitAll" />
+		  <intercept-url pattern="/*" access="permitAll" />  -->
+		    <intercept-url pattern="/signIn.html" access="permitAll" />
+		     <intercept-url pattern="/resources/**" access="permitAll" />
+		   <intercept-url pattern="/adminloggedin" access="hasAnyRole('ROLE_ADMIN','ROLE_DEPARTMENT','ROLE_CONSULTANT')" />
+		   <intercept-url pattern="/worksCreation/**" access="hasAnyRole('ROLE_ADMIN')" />
+		   <!-- <intercept-url pattern="/worksCreation/save" access="hasAnyRole('ROLE_SAAP')" />  -->
+		   <intercept-url pattern="/department/**" access="hasAnyRole('ROLE_DEPARTMENT','ROLE_CONSULTANT')" />
 		   
 		 
 	   	<csrf disabled="true"/>

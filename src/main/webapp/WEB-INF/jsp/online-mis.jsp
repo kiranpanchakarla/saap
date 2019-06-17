@@ -161,7 +161,7 @@
                         <!--==========================
     Intro Section
   ============================-->
-                        <section id="intro-inner">
+                       <!--  <section id="intro-inner">
                             <div class="page-header">
                                 <section id="page-title" class="parralax">
                                     <div class="container rel">
@@ -175,7 +175,7 @@
                                     </div>
                                 </section>
                             </div>
-                        </section>
+                        </section> -->
                         <!-- #intro -->
 
                         <main id="main">
@@ -264,8 +264,12 @@
                                                                     </li>
                                                                     <li>
                                                                         <form:select id="constituency" path="constituency.id">
-                                                                            <form:option value="">--Select--</form:option>
-                                                                            <form:option value="${constituency.id}">${constituency.name}</form:option>
+                                                                            <form:option value="" >--Select--</form:option>
+                                                                            <c:if test="${workObject.id != null}">
+                                                                             <c:forEach items="${constituency}" var="constituency">
+                                                                           <form:option value="${constituency.id}">${constituency.name}</form:option> 
+                                                                           </c:forEach>
+                                                                           </c:if>
                                                                         </form:select>
                                                                         <br><span id="constituencyErr" class="errors" style="color:red;float:right;"></span>
                                                                     </li>
@@ -278,7 +282,11 @@
                                                                     <li>
                                                                         <form:select id="mandal" path="mandal.id">
                                                                             <form:option value="">--Select--</form:option>
+                                                                             <c:if test="${workObject.id != null}">
+                                                                             <c:forEach items="${mandal}" var="mandal">
                                                                             <form:option value="${mandal.id}">${mandal.name}</form:option>
+                                                                            </c:forEach>
+                                                                            </c:if>
                                                                         </form:select>
                                                                         <span id="mandalErr" class="errors" style="color:red;float:right;"></span>
                                                                     </li>
@@ -291,7 +299,11 @@
                                                                     <li>
                                                                         <form:select id="village" path="village.id">
                                                                             <form:option value="">--Select--</form:option>
+                                                                            <c:if test="${workObject.id != null}">
+                                                                             <c:forEach items="${village}" var="village">
                                                                             <form:option value="${village.id}">${village.name}</form:option>
+                                                                             </c:forEach>
+                                                                            </c:if>
                                                                         </form:select>
                                                                         <span id="villageErr" class="errors" style="color:red;float:right;"></span>
                                                                     </li>

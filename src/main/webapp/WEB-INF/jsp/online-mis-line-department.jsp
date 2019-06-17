@@ -21,7 +21,7 @@
 <!--==========================
     Intro Section
   ============================-->
-<section id="intro-inner">
+<!-- <section id="intro-inner">
   <div class="page-header">
     <section id="page-title" class="parralax">
       <div class="container rel">
@@ -35,7 +35,7 @@
       </div>
     </section>
   </div>
-</section>
+</section> -->
 <!-- #intro -->
 
 <main id="main"> 
@@ -46,7 +46,9 @@
   
   <section id="contact" class="section-bg-con">
     <div class="container">
+    <c:if test="${lineDeptObj.id != null}">
      <jsp:include page="online-mis-tabView.jsp" />
+     </c:if>
       <div class="tab-content">
 	 <div class="tab-pane fade show" id="nav-department" role="tabpanel" aria-labelledby="nav-department-tab">
     <div class="row">

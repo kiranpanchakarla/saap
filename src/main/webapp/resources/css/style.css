@@ -41,9 +41,13 @@ figure img {
 .table td, .table th {
 	border-top: 1px solid #212529 !important;
 }
-.table-striped th {
+/*.table-striped th {
 	background: #008c3b;
 	color: #fff;
+}*/
+.table-striped th {
+    background: #338333;
+    color: #000;
 }
 .table-striped h6.highlight {
 	color: #fff;
@@ -125,18 +129,19 @@ figure img {
 --------------------------------------------------------------*/
 
 #header {
-	height: 92px;
-	position: fixed;
-	left: 0;
-	top: 0;
-	right: 0;
-	transition: all 0.5s;
-	z-index: 997;
-	background-color: rgba(0, 0, 0, 0.2);
+	height: auto;
+    width: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    transition: all 0.5s;
+    z-index: 997;
+    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(1, 100, 0,0.8);
 }
 #header.header-scrolled {
-	background: rgba(0, 0, 0, 0.9);
-	height: 72px;
+	background: rgba(1, 100, 0,0.8);
+	height: auto;
 	transition: all 0.5s;
 }
 #header #logo {
@@ -151,7 +156,7 @@ figure img {
 	content: "";
 	position: absolute;
 	top: -30px;
-	bottom: -10px;
+	bottom: 0px;
 	left: -1000px;
 	right: -45px;
 	background-color: rgb(1, 140, 59);
@@ -317,7 +322,7 @@ figure img {
 	font-weight: 700;
 	margin-bottom: 25px;
 }
-.section-title:after {
+/* .section-title:after {
 	content: '';
 	position: absolute;
 	display: block;
@@ -326,8 +331,8 @@ figure img {
 	background: #fab702;
 	bottom: 0;
 	left: calc(50% - 20px);
-}
-.section-title:before {
+} */
+/* .section-title:before {
 	content: '';
 	position: absolute;
 	display: block;
@@ -336,7 +341,7 @@ figure img {
 	background: #ddd;
 	bottom: 1px;
 	left: calc(50% - 60px);
-}
+} */
 .about-details {
 	width: 100%;
 	overflow: hidden;
@@ -551,12 +556,22 @@ figure img {
 .sf-arrows ul .sf-with-ul:after {
 	content: "\f105";
 }
-/* Nav Meu Container */
+/* Nav Meu Container 
 
 #nav-menu-container {
 	float: right;
 	margin: 0;
 }
+*/
+#nav-menu-container {
+    float: right;
+    margin: 0;
+    position: absolute;
+    right: 40px;
+    top: 60px;
+    padding-right: 0px !important;
+}
+
 /* Nav Meu Styling */
 
 .nav-menu a {
@@ -569,6 +584,9 @@ figure img {
 	font-size: 13px;
 	text-transform: uppercase;
 	outline: none;
+}
+.nav-menu a:hover {
+    color: #f79646 !important;
 }
 .nav-menu li:hover > a, .nav-menu > .menu-active > a {
 	color: #008c3b;
@@ -2248,5 +2266,19 @@ table>tbody>tr.info>td em {
 	width: 100%;
 }
 }
-<!--
-------------------------------------Edit css---------------------------------->
+
+.main-header{
+	display: inline-block;
+    float: right;
+    position: absolute;
+    right: 35px;
+    top: 5px;
+}
+.main-header h1 {
+    color: #fff;
+    font-size: 44px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 5px;
+}
+#viewTable .btn{padding: 6px 0px !important;}

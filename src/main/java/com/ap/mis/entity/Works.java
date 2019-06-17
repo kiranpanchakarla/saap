@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_sa_works")
-public class Works implements Serializable {
+public class Works extends AuditModel implements Serializable {
 
 	private static final long serialVersionUID = -3465813074586302847L;
 
@@ -56,13 +56,9 @@ public class Works implements Serializable {
 	@JoinColumn(name = "worklineitems_id", referencedColumnName = "id")
     private List<WorkLineItemsList> WorkLineItemsList;
 	
-	
-/*	@OneToMany(cascade = CascadeType.ALL,mappedBy="works")
-	private List<WorkLineItemsList> WorkLineItemsList;*/
-	
-	
-	
-
+	@Column(name = "status")
+	private String status;
+ 
 	@Column
 	private String location;
 
@@ -207,21 +203,23 @@ public class Works implements Serializable {
 		WorkLineItemsList = workLineItemsList;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Works [id=" + id + ", typeOfWork=" + typeOfWork + ", natureOfWork=" + natureOfWork + ", district="
 				+ district + ", village=" + village + ", mandal=" + mandal + ", constituency=" + constituency
-				+ ", WorkLineItemsList=" + WorkLineItemsList + ", location=" + location + ", noOfWorks=" + noOfWorks
-				+ ", workNo=" + workNo + ", workDetails=" + workDetails + ", cost=" + cost + ", user=" + user
-				+ ", isActive=" + isActive + "]";
+				+ ", WorkLineItemsList=" + WorkLineItemsList + ", status=" + status + ", location=" + location
+				+ ", noOfWorks=" + noOfWorks + ", workNo=" + workNo + ", workDetails=" + workDetails + ", cost=" + cost
+				+ ", user=" + user + ", isActive=" + isActive + "]";
 	}
 
-	
-
-	
-
-	
-
-	
+	  
 
 }

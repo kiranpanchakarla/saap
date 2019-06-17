@@ -11,10 +11,16 @@ public class ViewDetails {
 	private String consultantfirm;
 	private String agencyName;
 	private Integer id;
+	private String status;
 	
 	
 	
-	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public Integer getId() {
 		return id;
 	}

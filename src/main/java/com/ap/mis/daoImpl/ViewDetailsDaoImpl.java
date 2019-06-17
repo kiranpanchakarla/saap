@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ap.mis.dao.ViewDetailsDao;
+import com.ap.mis.entity.User;
 import com.ap.mis.model.ViewDetails;
+import com.ap.mis.util.EnumMap;
+import com.ap.mis.util.SecurityUtil;
 
 @Repository
 public class ViewDetailsDaoImpl implements  ViewDetailsDao{
@@ -18,8 +21,13 @@ public class ViewDetailsDaoImpl implements  ViewDetailsDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getViewDetials() {
+		User loggedInUser = SecurityUtil.getLoggedUser();
+		String status = EnumMap.DB_COLUMN.get(EnumMap.UI_COLUMN.get(loggedInUser.getRole().getRoleName()));
+		
+		
+	 
 	List<Object[]> details=sessionFactory.getCurrentSession().
-			createQuery("select distinct(a.id),d.name,e.name,a.workDetails,a.workNo,f.departmentName,g.surveyNo,h.consultant_firm,j.name,a.id from Works a\r\n" + 
+			createQuery("select distinct(a.id),d.name,e.name,a.workDetails,a.workNo,f.departmentName,g.surveyNo,h.consultant_firm,j.name,a.id,a.status from Works a\r\n" + 
 			"left join AdministrativeSection b on a.id = b.work\r\n" + 
 			"left join TypeOfWork d on a.typeOfWork = d.id\r\n" + 
 			"left join NatureOfWork e on a.natureOfWork=e.id\r\n" + 
@@ -27,8 +35,10 @@ public class ViewDetailsDaoImpl implements  ViewDetailsDao{
 			"left join LandDetails g on a.id=g.work\r\n" + 
 			"left join ConsultantInfo h on a.id=h.work\r\n" + 
 			"left join TenderingProcess i on a.id=i.work\r\n" + 
-			"left join Agency j on  i.angencyName=j.id where a.isActive='true' order by a.id desc").list();
-
+			"left join Agency j on  i.angencyName=j.id where a.isActive='true' and a.status in (" + status + ") order by a.id desc")
+			.list();
+    
+	
 		return details;
 	}
 

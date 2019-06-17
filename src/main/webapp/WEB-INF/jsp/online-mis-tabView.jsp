@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,14 +15,14 @@
 		aria-controls="nav-work" aria-selected="true">Work Creation</a></li>
 		
 	<li class="nav-item"><a class="nav-item nav-link" id="nav-admin-tab" data-toggle="tab"
-		href="" role="tab" aria-controls="nav-admin"
+		<%-- href="<c:url value="/administrativeSection/edit/+${workObject.id}"/>" --%> role="tab" aria-controls="nav-admin"
 		aria-selected="false">Administration</a></li>
 		
 	<li class="nav-item"><a class="nav-item nav-link"
-	    id="nav-department-tab" data-toggle="tab" href="#nav-department"
+	    id="nav-department-tab" data-toggle="tab" <%-- href="<c:url value="/lineDepartment/edit/${workInfo.id}"/>" --%>
 		 role="tab" aria-controls="nav-department" aria-selected="false">Department</a></li>
 	<li class="nav-item"><a class="nav-item nav-link" id="nav-land-tab" data-toggle="tab"
-		 href="#nav-land" role="tab" aria-controls="nav-land"
+		<%-- href="<c:url value="/landDetails/edit/${workInfo.id}"/>"  --%>role="tab" aria-controls="nav-land"
 		 aria-selected="false">Land Details</a></li>
    </ul>  
 </div>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ap.mis.entity.User;
 import com.ap.mis.model.ViewDetails;
 import com.ap.mis.service.ViewDetailsService;
+import com.ap.mis.util.SecurityUtil;
 
 
 @Controller
@@ -27,6 +28,8 @@ public class ViewDetailsController {
 	@RequestMapping(value = "/adminloggedin" , method = RequestMethod.GET)
 	public String viewDetails(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
 		
+		User loggedInUser = SecurityUtil.getLoggedUser();
+		model.addAttribute("userRole", loggedInUser.getRole().getRoleName());
 		
 		List<ViewDetails> viewList = viewDetailsService.getViewDetials();
 		model.addAttribute("viewList", viewList); 

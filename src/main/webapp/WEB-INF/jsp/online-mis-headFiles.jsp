@@ -16,8 +16,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script> 
-
+<!-- <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>  -->
+<script src=<c:url value="/resources/js/jquery-ui.js"/> type="text/javascript"></script>
 <!-- Favicons -->
 <link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon"> 
 

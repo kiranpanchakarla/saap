@@ -17,6 +17,7 @@ import com.ap.mis.entity.Village;
 import com.ap.mis.entity.WorkLineItemsList;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.MISService;
+import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.UploadUtil;
 
 
@@ -44,6 +45,7 @@ public class MISServiceImpl implements MISService {
 			}
 			work.setWorkLineItemsList(ltms);
 		}
+		work.setStatus(EnumFilter.OPEN.getStatus());
 			return	misDao.saveWorks(work);
 	}
 	
@@ -105,6 +107,7 @@ public class MISServiceImpl implements MISService {
 			}
 			work.setWorkLineItemsList(ltms);
 		}
+		work.setStatus(EnumFilter.OPEN.getStatus());
 		return misDao.updateWork(work);
 	}
 

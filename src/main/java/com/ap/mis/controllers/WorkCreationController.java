@@ -103,16 +103,14 @@ public class WorkCreationController {
 		
 		Works work = misService.getWorkInfo(Integer.parseInt(workId));
 	    model.addAttribute("workObject",work);
-	    model.addAttribute("districts", districtsService.findAll());
-		model.addAttribute("constituency",constituencyService.findById(work.getConstituency().getId()));
-		model.addAttribute("mandal", mandalService.findById(work.getMandal().getId()));
-		model.addAttribute("village", villageService.findById(work.getVillage().getId()));
+		model.addAttribute("districts", districtsService.findAll());
+		model.addAttribute("constituency",constituencyService.findAll());
+		model.addAttribute("mandal", mandalService.findAll());
+		model.addAttribute("village", villageService.findAll());
 		List<TypeOfWork> typeOfWork=misService.findAll();
 		model.addAttribute("typeOfWork", typeOfWork);
 		List<NatureOfWork> natureOfWork=misService.natureOfDetails();
 		model.addAttribute("natureOfWork", natureOfWork);
-		
-		
 		return "online-mis";
 	}
 	
