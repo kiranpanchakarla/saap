@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.DepartmentLinkingLine;
+import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
@@ -59,6 +60,13 @@ public class LineDepartmentController {
 		obj.setDepartmentlinkingine(lineDeptObj);
 		session.setAttribute("generalInfo", obj);
 		Integer idVal=lineDeptObj.getWork().getId();
+		
+		 //checking... LandDetails is created or not
+		LandDetails landInfo = landDetailService.getLandDetails(idVal);
+        if(landInfo == null) {
+            isSave = true;
+        }    
+        
 		if(isSave==true) {
 		return "redirect:/landDetails/create";
 		}else {

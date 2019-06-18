@@ -13,6 +13,7 @@ import com.ap.mis.dao.TenderingProcessDao;
 import com.ap.mis.entity.Agency;
 import com.ap.mis.entity.GrantType;
 import com.ap.mis.entity.NoticeIssuingAuthorities;
+import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.TenderingProcess;
 
 @Repository
@@ -67,7 +68,25 @@ public class TenderingProcessDaoImpl implements TenderingProcessDao  {
 
 	@Override
 	public TenderingProcess getTenderDetails(int id) {
-		TenderingProcess tenderInfo=(TenderingProcess) sessionFactory.getCurrentSession().createQuery("from TenderingProcess where work.id="+id).getSingleResult();
+		/*TenderingProcess tenderInfo=(TenderingProcess) sessionFactory.getCurrentSession()
+				.createQuery("from TenderingProcess where work.id="+id).getSingleResult();
+		return tenderInfo;*/
+		
+		TenderingProcess tenderInfo = null;
+		try {
+			@SuppressWarnings("unchecked")
+			List<TenderingProcess> tenderInfoList = sessionFactory.getCurrentSession()
+					.createQuery("from TenderingProcess where work.id=" + id).list();
+			if (tenderInfoList.size() != 0) {
+				for (TenderingProcess consult : tenderInfoList) {
+					tenderInfo = consult;
+				}
+			} else {
+				tenderInfo = null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return tenderInfo;
 	}
 

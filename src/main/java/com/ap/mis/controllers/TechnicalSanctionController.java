@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.ConsultantInfo;
 import com.ap.mis.entity.TechnicalSanction;
+import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.MISService;
@@ -44,8 +45,8 @@ public class TechnicalSanctionController {
 			return "online-admin";
 		}*/
 
-		int wrokid = (int) session.getAttribute("workIdSession");
-//		techsanc.setWorkId(wrokid);
+		int workId = (int) session.getAttribute("workIdSession");
+//		techsanc.setWorkId(workId);
 //		techSanction.saveTechSanction(techsanc);
 		
 		if (techsanc.getId() == null) {
@@ -55,15 +56,20 @@ public class TechnicalSanctionController {
 			techSanction.updateTechSanction(techsanc);
 		}
 
-		Works workInfo = misService.getWorkInfo(wrokid);
+		Works workInfo = misService.getWorkInfo(workId);
 		model.addAttribute("workInfo", workInfo);
 		model.addAttribute("authoritiesTypeList", tenderingProcessService.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderingProcessService.getAgencyList());
 
+		//checking... TenderProcess is created or not
+		TenderingProcess tenderProcess = tenderingProcessService.getTenderDetails(workId);
+		        if(tenderProcess == null) {
+		            isSave = true;
+		        }  
 		if(isSave==true) {
 			return "redirect:/tenderProcess/create";
 		}else {
-			return "redirect:/tenderProcess/edit/"+wrokid;
+			return "redirect:/tenderProcess/edit/"+workId;
 		}
 
 

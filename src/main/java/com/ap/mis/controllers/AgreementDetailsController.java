@@ -38,12 +38,15 @@ public class AgreementDetailsController {
 	public String saveAgreementDetails(@ModelAttribute AgreementDetails agreementDetailsObj ,Model model,HttpServletRequest request,HttpSession session) {	
 
 		boolean isSave=false;
+		
+			        
 		if (agreementDetailsObj.getId() == null) {
 			agreeDetailsService.saveAgreementDetails(agreementDetailsObj);
 			isSave = true;
 		} else {
 			agreeDetailsService.updateAgreementDetails(agreementDetailsObj);
 		}
+		
 		return "redirect:/misDetails/list";
 	}	
 	

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ap.mis.dao.LandDetailDao;
 import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.Division;
 import com.ap.mis.entity.Land;
 import com.ap.mis.entity.LandDetails;
@@ -66,8 +67,24 @@ public class LandDetailDaoImpl implements LandDetailDao {
 
 	@Override
 	public LandDetails getLandDetails(int id) {
-		LandDetails landInfo=null;
+		/*LandDetails landInfo=null;
 		landInfo=(LandDetails)sessionFactory.getCurrentSession().createQuery("from LandDetails where work.id="+id).getSingleResult();
+		return landInfo;*/
+		LandDetails landInfo = null;
+		try {
+			@SuppressWarnings("unchecked")
+			List<LandDetails> landList = sessionFactory.getCurrentSession()
+					.createQuery("from LandDetails where work.id=" + id).list();
+			if (landList.size() != 0) {
+				for (LandDetails land : landList) {
+					landInfo = land;
+				}
+			} else {
+				landInfo = null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return landInfo;
 	}
 

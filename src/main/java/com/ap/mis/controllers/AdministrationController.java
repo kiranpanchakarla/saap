@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
@@ -63,8 +64,14 @@ public class AdministrationController {
 		obj.setAdministrativeesction(adminSecObject);
 		session.setAttribute("generalInfo", obj);
 
-//		model.addAttribute("wrokid", workid);
 		Integer idVal=adminSecObject.getWork().getId();
+		
+		 //checking... Department is created or not
+		DepartmentLinkingLine deptInfo = lineDepartmentService.getdepartDetails(idVal);
+        if(deptInfo == null) {
+            isSave = true;
+        }    
+        
 		log.info("==idVal===:"+idVal);
 		if(isSave==true) {
 			return "redirect:/lineDepartment/create";

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.ConsultantInfo;
 import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.User;
@@ -23,6 +24,7 @@ import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.ConstituencyService;
+import com.ap.mis.service.ConsultantInfoService;
 import com.ap.mis.service.DistrictService;
 import com.ap.mis.service.LandDetailService;
 import com.ap.mis.service.LineDepartmentService;
@@ -52,6 +54,8 @@ public class LandDetailsController {
 	LandDetailService landDetailService;
 	@Autowired
 	LineDepartmentService lineDepartmentService;
+	@Autowired
+	ConsultantInfoService consultantInfoService;
 
 	@PostMapping(value = "/save")
 	public String landDetailsSave(@ModelAttribute LandDetails landDetails, Model model, HttpServletRequest request,
@@ -101,6 +105,12 @@ public class LandDetailsController {
 			}		
 		
 			model.addAttribute("userRole", loggedInUser.getRole().getRoleName());
+			
+			 //checking... ConsultantInfo is created or not
+			ConsultantInfo consultantInfo = consultantInfoService.getConsultDetails(landDetails.getWork().getId());
+	        if(consultantInfo == null) {
+	            isSave = true;
+	        }  
 			
 			return "online-mis-general-information";
 		} else {

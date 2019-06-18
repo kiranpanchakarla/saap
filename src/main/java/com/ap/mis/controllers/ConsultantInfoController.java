@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.ConsultantInfo;
 import com.ap.mis.entity.NatureOfWork;
+import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.TypeOfWork;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.ConsultantInfoService;
 import com.ap.mis.service.MISService;
+import com.ap.mis.service.TechnicalSanctionService;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -34,11 +36,13 @@ public class ConsultantInfoController {
 	
 	@Autowired ConsultantInfoService constInfoService;
 	
+	@Autowired TechnicalSanctionService technicalSanctionService;
+	
 	@PostMapping(value = "/save")
 	public String saveConsultantInfo(@ModelAttribute ConsultantInfo consultantInfoObject,Model model,HttpServletRequest request,HttpSession session) {
 		boolean isSave = false;
-		int wrokid =(int) session.getAttribute("workIdSession");
-//		consultantInfoObject.setWorkId(wrokid);	
+		int workId =(int) session.getAttribute("workIdSession");
+//		consultantInfoObject.setWorkId(workId);	
 //	    constInfoService.saveConsultantInfo(consultantInfoObject);
 	    
 		if (consultantInfoObject.getId() == null) {
@@ -49,15 +53,20 @@ public class ConsultantInfoController {
 			log.info("inside update:"+consultantInfoObject.getId());
 			constInfoService.updateConsultantInfo(consultantInfoObject);
 		}
-		Works workInfo=misService.getWorkInfo(wrokid);
+		Works workInfo=misService.getWorkInfo(workId);
 		session.setAttribute("workInfo", workInfo);
-		
+		 //checking... TechnicalSanction is created or not
+		TechnicalSanction technicalSanction = technicalSanctionService.getTechDetails(workId);
+        if(technicalSanction == null) {
+            isSave = true;
+        }  
+        
 		if(isSave == true) {
 			log.info("isSave value save T :"+isSave);
 			return "redirect:/technicalSanction/create";
 		}else {
 			log.info("isSave value edit F :"+isSave);
-			return "redirect:/technicalSanction/edit/"+wrokid;
+			return "redirect:/technicalSanction/edit/"+workId;
 		}
 		
 		 

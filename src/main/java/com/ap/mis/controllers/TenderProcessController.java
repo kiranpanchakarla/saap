@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ap.mis.entity.AgreementDetails;
 import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
+import com.ap.mis.service.AgreementDetailService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.util.ContextUtil;
@@ -31,13 +33,15 @@ public class TenderProcessController {
 
 	@Autowired TenderingProcessService tenderProcess;
 	
+	@Autowired AgreementDetailService agreementDetailService;
+	
 	 
 	
 	@PostMapping(value = "/save")
 	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj ,Model model,HttpServletRequest request,@RequestParam("engfile") MultipartFile engfile,@RequestParam("telugufile") MultipartFile telugufile,HttpSession session) {	
 		
 		boolean isSave=false;
-		int wrokid =(int) session.getAttribute("workIdSession");
+		int workId =(int) session.getAttribute("workIdSession");
 //		tenderProcess.saveTenderingProcess(tenderingProcessObj,engfile,telugufile);
 		
 		if (tenderingProcessObj.getId() == null) {
@@ -47,17 +51,20 @@ public class TenderProcessController {
 			tenderProcess.updateTenderingProcess(tenderingProcessObj,engfile,telugufile);
 		}
 		
-		Works workInfo=misService.getWorkInfo(wrokid);
+		Works workInfo=misService.getWorkInfo(workId);
 		model.addAttribute("workInfo", workInfo);
 		
 		   session.setAttribute("tenderingIdSession", tenderingProcessObj.getId());
 		    
-		   //return "redirect:/agreementDetails/create";
-		   
+		 //checking... agreementDetails is created or not
+		   AgreementDetails agreementDetails = agreementDetailService.getAgreementDetails(workId);
+			        if(agreementDetails == null) {
+			            isSave = true;
+			        }  		   
 			if(isSave==true) {
 				 return "redirect:/agreementDetails/create";
 			}else {
-				return "redirect:/agreementDetails/edit/"+wrokid;
+				return "redirect:/agreementDetails/edit/"+workId;
 			}
 
 
