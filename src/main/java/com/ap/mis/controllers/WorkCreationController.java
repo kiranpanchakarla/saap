@@ -95,6 +95,8 @@ public class WorkCreationController {
         Works workInfo=misService.getWorkInfo(Integer.parseInt(workId));
         model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
         model.addAttribute("workInfo",workInfo);
+        AdministrativeSection adminInfo = administrativeSectionService.getAdminDetails(Integer.parseInt(workId));
+        model.addAttribute("adminInfo",adminInfo);
         return "online-mis-workCreationView";
     }
     

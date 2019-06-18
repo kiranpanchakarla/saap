@@ -48,7 +48,7 @@
       </c:if>
       
       <div class="col-md-12">
-        <table id="example" class="display nowrap table table_padding_custom table-hover table-striped table-bordered" style="width:100%">
+        <table id="viewTable" class="display table-hover table-striped table-bordered" >
             <thead>
                 <tr>
                     <th>S.No</th>

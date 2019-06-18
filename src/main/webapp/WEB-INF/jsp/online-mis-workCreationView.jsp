@@ -98,7 +98,9 @@
             
           <div class="row">
           <div class="col-sm-6 form-group"><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></div>
+           <c:if test="${adminInfo != null}">
           <div class="col-sm-6 form-group"><a href="<c:url value="/administrativeSection/view?workId=${workInfo.id}"/>" class="btn btn-info ">Administrative Page</a></div>
+         </c:if>
          </div>
         </form>
     </div>

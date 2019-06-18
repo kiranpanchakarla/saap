@@ -13,7 +13,29 @@
 
 <body>
 <!--=== Header ====-->
-<jsp:include page="online-mis-header.jsp" />
+<!--==========================
+    Header
+  ============================-->
+<header id="header">
+   <div class="container social-links">
+   <div class="main-header"><h1>Sports Authority Of Andhra Pradesh
+   <span>(Works management system)</span></h1></div>
+    
+  </div>
+   <div class="container-fluid">
+      <div id="logo" class="pull-left">
+        <h1><a href=""><img src="<c:url value="/resources/img/logo.png" />" alt="" title="" /></a></h1>
+      </div>
+    <nav id="nav-menu-container">
+     <%--  <ul class="nav-menu">
+         <li><a href="<c:url value="/adminloggedin"/>">Home</a></li>
+        <li><a href="<c:url value="/logout"/>">Logout</a></li>
+      </ul> --%>
+    </nav>
+    <!-- #nav-menu-container --> 
+  </div>
+</header>
+<!-- #header --> 
 
 
 <!--==========================
@@ -76,7 +98,7 @@
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-       <a class="underlineHover" href="#">Forgot Password?</a>
+       <!-- <a class="underlineHover" href="#">Forgot Password?</a> -->
       |
        <c:url value="/userCreation" var="createUrl" />
        <a class="underlineHover" href="${createUrl}">New user? Register here</a>
