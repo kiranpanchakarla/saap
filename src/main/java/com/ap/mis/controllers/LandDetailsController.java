@@ -153,7 +153,8 @@ public class LandDetailsController {
 		Works workInfo = misService.getWorkInfo(landInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("landInfo",landInfo);
-		
+		ConsultantInfo consultInfo = consultantInfoService.getConsultDetails(Integer.parseInt(workId));
+		model.addAttribute("consultInfo",consultInfo);
 	    return "online-mis-landDetailsView";
 	}
 	

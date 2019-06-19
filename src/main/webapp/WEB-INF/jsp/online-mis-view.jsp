@@ -52,7 +52,7 @@
             <thead>
                 <tr>
                     <th>S.No</th>
-                    <th>ID</th>
+                 <!--    <th>ID</th> -->
                     <th>Work No</th>
                     <th>Type of Work</th>
                     <th>Nature Of Work</th>
@@ -69,7 +69,7 @@
 			<tr>
 			  <td><c:set var="count" value="${count + 1}"
 			scope="page" /> <c:out value="${count}" /></td>
-			<td>${viewDetails.id}</td>
+		<%-- 	<td>${viewDetails.id}</td> --%>
 			<td>${viewDetails.workNo}</td>
 			 <td>${viewDetails.typeOfWork}</td>
 			 <td>${viewDetails.natureOfWork}</td>

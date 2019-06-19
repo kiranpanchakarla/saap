@@ -143,8 +143,10 @@
                  
                  <ul class="fs-list-details">
                 <li><p>Upload Adminstrative Details Document(pdf/jpg/png)<span class="red">*</span></p>
-                <input type="file" name="file" id="file" value="${filePath}" onchange="document.getElementById('image').src = window.URL.createObjectURL(this.files[0])"></li>
-                <li> <img id="image" src="${filePath}"   width="100" height="70"/> </li>
+                <input type="file" name="file" id="file" value="${filePath}" ></li>
+                <c:if test="${adminSecObject.id!=null}">
+                 <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>   
+                </c:if>
                 <form:input type="hidden" path="path" class="form-control" id="fileName" value="${adminSecObject.path}"></form:input>
                  <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
@@ -183,6 +185,14 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	$('#file').change(function (event) {
+		$('#docView').empty();
+	    var file = URL.createObjectURL(event.target.files[0]);
+	    $('#docView').append('<a href="' + file + '" target="_self">' + event.target.files[0].name + '</a><br>');
+	});
+	
+	
+	
 $("input[type='file']").on("change", function () {
 		  $("#file_error").html("");
 	     if(this.files[0].size > 2000000) {

@@ -77,14 +77,17 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li><img src="${filePath}"  width="100" height="70"/></li>
+                <%--   <li><img src="${filePath}"  width="100" height="70"/></li> --%>
+                <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li> 
                 </ul>
                 
                 </div>
             </fieldset>
          <div class="row">
           <div class="col-sm-6 form-group"><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></div>
+          <c:if test="${consultInfo!=null}">
           <div class="col-sm-6 form-group"><a href="<c:url value="/ConsultantInfo/view?workId=${landInfo.work.id}"/>" class="btn btn-info ">Consultant Information Page</a></div>
+         </c:if>
         </div> 
         </form>
     </div>

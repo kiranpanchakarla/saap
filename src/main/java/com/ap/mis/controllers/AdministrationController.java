@@ -42,21 +42,24 @@ public class AdministrationController {
 	@PostMapping(value = "/save")
 	public String administrativeSectionSave(@ModelAttribute AdministrativeSection adminSecObject, Model model,
 			HttpServletRequest request, @RequestParam("file") MultipartFile file, HttpSession session) {
-		
-		
-		boolean isSave=false;
+
+		boolean isSave = false;
 		int workid = (int) session.getAttribute("workIdSession");
+		Integer idVal = adminSecObject.getWork().getId();
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		adminSecObject.setUser(loggedInUser);
-		if(adminSecObject.getId()==null) {
-			isSave=true;
-		admService.adminstrativeSection(adminSecObject, file);
-		}
-		else {
-		admService.adminstrativeSectionUpdate(adminSecObject, file);
+		if (adminSecObject.getId() == null) {
+			isSave = true;
+			admService.adminstrativeSection(adminSecObject, file);
+		} else {
+			admService.adminstrativeSectionUpdate(adminSecObject, file);
+			// checking... Department is created or not
+			DepartmentLinkingLine deptInfo = lineDepartmentService.getdepartDetails(idVal);
+			if (deptInfo == null) {
+				isSave = true;
+			}
 		}
 		Works workInfo = misService.getWorkInfo(workid);
-		//model.addAttribute("workInfo", workInfo);
 		session.setAttribute("workInfo", workInfo);
 
 		WorktoLandDetails obj = new WorktoLandDetails();
@@ -64,21 +67,12 @@ public class AdministrationController {
 		obj.setAdministrativeesction(adminSecObject);
 		session.setAttribute("generalInfo", obj);
 
-		Integer idVal=adminSecObject.getWork().getId();
-		
-		 //checking... Department is created or not
-		DepartmentLinkingLine deptInfo = lineDepartmentService.getdepartDetails(idVal);
-        if(deptInfo == null) {
-            isSave = true;
-        }    
-        
-		log.info("==idVal===:"+idVal);
-		if(isSave==true) {
+		log.info("==idVal===:" + idVal);
+		if (isSave == true) {
 			return "redirect:/lineDepartment/create";
-		}else {
-			return "redirect:/lineDepartment/edit/"+idVal;
+		} else {
+			return "redirect:/lineDepartment/edit/" + idVal;
 		}
-		
 
 	}
 	
@@ -112,6 +106,8 @@ public class AdministrationController {
 			model.addAttribute("filePath", null);
 		}
 		model.addAttribute("adminInfo",adminInfo);
+		DepartmentLinkingLine departInfo = lineDepartmentService.getdepartDetails(Integer.parseInt(workId));
+		model.addAttribute("deptInfo",departInfo);
 	    return "online-mis-adminView";
 	}
 	

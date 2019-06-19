@@ -52,14 +52,15 @@ public class ConsultantInfoController {
 		} else {
 			log.info("inside update:"+consultantInfoObject.getId());
 			constInfoService.updateConsultantInfo(consultantInfoObject);
+			 //checking... TechnicalSanction is created or not
+			TechnicalSanction technicalSanction = technicalSanctionService.getTechDetails(workId);
+	        if(technicalSanction == null) {
+	            isSave = true;
+	        }  
 		}
 		Works workInfo=misService.getWorkInfo(workId);
 		session.setAttribute("workInfo", workInfo);
-		 //checking... TechnicalSanction is created or not
-		TechnicalSanction technicalSanction = technicalSanctionService.getTechDetails(workId);
-        if(technicalSanction == null) {
-            isSave = true;
-        }  
+		
         
 		if(isSave == true) {
 			log.info("isSave value save T :"+isSave);
@@ -86,7 +87,9 @@ public class ConsultantInfoController {
 	public String view(Model model, String workId) {
 		ConsultantInfo consultInfo = constInfoService.getConsultDetails(Integer.parseInt(workId));
 		model.addAttribute("consultInfo",consultInfo);
-	    return "online-mis-consultInfoView";
+		TechnicalSanction techInfo = technicalSanctionService.getTechDetails(Integer.parseInt(workId));
+		model.addAttribute("techInfo",techInfo);
+		return "online-mis-consultInfoView";
 	}
 	
 	@GetMapping(value = "/edit/{id}")

@@ -40,7 +40,7 @@ public class AgreementDetailsDaoImpl implements AgreementDetailsDao{
 		try {
 			@SuppressWarnings("unchecked")
 			List<AgreementDetails> agreementDetailsList = sessionFactory.getCurrentSession()
-					.createQuery("from TenderingProcess where work.id=" + id).list();
+					.createQuery("from AgreementDetails where work.id=" + id).list();
 			if (agreementDetailsList.size() != 0) {
 				for (AgreementDetails consult : agreementDetailsList) {
 					agreementDetails = consult;

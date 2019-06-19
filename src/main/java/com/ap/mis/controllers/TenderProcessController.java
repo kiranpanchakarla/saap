@@ -49,6 +49,11 @@ public class TenderProcessController {
 			isSave = true;
 		} else {
 			tenderProcess.updateTenderingProcess(tenderingProcessObj,engfile,telugufile);
+			 //checking... agreementDetails is created or not
+			   AgreementDetails agreementDetails = agreementDetailService.getAgreementDetails(workId);
+				        if(agreementDetails == null) {
+				            isSave = true;
+				        }  
 		}
 		
 		Works workInfo=misService.getWorkInfo(workId);
@@ -56,11 +61,7 @@ public class TenderProcessController {
 		
 		   session.setAttribute("tenderingIdSession", tenderingProcessObj.getId());
 		    
-		 //checking... agreementDetails is created or not
-		   AgreementDetails agreementDetails = agreementDetailService.getAgreementDetails(workId);
-			        if(agreementDetails == null) {
-			            isSave = true;
-			        }  		   
+				   
 			if(isSave==true) {
 				 return "redirect:/agreementDetails/create";
 			}else {
@@ -103,7 +104,10 @@ public class TenderProcessController {
 		model.addAttribute("tenderInfo",tenderInfo);
 		Works workInfo = misService.getWorkInfo(tenderInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
-	    return "online-mis-tenderView";		 
+		AgreementDetails  agreementInfo = agreementDetailService.getAgreementDetails(Integer.parseInt(workId));
+		model.addAttribute("agreementInfo",agreementInfo);
+		
+		return "online-mis-tenderView";		 
 	}
 	
 	@GetMapping(value = "/edit/{id}")

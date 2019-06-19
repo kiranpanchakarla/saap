@@ -175,7 +175,8 @@
                 <ul class="fs-list-details">
                 <li><div id="page-title1"></div>
                 <p>Upload Adminstrative Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li> <img  src="${filePath}"    width="100" height="70"/> 
+                <%-- <li> <img  src="${filePath}"    width="100" height="70"/>  --%>
+                 <li><a href="${filePath}" target="_blank" id="docView" name="image" >View Document</a></li> 
                </li> 
               
                
@@ -299,7 +300,8 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li><img src="${landfilePath}"  width="100" height="70"/></li>
+               <%--  <li><img src="${landfilePath}"  width="100" height="70"/></li> --%>
+                <li><a href="${landfilePath}" target="_blank" id="docView" name="image" >View Document</a></li> 
                 </ul>
                 
                 </div>

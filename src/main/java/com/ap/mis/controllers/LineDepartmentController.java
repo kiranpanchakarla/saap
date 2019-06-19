@@ -41,6 +41,7 @@ public class LineDepartmentController {
 		boolean isSave=false;
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		int workid = (int) session.getAttribute("workIdSession");
+		Integer idVal=lineDeptObj.getWork().getId();
 		Works workInfo = misService.getWorkInfo(workid);
 		session.setAttribute("workInfo", workInfo);
 		
@@ -52,6 +53,11 @@ public class LineDepartmentController {
 		}else {
 			log.info("inside update:"+lineDeptObj.getId());
 			lineDepartService.departmentLinkingLineUpdate(lineDeptObj);
+			 //checking... LandDetails is created or not
+			LandDetails landInfo = landDetailService.getLandDetails(idVal);
+	        if(landInfo == null) {
+	            isSave = true;
+	        } 
 		}
 		
 		
@@ -59,14 +65,6 @@ public class LineDepartmentController {
         obj = (WorktoLandDetails) session.getAttribute("generalInfo");
 		obj.setDepartmentlinkingine(lineDeptObj);
 		session.setAttribute("generalInfo", obj);
-		Integer idVal=lineDeptObj.getWork().getId();
-		
-		 //checking... LandDetails is created or not
-		LandDetails landInfo = landDetailService.getLandDetails(idVal);
-        if(landInfo == null) {
-            isSave = true;
-        }    
-        
 		if(isSave==true) {
 		return "redirect:/landDetails/create";
 		}else {
@@ -93,6 +91,8 @@ public class LineDepartmentController {
 	public String view(Model model, String workId) {
 		DepartmentLinkingLine departInfo = lineDepartService.getdepartDetails(Integer.parseInt(workId));
 		model.addAttribute("deptInfo",departInfo);
+		LandDetails landInfo = landDetailService.getLandDetails(Integer.parseInt(workId));
+		model.addAttribute("landInfo",landInfo);
 	    return "online-mis-departView";
 	}
 	

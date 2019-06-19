@@ -105,8 +105,9 @@
                
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - English (pdf/jpg/png) </p></li>
-                <li><li><img src="${engUpload}"  width="100" height="70"/></li>
+              <%--   <li><li><img src="${engUpload}"  width="100" height="70"/></li> --%>
                 <%-- <input type="file" name="engfile" id="englishPaperCopyLocationFile" readonly value="${engUpload}" class="form-control mb-md"  > --%>
+                 <li><a href="${engUpload}" target="_self" id="docView" name="image" >View Document</a></li> 
                </li>
                </ul>
                                            
@@ -128,7 +129,8 @@
             
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - Telugu (pdf/jpg/png)</p></li>
-                <li><img src="${telUpload}"  width="100" height="70"/></li>
+              <%--   <li><img src="${telUpload}"  width="100" height="70"/></li> --%>
+                <li><a href="${telUpload}" target="_self" id="docView" name="image" >View Document</a></li> 
                 </li>
                </ul>
                
@@ -226,7 +228,9 @@
             </fieldset>
          <div class="row">
           <div class="col-sm-6 form-group"><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></div>
+         <c:if test="${agreementInfo!=null}">
           <div class="col-sm-6 form-group"><a href="<c:url value="/agreementDetails/view?workId=${tenderInfo.work.id}"/>" class="btn btn-info ">Technical Sanction Page</a></div>
+        </c:if>
         </div> 
         </form>
         

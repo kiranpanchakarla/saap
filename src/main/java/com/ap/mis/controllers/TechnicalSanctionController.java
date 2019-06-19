@@ -54,6 +54,11 @@ public class TechnicalSanctionController {
 			isSave = true;
 		} else {
 			techSanction.updateTechSanction(techsanc);
+			//checking... TenderProcess is created or not
+			TenderingProcess tenderProcess = tenderingProcessService.getTenderDetails(workId);
+			        if(tenderProcess == null) {
+			            isSave = true;
+			        }  
 		}
 
 		Works workInfo = misService.getWorkInfo(workId);
@@ -61,11 +66,7 @@ public class TechnicalSanctionController {
 		model.addAttribute("authoritiesTypeList", tenderingProcessService.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderingProcessService.getAgencyList());
 
-		//checking... TenderProcess is created or not
-		TenderingProcess tenderProcess = tenderingProcessService.getTenderDetails(workId);
-		        if(tenderProcess == null) {
-		            isSave = true;
-		        }  
+		
 		if(isSave==true) {
 			return "redirect:/tenderProcess/create";
 		}else {
@@ -95,7 +96,9 @@ public class TechnicalSanctionController {
 		Works workInfo = misService.getWorkInfo(techInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("techInfo",techInfo);
-	    return "online-mis-techSanctionView";
+		TenderingProcess tenderInfo = tenderingProcessService.getTenderDetails(Integer.parseInt(workId));
+		model.addAttribute("tenderInfo",tenderInfo);
+		return "online-mis-techSanctionView";
 	}
 	
 	@GetMapping(value = "/edit/{id}")

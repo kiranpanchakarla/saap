@@ -116,7 +116,9 @@
              </fieldset> 
           <div class="row">
           <div class="col-sm-6 form-group"><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></div>
+          <c:if test="${techInfo!=null}">
           <div class="col-sm-6 form-group"><a href="<c:url value="/technicalSanction/view?workId=${consultInfo.work.id}"/>" class="btn btn-info ">Technical Sanction Page</a></div>
+         </c:if>
         </div>  
         </form>
     </div>
