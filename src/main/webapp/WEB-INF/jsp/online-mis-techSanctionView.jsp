@@ -65,7 +65,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Date <span class="red">*</span></p></li>
-				<li><fmt:formatDate pattern = "dd/MM/yyyy" var="fmtDate" value="${techInfo.date}" />  
+				<li><fmt:formatDate pattern = "dd/MM/yyyy" var="fmtDate" value="${techInfo.docDate}" />  
 				   <input type="text" id="date"name="date" readonly class="form-control mb-md" value="${fmtDate}">          	
  				</li>
                	</ul>

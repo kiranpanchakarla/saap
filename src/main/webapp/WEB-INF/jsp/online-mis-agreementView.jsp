@@ -52,7 +52,7 @@
                
                <ul class="fs-list-details">
                 <li><p>Contractor Name<span class="red">*</span></p></li>
-                <li><input type="text"  id="contratorName" name="contratorName" class="form-control mb-md" readonly value="${agreementInfo.tenderingProcess.angencyName.name}">
+                <li><input type="text"  id="contratorName" name="contratorName" class="form-control mb-md" readonly value="${tenderingInfo.angencyName.name}">
                 </li>
                </ul>
                

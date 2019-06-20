@@ -12,6 +12,35 @@
 </head>
  <script type="text/javascript"> 
  $(document).ready(function() {
+	
+			$('#englishPaperCopyLocationFile').change(function (event) {
+				$('#engdocView').empty();
+			    var file = URL.createObjectURL(event.target.files[0]);
+			    $('#engdocView').append('<a href="' + file + '" target="_self">' + event.target.files[0].name + '</a><br>');
+			});
+			
+			$('#teluguPaperCopyLocationFile').change(function (event) {
+				$('#teldocView').empty();
+			    var file = URL.createObjectURL(event.target.files[0]);
+			    $('#teldocView').append('<a href="' + file + '" target="_self">' + event.target.files[0].name + '</a><br>');
+			});
+			
+			  $("input[name='engfile']").on("change", function () {
+				   $("#file_error1").html("");
+				     if(this.files[0].size > 2000000) {
+				    	 $("#file_error1").html("File size is greater than 2MB");
+				     $(this).val('');
+				     }
+				    });
+			  
+			  $("input[name='telugufile']").on("change", function () {
+				  $("#file_error2").html("");
+				     if(this.files[0].size > 2000000) {
+				    	 $("#file_error2").html("File size is greater than 2MB");
+				     $(this).val('');
+				     }
+				    });
+		
 
 	    $('#ifbPreperationDate').datepicker({dateFormat: 'yy-mm-dd'});
 	    $('#ifbPreperationDate').datepicker('setDate', $('#ifbDate').val());
@@ -172,15 +201,17 @@
                
                 <ul class="fs-list-details">
                 <li><p>soft copy upload - English (pdf/jpg/png) </p></li>
-                <li><input type="file" name="file" id="engfile" value="${engUpload}"  >
-               <%--   <li> <img id="image" src="${engUpload}"   width="100" height="70"/> </li> --%>
-                <c:if test="${tenderingProcessObj.id!=null}">
-                <li><a href="${engUpload}" target="_self" id="engdocView" name="image" >View Document</a></li>   
+                <li><input type="file" name="engfile" id="englishPaperCopyLocationFile" value="${engUpload}"   >
+                  <c:if test="${tenderingProcessObj.id!=null}">
+                <%--  <li> <img id="image" src="${engUpload}"   width="100" height="70"/> </li> --%>
+                <li><a href="${engUpload}" target="_self" id="engdocView" name="image" >View Document</a></li>  
                 </c:if>
                   <form:input type="hidden" path="engUpload" class="form-control" id="engfileName" value="${tenderingProcessObj.engUpload}"></form:input>
                  <span id="file_error1" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
+               
+                
                
              
                                            
@@ -202,10 +233,10 @@
             
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - Telugu (pdf/jpg/png)</p></li>
-                <li><input type="file" name="file" id="telugufile" value="${telUpload}" class="form-control mb-md" onchange="document.getElementById('telimage').src = window.URL.createObjectURL(this.files[0])" class="form-control mb-md"/>
-              <%--  <li> <img id="telimage" src="${telUpload}"   width="100" height="70"/> </li> --%>
+                <li><input type="file" name="telugufile" id="teluguPaperCopyLocationFile" value="${telUpload}" class="form-control mb-md" />
                 <c:if test="${tenderingProcessObj.id!=null}">
-                 <li><a href="${telUpload}" target="_self" id="telugudocView" name="image" >View Document</a></li>   
+                <%--    <li> <img id="telimage" src="${telUpload}"   width="100" height="70"/> </li> --%>
+                <li><a href="${telUpload}" target="_self" id="teldocView" name="image" >View Document</a></li>  
                 </c:if>
                   <form:input type="hidden" path="telUpload" class="form-control" id="telfileName" value="${tenderingProcessObj.telUpload}"></form:input>
                <span id="file_error2" class="errors" style="color:red;float:right;"></span>
@@ -341,37 +372,6 @@
 
 <script type="text/javascript">
 
-$(document).ready(function(){
-	
-	$('#engfile').change(function (event) {
-		$('#engdocView').empty();
-	    var file = URL.createObjectURL(event.target.files[0]);
-	    alert("==file==:"+file);
-	    $('#engdocView').append('<a href="' + file + '" target="_self">' + event.target.files[0].name + '</a><br>');
-	});
-	$('#telugufile').change(function (event) {
-		$('#telugudocView').empty();
-	    var telfile = URL.createObjectURL(event.target.files[0]);
-	    $('#telugudocView').append('<a href="' + telfile + '" target="_self">' + event.target.files[0].name + '</a><br>');
-	});
-	
-	
-	  $("input[name='engfile']").on("change", function () {
-		  $("#file_error1").html("");
-		     if(this.files[0].size > 2000000) {
-		    	 $("#file_error1").html("File size is greater than 2MB");
-		     $(this).val('');
-		     }
-		    });
-	  
-	  $("input[name='telugufile']").on("change", function () {
-		  $("#file_error2").html("");
-		     if(this.files[0].size > 2000000) {
-		    	 $("#file_error2").html("File size is greater than 2MB");
-		     $(this).val('');
-		     }
-		    });
-
 $("#percentageQuoted,#bidsReceived,#hardCopiesSubmitted,#noofBidsQualified").on('input', function () {
     this.value = this.value.match(/^\d+/);
 });
@@ -387,15 +387,6 @@ $('#tenderNoticeNumber').on('input', function() {
 });
 $("#submit").click(function(){
 
-	/* 	var workName=$("#workName").val();
-	if(workName=="" || workName==null){
-	    $("#workNameErr").html("Please Enter Name of Work ");
-	    $("#workNameErr").focus();
-	    return false;
-	}else{
-	    $("#workNameErr").html("");
-	} */
-	
 	var workNumber=$("#workNumber").val();
 	if(workNumber=="" || workNumber==null){
 	    $("#workNumberErr").html("Please Enter Work Number");
@@ -474,7 +465,6 @@ $("#submit").click(function(){
 	}else{
 		$("#agencyNameErr").text("");
 	}
-});	
 });	
 	
 </script>

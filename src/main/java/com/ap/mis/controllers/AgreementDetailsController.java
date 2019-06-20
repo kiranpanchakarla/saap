@@ -72,9 +72,12 @@ public class AgreementDetailsController {
 	}
 	
 	@GetMapping(value = "/view")
-	public String view(Model model, String workId) {
+	public String view(Model model, String workId,HttpSession session) {
 		AgreementDetails  agreementInfo = agreeDetailsService.getAgreementDetails(Integer.parseInt(workId));
 		model.addAttribute("agreementInfo",agreementInfo);
+		
+		TenderingProcess tenderingInfo=tenderProcess.getTenderDetails(Integer.parseInt(workId));
+		model.addAttribute("tenderingInfo", tenderingInfo);
 	    return "online-mis-agreementView";
 		 
 	}
@@ -85,7 +88,7 @@ public class AgreementDetailsController {
 		AgreementDetails  agreementInfo = agreeDetailsService.getAgreementDetails(id);
 		
 		int tenderingId =(int) session.getAttribute("tenderingIdSession");
-		System.out.println("TENDER ID ::: "+tenderingId);
+		
 		   TenderingProcess tenderingInfo=tenderProcess.getTenderingInfo(tenderingId);
 		   model.addAttribute("tenderingInfo", tenderingInfo);
 		   
