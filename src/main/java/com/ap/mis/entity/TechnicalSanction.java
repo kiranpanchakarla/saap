@@ -27,9 +27,9 @@ public class TechnicalSanction implements Serializable {
 	@Column(name = "techsanction_number")
 	private int techSanction_no;
 
-	@Column(name = "date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
-	private Date date;
+	@Column(name = "doc_date")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	private Date docDate;
 
 	@Column(name = "amount")
 	private double amount;
@@ -86,14 +86,6 @@ public class TechnicalSanction implements Serializable {
 		this.techSanction_no = techSanction_no;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public double getAmount() {
 		return amount;
 	}
@@ -110,10 +102,20 @@ public class TechnicalSanction implements Serializable {
 		this.work = work;
 	}
 
+	public Date getDocDate() {
+		return docDate;
+	}
+
+	public void setDocDate(Date docDate) {
+		this.docDate = docDate;
+	}
+
 	@Override
 	public String toString() {
-		return "TechnicalSanction [id=" + id + ", techSanction_no=" + techSanction_no + ", date=" + date + ", amount="
-				+ amount + ", work=" + work + "]";
+		return "TechnicalSanction [id=" + id + ", techSanction_no=" + techSanction_no + ", docDate=" + docDate
+				+ ", amount=" + amount + ", work=" + work + "]";
 	}
+    
+	
 
 }

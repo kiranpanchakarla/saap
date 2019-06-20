@@ -27,14 +27,14 @@ public class TenderingProcess {
 	private Integer id;
 
 	@Column(name = "ifb_preparation_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date ifbPreperationDate;
 
 	@Column(name = "tender_notice_number")
 	private String tenderNoticeNumber;
 
 	@Column(name = "tender_notice_issuedDate")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date tenderNoticeIssuedDate;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -46,7 +46,7 @@ public class TenderingProcess {
 
 	@Nullable
 	@Column(name = "english_newspaper_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date engNewsPaperDate;
 
 	@Column(name = "tel_newspaper_name")
@@ -54,22 +54,22 @@ public class TenderingProcess {
 
 	@Nullable
 	@Column(name = "telugu_newspaper_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date telNewspaperDate;
 
 	@Nullable
 	@Column(name = "bid_start_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date bidStrartDate;
 
 	@Nullable
 	@Column(name = "bid_closing_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date bidClosingDate;
 
 	@Nullable
 	@Column(name = "bid_opening_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date bidOpeningDate;
 
 	@Column(name = "bids_received")
@@ -83,7 +83,7 @@ public class TenderingProcess {
 
 	@Nullable
 	@Column(name = "evaluationCompleted_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date dateOfEvaluationCompleted;
 
 	@Column(name = "contractvalue")
@@ -102,7 +102,7 @@ public class TenderingProcess {
 
 	@Nullable
 	@Column(name = "loa_issued_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date dateOfLoaIssued;
 
 	@ManyToOne(fetch = FetchType.EAGER)

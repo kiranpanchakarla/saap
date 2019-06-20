@@ -67,7 +67,7 @@
 		<c:choose>
 		<c:when test="${!empty techsanc.id}">
 			<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
-			<input type="hidden" name="datename" id ="dateid" value="${techsanc.date}"   > 	
+			<input type="hidden" name="datename" id ="dateid" value="${techsanc.docDate}"   > 	
 		</c:when>
 		</c:choose> 
        
@@ -107,7 +107,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Date <span class="red">*</span></p></li>
-				<li>  <form:input  type="date" path="date" id="date"/> 														   		
+				<li>  <form:input  type="date" path="docDate" id="date"/> 														   		
  				<span id="dateErr" class="errors" style="color:red;float:right;"></span>
                	</li>
                	</ul>

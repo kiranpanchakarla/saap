@@ -107,6 +107,7 @@ public class MISServiceImpl implements MISService {
 			}
 			work.setWorkLineItemsList(ltms);
 		}
+		work.setStatus(EnumFilter.OPEN.getStatus());
 		return misDao.updateWork(work);
 	}
 

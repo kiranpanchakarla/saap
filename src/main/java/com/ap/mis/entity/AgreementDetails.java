@@ -29,18 +29,18 @@ public class AgreementDetails {
 	private double bgAmount;
 
 	@Column(name = "sitehandover_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date siteHandOverDate;
 
 	@Column(name = "agreementConcluded_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date agreementCouncludedDate;
 
 	@Column(name = "periodofcontract")
 	private int periodOfContract;
 
 	@Column(name = "expcompletion_date")
-	@DateTimeFormat(pattern = "yy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date expectedCompletionDate;
 
 	@Column(name = "agreement_number")
