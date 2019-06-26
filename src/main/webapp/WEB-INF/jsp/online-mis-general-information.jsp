@@ -175,8 +175,9 @@
                 <ul class="fs-list-details">
                 <li><div id="page-title1"></div>
                 <p>Upload Adminstrative Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <%-- <li> <img  src="${filePath}"    width="100" height="70"/>  --%>
-                 <li><a href="${filePath}" target="_blank" id="docView" name="image" >View Document</a></li> 
+               <c:forEach items="${filePath}" var="file">
+			      <li><a href="${file}" target="_blank" id="docView" name="image" >View Document</a></li>
+		       </c:forEach>
                </li> 
               
                
@@ -300,8 +301,9 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-               <%--  <li><img src="${landfilePath}"  width="100" height="70"/></li> --%>
-                <li><a href="${landfilePath}" target="_blank" id="docView" name="image" >View Document</a></li> 
+                <c:forEach items="${landfilePath}" var="landfile">
+			      <li><a href="${landfile}" target="_blank" id="docView" name="image" >View Document</a></li>
+		        </c:forEach>
                 </ul>
                 
                 </div>

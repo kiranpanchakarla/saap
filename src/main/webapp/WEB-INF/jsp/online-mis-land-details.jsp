@@ -122,11 +122,11 @@
                 
                <ul class="fs-list-details">
                 <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li><input type="file" name="file" id="file"  value="${filePath}" class="form-control mb-md" ></li>
+                <li><input type="file" name="file" id="file" multiple value="${filePath}" class="form-control mb-md" ></li>
                 <c:if test="${landDetails.id!=null}">
                  <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>   
                 </c:if>
-                <form:input type="hidden" path="path" class="form-control" id="fileName" value="${landDetails.path}"></form:input>
+               <%--  <form:input type="hidden" path="path" class="form-control" id="fileName" value="${landDetails.path}"></form:input> --%>
                 <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
                 
@@ -244,7 +244,7 @@ $("#submit").click(function(){
 	}
 	
 	
-	var fileName=$("#fileName").val();
+	/* var fileName=$("#fileName").val();
 	if(fileName==""){
 		fileName=$("#file").val();
 	}
@@ -255,7 +255,7 @@ $("#submit").click(function(){
     }else{
         $("#file_error").html("");
         return true
-    }
+    } */
 	
 })
 $(document).ready(function(){

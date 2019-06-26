@@ -51,16 +51,7 @@ public class LandDetails implements Serializable {
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
 
-	@Column(name = "path")
-	private String path;
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
+	
 
 	public Integer getId() {
 		return id;
@@ -145,8 +136,9 @@ public class LandDetails implements Serializable {
 	@Override
 	public String toString() {
 		return "LandDetails [id=" + id + ", bookDetails=" + bookDetails + ", surveyNo=" + surveyNo + ", landExtend="
-				+ landExtend + ", typeOfLand=" + typeOfLand + ", user=" + user + ", work=" + work + ", path=" + path
-				+ "]";
+				+ landExtend + ", typeOfLand=" + typeOfLand + ", user=" + user + ", work=" + work + "]";
 	}
+
+	
 
 }

@@ -62,29 +62,8 @@ public class LandDetailServiceImpl implements LandDetailService{
 
 
 	@Override
-	public LandDetails landDetailsSave(LandDetails landDetails, MultipartFile file) {
-		 try
-		 {
-			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			
-				if (!file.getOriginalFilename().isEmpty()) {
-					File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-					log.info("==rootFolder=="+rootFolder);
-					if (!rootFolder.exists()) {
-						rootFolder.mkdirs();
-					}
-				    String  filepath=rootFolder + File.separator+ file.getOriginalFilename();
-					file.transferTo(new File(filepath));
-					log.info("===filepath==:"+filepath);
-						  landDetails.setPath(filepath);	
-					 
-				}
-		 }
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		 landDetails.getWork().setStatus(EnumFilter.CONST_INPROGRESS.getStatus());
-		 return landDetailDao.landDetailsSave(landDetails);
+	public LandDetails landDetailsSave(LandDetails landDetails) {
+				return landDetailDao.landDetailsSave(landDetails);
 	}
 
 
@@ -106,7 +85,7 @@ public class LandDetailServiceImpl implements LandDetailService{
 
 	@Override
 	public LandDetails landDetailsUpdate(LandDetails landDetails, MultipartFile file) {
-		 try
+		/* try
 		 {
 			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 			
@@ -128,8 +107,12 @@ public class LandDetailServiceImpl implements LandDetailService{
 		 }
 		catch(Exception e){
 			e.printStackTrace();
-		}
+		}*/
 		 landDetails.getWork().setStatus(EnumFilter.CONST_INPROGRESS.getStatus());
 		 return landDetailDao.landDetailsUpdate(landDetails);
 	}
+
+
+
+	
 }

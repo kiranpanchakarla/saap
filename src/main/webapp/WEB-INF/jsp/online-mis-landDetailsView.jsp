@@ -78,7 +78,10 @@
                 <ul class="fs-list-details">
                 <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
                 <%--   <li><img src="${filePath}"  width="100" height="70"/></li> --%>
-                <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li> 
+               <%--  <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>  --%>
+                <c:forEach items="${filePath}" var="file">
+			      <li><a href="${file}" target="_self" id="docView" name="image" >View Document</a></li>
+		       </c:forEach>
                 </ul>
                 
                 </div>
