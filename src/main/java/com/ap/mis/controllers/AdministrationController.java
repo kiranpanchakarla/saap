@@ -138,14 +138,26 @@ public class AdministrationController {
 	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request,HttpSession session) {
 		
 		AdministrativeSection adminInfo = admService.getAdminDetails(id);
-	 /*  if (adminInfo.getPath() != null && !adminInfo.getPath().equals("")) {
-			model.addAttribute("filePath",ContextUtil.populateContext(request) + adminInfo.getPath());
-			model.addAttribute("fileName",adminInfo.getPath().substring(adminInfo.getPath().lastIndexOf('\\') + 1));
-			
-		} else {
-			model.addAttribute("filePath", null);
+		List<Attachements> attachements=attachService.getAttachementsDetails(id,EnumFilter.ADMIN.getStatus());
+		List<String> filePath = new ArrayList<String>();
+		List<String> fileName = new ArrayList<String>();
+		log.info("===attachements===:"+attachements);
+		for(Attachements attachDetails :attachements) {
+			if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
+				String attachmentPath=ContextUtil.populateContext(request) + attachDetails.getPath();
+				String fileNameVal=attachDetails.getPath().substring(attachDetails.getPath().lastIndexOf('\\') + 1);
+				log.info("==attachmentPath==:"+attachmentPath);
+				filePath.add(attachmentPath);
+				fileName.add(fileNameVal);
+				model.addAttribute("filePath",filePath);
+				model.addAttribute("fileName",fileName);
+				
+			} else {
+				model.addAttribute("filePath", null);
+			}
 		}
-	  */
+		
+	
 		Works workInfo = misService.getWorkInfo(adminInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("grantTypeList", admService.findAll());
