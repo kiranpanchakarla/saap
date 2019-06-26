@@ -5,15 +5,16 @@
 body {
 	background: #fff;
 	color: #212529;
-	font-family: 'Raleway', sans-serif;
-	font-size: 13px;
+	/*font-family: 'Raleway', sans-serif;*/
+	font-family: 'Poppins', sans-serif;
+	font-size: 14px;
 }
 a {
-	color: #fab702;
+	color: #ff0000;
 	transition: 0.5s;
 }
 a:hover, a:active, a:focus {
-	color: #18d36e;
+	color: #1cb9c8;
 	outline: none;
 	text-decoration: none;
 }
@@ -22,7 +23,7 @@ p {
 	margin: 0 0 15px 0;
 }
 .highlight {
-	color: #018c3b;
+	color: #1cb9c8;
 	font-weight: bold;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -46,8 +47,8 @@ figure img {
 	color: #fff;
 }*/
 .table-striped th {
-    background: #338333;
-    color: #000;
+    background: #033d75;
+    color: #fff;
 }
 .table-striped h6.highlight {
 	color: #fff;
@@ -62,7 +63,7 @@ figure img {
 .back-to-top {
 	position: fixed;
 	display: none;
-	background: transparent;
+	background: #033d75;
 	color: #b3b3b3;
 	width: 44px;
 	height: 44px;
@@ -73,7 +74,7 @@ figure img {
 	bottom: 15px;
 	transition: background 0.5s;
 	z-index: 11;
-	border: solid 1px #333;
+	border: solid 1px #033d75;
 }
 .back-to-top i {
 	padding-top: 12px;
@@ -137,10 +138,10 @@ figure img {
     transition: all 0.5s;
     z-index: 997;
     background-color: rgba(0, 0, 0, 0.2);
-    background-color: rgba(1, 100, 0,0.8);
+    background-color: rgba(25, 163, 204, 0.8);
 }
 #header.header-scrolled {
-	background: rgba(1, 100, 0,0.8);
+	background: rgba(28, 185, 200, 0.8);
 	height: auto;
 	transition: all 0.5s;
 }
@@ -159,7 +160,7 @@ figure img {
 	bottom: 0px;
 	left: -1000px;
 	right: -45px;
-	background-color: rgb(1, 140, 59);
+	background-color:#1cb9c8;
 	transform: skewX(-33deg);
 	z-index: -1;
 }
@@ -586,7 +587,7 @@ figure img {
 	outline: none;
 }
 .nav-menu a:hover {
-    color: #f79646 !important;
+    color: #033d75 !important;
 }
 .nav-menu li:hover > a, .nav-menu > .menu-active > a {
 	color: #008c3b;
@@ -1100,7 +1101,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* FORM TYPOGRAPHY*/
 
 #formContent input[type=button], #formContent input[type=submit], #formContent input[type=reset] {
-	background-color: #008c3b;
+	background-color: #1cb9c8;
 	border: none;
 	color: white;
 	padding: 12px 40px;
@@ -1121,7 +1122,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 	transition: all 0.3s ease-in-out;
 }
 #formContent input[type=button]:hover, #formContent input[type=submit]:hover, #formContent input[type=reset]:hover {
-	background-color: #13a456;
+	background-color: #033d75;
 }
 #formContent input[type=button]:active, #formContent input[type=submit]:active, #formContent input[type=reset]:active {
 	-moz-transform: scale(0.95);
@@ -1207,7 +1208,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 	-moz-box-shadow: none !important;
 	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
-	border: 1px solid #008c3b;
+	border: 1px solid #19a3cc;
 	outline-width: 0;
 	transition: All 0.5s ease-in;
 	-webkit-transition: All 0.5s ease-in;
@@ -1233,7 +1234,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /*buttons*/
 #msform .action-button {
 	width: auto;
-	background: #008c3b;
+	background: #1cb9c8;
 	font-weight: bold;
 	color: white;
 	border: 0 none;
@@ -1243,7 +1244,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 	margin: 10px 5px;
 }
 #msform .action-button:hover, #msform .action-button:focus {
-	box-shadow: 0 0 0 2px white, 0 0 0 3px #008c3b;
+	box-shadow: 0 0 0 2px white, 0 0 0 3px #1cb9c8;
 }
 #msform .action-button-previous {
 	width: 100px;
@@ -1357,7 +1358,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 .fs-list-details p {
 	font-weight: bold;
-	color: #008c3b;
+	color: #033d75;
 	padding: 5px 0;
 	margin: 0px;
 	text-align: left;
@@ -1378,13 +1379,13 @@ body.mobile-nav-active #mobile-nav-toggle {
 	float: left;
 	margin: 2px 10px;
 	font-size: 12px !important;
-	background: #008c3b;
+	background: #1cb9c8;
 	color: #fff !important;
 	font-weight: bold;
 	cursor: pointer;
 }
 .work-space .create-button:hover {
-	background: #008c3b;
+	background: #033d75;
 }
 .work-space {
 	width: 100%;
@@ -1830,9 +1831,13 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 /* Contact Section
 --------------------------------*/
-
+#contact-error{
+	padding: 90px 0;
+}
 #contact {
 	padding: 60px 0;
+	background: url(../img/login_page.jpg) no-repeat top center;
+	background-size: cover;
 }
 #contact .contact-info {
 	margin-bottom: 20px;
@@ -1953,16 +1958,21 @@ table>tbody>tr.info>td em {
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
+#main {
+    min-height: 500px;
+}
 
 #footer {
-	background: #222222;
+	background: #19a3cc;
 	padding: 0 0 20px 0;
 	color: #eee;
 	font-size: 14px;
+	 width: 100%;
+	 bottom: 0px;
 }
 #footer .footer-top {
 	background: #111111;
-	padding: 60px 0 30px 0;
+	padding: 20px 0 0px 0;
 	border-bottom: 1px solid #333;
 }
 #footer .footer-top .footer-info {
@@ -2041,10 +2051,10 @@ table>tbody>tr.info>td em {
 	font-size: 12px;
 }
 #footer .footer-top .footer-links ul a:hover {
-	color: #008c3b;
+	color: #19a3cc;
 }
 #footer .footer-top .footer-contact {
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 #footer .footer-top .footer-contact p {
 	line-height: 26px;
@@ -2164,6 +2174,10 @@ table>tbody>tr.info>td em {
 /*--------------------------------------------------------------
 # nav tab
 --------------------------------------------------------------*/
+#nav-tab {
+    width: 90%;
+    margin: 0 auto;
+}
 .nav-tabs {
 	border-bottom: 1px solid #ddd;
 }
@@ -2283,7 +2297,36 @@ table>tbody>tr.info>td em {
     font-size: 18px;
 }
 #viewTable .btn{padding: 6px 0px !important;}
+.btn.focus, .btn:focus, .btn:hover{
+	color:#033d75;
+}
+.nav-fill .nav-item{
+	background: #033d75;
+    color: #fff;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active, .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover,
+.nav-tabs>li>a.active, .nav-tabs>li>a.active:focus, .nav-tabs>li>a.active:hover{
+	background:#1cb9c8;
+	color: #fff;
+	border-color: #1cb9c8;
+}
+.container-full {
+    width: 90%;
+    margin: 0 auto;
+}
 
 @media (min-width: 767px){
 	
 }
+label {
+    color: #fff;
+}
+
+a#viewTable_previous {
+    color: #fff !important;
+}
+a#viewTable_next{
+    color: #fff !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{color: #fff !important;}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{background:#033d75 !important;box-shadow: inset 0 0 3px #033d75 !important;}

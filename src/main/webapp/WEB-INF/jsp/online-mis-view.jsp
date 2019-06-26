@@ -14,9 +14,22 @@
 
  <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" /> 
 <jsp:include page="online-mis-header.jsp" />
-<script src="<c:url value="/resources/lib/jquery/jquery.min.js"/>" type="text/javascript"></script>
+ <script src="<c:url value="/resources/lib/jquery/jquery.min.js"/>" type="text/javascript"></script> 
+
+
+
+    
+    
+    
+    
+    
+
+    
+
 
 </head>
+
+
 
 <body>
 
@@ -37,7 +50,8 @@
   </div>
 </section> -->
  <c:url value="/worksCreation/create" var="createUrl" />
-        <div class="container">
+ <section id="contact" class="section-bg-con">
+        <div class="container-full">
         <div class="row">
         <form id="msform"  method="get" action="${createUrl}" modelAttribute="workObject">
          
@@ -48,7 +62,7 @@
       </c:if>
       
       <div class="col-md-12">
-        <table id="viewTable" class="display table-hover table-striped table-bordered" >
+        <table id="viewTable" class="display table-hover table-striped table-bordered " >
             <thead>
                 <tr>
                     <th>S.No</th>
@@ -109,6 +123,7 @@
 </form>
 </div>
 </div>
+</section>
  <script>
  
  
@@ -122,13 +137,16 @@
 			"dom": '<"top"i>rt<"bottom"flp><"clear">'
      });
  });
-</script>
+</script> 
 
 <!-- <script  src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/>
         type="text/javascript"></script> 
    <script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/>
         type="text/javascript"></script>  -->
-    <script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/>
+        
+        
+        
+     <script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/>
         type="text/javascript"></script>
             <script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
         

@@ -99,7 +99,7 @@
     <!-- Remind Passowrd -->
     <div id="formFooter">
        <!-- <a class="underlineHover" href="#">Forgot Password?</a> -->
-      |
+      
        <c:url value="/userCreation" var="createUrl" />
        <a class="underlineHover" href="${createUrl}">New user? Register here</a>
     </div>

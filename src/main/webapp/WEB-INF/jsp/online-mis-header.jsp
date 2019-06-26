@@ -8,6 +8,7 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap" rel="stylesheet">
 
 </head>
 <body>
