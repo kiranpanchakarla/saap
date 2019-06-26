@@ -3,6 +3,7 @@ package com.ap.mis.serviceImpl;
 import java.io.File;
 import java.sql.Blob;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,12 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.dao.AdministrativeSectionDao;
 import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.Attachements;
 import com.ap.mis.entity.ExecutiveConsultant;
 import com.ap.mis.entity.ExecutiveDept;
 import com.ap.mis.entity.FinancialYear;
 import com.ap.mis.entity.GrantType;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AdministrativeSectionService;
+import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.UploadUtil;
 
 @Service
@@ -83,38 +86,10 @@ public class AdministrativeSectionServiceImpl implements AdministrativeSectionSe
 	}
 
 	@Override
-	public AdministrativeSection adminstrativeSection(AdministrativeSection adminSecObject, MultipartFile file) {
-		try {
-			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			String saveDirectory = servletContext.getRealPath("/");
-			String uploadfile = "";
-			byte[] data = null;
-			Blob encodstring = null;
-			if (!file.getOriginalFilename().isEmpty()) {
-				File rootFolder = new File(
-						uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-				log.info("==rootFolder==" + rootFolder);
-				if (!rootFolder.exists()) {
-					rootFolder.mkdirs();
-				}
-				String filepath = rootFolder + File.separator + file.getOriginalFilename();
-				file.transferTo(new File(filepath));
-				log.info("===filepath==:" + filepath);
-				adminSecObject.setPath(filepath);
-				/*
-				 * if ((!(" ".equals(uploadfile)) || uploadfile == null)) { InputStream stream =
-				 * (InputStream) file.getInputStream(); data = new byte[50000];
-				 * stream.read(data); System.out.println("file is*********************" + data);
-				 * } encodstring = (Blob) Hibernate.getLobCreator((Session)
-				 * sessionFactory).createBlob(data); } adminSecObject.setContent(encodstring);
-				 */
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public AdministrativeSection adminstrativeSectionSave(AdministrativeSection adminSecObject) {
+		
 		return administrativeSectionDao.adminstrativeSectionSave(adminSecObject);
 	}
-
 	@Override
 	public AdministrativeSection getAdminInfo(int id) {
 		return administrativeSectionDao.getAdminInfo(id);
@@ -129,7 +104,7 @@ public class AdministrativeSectionServiceImpl implements AdministrativeSectionSe
 	@Override
 	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSecObject,
 			MultipartFile file) {
-		try {
+		try {/*
 			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 			String path = adminSecObject.getPath();
 			log.info("==path==" + path);
@@ -148,12 +123,15 @@ public class AdministrativeSectionServiceImpl implements AdministrativeSectionSe
 			} else {
 				adminSecObject.setPath(path);
 			}
-		}
+		*/}
 
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return administrativeSectionDao.adminstrativeSectionUpdate(adminSecObject);
 	}
+
+	
+	
 
 }

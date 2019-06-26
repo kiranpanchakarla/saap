@@ -1,5 +1,8 @@
 package com.ap.mis.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -16,14 +19,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.Attachements;
 import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.AdministrativeSectionService;
+import com.ap.mis.service.AttachmentService;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.ContextUtil;
+import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -35,24 +41,30 @@ public class AdministrationController {
 
 	@Autowired
 	AdministrativeSectionService admService;
+	
+	@Autowired
+	AttachmentService attachService;
 
 	@Autowired
 	LineDepartmentService lineDepartmentService;
 
 	@PostMapping(value = "/save")
 	public String administrativeSectionSave(@ModelAttribute AdministrativeSection adminSecObject, Model model,
-			HttpServletRequest request, @RequestParam("file") MultipartFile file, HttpSession session) {
+			HttpServletRequest request, @RequestParam("file") MultipartFile[] file, HttpSession session) {
 
 		boolean isSave = false;
 		int workid = (int) session.getAttribute("workIdSession");
 		Integer idVal = adminSecObject.getWork().getId();
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		adminSecObject.setUser(loggedInUser);
+		Integer workId=adminSecObject.getWork().getId();
+		String moduleName=EnumFilter.ADMIN.getStatus();
 		if (adminSecObject.getId() == null) {
 			isSave = true;
-			admService.adminstrativeSection(adminSecObject, file);
+		    admService.adminstrativeSectionSave(adminSecObject);
+			attachService.saveAttachedDetails(workId,moduleName, file);
 		} else {
-			admService.adminstrativeSectionUpdate(adminSecObject, file);
+			/*admService.adminstrativeSectionUpdate(adminSecObject, file);*/
 			// checking... Department is created or not
 			DepartmentLinkingLine deptInfo = lineDepartmentService.getdepartDetails(idVal);
 			if (deptInfo == null) {
@@ -99,12 +111,23 @@ public class AdministrationController {
 	@GetMapping(value = "/view")
 	public String view(Model model, String workId,HttpServletRequest request) {
 		AdministrativeSection adminInfo = admService.getAdminDetails(Integer.parseInt(workId));
+		log.info("===adminInfo===:"+adminInfo);
 		
-		if (adminInfo.getPath() != null && !adminInfo.getPath().equals("")) {
-			model.addAttribute("filePath",ContextUtil.populateContext(request) + adminInfo.getPath());
-		} else {
-			model.addAttribute("filePath", null);
+		List<Attachements> attachements=attachService.getAttachementsDetails(Integer.parseInt(workId),EnumFilter.ADMIN.getStatus());
+		List<String> filePath = new ArrayList<String>();
+		log.info("===attachements===:"+attachements);
+		for(Attachements attachDetails :attachements) {
+			if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
+				String attachmentPath=ContextUtil.populateContext(request) + attachDetails.getPath();
+				log.info("==attachmentPath==:"+attachmentPath);
+				filePath.add(attachmentPath);
+				model.addAttribute("filePath",filePath);
+				
+			} else {
+				model.addAttribute("filePath", null);
+			}
 		}
+		
 		model.addAttribute("adminInfo",adminInfo);
 		DepartmentLinkingLine departInfo = lineDepartmentService.getdepartDetails(Integer.parseInt(workId));
 		model.addAttribute("deptInfo",departInfo);
@@ -115,14 +138,14 @@ public class AdministrationController {
 	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request,HttpSession session) {
 		
 		AdministrativeSection adminInfo = admService.getAdminDetails(id);
-	   if (adminInfo.getPath() != null && !adminInfo.getPath().equals("")) {
+	 /*  if (adminInfo.getPath() != null && !adminInfo.getPath().equals("")) {
 			model.addAttribute("filePath",ContextUtil.populateContext(request) + adminInfo.getPath());
-			/*model.addAttribute("fileName",adminInfo.getPath().substring(adminInfo.getPath().lastIndexOf('\\') + 1));*/
+			model.addAttribute("fileName",adminInfo.getPath().substring(adminInfo.getPath().lastIndexOf('\\') + 1));
 			
 		} else {
 			model.addAttribute("filePath", null);
 		}
-	  
+	  */
 		Works workInfo = misService.getWorkInfo(adminInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("grantTypeList", admService.findAll());

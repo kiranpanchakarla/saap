@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ap.mis.dao.AdministrativeSectionDao;
 import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.Attachements;
 import com.ap.mis.entity.ExecutiveConsultant;
 import com.ap.mis.entity.ExecutiveDept;
 import com.ap.mis.entity.FinancialYear;
@@ -80,8 +81,7 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 
 	@Override
 	public AdministrativeSection adminstrativeSectionSave(AdministrativeSection adminSec) {
-
-		Blob encodstring = null;
+		
 		try {
 			sessionFactory.getCurrentSession().save(adminSec);
 		} catch (Exception e) {
@@ -97,12 +97,6 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 
 	@Override
 	public AdministrativeSection getAdminDetails(int id) {
-		/*
-		 * return (AdministrativeSection) sessionFactory.getCurrentSession()
-		 * .createQuery("from AdministrativeSection where work.id="+id)
-		 * .getSingleResult();
-		 */
-
 		AdministrativeSection adminsec = null;
 		try {
 			@SuppressWarnings("unchecked")
@@ -131,5 +125,6 @@ public class AdministrativeSectionDaoImpl implements AdministrativeSectionDao {
 		}
 		return adminSec;
 	}
+	
 
 }

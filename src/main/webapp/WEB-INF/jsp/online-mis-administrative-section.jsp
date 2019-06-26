@@ -143,11 +143,11 @@
                  
                  <ul class="fs-list-details">
                 <li><p>Upload Adminstrative Details Document(pdf/jpg/png)<span class="red">*</span></p>
-                <input type="file" name="file" id="file" value="${filePath}" ></li>
+                <input type="file" name="file" id="file" multiple value="${filePath}" ></li>
                 <c:if test="${adminSecObject.id!=null}">
                  <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>   
                 </c:if>
-                <form:input type="hidden" path="path" class="form-control" id="fileName" value="${adminSecObject.path}"></form:input>
+               <%--  <form:input type="hidden" path="path" class="form-control" id="fileName" value="${adminSecObject.path}"></form:input> --%>
                  <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
                 
@@ -184,7 +184,7 @@
 <jsp:include page="online-mis-footer.jsp" />
 
 <script type="text/javascript">
-$(document).ready(function(){
+/* $(document).ready(function(){
 	$('#file').change(function (event) {
 		$('#docView').empty();
 	    var file = URL.createObjectURL(event.target.files[0]);
@@ -202,7 +202,7 @@ $("input[type='file']").on("change", function () {
 	     }
 	    }); 
 	
-});
+}); */
 
 $('input').on('input', function() {
 	  $(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''));
@@ -270,7 +270,7 @@ $("#submit").click(function(){
 	}
 	
 	
-    var fileName=$('#fileName').val();
+   /*  var fileName=$('#fileName').val();
 	if(fileName==""){
 		fileName=$('#file').val();
 	}
@@ -281,7 +281,7 @@ $("#submit").click(function(){
     }else{
     	 $("#file_error").html("");
     	return true;
-    }
+    } */
 	
 });
 
@@ -289,6 +289,9 @@ $(document).ready(function(){
 	$('#nav-admin-tab').addClass('active');
 	 $('#nav-admin').addClass('active');
 	});
+	
+	
+	
 	
 </script>
 </body>

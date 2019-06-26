@@ -3,6 +3,7 @@ package com.ap.mis.dao;
 import java.util.List;
 
 import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.Attachements;
 import com.ap.mis.entity.ExecutiveConsultant;
 import com.ap.mis.entity.ExecutiveDept;
 import com.ap.mis.entity.FinancialYear;
@@ -22,6 +23,7 @@ public interface AdministrativeSectionDao {
 	public AdministrativeSection getAdminInfo(int id);
 	public AdministrativeSection getAdminDetails(int id);
 	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSecObject);
+	
 
 		
 }

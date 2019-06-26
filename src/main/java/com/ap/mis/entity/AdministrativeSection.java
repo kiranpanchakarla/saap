@@ -1,7 +1,9 @@
 package com.ap.mis.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -52,9 +55,16 @@ public class AdministrativeSection implements Serializable {
 	@OneToOne(targetEntity = Works.class)
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
-
-	@Column(name = "path")
-	private String path;
+	
+	/*@OneToMany(cascade=CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+	@JoinColumn(name = "module_id", referencedColumnName = "id")
+    private List<Attachements> attachements;*/
+	
+	
+	
+	
+	/*@Column(name = "path")
+	private String path;*/
 
 	@OneToOne(targetEntity = User.class)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -68,13 +78,13 @@ public class AdministrativeSection implements Serializable {
 		this.id = id;
 	}
 
-	public String getPath() {
+	/*public String getPath() {
 		return path;
 	}
 
 	public void setPath(String path) {
 		this.path = path;
-	}
+	}*/
 
 	public void setId(int id) {
 		this.id = id;
@@ -151,15 +161,36 @@ public class AdministrativeSection implements Serializable {
 	public void setConsultant(ExecutiveConsultant consultant) {
 		this.consultant = consultant;
 	}
+	
+	/*public List<Attachements> getAttachements() {
+	return attachements;
+}
+
+public void setAttachements(List<Attachements> attachements) {
+	this.attachements = attachements;
+}*/
 
 	@Override
 	public String toString() {
 		return "AdministrativeSection [id=" + id + ", workName=" + workName + ", workNumber=" + workNumber
 				+ ", sanctionedDetails=" + sanctionedDetails + ", typeOfGrant=" + typeOfGrant + ", financialYear="
 				+ financialYear + ", executiveDept=" + executiveDept + ", consultant=" + consultant + ", work=" + work
-				+ ", path=" + path + ", user=" + user + "]";
+				+ ", user=" + user + "]";
 	}
 
+	
 
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
 
 }
