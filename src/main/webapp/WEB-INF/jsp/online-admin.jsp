@@ -80,7 +80,7 @@
     <form method="post" action="<c:url value='j_spring_security_check'/>">
       <input type="text" id="login" class="fadeIn second" name="username" placeholder="username">
 	  	<br><span id="uError" style="color:red;"></span>  		
-      <input type="password" class="fadeIn third" name="password" id="password" placeholder="Password">
+      <input type="password" class="fadeIn third" name="password" id="password" placeholder="password">
       	<br><span id="pError" style="color:red;"></span><br>
       <input type="submit" id="submit" name="submit" class="fadeIn fourth" value="Log In" >
 <!--       onsubmit="return validateForm()" -->
