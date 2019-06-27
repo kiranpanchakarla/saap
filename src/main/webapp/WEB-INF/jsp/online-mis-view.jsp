@@ -7,7 +7,6 @@
 <head>
 <meta charset="utf-8">
 <title>SAAP : Online MIS</title>
-
 <link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
     rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
@@ -15,10 +14,25 @@
 
  <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" /> 
 <jsp:include page="online-mis-header.jsp" />
+ <script src="<c:url value="/resources/lib/jquery/jquery.min.js"/>" type="text/javascript"></script> 
+
+
+
+    
+    
+    
+    
+    
+
+    
+
 
 </head>
 
+
+
 <body>
+
 
 <!-- <section id="intro-inner">
   <div class="page-header">
@@ -41,11 +55,11 @@
         <div class="row">
         <form id="msform"  method="get" action="${createUrl}" modelAttribute="workObject">
          
-     <%--  <c:if test="${userRole eq 'ROLE_ADMIN'}">
-         <div class="col-md-12" align="left">
+      <c:if test="${userRole eq 'ROLE_ADMIN'}">
+         <div class="col-md-12" align="right">
           <button type="submit" class="btn btn-info">Create New Work</button>
          </div>  
-      </c:if> --%>
+      </c:if>
       
       <div class="col-md-12">
         <table id="viewTable" class="display table-hover table-striped table-bordered " >
@@ -115,50 +129,26 @@
  
  
  $(document).ready(function() {
-	 
+/* 	 alert( $.fn.jquery ) */
      $('#viewTable').DataTable({
          "scrollX" : false,
          "searching": false,
 			"info": false,
-			"responsive": true,
 			"dom": '<"top"i>rt<"bottom"flp><"clear">'
      });
  });
- 
- $('#submitBtn').on(
-			'click',
-			function(event) {
-				event.preventDefault();
-				alertify.confirm('Create New Work','Are you Sure, want to create new work! ',
-						function() {
-							  $.blockUI({ css: {
-				                 border: 'none', 
-				                 padding: '15px', 
-				                 backgroundColor: '#000', 
-				                 '-webkit-border-radius': '10px', 
-				                 '-moz-border-radius': '10px', 
-				                 opacity: .5, 
-				                 color: '#fff' 
-				             },
-				             message: "<h3>Creating New Work</h3>"
-				             });
-							
-				             msform.submit();
-						}, function() {
-							setTimeout($.unblockUI, 1000); 
-							alertify.error('Cancelled')
-						});
-
-			});
-</script>
-
+</script> 
 
 <!-- <script  src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/>
         type="text/javascript"></script> 
    <script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/>
         type="text/javascript"></script>  -->
-    <script src=<c:url value="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"/>
+        
+        
+        
+     <script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/>
         type="text/javascript"></script>
+            <script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
         
   
   <jsp:include page="online-mis-footer.jsp" />  
