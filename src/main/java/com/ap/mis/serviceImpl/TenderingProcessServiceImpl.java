@@ -46,42 +46,8 @@ public class TenderingProcessServiceImpl implements TenderingProcessService {
 	}
 
 	@Override
-	public TenderingProcess saveTenderingProcess(TenderingProcess tenderingProcess, MultipartFile engfile,
-			MultipartFile telugufile) {
-		 try
-		 {
-			 
-			 String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-				
-				if (!engfile.getOriginalFilename().isEmpty()) {
-					File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-					log.info("==rootFolder=="+rootFolder);
-					if (!rootFolder.exists()) {
-						rootFolder.mkdirs();
-					}
-				    String  filepath=rootFolder + File.separator+ engfile.getOriginalFilename();
-				    engfile.transferTo(new File(filepath));
-					log.info("===filepath==:"+filepath);
-					tenderingProcess.setEngUpload(filepath);	
-				}
-				
-				if (!telugufile.getOriginalFilename().isEmpty()) {
-					File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-					log.info("==rootFolder=="+rootFolder);
-					if (!rootFolder.exists()) {
-						rootFolder.mkdirs();
-					}
-				    String  filepath=rootFolder + File.separator+ telugufile.getOriginalFilename();
-				    telugufile.transferTo(new File(filepath));
-					log.info("===filepath==:"+filepath);
-					tenderingProcess.setTelUpload(filepath);	
-				}
-				
+	public TenderingProcess saveTenderingProcess(TenderingProcess tenderingProcess) {
 		
-		 }
-		catch(Exception e){
-			e.printStackTrace();
-		}
 		return tenderingProcessDao.saveTenderingProcess(tenderingProcess);
 	}
 
@@ -99,7 +65,7 @@ public class TenderingProcessServiceImpl implements TenderingProcessService {
 	@Override
 	public TenderingProcess updateTenderingProcess(TenderingProcess tenderingProcessObj, MultipartFile engfile,
 			MultipartFile telugufile) {
-		try {
+		/*try {
 			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
 			if (!engfile.getOriginalFilename().isEmpty()) {
@@ -133,7 +99,7 @@ public class TenderingProcessServiceImpl implements TenderingProcessService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		return tenderingProcessDao.updateTenderingProcess(tenderingProcessObj);
 	}
 

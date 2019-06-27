@@ -105,9 +105,10 @@
                
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - English (pdf/jpg/png) </p></li>
-              <%--   <li><li><img src="${engUpload}"  width="100" height="70"/></li> --%>
-                <%-- <input type="file" name="engfile" id="englishPaperCopyLocationFile" readonly value="${engUpload}" class="form-control mb-md"  > --%>
-                 <li><a href="${engUpload}" target="_self" id="docView" name="image" >View Document</a></li> 
+             <%--  <li><a href="${engUpload}" target="_self" id="docView" name="image" >View Document</a></li>  --%>
+                  <c:forEach items="${engUpload}" var="engfile">
+			      <li><a href="${engfile}" target="_blank" id="docView" name="image" >View Document</a></li>
+		       </c:forEach>
                </li>
                </ul>
                                            
@@ -129,8 +130,9 @@
             
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - Telugu (pdf/jpg/png)</p></li>
-              <%--   <li><img src="${telUpload}"  width="100" height="70"/></li> --%>
-                <li><a href="${telUpload}" target="_self" id="docView" name="image" >View Document</a></li> 
+               <c:forEach items="${telUpload}" var="telfile">
+			      <li><a href="${telfile}" target="_blank" id="docView" name="image" >View Document</a></li>
+		       </c:forEach>
                 </li>
                </ul>
                

@@ -113,11 +113,7 @@ public class TenderingProcess {
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
 
-	@Column(name = "engUpload")
-	private String engUpload;
-
-	@Column(name = "telUpload")
-	private String telUpload;
+	
 	
 	private transient String workNumber;
 	
@@ -140,21 +136,7 @@ public class TenderingProcess {
 		this.workName = workName;
 	}
 
-	public String getEngUpload() {
-		return engUpload;
-	}
-
-	public void setEngUpload(String engUpload) {
-		this.engUpload = engUpload;
-	}
-
-	public String getTelUpload() {
-		return telUpload;
-	}
-
-	public void setTelUpload(String telUpload) {
-		this.telUpload = telUpload;
-	}
+	
 
 	public Integer getId() {
 		return id;
@@ -340,19 +322,6 @@ public class TenderingProcess {
 		this.work = work;
 	}
 
-	@Override
-	public String toString() {
-		return "TenderingProcess [id=" + id + ", ifbPreperationDate=" + ifbPreperationDate + ", tenderNoticeNumber="
-				+ tenderNoticeNumber + ", tenderNoticeIssuedDate=" + tenderNoticeIssuedDate
-				+ ", noticeIssuingAuthorities=" + noticeIssuingAuthorities + ", englishNewspaperName="
-				+ englishNewspaperName + ", engNewsPaperDate=" + engNewsPaperDate + ", teluguNewspaperName="
-				+ teluguNewspaperName + ", telNewspaperDate=" + telNewspaperDate + ", bidStrartDate=" + bidStrartDate
-				+ ", bidClosingDate=" + bidClosingDate + ", bidOpeningDate=" + bidOpeningDate + ", bidsReceived="
-				+ bidsReceived + ", hardCopiesSubmitted=" + hardCopiesSubmitted + ", bidsForPriceBid=" + bidsForPriceBid
-				+ ", dateOfEvaluationCompleted=" + dateOfEvaluationCompleted + ", contractValue=" + contractValue
-				+ ", contractValueByL1Bidder=" + contractValueByL1Bidder + ", percentageQuoted=" + percentageQuoted
-				+ ", bidStatus=" + bidStatus + ", dateOfLoaIssued=" + dateOfLoaIssued + ", angencyName=" + angencyName
-				+ ", work=" + work + ", engUpload=" + engUpload + ", telUpload=" + telUpload + "]";
-	}
+	
 
 }

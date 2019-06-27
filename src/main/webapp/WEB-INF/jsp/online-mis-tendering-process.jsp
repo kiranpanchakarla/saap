@@ -201,12 +201,12 @@
                
                 <ul class="fs-list-details">
                 <li><p>soft copy upload - English (pdf/jpg/png) </p></li>
-                <li><input type="file" name="engfile" id="englishPaperCopyLocationFile" value="${engUpload}"   >
+                <li><input type="file" name="engfile" id="englishPaperCopyLocationFile" multiple value="${engUpload}"   >
                   <c:if test="${tenderingProcessObj.id!=null}">
                 <%--  <li> <img id="image" src="${engUpload}"   width="100" height="70"/> </li> --%>
                 <li><a href="${engUpload}" target="_self" id="engdocView" name="image" >View Document</a></li>  
                 </c:if>
-                  <form:input type="hidden" path="engUpload" class="form-control" id="engfileName" value="${tenderingProcessObj.engUpload}"></form:input>
+                 <%--  <form:input type="hidden" path="engUpload" class="form-control" id="engfileName" value="${tenderingProcessObj.engUpload}"></form:input> --%>
                  <span id="file_error1" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -233,12 +233,12 @@
             
                  <ul class="fs-list-details">
                 <li><p>soft copy upload - Telugu (pdf/jpg/png)</p></li>
-                <li><input type="file" name="telugufile" id="teluguPaperCopyLocationFile" value="${telUpload}" class="form-control mb-md" />
+                <li><input type="file" name="telugufile" id="teluguPaperCopyLocationFile" multiple value="${telUpload}" class="form-control mb-md" />
                 <c:if test="${tenderingProcessObj.id!=null}">
                 <%--    <li> <img id="telimage" src="${telUpload}"   width="100" height="70"/> </li> --%>
                 <li><a href="${telUpload}" target="_self" id="teldocView" name="image" >View Document</a></li>  
                 </c:if>
-                  <form:input type="hidden" path="telUpload" class="form-control" id="telfileName" value="${tenderingProcessObj.telUpload}"></form:input>
+                 <%--  <form:input type="hidden" path="telUpload" class="form-control" id="telfileName" value="${tenderingProcessObj.telUpload}"></form:input> --%>
                <span id="file_error2" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>

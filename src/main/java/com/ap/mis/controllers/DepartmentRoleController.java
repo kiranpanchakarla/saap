@@ -1,5 +1,8 @@
 package com.ap.mis.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,15 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.Attachements;
 import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AdministrativeSectionService;
+import com.ap.mis.service.AttachmentService;
 import com.ap.mis.service.LandDetailService;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.ContextUtil;
+import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -37,6 +43,9 @@ public class DepartmentRoleController {
 	@Autowired
 	LineDepartmentService lineDepartmentService;
 	
+	@Autowired
+	AttachmentService attachService;
+	
 	@GetMapping(value = "/view")
 	public String view(Model model, String workId,HttpServletRequest request,HttpSession session) {
 		/*Work Details*/
@@ -46,20 +55,31 @@ public class DepartmentRoleController {
 		/*Administrative Sanction Details*/
 		
         AdministrativeSection adminInfo = admService.getAdminDetails(Integer.parseInt(workId));
-		
-		if (adminInfo.getPath() != null && !adminInfo.getPath().equals("")) {
-			model.addAttribute("filePath",ContextUtil.populateContext(request) + adminInfo.getPath());
-		} else {
-			model.addAttribute("filePath", null);
+        List<Attachements> adminattachements=attachService.getAttachementsDetails(Integer.parseInt(workId),EnumFilter.ADMIN.getStatus());
+		List<String> filePath = new ArrayList<String>();
+		for(Attachements adminattachDetails :adminattachements) {
+			if (adminattachDetails.getPath() != null && !adminattachDetails.getPath().equals("")) {
+				String adminattachmentPath=ContextUtil.populateContext(request) + adminattachDetails.getPath();
+				filePath.add(adminattachmentPath);
+				model.addAttribute("filePath",filePath);
+				
+			} else {
+				model.addAttribute("filePath", null);
+			}
 		}
 		model.addAttribute("adminInfo",adminInfo);
-		
-		/*Land Details*/
 		LandDetails landInfo = landDetailService.getLandDetails(Integer.parseInt(workId));
-		if (landInfo.getPath() != null && !landInfo.getPath().equals("")) {
-			model.addAttribute("filePath",ContextUtil.populateContext(request) + landInfo.getPath());
-		} else {
-			model.addAttribute("filePath", null);
+		List<String> landFilePath = new ArrayList<String>();
+		List<Attachements> landattachements=attachService.getAttachementsDetails(Integer.parseInt(workId),EnumFilter.LANDDETAILS.getStatus());
+		for(Attachements landattachDetails :landattachements) {
+			if (landattachDetails.getPath() != null && !landattachDetails.getPath().equals("")) {
+				String landattachmentPath=ContextUtil.populateContext(request) + landattachDetails.getPath();
+				landFilePath.add(landattachmentPath);
+				model.addAttribute("landfilePath",landFilePath);
+				
+			} else {
+				model.addAttribute("landfilePath", null);
+			}
 		}
 		model.addAttribute("landInfo",landInfo);
 		
