@@ -28,6 +28,9 @@
     <nav id="nav-menu-container">
       <ul class="nav-menu">
          <li><a href="<c:url value="/adminloggedin"/>">Home</a></li>
+          <c:if test="${userRole eq 'ROLE_ADMIN'}">
+         <li><a href="<c:url value="/worksCreation/create"/>">New Work Creation</a></li>
+         </c:if>
         <li><a href="<c:url value="/logout"/>">Logout</a></li>
       </ul>
     </nav>

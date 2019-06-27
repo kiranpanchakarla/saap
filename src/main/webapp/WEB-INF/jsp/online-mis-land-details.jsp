@@ -122,7 +122,7 @@
                 
                <ul class="fs-list-details">
                 <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li><input type="file" name="file" id="file" multiple value="${filePath}" class="form-control mb-md" ></li>
+                <li><input type="file" name="file" id="files" multiple value="${filePath}" class="form-control mb-md" ></li>
                 <c:if test="${landDetails.id!=null}">
                  <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>   
                 </c:if>
@@ -161,7 +161,7 @@
 <jsp:include page="online-mis-footer.jsp" />
 
 <script type="text/javascript">
-$(document).ready(function(){
+/* $(document).ready(function(){
 	$('#file').change(function (event) {
 		$('#docView').empty();
 	    var file = URL.createObjectURL(event.target.files[0]);
@@ -176,7 +176,7 @@ $(document).ready(function(){
 		     }
 		    });
 	});
-
+ */
 $("#landExtend,#bookDetails,#surveyNo").on('input', function() {
 	  $(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''));
 	})
@@ -263,5 +263,6 @@ $(document).ready(function(){
 	 $('#nav-land').addClass('active');
 	});
 </script>
+<script src=<c:url value="/resources/js/fileUpload.js"/> type="text/javascript"></script>
 </body>
 </html>

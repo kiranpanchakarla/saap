@@ -9,13 +9,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SAAP : Administrative Section</title>
+<title>SAAP : Administrative Sanction Details</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 </head>
 
 <body>
 <!--=== Header ====-->
-<jsp:include page="online-mis-header.jsp" />
+<%-- <jsp:include page="online-mis-header.jsp" /> --%>
+<c:import url="/WEB-INF/jsp/online-mis-header.jsp" />
 
 
 
@@ -48,8 +49,8 @@
   <section id="contact" class="section-bg-con">
     <div class="container">
     
-   <jsp:include page="online-mis-tabView.jsp" />
-    
+   <%-- <jsp:include page="online-mis-tabView.jsp" /> --%>
+   <c:import url="/WEB-INF/jsp/online-mis-tabView.jsp" /> 
    <div class="tab-content">
 	
 	 <div class="tab-pane fade show" id="nav-admin" role="tabpanel" aria-labelledby="nav-admin-tab">
@@ -143,11 +144,12 @@
                  
                  <ul class="fs-list-details">
                 <li><p>Upload Adminstrative Details Document(pdf/jpg/png)<span class="red">*</span></p>
-                <input type="file" name="file" id="file" multiple value="${filePath}" ></li>
-                <c:if test="${adminSecObject.id!=null}">
+                <input type="file" name="file" id="files" accept=".png, .jpg, .jpeg, .pdf" value="${filePath}" multiple="multiple"> 
+                </li>
+                <%-- <c:if test="${adminSecObject.id!=null}">
                  <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>   
-                </c:if>
-               <%--  <form:input type="hidden" path="path" class="form-control" id="fileName" value="${adminSecObject.path}"></form:input> --%>
+                </c:if> --%>
+                <%-- <form:input type="hidden" path="path" class="form-control" id="fileName" value="${adminSecObject.path}"></form:input> --%>
                  <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
                 
@@ -181,29 +183,62 @@
 </main>
 
 <!--=== Footer ====-->
-<jsp:include page="online-mis-footer.jsp" />
-
+<%-- <jsp:include page="online-mis-footer.jsp" /> --%>
+<c:import url="/WEB-INF/jsp/online-mis-footer.jsp" />
 <script type="text/javascript">
-/* $(document).ready(function(){
-	$('#file').change(function (event) {
-		$('#docView').empty();
-	    var file = URL.createObjectURL(event.target.files[0]);
-	    $('#docView').append('<a href="' + file + '" target="_self">' + event.target.files[0].name + '</a><br>');
-	});
+ 
+
+ /* $(document).ready(function() {
+	 
+	    $("#files").on("change", function(e) {
+	      var files = e.target.files,
+	        filesLength = files.length;
+	      for (var i = 0; i < filesLength; i++) {
+	        var f = files[i];
+	        
+	        var removeLink = "<a class=\"btn btn-delete\" href=\"#\" data-fileid=\"" + [i] + "\"><i " +
+   		                           " class=\"glyphicon glyphicon-trash left\"></i></a>";
+	        
+	        /* $("<li id=\"file"+[i]+"\"><strong style=\"float: left;\">" + f.name + "</strong> " + " &nbsp; &nbsp; "+ removeLink + "</li> ").insertAfter("#files");  
+	      
+	        $("<table> <tr id=\"file"+[i]+"\"> <th> " + f.name + " </th> <th> " + f.size + " </th> <td> "+ removeLink + " </td>  </tr></table>").insertAfter("#files");
+	        
+	          $(".btn-delete").click(function($index){
+	        	 
+	        	/* var val = $(this).parent().attr('id'); 
+	        	var val = $(this).parents('tr').attr('id');
+	            //alert(val);
+	        	 alertify.confirm('Are you Sure, want to delete the file! ',
+							function(e) { 
+	        	 if(e){
+	        		 //$("#file0").remove();  
+	        		 $("#"+val).remove();
+	        	 }
+	        	 
+	        	  }); 
+	        	 
+	          });
+	          
+	        
+	       
+	      }
+	    });
+	  
+	});    
 	
+   
 	
-	
-$("input[type='file']").on("change", function () {
+	$("input[type='file']").on("change", function () {
 		  $("#file_error").html("");
 	     if(this.files[0].size > 2000000) {
 	    	 $("#file_error").html("File size is greater than 2MB");
-	        alert("Please upload file less than 2MB. Thanks!!"); 
+	    	 alertify.alert("File Upload","Please upload file less than 2MB. Thanks!!"); 
 	       $(this).val('');
 	     }
-	    }); 
+	    });  */	
+	    
+	  
 	
-}); */
-
 $('input').on('input', function() {
 	  $(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''));
 	});
@@ -270,13 +305,14 @@ $("#submit").click(function(){
 	}
 	
 	
-   /*  var fileName=$('#fileName').val();
+   /*   var fileName=$('#fileName').val();
 	if(fileName==""){
-		fileName=$('#file').val();
-	}
+		fileName=$('#files').val();
+		alert(fileName);
+	} 
 	if(fileName=="" || fileName==null){
         $("#file_error").html("Please Upload a file ");
-        $("#file").focus();
+        $("#files").focus();
         return false;
     }else{
     	 $("#file_error").html("");
@@ -290,9 +326,7 @@ $(document).ready(function(){
 	 $('#nav-admin').addClass('active');
 	});
 	
-	
-	
-	
 </script>
+<script src=<c:url value="/resources/js/fileUpload.js"/> type="text/javascript"></script>
 </body>
 </html>

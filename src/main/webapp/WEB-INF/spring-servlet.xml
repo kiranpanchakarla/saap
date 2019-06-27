@@ -53,6 +53,7 @@
 			</props>
 		</property>
 		<property name="packagesToScan" value="com.ap"></property>
+		<property name="entityInterceptor" ref="auditEntityInterceptor"></property>
 	</bean>
 
 	<!-- Transaction -->
