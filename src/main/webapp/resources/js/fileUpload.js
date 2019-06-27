@@ -9,8 +9,6 @@ $(document).ready(function() {
 	        var removeLink = "<a class=\"btn btn-delete\" href=\"#\" data-fileid=\"" + [i] + "\"><i " +
    		                           " class=\"glyphicon glyphicon-trash left\"></i></a>";
 	        
-	        /* $("<li id=\"file"+[i]+"\"><strong style=\"float: left;\">" + f.name + "</strong> " + " &nbsp; &nbsp; "+ removeLink + "</li> ").insertAfter("#files");  */
-	      
 	        $("<table> <tr id=\"file"+[i]+"\"> <th> " + f.name + " </th> "+ " " + " <th> " + size + "Kb" + " </th> <td> "+ removeLink + " </td>  </tr></table>").insertAfter("#files");
 	        
 	          $(".btn-delete").click(function($index){
