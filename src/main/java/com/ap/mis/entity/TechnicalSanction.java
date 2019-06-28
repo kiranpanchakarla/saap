@@ -17,7 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "tbl_sa_technicalsanction")
-public class TechnicalSanction implements Serializable {
+public class TechnicalSanction extends AuditModel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

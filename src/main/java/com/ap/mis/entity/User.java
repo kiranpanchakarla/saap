@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_sa_users")
-public class User implements Serializable {
+public class User extends AuditModel implements Serializable {
 	/**
 	 * 
 	 */

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_sa_department_linking_line")
-public final class DepartmentLinkingLine implements Serializable {
+public final class DepartmentLinkingLine extends AuditModel implements Serializable {
 
 	private static final long serialVersionUID = 2498915935089096549L;
 

@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_sa_administrative_section")
-public class AdministrativeSection implements Serializable {
+public class AdministrativeSection extends AuditModel implements Serializable {
 
 	private static final long serialVersionUID = -7281661295866227383L;
 	

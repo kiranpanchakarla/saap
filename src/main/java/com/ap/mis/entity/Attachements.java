@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
 @Table(name = "tbl_sa_Attachements")
-public class Attachements implements Serializable {
+public class Attachements extends AuditModel implements Serializable {
 
 	private static final long serialVersionUID = -3465813074586302847L;
 

@@ -19,7 +19,7 @@ import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "tbl_sa_tendering_process")
-public class TenderingProcess {
+public class TenderingProcess extends AuditModel{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
