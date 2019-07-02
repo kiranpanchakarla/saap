@@ -38,6 +38,7 @@ import com.ap.mis.service.MandalService;
 import com.ap.mis.service.VillageService;
 import com.ap.mis.util.ContextUtil;
 import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -74,19 +75,23 @@ public class LandDetailsController {
 		landDetails.setUser(loggedInUser);
 		Integer workId=landDetails.getWork().getId();
 		String moduleName=EnumFilter.LANDDETAILS.getStatus();
-		if (landDetails.getId() == null) {
-			landDetailService.landDetailsSave(landDetails);
-			attachService.saveAttachedDetails(workId,moduleName,file);
-			isSave = true;
-		} else {
-			/*landDetailService.landDetailsUpdate(landDetails, file);*/
-		}
 		WorktoLandDetails obj = new WorktoLandDetails();
 		obj = (WorktoLandDetails) session.getAttribute("generalInfo");
 		obj.setLanddetails(landDetails);
 		session.setAttribute("generalInfo", obj);
 
 		Works workInfo=misService.getWorkInfo(obj.getWorks().getId());
+		if (landDetails.getId() == null) {
+			landDetailService.landDetailsSave(landDetails);
+			workInfo.setStatus(EnumFilter.OPEN.getStatus());
+		    workInfo.setWorkStatus(EnumWorkStatus.LAND.getStatus());
+		    misService.updateWork(workInfo);
+			attachService.saveAttachedDetails(workId,moduleName,file);
+			isSave = true;
+		} else {
+			/*landDetailService.landDetailsUpdate(landDetails, file);*/
+		}
+		
 		model.addAttribute("workInfo",workInfo);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		

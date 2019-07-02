@@ -46,7 +46,7 @@
     
     <div class="row">
     <div class="col-md-12">
-       <c:url value="/ConsultantInfo/create" var="createUrl" />
+       <c:url value="/adminloggedin" var="createUrl" />
       <form id="msform" method="GET" action="${createUrl}" >
 
            <input type="hidden" name="${_csrf.parameterName}"

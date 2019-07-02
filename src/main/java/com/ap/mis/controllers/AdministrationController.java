@@ -30,6 +30,7 @@ import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.ContextUtil;
 import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -58,10 +59,14 @@ public class AdministrationController {
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		adminSecObject.setUser(loggedInUser);
 		Integer workId=adminSecObject.getWork().getId();
+		Works workInfo = misService.getWorkInfo(workid);
 		String moduleName=EnumFilter.ADMIN.getStatus();
 		if (adminSecObject.getId() == null) {
 			isSave = true;
 		    admService.adminstrativeSectionSave(adminSecObject);
+		    workInfo.setStatus(EnumFilter.OPEN.getStatus());
+		    workInfo.setWorkStatus(EnumWorkStatus.ADMIN.getStatus());
+		    misService.updateWork(workInfo);
 			attachService.saveAttachedDetails(workId,moduleName, file);
 		} else {
 			/*admService.adminstrativeSectionUpdate(adminSecObject, file);*/
@@ -71,7 +76,7 @@ public class AdministrationController {
 				isSave = true;
 			}
 		}
-		Works workInfo = misService.getWorkInfo(workid);
+		
 		session.setAttribute("workInfo", workInfo);
 
 		WorktoLandDetails obj = new WorktoLandDetails();

@@ -58,6 +58,9 @@ public class Works extends AuditModel implements Serializable {
 	
 	@Column(name = "status")
 	private String status;
+	
+	@Column(name = "work_status")
+	private String workStatus;
  
 	@Column
 	private String location;
@@ -210,16 +213,25 @@ public class Works extends AuditModel implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
+
+	public String getWorkStatus() {
+		return workStatus;
+	}
+
+	public void setWorkStatus(String workStatus) {
+		this.workStatus = workStatus;
+	}
 
 	@Override
 	public String toString() {
 		return "Works [id=" + id + ", typeOfWork=" + typeOfWork + ", natureOfWork=" + natureOfWork + ", district="
 				+ district + ", village=" + village + ", mandal=" + mandal + ", constituency=" + constituency
-				+ ", WorkLineItemsList=" + WorkLineItemsList + ", status=" + status + ", location=" + location
-				+ ", noOfWorks=" + noOfWorks + ", workNo=" + workNo + ", workDetails=" + workDetails + ", cost=" + cost
-				+ ", user=" + user + ", isActive=" + isActive + "]";
+				+ ", WorkLineItemsList=" + WorkLineItemsList + ", status=" + status + ", workStatus=" + workStatus
+				+ ", location=" + location + ", noOfWorks=" + noOfWorks + ", workNo=" + workNo + ", workDetails="
+				+ workDetails + ", cost=" + cost + ", user=" + user + ", isActive=" + isActive + "]";
 	}
 
-	  
-
+	 
 }

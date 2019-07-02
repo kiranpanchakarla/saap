@@ -28,6 +28,8 @@ import com.ap.mis.service.DistrictService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.MandalService;
 import com.ap.mis.service.VillageService;
+import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.SecurityUtil;
 import com.google.gson.Gson;
 @Controller
@@ -50,9 +52,13 @@ public class WorkCreationController {
         if(workObject.getId()==null) {
             log.info("inside save:"+workObject.getId());
             isSave=true;
-          misService.saveWorks(workObject);
+            workObject.setStatus(EnumFilter.OPEN.getStatus());
+            workObject.setWorkStatus(EnumWorkStatus.WORK.getStatus());
+            misService.saveWorks(workObject);
         }else {         
             log.info("inside update:"+workObject.getId());
+            workObject.setStatus(workObject.getStatus());
+            workObject.setWorkStatus(workObject.getWorkStatus());
             misService.updateWork(workObject);
             
             //checking... AdministrativeSection is created or not

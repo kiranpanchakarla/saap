@@ -22,6 +22,8 @@ import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.LandDetailService;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
+import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -50,6 +52,9 @@ public class LineDepartmentController {
 			log.info("inside save:"+lineDeptObj.getId());
 			isSave=true;
 		    lineDepartService.departmentLinkingLineSave(lineDeptObj);
+		    workInfo.setStatus(EnumFilter.OPEN.getStatus());
+		    workInfo.setWorkStatus(EnumWorkStatus.DEPARTMENT.getStatus());
+		    misService.updateWork(workInfo);
 		}else {
 			log.info("inside update:"+lineDeptObj.getId());
 			lineDepartService.departmentLinkingLineUpdate(lineDeptObj);

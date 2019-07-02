@@ -27,7 +27,7 @@ public class ViewDetailsDaoImpl implements  ViewDetailsDao{
 		
 	 
 	List<Object[]> details=sessionFactory.getCurrentSession().
-			createQuery("select distinct(a.id),d.name,e.name,a.workDetails,a.workNo,f.departmentName,g.surveyNo,h.consultant_firm,j.name,a.id,a.status from Works a\r\n" + 
+			createQuery("select distinct(a.id),d.name,e.name,a.workDetails,a.workNo,f.departmentName,g.surveyNo,h.consultant_firm,j.name,a.id,a.workStatus from Works a\r\n" + 
 			"left join AdministrativeSection b on a.id = b.work\r\n" + 
 			"left join TypeOfWork d on a.typeOfWork = d.id\r\n" + 
 			"left join NatureOfWork e on a.natureOfWork=e.id\r\n" + 
@@ -35,7 +35,7 @@ public class ViewDetailsDaoImpl implements  ViewDetailsDao{
 			"left join LandDetails g on a.id=g.work\r\n" + 
 			"left join ConsultantInfo h on a.id=h.work\r\n" + 
 			"left join TenderingProcess i on a.id=i.work\r\n" + 
-			"left join Agency j on  i.angencyName=j.id where a.isActive='true' and a.status in (" + status + ") order by a.id desc")
+			"left join Agency j on  i.angencyName=j.id where a.isActive='true' and a.workStatus in (" + status + ") order by a.id desc")
 			.list();
     
 	

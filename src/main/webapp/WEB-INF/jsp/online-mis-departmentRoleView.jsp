@@ -47,6 +47,7 @@
 	 <c:if test="${userRole eq 'ROLE_CONSULTANT'}">
 	<c:url value="/ConsultantInfo/create" var="createUrl" />
 	</c:if>
+	<section id="contact" class="section-bg-con">
 	<div class="container">
 		<div class="row">
 		<div class="col-md-12">
@@ -58,7 +59,7 @@
                   </div>
                   <div class="table-responsive">
 					 
-					<table id="viewTable" class="table table-bordered"
+					<table class="table table-bordered"
 						style="width: 100%">
 						<thead>
 							<tr>
@@ -118,10 +119,10 @@
 				
 				<div class="col-md-6">
 				<div class="text-center">
-                   <h4 class="section-title">Administration</h4>
+                   <h4 class="section-title">Administrative Sanction</h4>
                   </div>
                    <div class="table-responsive">
-					<table id="viewTable" class="table table-bordered"
+					<table class="table table-bordered"
 						style="width: 100%">
 						<thead>
 							 
@@ -181,7 +182,7 @@
                   </div>
                   <div class="table-responsive">
 					 
-					<table id="viewTable" class="table table-bordered"
+					<table class="table table-bordered"
 						style="width: 100%">
 						<thead>
 							<tr>
@@ -240,7 +241,7 @@
                    <h4 class="section-title">Land Details</h4>
                   </div>
                    <div class="table-responsive">
-					<table id="viewTable" class="table table-bordered"
+					<table class="table table-bordered"
 						style="width: 100%">
 						<thead>
 							<tr>
@@ -306,6 +307,7 @@
 		</div>
 	</div>
 	</div>
+	</section>
 	<br>
 	
 	<br>

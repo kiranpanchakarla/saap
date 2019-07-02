@@ -7,10 +7,10 @@ import java.util.Map;
 public enum EnumMap {
 
 	/* UI_Columns  DB_pojo_Columns*/
-	ADMIN("ROLE_ADMIN","'OPEN','SAAP_APPROVED','DEPT_INPROGRESS','DEPT_APPROVED','CONST_INPROGRESS','COMPLETED'"),
-	SAAP("ROLE_SAAP","'OPEN','SAAP_APPROVED','DEPT_INPROGRESS','DEPT_APPROVED','CONST_INPROGRESS','COMPLETED'"),
-	DEPARTMENT("ROLE_DEPARTMENT","'DEPT_INPROGRESS','DEPT_APPROVED'"),
-	CONSULTANT("ROLE_CONSULTANT","'CONST_INPROGRESS'");
+	ADMIN("ROLE_ADMIN","'Work_Created','Admin_Sanction','Line_Department','Land_Details','COMPLETED'"),
+	SAAP("ROLE_SAAP","'Work_Created','Admin_Sanction','Line_Department','Land_Details','COMPLETED'"),
+	DEPARTMENT("ROLE_DEPARTMENT","'Land_Details'"),
+	CONSULTANT("ROLE_CONSULTANT","'Land_Details'");
 	
 	private String status;
 	private String value;
