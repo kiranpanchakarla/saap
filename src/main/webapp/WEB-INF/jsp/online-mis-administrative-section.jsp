@@ -18,11 +18,7 @@
 <!--=== Header ====-->
 <%-- <jsp:include page="online-mis-header.jsp" /> --%>
 <c:import url="/WEB-INF/jsp/online-mis-header.jsp" />
-<c:import url="/WEB-INF/jsp/fileupload.jsp" />
-
-
-<link href="${pageContext.request.contextPath}/resources/css/fileinput.css" rel="stylesheet">
-
+<c:import url="/WEB-INF/jsp/online-mis-fileUpload.jsp" />
 
 <!--==========================
     Intro Section

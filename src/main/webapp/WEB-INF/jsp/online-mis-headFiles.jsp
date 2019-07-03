@@ -56,8 +56,6 @@
 <!-- alertfy-->
 
 <!-- file upload -->
-<script src=<c:url value="/resources/js/fileinput.js"/> type="text/javascript"></script>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/fileinput.css"/>
 </head>
 <body>
 

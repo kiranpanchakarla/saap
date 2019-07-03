@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <title>SAAP : Land details</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
-<c:import url="/WEB-INF/jsp/fileupload.jsp" />
+<c:import url="/WEB-INF/jsp/online-mis-fileUpload.jsp" />
 
 </head>
 
