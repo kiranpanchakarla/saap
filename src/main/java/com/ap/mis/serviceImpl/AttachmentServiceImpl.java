@@ -77,4 +77,27 @@ public class AttachmentServiceImpl implements AttachmentService{
 
 	
 
+	@Override
+	public Attachements findById(Integer uploadFileId) {
+		
+		return attachDao.findById(uploadFileId);
+	}
+
+
+	@Override
+	public Attachements deleteAttachedDetails(Attachements attachInfo) {
+		 attachInfo.setIsActive(false);
+		return attachDao.deleteAttachedDetails(attachInfo);
+	}
+	
+
+
+	
+
+
+	
+
+
+	
+
 }

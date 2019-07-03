@@ -16,4 +16,15 @@ public interface AttachmentService {
 
 	
 
+	Attachements findById(Integer uploadFileId);
+
+	Attachements deleteAttachedDetails(Attachements attachInfo);
+
+	
+
+	
+
+	
+	
+
 }
