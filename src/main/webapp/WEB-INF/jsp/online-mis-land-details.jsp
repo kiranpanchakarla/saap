@@ -135,15 +135,7 @@
                 </ul>
                 </form>
                 
-              <%--  <ul class="fs-list-details">
-                <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li><input type="file" name="file" id="files" multiple value="${filePath}" class="form-control mb-md" ></li>
-                <c:if test="${landDetails.id!=null}">
-                 <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>   
-                </c:if>
-                <form:input type="hidden" path="path" class="form-control" id="fileName" value="${landDetails.path}"></form:input>
-                <span id="file_error" class="errors" style="color:red;float:right;"></span>
-                </ul> --%>
+             
                 
                 </div>
                  <c:if test="${landDetails.id==null}">
@@ -258,8 +250,13 @@ $("#submit").click(function(){
 		$("#typeOfLandErr").text("");
 	}
 	
-	var fileName=$("#files").val();
-	
+	var fileName
+	if($("#filedetails tr").length>0){
+		 fileName=$("#filedetails tr:first").data("fileid");
+	}
+	if(fileName==""){
+			fileName=$("#file").val();
+		}
 	if(fileName=="" || fileName==null){
         $("#file_error").html("Please Upload a file ");
         $("#files").focus();
@@ -267,18 +264,7 @@ $("#submit").click(function(){
     }
 	
 	
-	/* var fileName=$("#fileName").val();
-	if(fileName==""){
-		fileName=$("#file").val();
-	}
-    if(fileName=="" || fileName==null){
-        $("#file_error").html("Please Upload a file ");
-        $("#file").focus();
-        return false;
-    }else{
-        $("#file_error").html("");
-        return true
-    } */
+	
 	
 })
 $(document).ready(function(){

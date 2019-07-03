@@ -151,9 +151,11 @@
                 <input type="file" name="file" id="files" style="display: none" accept=".png, .jpg, .jpeg, .pdf" value="${filePath}" multiple="multiple"> 
                 <table id="filedetails"></table>
 	            </li>
-                <span id="file_error" class="errors" style="color:red;float:right;"></span>
+	            <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
                 </form>
+                
+                
                 
                </div>
                <c:if test="${adminSecObject.id==null}">
@@ -233,8 +235,13 @@ $("#submit").click(function(){
 	}else{
 		$("#consultantErr").text("");
 	}
-	var fileName=$("#files").val();
-
+	var fileName
+	if($("#filedetails tr").length>0){
+		 fileName=$("#filedetails tr:first").data("fileid");
+	}
+	if(fileName==""){
+			fileName=$("#file").val();
+		}
 	if(fileName=="" || fileName==null){
         $("#file_error").html("Please Upload a file ");
         $("#files").focus();
@@ -248,6 +255,13 @@ $("#submit").click(function(){
 $(document).ready(function(){
 	$('#nav-admin-tab').addClass('active');
 	 $('#nav-admin').addClass('active');
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	});
 	
 </script>

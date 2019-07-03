@@ -84,31 +84,8 @@ public class LandDetailServiceImpl implements LandDetailService{
 
 
 	@Override
-	public LandDetails landDetailsUpdate(LandDetails landDetails, MultipartFile file) {
-		/* try
-		 {
-			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			
-				if (!file.getOriginalFilename().isEmpty()) {
-					File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-					log.info("==rootFolder=="+rootFolder);
-					if (!rootFolder.exists()) {
-						rootFolder.mkdirs();
-					}
-				    String  filepath=rootFolder + File.separator+ file.getOriginalFilename();
-					file.transferTo(new File(filepath));
-					log.info("===filepath==:"+filepath);
-						  landDetails.setPath(filepath);	
-					 
-				}
-				else{
-					landDetails.setPath(landDetails.getPath());
-				}
-		 }
-		catch(Exception e){
-			e.printStackTrace();
-		}*/
-		 landDetails.getWork().setStatus(EnumFilter.CONST_INPROGRESS.getStatus());
+	public LandDetails landDetailsUpdate(LandDetails landDetails) {
+		landDetails.getWork().setStatus(EnumFilter.CONST_INPROGRESS.getStatus());
 		 return landDetailDao.landDetailsUpdate(landDetails);
 	}
 

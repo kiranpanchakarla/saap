@@ -38,7 +38,7 @@ public interface AdministrativeSectionService {
 
 	public AdministrativeSection getAdminDetails(int id);
 
-	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSecObject, MultipartFile file);
+	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSecObject);
 
 	
 

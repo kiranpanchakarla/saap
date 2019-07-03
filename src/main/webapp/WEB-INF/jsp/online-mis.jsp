@@ -207,6 +207,7 @@
                                                             <c:choose>
                                                                 <c:when test="${!empty workObject.id}">
                                                                     <form:input type="hidden" path="id" class="form-control" id="id" name="id"></form:input>
+                                                                    <form:input type="hidden" path="workStatus" class="form-control" id="workStatus" name="workStatus"></form:input>
                                                                 </c:when>
                                                             </c:choose>
                                                             <!-- fieldsets -->

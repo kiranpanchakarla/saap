@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Attachements;
@@ -69,7 +67,7 @@ public class AdministrationController {
             misService.updateWork(workInfo);
 			
 		} else {
-			//admService.adminstrativeSectionUpdate(adminSecObject, file);
+			admService.adminstrativeSectionUpdate(adminSecObject);
 			// checking... Department is created or not
 			DepartmentLinkingLine deptInfo = lineDepartmentService.getdepartDetails(workid);
 			if (deptInfo == null) {
@@ -143,24 +141,6 @@ public class AdministrationController {
 	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request,HttpSession session) {
 		
 		AdministrativeSection adminInfo = admService.getAdminDetails(id);
-		List<Attachements> attachements=attachService.getAttachementsDetails(id,EnumFilter.ADMIN.getStatus());
-		List<String> filePath = new ArrayList<String>();
-		List<String> fileName = new ArrayList<String>();
-		log.info("===attachements===:"+attachements);
-		for(Attachements attachDetails :attachements) {
-			if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
-				String attachmentPath=ContextUtil.populateContext(request) + attachDetails.getPath();
-				String fileNameVal=attachDetails.getPath().substring(attachDetails.getPath().lastIndexOf('\\') + 1);
-				log.info("==attachmentPath==:"+attachmentPath);
-				filePath.add(attachmentPath);
-				fileName.add(fileNameVal);
-				model.addAttribute("filePath",filePath);
-				model.addAttribute("fileName",fileName);
-				
-			} else {
-				model.addAttribute("filePath", null);
-			}
-		}
 		
 	
 		Works workInfo = misService.getWorkInfo(adminInfo.getWork().getId());
@@ -174,14 +154,7 @@ public class AdministrationController {
 		return "online-mis-administrative-section";
 	}
 	
-	/*@RequestMapping(method = RequestMethod.POST, value = "/saveMultipleFileUpload")
-    @ResponseBody
-    public String uploadFile(@ModelAttribute AdministrativeSection adminSecObject,@RequestParam("file") MultipartFile[] file) {
-		Integer workId=adminSecObject.getWork().getId();
-		String moduleName=EnumFilter.ADMIN.getStatus();
-		attachService.saveAttachedDetails(workId,moduleName, file);    
-		return new Gson().toJson(attachService);
-    }*/
+	
 	
 	
 	

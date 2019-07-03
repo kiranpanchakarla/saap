@@ -26,10 +26,8 @@
     	   	    		var moduleName= $('#moduleName').val();
     	   	    		
     	   	    	  var files = e.target.files;
-    	   	    	 
     	   	    	  var filesLength=files.length;
-    			      var fileInput = document.querySelector("#files");
-    			 	  var files = fileInput.files; 
+    			     
     			 
     			 	
     			 	/* if(filesLength > 5 ){
@@ -88,7 +86,8 @@
     								  var str = item.path;
     								  var fileName = str.substring(str.lastIndexOf("\\") + 1, str.length);
     								  $("#filedetails").append("<tr data-fileId='" + item.id + "' ><td ><strong>" + fileName + "</strong></td><td><a class='delete' id='delete_"+item.id+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
-    								 }); 
+    								 /*  $('#engdocView').append('<a href="' + file + '" target="_self">' + event.target.files[0].name + '</a><br>'); */
+    							  }); 
     					        document.querySelector("#files").onchange=attachments;
     						    	}
     							else{
@@ -120,19 +119,47 @@
     	    		        headers: { 'X-CSRF-TOKEN': csrf_tokenvalue},
     	    		       success: function (data) {
     	    		    	   if(data=="success"){
-    	    		    	
+    	    		    		   attachments.splice( attachments.indexOf($parent), 1 );
+ 	    			   	   	      $parent.remove();
     	    		    	   }else{
     	    		    		   alert("unable to delete");
     	    		    	   }
     	    		        } 
     	    		    });
-    	    		    		   attachments.splice( attachments.indexOf($parent), 1 );
-    	    			   	   	      $parent.remove();
+    	    		    		  
     				}
     	    		
     				 });   
     			});
     			
+    			
+    			
+    		//edit
+        
+    		var workid=$('#workid').val();
+    		var moduleName= $('#moduleName').val();
+    		/* alert("==workid==:"+workid);
+    		alert("==moduleName==:"+moduleName); */
+            if(workid == undefined){
+          	 alert("====");
+            }else{
+    				 $.ajax({
+ 	    		        url : "<c:url value='/upload/edit'/>?workId="+workid+"&moduleName="+moduleName,
+ 	    		        success: function(data) {
+ 	    		    	if(data.length>0){
+                        var dataVal = JSON.parse(data); 
+                        $.each(dataVal, function(index, item) {
+                        	 var fileName = item.substring(item.lastIndexOf("\\") + 1, item.length);
+							$("#filedetails").append("<tr data-fileId='" + item + "' ><td ><strong>" +fileName + "</strong></td><td><a class='delete' id='delete_"+index+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
+							 }); 
+ 	    		    	}
+
+                       }
+ 	    		      
+ 	    		    });
+            }
+ 							    
+    		
 
     	    	
     	    	 

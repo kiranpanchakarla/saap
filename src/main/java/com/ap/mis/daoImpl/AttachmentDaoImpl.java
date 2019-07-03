@@ -33,7 +33,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	@Override
 	public List<Attachements> getAttachementsDetails(int workId, String moduleName) {
 		log.info("===module==:"+moduleName);
-			List<Attachements> attachments=sessionFactory.getCurrentSession().createQuery("from Attachements where workId="+workId+" and module='"+moduleName+"'").list();
+			List<Attachements> attachments=sessionFactory.getCurrentSession().createQuery("from Attachements where workId="+workId+" and module='"+moduleName+"' and isActive='true' ").list();
 	return attachments;
 	}
 	

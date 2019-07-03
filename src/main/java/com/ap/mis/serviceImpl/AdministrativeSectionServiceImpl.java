@@ -102,32 +102,8 @@ public class AdministrativeSectionServiceImpl implements AdministrativeSectionSe
 	}
 
 	@Override
-	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSecObject,
-			MultipartFile file) {
-		try {/*
-			String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			String path = adminSecObject.getPath();
-			log.info("==path==" + path);
-			if (!file.getOriginalFilename().isEmpty()) {
-				File rootFolder = new File(
-						uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-				log.info("==rootFolder==" + rootFolder);
-				if (!rootFolder.exists()) {
-					rootFolder.mkdirs();
-				}
-				String filepath = rootFolder + File.separator + file.getOriginalFilename();
-				file.transferTo(new File(filepath));
-				log.info("===filepath==:" + filepath);
-				adminSecObject.setPath(filepath);
-
-			} else {
-				adminSecObject.setPath(path);
-			}
-		*/}
-
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+	public AdministrativeSection adminstrativeSectionUpdate(AdministrativeSection adminSecObject) {
+		
 		return administrativeSectionDao.adminstrativeSectionUpdate(adminSecObject);
 	}
 
