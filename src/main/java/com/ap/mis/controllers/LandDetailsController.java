@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Attachements;
@@ -68,13 +66,11 @@ public class LandDetailsController {
 
 	@PostMapping(value = "/save")
 	public String landDetailsSave(@ModelAttribute LandDetails landDetails, Model model, HttpServletRequest request,
-			@RequestParam("file") MultipartFile[] file, HttpSession session) {
+			 HttpSession session) {
 		
 		boolean isSave=false;
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		landDetails.setUser(loggedInUser);
-		Integer workId=landDetails.getWork().getId();
-		String moduleName=EnumFilter.LANDDETAILS.getStatus();
 		WorktoLandDetails obj = new WorktoLandDetails();
 		obj = (WorktoLandDetails) session.getAttribute("generalInfo");
 		obj.setLanddetails(landDetails);
@@ -86,7 +82,6 @@ public class LandDetailsController {
 			workInfo.setStatus(EnumFilter.OPEN.getStatus());
 		    workInfo.setWorkStatus(EnumWorkStatus.LAND.getStatus());
 		    misService.updateWork(workInfo);
-			attachService.saveAttachedDetails(workId,moduleName,file);
 			isSave = true;
 		} else {
 			/*landDetailService.landDetailsUpdate(landDetails, file);*/

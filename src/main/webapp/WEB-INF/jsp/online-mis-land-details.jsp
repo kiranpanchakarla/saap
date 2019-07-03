@@ -10,6 +10,7 @@
 <meta charset="utf-8">
 <title>SAAP : Land details</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
+<c:import url="/WEB-INF/jsp/fileupload.jsp" />
 
 </head>
 
@@ -55,6 +56,8 @@
        <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="landDetails" enctype="multipart/form-data">
             <input type="hidden" name="${_csrf.parameterName}"
            value="${_csrf.token}" />
+           <input type="hidden" id="moduleName" value="LANDDETAILS"/>
+           <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}" />
              <c:choose>
 			<c:when test="${!empty landDetails.id}">
 				<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
@@ -120,15 +123,27 @@
             	</li>
                 </ul>
                 
-               <ul class="fs-list-details">
+                
+                 <form method="POST"  id="fileUploadForm"> 
+                 <ul class="fs-list-details">
+                <li><p>Upload Land Details Document(pdf/jpg/png)<span class="red">*</span></p>
+                <label for="files"  class="fileuploadLabel">Upload Image</label>
+                <input type="file" name="file" id="files" style="display: none" accept=".png, .jpg, .jpeg, .pdf" value="${filePath}" multiple="multiple"> 
+                <table id="filedetails"></table>
+	            </li>
+                <span id="file_error" class="errors" style="color:red;float:right;"></span>
+                </ul>
+                </form>
+                
+              <%--  <ul class="fs-list-details">
                 <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
                 <li><input type="file" name="file" id="files" multiple value="${filePath}" class="form-control mb-md" ></li>
                 <c:if test="${landDetails.id!=null}">
                  <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>   
                 </c:if>
-               <%--  <form:input type="hidden" path="path" class="form-control" id="fileName" value="${landDetails.path}"></form:input> --%>
+                <form:input type="hidden" path="path" class="form-control" id="fileName" value="${landDetails.path}"></form:input>
                 <span id="file_error" class="errors" style="color:red;float:right;"></span>
-                </ul>
+                </ul> --%>
                 
                 </div>
                  <c:if test="${landDetails.id==null}">
@@ -138,7 +153,7 @@
                     <input type="submit" id="submit" name="next" class="next action-button" value="update and Continue">
                   </c:if>
             </fieldset>
-            <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}" />
+          
        </form:form>
         
         
@@ -171,7 +186,7 @@
 		  $("#file_error").html("");
 		     if(this.files[0].size > 2000000) {
 		    	 $("#file_error").html("File size is greater than 2MB");
-		      /*  alert("Please upload file less than 2MB. Thanks!!"); */
+		       alert("Please upload file less than 2MB. Thanks!!"); 
 		       $(this).val('');
 		     }
 		    });
@@ -243,6 +258,14 @@ $("#submit").click(function(){
 		$("#typeOfLandErr").text("");
 	}
 	
+	var fileName=$("#files").val();
+	
+	if(fileName=="" || fileName==null){
+        $("#file_error").html("Please Upload a file ");
+        $("#files").focus();
+        return false;
+    }
+	
 	
 	/* var fileName=$("#fileName").val();
 	if(fileName==""){
@@ -263,6 +286,6 @@ $(document).ready(function(){
 	 $('#nav-land').addClass('active');
 	});
 </script>
-<script src=<c:url value="/resources/js/fileUpload.js"/> type="text/javascript"></script>
+<!-- <script src=<c:url value="/resources/js/fileUpload.js"/> type="text/javascript"></script> -->
 </body>
 </html>

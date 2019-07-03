@@ -11,13 +11,17 @@
 <meta charset="utf-8">
 <title>SAAP : Administrative Sanction Details</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
+
 </head>
 
 <body>
 <!--=== Header ====-->
 <%-- <jsp:include page="online-mis-header.jsp" /> --%>
 <c:import url="/WEB-INF/jsp/online-mis-header.jsp" />
+<c:import url="/WEB-INF/jsp/fileupload.jsp" />
 
+
+<link href="${pageContext.request.contextPath}/resources/css/fileinput.css" rel="stylesheet">
 
 
 <!--==========================
@@ -59,6 +63,9 @@
     <c:url value="/administrativeSection/save" var="createUrl" />
         <form:form id="msform" method="POST" action="${createUrl}"  modelAttribute="adminSecObject" enctype="multipart/form-data">
            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="hidden" id="moduleName" value="ADMINISTRATIVE"/>
+            <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}"/>
+           
          <c:choose>
 			<c:when test="${!empty adminSecObject.id}">
 				<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
@@ -141,17 +148,16 @@
                 </li>
                 </ul>
                 
-                 
+                <form method="POST"  id="fileUploadForm"> 
                  <ul class="fs-list-details">
                 <li><p>Upload Adminstrative Details Document(pdf/jpg/png)<span class="red">*</span></p>
-                <input type="file" name="file" id="files" accept=".png, .jpg, .jpeg, .pdf" value="${filePath}" multiple="multiple"> 
-                </li>
-                <%-- <c:if test="${adminSecObject.id!=null}">
-                 <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>   
-                </c:if> --%>
-                <%-- <form:input type="hidden" path="path" class="form-control" id="fileName" value="${adminSecObject.path}"></form:input> --%>
-                 <span id="file_error" class="errors" style="color:red;float:right;"></span>
+                <label for="files"  class="fileuploadLabel">Upload Image</label>
+                <input type="file" name="file" id="files" style="display: none" accept=".png, .jpg, .jpeg, .pdf" value="${filePath}" multiple="multiple"> 
+                <table id="filedetails"></table>
+	            </li>
+                <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
+                </form>
                 
                </div>
                <c:if test="${adminSecObject.id==null}">
@@ -161,7 +167,7 @@
                 <input type="submit" id="submit" name="next" class="next action-button" value="Update and Continue"/>
                </c:if>
             </fieldset>
-            <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}"/>
+            
         </form:form>
         
     </div>
@@ -186,82 +192,10 @@
 <%-- <jsp:include page="online-mis-footer.jsp" /> --%>
 <c:import url="/WEB-INF/jsp/online-mis-footer.jsp" />
 <script type="text/javascript">
- 
-
- /* $(document).ready(function() {
-	 
-	    $("#files").on("change", function(e) {
-	      var files = e.target.files,
-	        filesLength = files.length;
-	      for (var i = 0; i < filesLength; i++) {
-	        var f = files[i];
-	        
-	        var removeLink = "<a class=\"btn btn-delete\" href=\"#\" data-fileid=\"" + [i] + "\"><i " +
-   		                           " class=\"glyphicon glyphicon-trash left\"></i></a>";
-	        
-	        /* $("<li id=\"file"+[i]+"\"><strong style=\"float: left;\">" + f.name + "</strong> " + " &nbsp; &nbsp; "+ removeLink + "</li> ").insertAfter("#files");  
-	      
-	        $("<table> <tr id=\"file"+[i]+"\"> <th> " + f.name + " </th> <th> " + f.size + " </th> <td> "+ removeLink + " </td>  </tr></table>").insertAfter("#files");
-	        
-	          $(".btn-delete").click(function($index){
-	        	 
-	        	/* var val = $(this).parent().attr('id'); 
-	        	var val = $(this).parents('tr').attr('id');
-	            //alert(val);
-	        	 alertify.confirm('Are you Sure, want to delete the file! ',
-							function(e) { 
-	        	 if(e){
-	        		 //$("#file0").remove();  
-	        		 $("#"+val).remove();
-	        	 }
-	        	 
-	        	  }); 
-	        	 
-	          });
-	          
-	        
-	       
-	      }
-	    });
-	  
-	});    
-	
-   
-	
-	$("input[type='file']").on("change", function () {
-		  $("#file_error").html("");
-	     if(this.files[0].size > 2000000) {
-	    	 $("#file_error").html("File size is greater than 2MB");
-	    	 alertify.alert("File Upload","Please upload file less than 2MB. Thanks!!"); 
-	       $(this).val('');
-	     }
-	    });  */	
-	    
-	  
-	
-$('input').on('input', function() {
-	  $(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''));
-	});
 
 $("#submit").click(function(){
 	
-/*     var workName=$("#workName").val();
-    if(workName=="" || workName==null){
-        $("#workNameErr").html("Please Enter Name of Work ");
-        $("#workName").focus();
-        return false;
-    }else{
-        $("#workNameErr").html("");
-    }
-    
-    var workNumber=$("#workNumber").val();
-    if(workNumber=="" || workNumber==null){
-        $("#workNumberErr").html("Please Enter Work Number ");
-        $("#workNumber").focus();
-        return false;
-    }else{
-        $("#workNumberErr").html("");
-    } */
+
     
     var sanctionedDetails=$("#sanctionedDetails").val();
     if(sanctionedDetails=="" || sanctionedDetails==null){
@@ -303,21 +237,15 @@ $("#submit").click(function(){
 	}else{
 		$("#consultantErr").text("");
 	}
-	
-	
-   /*   var fileName=$('#fileName').val();
-	if(fileName==""){
-		fileName=$('#files').val();
-		alert(fileName);
-	} 
+	var fileName=$("#files").val();
+
 	if(fileName=="" || fileName==null){
         $("#file_error").html("Please Upload a file ");
         $("#files").focus();
         return false;
-    }else{
-    	 $("#file_error").html("");
-    	return true;
-    } */
+    }
+	
+  
 	
 });
 
@@ -327,6 +255,7 @@ $(document).ready(function(){
 	});
 	
 </script>
-<script src=<c:url value="/resources/js/fileUpload.js"/> type="text/javascript"></script>
+<!-- <script src=<c:url value="/resources/js/fileUpload.js"/> type="text/javascript"></script> -->
+<!-- <script src=<c:url value="/resources/js/fileinput.js"/> type="text/javascript"></script> -->
 </body>
 </html>

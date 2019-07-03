@@ -24,15 +24,7 @@ public class WorktoLandDetails implements Serializable {
 
 	private LandDetails landdetails;
 
-	private MultipartFile file;
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
+	
 
 	public Works getWorks() {
 		return works;
@@ -69,8 +61,9 @@ public class WorktoLandDetails implements Serializable {
 	@Override
 	public String toString() {
 		return "WorktoLandDetails [works=" + works + ", administrativeesction=" + administrativeesction
-				+ ", departmentlinkingine=" + departmentlinkingine + ", landdetails=" + landdetails + ", file=" + file
-				+ "]";
+				+ ", departmentlinkingine=" + departmentlinkingine + ", landdetails=" + landdetails + "]";
 	}
+
+	
 
 }

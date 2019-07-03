@@ -51,27 +51,27 @@ public class AdministrationController {
 
 	@PostMapping(value = "/save")
 	public String administrativeSectionSave(@ModelAttribute AdministrativeSection adminSecObject, Model model,
-			HttpServletRequest request, @RequestParam("file") MultipartFile[] file, HttpSession session) {
+			HttpServletRequest request, HttpSession session) {
 
 		boolean isSave = false;
 		int workid = (int) session.getAttribute("workIdSession");
-		Integer idVal = adminSecObject.getWork().getId();
+		/*Integer idVal = adminSecObject.getWork().getId();*/
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		adminSecObject.setUser(loggedInUser);
-		Integer workId=adminSecObject.getWork().getId();
+		/*Integer workId=adminSecObject.getWork().getId();*/
 		Works workInfo = misService.getWorkInfo(workid);
-		String moduleName=EnumFilter.ADMIN.getStatus();
+		/*String moduleName=EnumFilter.ADMIN.getStatus();*/
 		if (adminSecObject.getId() == null) {
 			isSave = true;
 		    admService.adminstrativeSectionSave(adminSecObject);
 		    workInfo.setStatus(EnumFilter.OPEN.getStatus());
-		    workInfo.setWorkStatus(EnumWorkStatus.ADMIN.getStatus());
-		    misService.updateWork(workInfo);
-			attachService.saveAttachedDetails(workId,moduleName, file);
+            workInfo.setWorkStatus(EnumWorkStatus.ADMIN.getStatus());
+            misService.updateWork(workInfo);
+			
 		} else {
-			/*admService.adminstrativeSectionUpdate(adminSecObject, file);*/
+			//admService.adminstrativeSectionUpdate(adminSecObject, file);
 			// checking... Department is created or not
-			DepartmentLinkingLine deptInfo = lineDepartmentService.getdepartDetails(idVal);
+			DepartmentLinkingLine deptInfo = lineDepartmentService.getdepartDetails(workid);
 			if (deptInfo == null) {
 				isSave = true;
 			}
@@ -84,11 +84,11 @@ public class AdministrationController {
 		obj.setAdministrativeesction(adminSecObject);
 		session.setAttribute("generalInfo", obj);
 
-		log.info("==idVal===:" + idVal);
+		
 		if (isSave == true) {
 			return "redirect:/lineDepartment/create";
 		} else {
-			return "redirect:/lineDepartment/edit/" + idVal;
+			return "redirect:/lineDepartment/edit/" + workid;
 		}
 
 	}
@@ -174,6 +174,14 @@ public class AdministrationController {
 		return "online-mis-administrative-section";
 	}
 	
+	/*@RequestMapping(method = RequestMethod.POST, value = "/saveMultipleFileUpload")
+    @ResponseBody
+    public String uploadFile(@ModelAttribute AdministrativeSection adminSecObject,@RequestParam("file") MultipartFile[] file) {
+		Integer workId=adminSecObject.getWork().getId();
+		String moduleName=EnumFilter.ADMIN.getStatus();
+		attachService.saveAttachedDetails(workId,moduleName, file);    
+		return new Gson().toJson(attachService);
+    }*/
 	
 	
 	

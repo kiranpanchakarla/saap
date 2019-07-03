@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ap.mis.controllers.AdministrationController;
 import com.ap.mis.dao.AttachmentDao;
 import com.ap.mis.entity.Attachements;
 
@@ -36,6 +35,17 @@ public class AttachmentDaoImpl implements AttachmentDao{
 		log.info("===module==:"+moduleName);
 			List<Attachements> attachments=sessionFactory.getCurrentSession().createQuery("from Attachements where workId="+workId+" and module='"+moduleName+"'").list();
 	return attachments;
+	}
+	
+	@Override
+	public Attachements findById(Integer uploadFileId) {
+		
+		return (Attachements)sessionFactory.getCurrentSession().get(Attachements.class,uploadFileId);
+	}
+	@Override
+	public Attachements deleteAttachedDetails(Attachements attachInfo) {
+		sessionFactory.getCurrentSession().update(attachInfo);
+		return attachInfo;
 	}
 	
 
