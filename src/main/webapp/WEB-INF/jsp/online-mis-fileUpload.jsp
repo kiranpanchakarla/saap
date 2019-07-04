@@ -81,15 +81,14 @@
     	    		        timeout: 600000,
     	    		        headers: { 'X-CSRF-TOKEN': csrf_tokenvalue},
     	    		        success: function (data) {
-    							if(data.length>0){
-    							  $.each(data, function(index, item) {
-    								  var str = item.path;
-    								  var fileName = str.substring(str.lastIndexOf("\\") + 1, str.length);
-    								  $("#filedetails").append("<tr data-fileId='" + item.id + "' ><td ><strong>" + fileName + "</strong></td><td><a class='delete' id='delete_"+item.id+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
-    								 /*  $('#engdocView').append('<a href="' + file + '" target="_self">' + event.target.files[0].name + '</a><br>'); */
-    							  }); 
-    					        document.querySelector("#files").onchange=attachments;
-    						    	}
+    	    		        	if(data.length>0){
+    	                            var dataVal = JSON.parse(data); 
+    	                            $.each(dataVal, function(index, item) {
+    	                            	 var fileName = item.substring(item.lastIndexOf("\\") + 1, item.length);
+    	                            	 $("#filedetails").append("<tr data-fileId='" + item + "' ><td ><a href='"+item+"'>"+fileName+"</td><td><a class='delete' id='delete_"+index+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
+    	    							 }); 
+    	     	    		    	}
+    						
     							else{
     								alert("Unable to upload File");
     							}
@@ -138,11 +137,9 @@
         
     		var workid=$('#workid').val();
     		var moduleName= $('#moduleName').val();
-    		/* alert("==workid==:"+workid);
-    		alert("==moduleName==:"+moduleName); */
-            if(workid == undefined){
-          	 alert("====");
-            }else{
+    		if(workid == undefined){
+    			
+          	 }else{
     				 $.ajax({
  	    		        url : "<c:url value='/upload/edit'/>?workId="+workid+"&moduleName="+moduleName,
  	    		        success: function(data) {
@@ -150,7 +147,7 @@
                         var dataVal = JSON.parse(data); 
                         $.each(dataVal, function(index, item) {
                         	 var fileName = item.substring(item.lastIndexOf("\\") + 1, item.length);
-							$("#filedetails").append("<tr data-fileId='" + item + "' ><td ><strong>" +fileName + "</strong></td><td><a class='delete' id='delete_"+index+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
+                        	 $("#filedetails").append("<tr data-fileId='" + item + "' ><td ><a href='"+item+"'>"+fileName+"</td><td><a class='delete' id='delete_"+index+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
 							 }); 
  	    		    	}
 

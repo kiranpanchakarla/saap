@@ -31,10 +31,18 @@ public class UploadController {
     AttachmentService attachmentService;
 
     @PostMapping(value = "/files")
-    public List<Attachements> fileUplaod(Model model,HttpServletRequest request, @RequestParam("files") MultipartFile[] file, @RequestParam("moduleName") String moduleName, HttpSession session) {
+    public @ResponseBody String fileUplaod(Model model,HttpServletRequest request, @RequestParam("files") MultipartFile[] file, @RequestParam("moduleName") String moduleName, HttpSession session) {
         int workId = (int) session.getAttribute("workIdSession");
         List<Attachements> attachments=  attachmentService.saveAttachedDetails(workId, moduleName, file);
-        return attachments;
+        Map<Integer, String> attachFile = new HashMap<Integer, String>();
+		for(Attachements attachDetails :attachments) {
+			if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
+				String attachmentPath=ContextUtil.populateContext(request) + attachDetails.getPath();
+			    Integer attachmentId=attachDetails.getId();
+			    attachFile.put(attachmentId, attachmentPath);
+			} 
+		}
+		return new Gson().toJson(attachFile);
         
     }
     
