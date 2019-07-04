@@ -86,7 +86,7 @@ public class LandDetailsController {
 		    misService.updateWork(workInfo);
 			isSave = true;
 		} else {
-			landDetailService.landDetailsUpdate(landDetails);
+			/*landDetailService.landDetailsUpdate(landDetails, file);*/
 		}
 		
 		model.addAttribute("workInfo",workInfo);
@@ -101,7 +101,35 @@ public class LandDetailsController {
 		LandDetails landinfo = landDetailService.getLandinfo(obj.getLanddetails().getId());
 		model.addAttribute("landinfo",landinfo);
 		
+		List<Attachements> adminattachements=attachService.getAttachementsDetails(obj.getWorks().getId(),EnumFilter.ADMIN.getStatus());
+		List<Attachements> landattachements=attachService.getAttachementsDetails(obj.getWorks().getId(),EnumFilter.LANDDETAILS.getStatus());
 		if (isSave == true) {
+			Map<String, String> adminFile = new HashMap<String, String>();
+			for(Attachements adminattachDetails :adminattachements) {
+				if (adminattachDetails.getPath() != null && !adminattachDetails.getPath().equals("") && adminattachDetails.getIsActive().equals(true)) {
+					String adminattachmentPath=ContextUtil.populateContext(request) + adminattachDetails.getPath();
+					String fileNameVal=adminattachDetails.getPath().substring(adminattachDetails.getPath().lastIndexOf('\\') + 1);
+					log.info("==attachmentPath==:"+adminattachmentPath);
+					adminFile.put(fileNameVal, adminattachmentPath);
+					model.addAttribute("adminFile",adminFile);
+				} else {
+					model.addAttribute("filePath", null);
+				}
+			}
+			Map<String, String> landFile = new HashMap<String, String>();
+			for(Attachements landattachDetails :landattachements) {
+				if (landattachDetails.getPath() != null && !landattachDetails.getPath().equals("") && landattachDetails.getIsActive().equals(true)) {
+					String landattachmentPath=ContextUtil.populateContext(request) + landattachDetails.getPath();
+					String fileNameVal=landattachDetails.getPath().substring(landattachDetails.getPath().lastIndexOf('\\') + 1);
+					log.info("==landattachmentPath==:"+landattachmentPath);
+					landFile.put(fileNameVal, landattachmentPath);
+					model.addAttribute("landFile",landFile);
+					
+				} else {
+					model.addAttribute("landfilePath", null);
+				}
+			}
+			
 			model.addAttribute("userRole", loggedInUser.getRole().getRoleName());
 			
 			 //checking... ConsultantInfo is created or not
@@ -117,6 +145,7 @@ public class LandDetailsController {
 
 
 	}
+		 
 
 	@GetMapping(value = "/generalInfo")
 	public String generalInformation(Model model) {
