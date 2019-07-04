@@ -8,7 +8,5 @@ import com.ap.mis.model.ViewDetails;
 public interface ViewDetailsService {
 
 	List<ViewDetails> getViewDetials();
-	
-	List<ViewDetails> getApprovalDetials();
 
 }
