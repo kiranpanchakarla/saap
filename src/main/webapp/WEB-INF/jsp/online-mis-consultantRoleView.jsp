@@ -25,28 +25,14 @@
 
 <body>
 
-<!-- 
-	 <section id="intro-inner">
-  <div class="page-header">
-    <section id="page-title" class="parralax">
-      <div class="container rel">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="text-center">
-              <h2 class="section-title">View Details</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-</section>  -->
-    <c:if test="${userRole eq 'ROLE_DEPARTMENT'}">
-	<c:url value="/lineDepartment/create" var="createUrl" />
-	</c:if>
-	 <c:if test="${userRole eq 'ROLE_CONSULTANT'}">
-	<c:url value="/ConsultantInfo/create" var="createUrl" />
-	</c:if>
+	<c:choose>
+    <c:when test="${consultantInfoObject != null}">
+        <c:url value="/ConsultantInfo/edit/${consultantInfoObject.work.id}" var="createUrl"/>
+    </c:when>    
+    <c:otherwise>
+    <c:url value="/ConsultantInfo/create" var="createUrl" />
+    </c:otherwise>
+</c:choose>
 	<section id="contact" class="section-bg-con">
 	<div class="container">
 		<div class="row">
