@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Attachements;
+import com.ap.mis.entity.ConsultantInfo;
 import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.AttachmentService;
+import com.ap.mis.service.ConsultantInfoService;
 import com.ap.mis.service.LandDetailService;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
@@ -28,8 +30,8 @@ import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
-@RequestMapping("/department")
-public class DepartmentRoleController {
+@RequestMapping("/consultant")
+public class ConsultantRoleController {
 
 	@Autowired
 	MISService misService;
@@ -45,6 +47,8 @@ public class DepartmentRoleController {
 	
 	@Autowired
 	AttachmentService attachService;
+	
+	@Autowired ConsultantInfoService consultantInfoService;
 	
 	@GetMapping(value = "/view")
 	public String view(Model model, String workId,HttpServletRequest request,HttpSession session) {
@@ -89,6 +93,9 @@ public class DepartmentRoleController {
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		model.addAttribute("userRole", loggedInUser.getRole().getRoleName());
 		
-	    return "online-mis-departmentRoleView";
+		ConsultantInfo consltInfo = consultantInfoService.getConsultDetails(Integer.parseInt(workId));
+		model.addAttribute("consultantInfoObject",consltInfo);
+		
+	    return "online-mis-consultantRoleView";
 	}
 }
