@@ -14,8 +14,8 @@
     	    $(document).ready(function(){
                         var maxSize = 10, // MB
     	    			currentSize = 0,
-    	    			remainSize = 0;
-    	    	
+    	    			remainSize = 0,
+    	    			currentFileLength=0;
     	    	
     	    	function refreshSpace() {
     	    		$('#totalsize span').text(currentSize.toFixed(2));
@@ -23,17 +23,14 @@
     	    	}
 
     	   	    	$("#files").change(function(e) {
-    	   	    		var moduleName= $('#moduleName').val();
-    	   	    		
+    	   	    	  var moduleName= $('#moduleName').val();
     	   	    	  var files = e.target.files;
     	   	    	  var filesLength=files.length;
-    			     
-    			 
-    			 	
-    			 	/* if(filesLength > 5 ){
+    	   	    	  currentFileLength += filesLength;
+    			      if(currentFileLength > 5 ){
     			 	              alertify.alert("File Upload","You are allowed to upload a maximum of 5 files. Thanks!!");
     			 	              $("#files").val('');
-    			 	          } */
+    			 	          } 
     			 	
     		           	for (var i = 0, f; f = files[i]; i++) {
     		    			attachments.push(f);
@@ -75,7 +72,7 @@
     	    		        enctype: 'multipart/form-data',
     	    		        url : "<c:url value="/upload/files"/>",
     	    		        data: formData,
-    	    		         processData: false,
+    	    		        processData: false,
     	    		        contentType: false,
     	    		        cache: false,
     	    		        timeout: 600000,
@@ -97,12 +94,15 @@
     	    		
     	    	});
     	   	    	
+    	   	  //delete  	
     			$("#filedetails").on('click', '.delete', function(e) {
     				var $parent = $(this).closest('tr'),fileID = $parent.attr('data-fileId');
     				var id = this.id;
     				alertify.confirm('Are you Sure, want to delete the file! ',function(e) { 
     				var split_id = id.split('_');
     				var uploadFileId = split_id[1];
+    			    var totalFileLength=$("#filedetails tr").length;
+    				currentFileLength =totalFileLength-1; 
     			    var formData = new FormData();
     				formData.append("uploadFileId",uploadFileId);
     				if(e){
@@ -118,7 +118,7 @@
     	    		        headers: { 'X-CSRF-TOKEN': csrf_tokenvalue},
     	    		       success: function (data) {
     	    		    	   if(data=="success"){
-    	    		    		   attachments.splice( attachments.indexOf($parent), 1 );
+    	    		    		  attachments.splice( attachments.indexOf($parent), 1 );
  	    			   	   	      $parent.remove();
     	    		    	   }else{
     	    		    		   alert("unable to delete");
@@ -148,7 +148,8 @@
                         $.each(dataVal, function(index, item) {
                         	 var fileName = item.substring(item.lastIndexOf("\\") + 1, item.length);
                         	 $("#filedetails").append("<tr data-fileId='" + item + "' ><td ><a href='"+item+"'>"+fileName+"</td><td><a class='delete' id='delete_"+index+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
-							 }); 
+                        }); 
+                        currentFileLength=$("#filedetails tr").length;
  	    		    	}
 
                        }
