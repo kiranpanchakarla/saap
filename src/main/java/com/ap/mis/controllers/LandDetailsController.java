@@ -204,6 +204,22 @@ public class LandDetailsController {
 		model.addAttribute("LandTypeList", landDetailService.getLandTypeList());
 		Works workInfo = misService.getWorkInfo(landInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
+		
+		List<Attachements> attachements=attachService.getAttachementsDetails(id,EnumFilter.LANDDETAILS.getStatus());
+		List<String> filePath = new ArrayList<String>();
+		log.info("===attachements===:"+attachements);
+		for(Attachements attachDetails :attachements) {
+			if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
+				String attachmentPath=ContextUtil.populateContext(request) + attachDetails.getPath();
+				log.info("==attachmentPath==:"+attachmentPath);
+				filePath.add(attachmentPath);
+				model.addAttribute("filePath",filePath);
+				
+			} else {
+				model.addAttribute("filePath", null);
+			}
+		}
+		
 		return "online-mis-land-details";
 		
 	}
