@@ -37,4 +37,13 @@ public class VillageDaoImpl implements VillageDao {
 		return village;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Village> findByMandalId(int id) {
+		List<Village> list = sessionFactory.getCurrentSession()
+		        .createQuery( "from Village v where v.mandalId=' "+ id +"'" )
+		        .list();
+		return list;
+	}
+
 }

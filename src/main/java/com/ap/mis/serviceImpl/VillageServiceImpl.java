@@ -26,4 +26,9 @@ public class VillageServiceImpl implements VillageService{
 		return villageDao.findById(id);
 	}
 
+	@Override
+	public List<Village> findByMandalId(int id) {
+		return villageDao.findByMandalId(id);
+	}
+
 }

@@ -89,7 +89,7 @@
                 		  class="fa fa-eye left"></i></a>
 				</c:when>
 				<c:otherwise>
-				  <a class="btn btn-edit"  href="<c:url value="/department/view?workId=${viewDetails.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
+				  <a class="btn btn-edit"  href="<c:url value="/consultant/view?workId=${viewDetails.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
                    		  class="glyphicon glyphicon-pencil left"></i></a>  
 			</c:otherwise>
 				</c:choose>

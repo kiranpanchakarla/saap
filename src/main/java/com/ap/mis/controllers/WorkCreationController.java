@@ -112,9 +112,9 @@ public class WorkCreationController {
         Works work = misService.getWorkInfo(Integer.parseInt(workId));
         model.addAttribute("workObject",work);
         model.addAttribute("districts", districtsService.findAll());
-        model.addAttribute("constituency",constituencyService.findAll());
-        model.addAttribute("mandal", mandalService.findAll());
-        model.addAttribute("village", villageService.findAll());
+        model.addAttribute("constituency",constituencyService.findByDistrictId(work.getDistrict().getId()));
+        model.addAttribute("mandal", mandalService.findByConstituencyId(work.getConstituency().getId()));
+        model.addAttribute("village", villageService.findByMandalId(work.getMandal().getId()));
         List<TypeOfWork> typeOfWork=misService.findAll();
         model.addAttribute("typeOfWork", typeOfWork);
         List<NatureOfWork> natureOfWork=misService.natureOfDetails();
