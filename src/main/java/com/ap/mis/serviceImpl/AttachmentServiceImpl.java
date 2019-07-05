@@ -42,9 +42,7 @@ public class AttachmentServiceImpl implements AttachmentService{
 				
 			     for (MultipartFile multipartFile : file) {
 		                String fileName = ((MultipartFile) multipartFile).getOriginalFilename();
-		                log.info("==fileName==" + fileName);
 		                File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
-						log.info("==rootFolder==" + rootFolder);
 						if (!rootFolder.exists()) {
 							rootFolder.mkdirs();
 						}

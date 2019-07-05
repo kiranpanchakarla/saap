@@ -81,10 +81,8 @@
                 <ul class="fs-list-details">
                 <li><div id="page-title1"></div>
                 <p>Upload Adminstrative Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-               <%--  <li> <img  src="${filePath}"    width="100" height="70"/>  --%>
-              <%--   <li><a href="${filePath}" target="_self" id="docView" name="image" >View Document</a></li>  --%>
-              <c:forEach items="${filePath}" var="file">
-			      <li><a href="${file}" target="_self" id="docView" name="image" >View Document</a></li>
+                <c:forEach items="${filePath}" var="entry">
+			      <li><a href="${entry.key}" target="_self" id="docView" name="image" >${entry.value}</a></li>
 		       </c:forEach>
                </li> 
                </ul>

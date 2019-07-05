@@ -1,7 +1,9 @@
 package com.ap.mis.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -114,23 +116,16 @@ public class AdministrationController {
 	@GetMapping(value = "/view")
 	public String view(Model model, String workId,HttpServletRequest request) {
 		AdministrativeSection adminInfo = admService.getAdminDetails(Integer.parseInt(workId));
-		log.info("===adminInfo===:"+adminInfo);
-		
 		List<Attachements> attachements=attachService.getAttachementsDetails(Integer.parseInt(workId),EnumFilter.ADMIN.getStatus());
-		List<String> filePath = new ArrayList<String>();
-		log.info("===attachements===:"+attachements);
-		for(Attachements attachDetails :attachements) {
-			if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
-				String attachmentPath=ContextUtil.populateContext(request) + attachDetails.getPath();
-				log.info("==attachmentPath==:"+attachmentPath);
-				filePath.add(attachmentPath);
-				model.addAttribute("filePath",filePath);
-				
-			} else {
-				model.addAttribute("filePath", null);
+			Map<String, String> attachFile = new HashMap<String, String>();
+			for(Attachements attachDetails :attachements) {
+				if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
+					String attachmentPath=ContextUtil.populateContext(request) + attachDetails.getPath();
+					String attachmentFileName=attachDetails.getPath().substring(attachDetails.getPath().lastIndexOf('\\') + 1);
+				    attachFile.put(attachmentPath, attachmentFileName);
+				} 
 			}
-		}
-		
+		model.addAttribute("filePath",attachFile);
 		model.addAttribute("adminInfo",adminInfo);
 		DepartmentLinkingLine departInfo = lineDepartmentService.getdepartDetails(Integer.parseInt(workId));
 		model.addAttribute("deptInfo",departInfo);

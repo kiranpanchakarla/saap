@@ -86,7 +86,7 @@ public class LandDetailsController {
 		    misService.updateWork(workInfo);
 			isSave = true;
 		} else {
-			/*landDetailService.landDetailsUpdate(landDetails, file);*/
+			landDetailService.landDetailsUpdate(landDetails);
 		}
 		
 		model.addAttribute("workInfo",workInfo);
@@ -140,7 +140,7 @@ public class LandDetailsController {
 			
 			return "online-mis-general-information";
 		} else {
-			return "redirect:/ConsultantInfo/edit/" + landDetails.getWork().getId();
+			return "redirect:/adminloggedin";
 		}
 
 
@@ -172,21 +172,16 @@ public class LandDetailsController {
 	@GetMapping(value = "/view")
 	public String view(Model model, String workId,HttpServletRequest request) {
 		LandDetails landInfo = landDetailService.getLandDetails(Integer.parseInt(workId));
-		
 		List<Attachements> attachements=attachService.getAttachementsDetails(Integer.parseInt(workId),EnumFilter.LANDDETAILS.getStatus());
-		List<String> filePath = new ArrayList<String>();
+		Map<String, String> attachFile = new HashMap<String, String>();
 		for(Attachements attachDetails :attachements) {
 			if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
 				String attachmentPath=ContextUtil.populateContext(request) + attachDetails.getPath();
-				log.info("==attachmentPath==:"+attachmentPath);
-				filePath.add(attachmentPath);
-				model.addAttribute("filePath",filePath);
-				
-			} else {
-				model.addAttribute("filePath", null);
-			}
+				String attachmentFileName=attachDetails.getPath().substring(attachDetails.getPath().lastIndexOf('\\') + 1);
+			    attachFile.put(attachmentPath, attachmentFileName);
+			} 
 		}
-		
+	    model.addAttribute("filePath",attachFile);
 		Works workInfo = misService.getWorkInfo(landInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("landInfo",landInfo);
