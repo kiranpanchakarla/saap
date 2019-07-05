@@ -1,6 +1,7 @@
 package com.ap.mis.serviceImpl;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,11 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.dao.AttachmentDao;
-import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Attachements;
-import com.ap.mis.entity.LandDetails;
 import com.ap.mis.service.AttachmentService;
-import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.UploadUtil;
 @Service
 @Transactional
@@ -41,6 +39,7 @@ public class AttachmentServiceImpl implements AttachmentService{
 			if (file.length >0) {
 				
 			     for (MultipartFile multipartFile : file) {
+			    	    
 		                String fileName = ((MultipartFile) multipartFile).getOriginalFilename();
 		                File rootFolder = new File(uploadUtil.getUploadPath() + File.separator + "uploadfile" + File.separator + timeStamp);
 						if (!rootFolder.exists()) {
@@ -48,11 +47,15 @@ public class AttachmentServiceImpl implements AttachmentService{
 						}
 						String filepath = rootFolder + File.separator + fileName;
 						((MultipartFile) multipartFile).transferTo(new File(filepath));
+						File attachFile=new File(filepath);
+						long fileSize = attachFile.length();
 						log.info("===filepath==:" + filepath);
 						Attachements fileItems=new Attachements();
 						fileItems.setPath(filepath);
 						fileItems.setWorkId(workId);
 					    fileItems.setModule(moduleName);
+					    fileItems.setFileSize(fileSize);
+					    fileItems.setConvertFileSize(readableFileSize(fileSize));
 						attachments.add(fileItems);
 					 
 		                }
@@ -68,8 +71,12 @@ public class AttachmentServiceImpl implements AttachmentService{
 
 	@Override
 	public List<Attachements> getAttachementsDetails(int workId, String module) {
+		List<Attachements> attachments=attachDao.getAttachementsDetails(workId,module);
 		
-		return attachDao.getAttachementsDetails(workId,module);
+		for(Attachements attach:attachments) {
+			attach.setConvertFileSize(readableFileSize(attach.getFileSize()));
+		}
+		return attachments;
 	}
 
 
@@ -91,6 +98,13 @@ public class AttachmentServiceImpl implements AttachmentService{
 
 
 	
+	  private String readableFileSize(long size) {
+		
+		    if(size <= 0) return "0 B";
+		    final String[] units = new String[] { "B", "kB", "MB", "GB", "TB" };
+		    int digitGroups = (int) (Math.log10(size)/Math.log10(1024));
+		    return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+		}
 
 
 	

@@ -79,26 +79,24 @@
     	    		        headers: { 'X-CSRF-TOKEN': csrf_tokenvalue},
     	    		        success: function (data) {
     	    		        	if(data.length>0){
-    	                            var dataVal = JSON.parse(data); 
-    	                            $.each(dataVal, function(index, item) {
-    	                            	 var fileName = item.substring(item.lastIndexOf("\\") + 1, item.length);
-    	                            	 $("#filedetails").append("<tr data-fileId='" + item + "' ><td ><a href='"+item+"'>"+fileName+"</td><td><a class='delete' id='delete_"+index+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
-    	    							 }); 
-    	     	    		    	}
-    						
-    							else{
+        							  $.each(data, function(index, item) {
+        								  var str = item.path;
+        								  var fileName = str.substring(str.lastIndexOf("\\") + 1, str.length);
+        								  $("#filedetails").append("<tr data-fileId='" + item.path + "' ><td ><a href="+ contextPath + item.path+">"+fileName+"</td><td >"+item.convertFileSize+"</td><td><a class='delete' id='delete_"+item.id+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
+        								 }); 
+        					            }
+    						 /*  else{
     								alert("Unable to upload File");
-    							}
+    							} */
     	    		        } 
     	    		    });
     	    		
     	    	});
-    	   	    	
     	   	  //delete  	
     			$("#filedetails").on('click', '.delete', function(e) {
     				var $parent = $(this).closest('tr'),fileID = $parent.attr('data-fileId');
     				var id = this.id;
-    				alertify.confirm('Are you Sure, want to delete the file! ',function(e) { 
+    				alertify.confirm(' Are you Sure, this file will be deleted permanently! ',function(e) { 
     				var split_id = id.split('_');
     				var uploadFileId = split_id[1];
     			    var totalFileLength=$("#filedetails tr").length;
@@ -143,14 +141,22 @@
     				 $.ajax({
  	    		        url : "<c:url value='/upload/edit'/>?workId="+workid+"&moduleName="+moduleName,
  	    		        success: function(data) {
- 	    		    	if(data.length>0){
+ 	    		        	if(data.length>0){
+  							  $.each(data, function(index, item) {
+  								  var str = item.path;
+  								  var fileName = str.substring(str.lastIndexOf("\\") + 1, str.length);
+  								  $("#filedetails").append("<tr data-fileId='" + item.path + "' ><td ><a href="+ contextPath + item.path+">"+fileName+"</td><td >"+item.convertFileSize+"</td><td><a class='delete' id='delete_"+item.id+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
+  								 }); 
+  							 currentFileLength=$("#filedetails tr").length;
+  					            }
+ 	    		    	/* if(data.length>0){
                         var dataVal = JSON.parse(data); 
                         $.each(dataVal, function(index, item) {
                         	 var fileName = item.substring(item.lastIndexOf("\\") + 1, item.length);
                         	 $("#filedetails").append("<tr data-fileId='" + item + "' ><td ><a href='"+item+"'>"+fileName+"</td><td><a class='delete' id='delete_"+index+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
                         }); 
                         currentFileLength=$("#filedetails tr").length;
- 	    		    	}
+ 	    		    	} */
 
                        }
  	    		      

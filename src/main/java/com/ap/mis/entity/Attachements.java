@@ -1,7 +1,6 @@
 package com.ap.mis.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 @Entity
 @Table(name = "tbl_sa_Attachements")
 public class Attachements extends AuditModel implements Serializable {
@@ -33,6 +33,26 @@ public class Attachements extends AuditModel implements Serializable {
 	@Column(name="is_active")
 	private Boolean isActive = true;
 	
+	@Column(name="file_size")
+	private long fileSize;
+	
+	@Transient
+	private String convertFileSize;
+	
+	
+	
+	
+	public String getConvertFileSize() {
+      
+		return convertFileSize;
+	}
+	
+
+	public void setConvertFileSize(String convertFileSize) {
+		this.convertFileSize = convertFileSize;
+	}
+
+
 	public Boolean getIsActive() {
 		return isActive;
 	}
@@ -73,6 +93,19 @@ public class Attachements extends AuditModel implements Serializable {
 	public void setWorkId(Integer workId) {
 		this.workId = workId;
 	}
+	
+	
+
+	public long getFileSize() {
+		
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	
+	}
+	
 
 	@Override
 	public String toString() {
@@ -80,8 +113,7 @@ public class Attachements extends AuditModel implements Serializable {
 	}
 
 	
-
-
+	 
 	
 
 }

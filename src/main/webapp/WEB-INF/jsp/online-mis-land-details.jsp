@@ -168,22 +168,7 @@
 <jsp:include page="online-mis-footer.jsp" />
 
 <script type="text/javascript">
-/* $(document).ready(function(){
-	$('#file').change(function (event) {
-		$('#docView').empty();
-	    var file = URL.createObjectURL(event.target.files[0]);
-	    $('#docView').append('<a href="' + file + '" target="_self">' + event.target.files[0].name + '</a><br>');
-	});
-	  $("input[type='file']").on("change", function () {
-		  $("#file_error").html("");
-		     if(this.files[0].size > 2000000) {
-		    	 $("#file_error").html("File size is greater than 2MB");
-		       alert("Please upload file less than 2MB. Thanks!!"); 
-		       $(this).val('');
-		     }
-		    });
-	});
- */
+var contextPath = "${pageContext.request.contextPath}";
 $("#landExtend,#bookDetails,#surveyNo").on('input', function() {
 	  $(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''));
 	})

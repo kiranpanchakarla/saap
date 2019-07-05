@@ -2339,4 +2339,19 @@ a#viewTable_next{
     cursor: pointer;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button{color: #fff !important;}
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover{background:#033d75 !important;box-shadow: inset 0 0 3px #033d75 !important;}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{background:#033d75 !important;
+box-shadow: inset 0 0 3px #033d75 !important;}
+
+#filedetails {
+    text-align: left;
+}
+
+#filedetails td {
+    padding-right: 10px;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    width:100px;
+}
+
+

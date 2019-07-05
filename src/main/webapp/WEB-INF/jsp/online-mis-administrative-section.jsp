@@ -190,7 +190,7 @@
 <%-- <jsp:include page="online-mis-footer.jsp" /> --%>
 <c:import url="/WEB-INF/jsp/online-mis-footer.jsp" />
 <script type="text/javascript">
-
+var contextPath = "${pageContext.request.contextPath}";
 $("#submit").click(function(){
 	
 
