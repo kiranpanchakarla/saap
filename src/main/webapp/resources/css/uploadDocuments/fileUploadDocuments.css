@@ -1,0 +1,115 @@
+@charset "ISO-8859-1";
+
+.notfound {
+	line-height: 6;
+	color: #585858;
+	opacity: .7;
+	font-size: 16px;
+	opacity: .7;
+}
+
+.fileuploadLabel {
+	display: block;
+	color: #6d6d6d;
+	background: #e2e2e2;
+	min-height: 30px;
+	line-height: 2;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.fileuploadLabel + input[type="file"] {
+	display: none;
+}
+
+.warning-alertjs-model .ajs-header {
+	background-color: #ffc107 !important;
+	color: #fff;
+}
+
+.ajs-button:focus, .ajs-button:active {
+	outline: none !important;
+}
+
+.ajs-button:hover {
+	box-shadow: 0 0 0 2px white, 0 0 0 3px #1cb9c8;
+}
+
+.danger-alertjs-model .ajs-header {
+	background-color: #dc3545 !important;
+	color: #fff;
+}
+
+.ajs-button {
+	width: auto;
+	background: #1cb9c8 !important;
+	font-weight: bold !important;
+	color: white !important;
+	border: 0 none !important;
+	border-radius: 25px;
+	cursor: pointer;
+	padding: 5px 10px;
+	margin: 10px 5px !important;
+	text-transform: capitalize !important;
+}
+
+
+
+.fileViewButton {
+	display: block;
+	width: 100%;	
+	line-height: 2.5;
+	border: 1px solid #ccc !important;
+	background-color: #eee !important;
+	color: #2C3E50;
+	border-radius: 5px;
+	box-sizing: border-box;
+}
+
+.modal.fade .modal-dialog {
+	-webkit-transform: translate(0, 25%) !important;
+	-ms-transform: translate(0, 25%) !important;
+	-o-transform: translate(0, 25%) !important;
+	transform: translate(0, 25%) !important;
+}
+
+.fileViewButton span {
+	position: relative;
+	display: block;
+	width: 100%;
+	border-radius: 5px;
+}
+
+.fileViewButton:hover span:first-child {
+	opacity: 0;
+	height: 0;
+	visibility: hidden;
+	transition: opacity 0.2S ease-out;
+}
+
+.fileViewButton:hover span:last-child {
+	opacity: 1;
+	height: auto;
+	visibility: visible;
+	transition: opacity 0.3S ease-in;
+}
+
+
+
+.fileViewButton span:first-child {
+	opacity: 1;
+	height: auto;
+	visibility: visible;
+	transition: opacity 0.3S ease-in;
+}
+
+.fileViewButton span:last-child {
+	opacity: 0;
+	height: 0;
+	visibility: hidden;
+	/* transition: all 0.2S ease-out; */
+}
+
+button:focus {
+	outline: none !important;
+}

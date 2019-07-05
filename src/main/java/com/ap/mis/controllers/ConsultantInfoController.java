@@ -53,10 +53,10 @@ public class ConsultantInfoController {
 			log.info("inside update:"+consultantInfoObject.getId());
 			constInfoService.updateConsultantInfo(consultantInfoObject);
 			 //checking... TechnicalSanction is created or not
-			TechnicalSanction technicalSanction = technicalSanctionService.getTechDetails(workId);
+			/*TechnicalSanction technicalSanction = technicalSanctionService.getTechDetails(workId);
 	        if(technicalSanction == null) {
 	            isSave = true;
-	        }  
+	        }  */
 		}
 		Works workInfo=misService.getWorkInfo(workId);
 		session.setAttribute("workInfo", workInfo);
@@ -64,10 +64,11 @@ public class ConsultantInfoController {
         
 		if(isSave == true) {
 			log.info("isSave value save T :"+isSave);
-			return "redirect:/technicalSanction/create";
+			return "redirect:/landSurveyDetails/create";
+//			return "redirect:/technicalSanction/create";
 		}else {
 			log.info("isSave value edit F :"+isSave);
-			return "redirect:/technicalSanction/edit/"+workId;
+			return "redirect:/landSurveyDetails/edit";
 		}
 		
 		 

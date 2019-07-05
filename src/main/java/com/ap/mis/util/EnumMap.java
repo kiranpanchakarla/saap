@@ -10,7 +10,7 @@ public enum EnumMap {
 	ADMIN("ROLE_ADMIN","'Work_Created','Admin_Sanction','Line_Department','Land_Details','COMPLETED'"),
 	SAAP("ROLE_SAAP","'Work_Created','Admin_Sanction','Line_Department','Land_Details','COMPLETED'"),
 	DEPARTMENT("ROLE_DEPARTMENT","'Land_Details'"),
-	CONSULTANT("ROLE_CONSULTANT","'Land_Details'");
+	CONSULTANT("ROLE_CONSULTANT","'Land_Details','PEND_SAAP_APRVL','SAAP_APRVD'");
 	
 	private String status;
 	private String value;

@@ -21,7 +21,7 @@ public class AttachmentDaoImpl implements AttachmentDao{
 	public List<Attachements> saveAttachedDetails(List<Attachements> attachments) {
 		try {
 			for(Attachements attachmentDetails : attachments) {
-				  sessionFactory.getCurrentSession().save(attachmentDetails);
+				sessionFactory.getCurrentSession().save(attachmentDetails);
 				}
 			
 		} catch (Exception e) {

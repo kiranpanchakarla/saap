@@ -7,6 +7,8 @@ public enum EnumWorkStatus {
 	DEPARTMENT("Line_Department"),
 	LAND("Land_Details"),
 	GENERAL("General_Info"),
+	PENDING_SAAP_APPROVAL("PEND_SAAP_APRVL"),
+	SAAP_APPROVED("SAAP_APRVD"),
 	COMPLETED("Completed");
 	
 private String status;
