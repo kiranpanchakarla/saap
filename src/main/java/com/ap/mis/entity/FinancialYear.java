@@ -8,22 +8,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="financial_year")
+@Table(name = "tbl_sa_financial_year")
 public class FinancialYear {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
-    private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
-    @Column(name = "year")
-    private String year;
+	@Column(name = "year")
+	private String year;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -35,4 +35,12 @@ public class FinancialYear {
 		this.year = year;
 	}
 
+	@Override
+	public String toString() {
+		return "FinancialYear [id=" + id + ", year=" + year + "]";
+	}
+
+	
+	
+	
 }

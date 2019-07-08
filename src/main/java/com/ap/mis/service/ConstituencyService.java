@@ -8,4 +8,5 @@ import com.ap.mis.entity.District;
 public interface ConstituencyService {
 	 public List<Constituency> findAll();
      public Constituency findById(int id);
+     public List<Constituency> findByDistrictId(int id);
 }

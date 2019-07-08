@@ -8,13 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
-public class PMSLoginUrlAuthenticationEntryPoint implements AuthenticationEntryPoint{
+public class PMSLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint{
+
+	public PMSLoginUrlAuthenticationEntryPoint(String loginFormUrl) {
+		super(loginFormUrl);
+	}
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized: Authentication was either missing or invalid.");
+		super.commence(request, response, authException);
 	}
 
 	 

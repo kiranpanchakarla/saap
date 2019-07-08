@@ -13,14 +13,36 @@
 
 <body>
 <!--=== Header ====-->
-<jsp:include page="online-mis-header.jsp" />
+<!--==========================
+    Header
+  ============================-->
+<header id="header">
+   <div class="container social-links">
+   <div class="main-header"><h1>Sports Authority Of Andhra Pradesh
+   <span>(Works management system)</span></h1></div>
+    
+  </div>
+   <div class="container-fluid">
+      <div id="logo" class="pull-left">
+        <h1><a href=""><img src="<c:url value="/resources/img/logo.png" />" alt="" title="" /></a></h1>
+      </div>
+    <nav id="nav-menu-container">
+     <%--  <ul class="nav-menu">
+         <li><a href="<c:url value="/adminloggedin"/>">Home</a></li>
+        <li><a href="<c:url value="/logout"/>">Logout</a></li>
+      </ul> --%>
+    </nav>
+    <!-- #nav-menu-container --> 
+  </div>
+</header>
+<!-- #header --> 
 
 
 <!--==========================
     Intro Section
   ============================-->
-<section id="intro-inner">
-  <div class="page-header">
+<!-- <section id="intro-inner">
+   <div class="page-header">
     <section id="page-title" class="parralax">
       <div class="container rel">
         <div class="row">
@@ -33,7 +55,7 @@
       </div>
     </section>
   </div>
-</section>
+</section> -->
 <!-- #intro -->
 
 <main id="main"> 
@@ -58,7 +80,7 @@
     <form method="post" action="<c:url value='j_spring_security_check'/>">
       <input type="text" id="login" class="fadeIn second" name="username" placeholder="username">
 	  	<br><span id="uError" style="color:red;"></span>  		
-      <input type="password" class="fadeIn third" name="password" id="password" placeholder="Password">
+      <input type="password" class="fadeIn third" name="password" id="password" placeholder="password">
       	<br><span id="pError" style="color:red;"></span><br>
       <input type="submit" id="submit" name="submit" class="fadeIn fourth" value="Log In" >
 <!--       onsubmit="return validateForm()" -->
@@ -76,7 +98,10 @@
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+       <!-- <a class="underlineHover" href="#">Forgot Password?</a> -->
+      
+       <c:url value="/userCreation" var="createUrl" />
+       <a class="underlineHover" href="${createUrl}">New user? Register here</a>
     </div>
 
   </div>

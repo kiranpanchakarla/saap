@@ -1,26 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SAAP : Administrative Section</title>
+<title>SAAP : Administrative Sanction Details</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
+
 </head>
 
 <body>
 <!--=== Header ====-->
-<jsp:include page="online-mis-header.jsp" />
-
-
+<%-- <jsp:include page="online-mis-header.jsp" /> --%>
+<c:import url="/WEB-INF/jsp/online-mis-header.jsp" />
+<c:import url="/WEB-INF/jsp/online-mis-fileUpload.jsp" />
 
 <!--==========================
     Intro Section
   ============================-->
-<section id="intro-inner">
+<!-- <section id="intro-inner">
   <div class="page-header">
     <section id="page-title" class="parralax">
       <div class="container rel">
@@ -34,7 +37,7 @@
       </div>
     </section>
   </div>
-</section>
+</section> -->
 <!-- #intro -->
 
 <main id="main"> 
@@ -46,60 +49,71 @@
   <section id="contact" class="section-bg-con">
     <div class="container">
     
-    <div class="row">
+   <%-- <jsp:include page="online-mis-tabView.jsp" /> --%>
+   <c:import url="/WEB-INF/jsp/online-mis-tabView.jsp" /> 
+   <div class="tab-content">
+	
+	 <div class="tab-pane fade show" id="nav-admin" role="tabpanel" aria-labelledby="nav-admin-tab">
+     <div class="row">
     <div class="col-md-12">
     <c:url value="/administrativeSection/save" var="createUrl" />
-        <form id="msform" method="post" action="${createUrl}"  modelAttribute="adminSecObject" enctype="multipart/form-data">
+        <form:form id="msform" method="POST" action="${createUrl}"  modelAttribute="adminSecObject" enctype="multipart/form-data">
+           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="hidden" id="moduleName" value="ADMINISTRATIVE"/>
+            <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}"/>
            
-           <input type="hidden" name="${_csrf.parameterName}"
-            value="${_csrf.token}" />
+         <c:choose>
+			<c:when test="${!empty adminSecObject.id}">
+				<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+			</c:when>
+		</c:choose> 
 
             <!-- fieldsets -->  
             <fieldset>
              <div class="fs-list-full"> 
-                <h2 class="fs-title">Administrative Section</h2>
+                <h2 class="fs-title">Administrative Sanction</h2>
                 <ul class="fs-list-details">
                 <li><p>Name of Work <span class="red">*</span></p></li>
-                <li><input type="text" id="workName" name="workName"  class="form-control mb-md" readonly value="${workInfo.workDetails}">
+                <li>
+                <form:input type="text" id="workName" path="workName"  class="form-control mb-md" readonly="true" value="${workLineItems.workDetails}"/>
                 <span id="workNameErr" class="errors" style="color:red;float:right;"></span> </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Work Number <span class="red">*</span></p></li>
-                <li><input type="text" id="workNumber" name="workNumber"  class="form-control mb-md" readonly value="${workInfo.workNo}">                
+                <li><form:input type="text" id="workNumber" path="workNumber"  class="form-control mb-md" readonly="true" value="${workInfo.workNo}"/>                
                 <span id="workNumberErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
-                <li><p>AS Sanctioned Details <span class="red">*</span></p></li>
-                <li><input type="text" name="sanctionedDetails" id="sanctionedDetails" placeholder="AS Sanctioned Details "/>
+                <li><p>Sanctioned Details <span class="red">*</span></p></li>
+                <li><form:input type="text" path="sanctionedDetails" id="sanctionedDetails" placeholder="AS Sanctioned Details "/>
                 	<br><span id="sanctionedDetailsErr" class="errors" style="color:red;float:right;"></span> </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Grant<span class="red">*</span></p></li>
                 <li>
-                <select id="typeOfGrant" name="typeOfGrant">
-					<option value="" selected="" disabled="">--Select Grant --</option>
+                <form:select id="typeOfGrant" path="typeOfGrant.id">
+					<form:option value="" >--Select Grant --</form:option>
 					<c:forEach  var="grant" items="${grantTypeList}">
-					<option value="${grant.id}">${grant.name}</option>
+					<form:option value="${grant.id}">${grant.name}</form:option>
 					</c:forEach>
-				</select>
-                
-                	<br><span id="typeOfGrantErr" class="errors" style="color:red;float:right;"></span> 
+				</form:select>
+                <br><span id="typeOfGrantErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Financial Year <span class="red">*</span></p></li>
                 <li>
-                <select id="financialYear" name="financialYear">
-					<option value="" selected="" disabled="">--Select Year --</option>
+                <form:select id="financialYear" path="financialYear.id">
+					<form:option value="" selected="" disabled="">--Select Year --</form:option>
 					<c:forEach  var="fyear" items="${finYearList}">
-					<option value="${fyear.id}">${fyear.year}</option>
+					<form:option value="${fyear.id}">${fyear.year}</form:option>
 					</c:forEach>
-				</select>
+				</form:select>
                 	<br><span id="financialYearErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
@@ -107,49 +121,58 @@
                 <ul class="fs-list-details">
                 <li><p>Engagement of executive dept by <span class="red">*</span></p></li>
                 <li>
-               <select id="executiveDept" name="executiveDept">
-					<option value="" selected="" disabled="">--Select Executive Dept --</option>
+                <form:select id="executiveDept" path="executiveDept.id">
+					<form:option value="" selected="" disabled="">--Select Executive Dept --</form:option>
 					<c:forEach  var="dpt" items="${executiveDeptList}">
-					<option value="${dpt.id}">${dpt.name}</option>
+					<form:option value="${dpt.id}">${dpt.name}</form:option>
 					</c:forEach>
-				</select>
-                
-                	<br><span id="executiveDeptErr" class="errors" style="color:red;float:right;"></span> 
+				</form:select>
+                <br><span id="executiveDeptErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Engagement of consultant by <span class="red">*</span></p></li>
                 <li>
-                <select id="consultant" name="consultant">
-					<option value="" selected="" disabled="">--Select Executive Consultant --</option>
+                <form:select id="consultant" path="consultant.id">
+					<form:option value="" selected="" disabled="">--Select Executive Consultant --</form:option>
 					<c:forEach  var="cons" items="${executiveConsultantList}">
-					<option value="${cons.id}">${cons.name}</option>
+					<form:option value="${cons.id}">${cons.name}</form:option>
 					</c:forEach>
-				</select>
-                
-                
+				</form:select>
                 <br><span id="consultantErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
                 
-                <ul class="fs-list-details">
-                <li><p>Upload Adminstrative Details Document(pdf/jpg/png)  <span class="red">*</span></p></li>
-                <li><input type="file" name="file" id="file"  placeholder="Adminstrative Details"></li>
-                 <br><span id="file_error" class="errors" style="color:red;float:right;"></span>
-              
+                <form method="POST"  id="fileUploadForm"> 
+                 <ul class="fs-list-details">
+                <li><p>Upload Adminstrative Details Document(pdf/jpg/png)<span class="red">*</span></p>
+                <label for="files"  class="fileuploadLabel">Upload Image</label>
+                <input type="file" name="file" id="files" style="display: none" accept=".png, .jpg, .jpeg, .pdf" value="${filePath}" multiple="multiple"> 
+                <table id="filedetails"></table>
+	            </li>
+	            <span id="file_error" class="errors" style="color:red;float:right;"></span>
                 </ul>
+                </form>
                 
                 
-                </div>
                 
+               </div>
+               <c:if test="${adminSecObject.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue"/>
-               
+               </c:if>
+                <c:if test="${adminSecObject.id!=null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="Update and Continue"/>
+               </c:if>
             </fieldset>
-        </form>
+            
+        </form:form>
         
     </div>
 </div>
+</div>
+</div>
+
 <!-- /.MultiStep Form -->
     
 
@@ -164,43 +187,13 @@
 </main>
 
 <!--=== Footer ====-->
-<jsp:include page="online-mis-footer.jsp" />
-
+<%-- <jsp:include page="online-mis-footer.jsp" /> --%>
+<c:import url="/WEB-INF/jsp/online-mis-footer.jsp" />
 <script type="text/javascript">
-$(document).ready(function(){
-$("input[type='file']").on("change", function () {
-	  $("#file_error").html("");
-	     if(this.files[0].size > 2000000) {
-	    	 $("#file_error").html("File size is greater than 2MB");
-	      /*  alert("Please upload file less than 2MB. Thanks!!"); */
-	       $(this).val('');
-	     }
-	    });
-});
-
-$('input').on('input', function() {
-	  $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
-	});
-
+var contextPath = "${pageContext.request.contextPath}";
 $("#submit").click(function(){
 	
-/*     var workName=$("#workName").val();
-    if(workName=="" || workName==null){
-        $("#workNameErr").html("Please Enter Name of Work ");
-        $("#workName").focus();
-        return false;
-    }else{
-        $("#workNameErr").html("");
-    }
-    
-    var workNumber=$("#workNumber").val();
-    if(workNumber=="" || workNumber==null){
-        $("#workNumberErr").html("Please Enter Work Number ");
-        $("#workNumber").focus();
-        return false;
-    }else{
-        $("#workNumberErr").html("");
-    } */
+
     
     var sanctionedDetails=$("#sanctionedDetails").val();
     if(sanctionedDetails=="" || sanctionedDetails==null){
@@ -242,17 +235,37 @@ $("#submit").click(function(){
 	}else{
 		$("#consultantErr").text("");
 	}
-	
-	var file=$("#file").val();
-    if(file=="" || file==null){
+	var fileName
+	if($("#filedetails tr").length>0){
+		 fileName=$("#filedetails tr:first").data("fileid");
+	}
+	if(fileName==""){
+			fileName=$("#file").val();
+		}
+	if(fileName=="" || fileName==null){
         $("#file_error").html("Please Upload a file ");
-        $("#file").focus();
+        $("#files").focus();
         return false;
-    }else{
-        $("#file_error").html("");
     }
-})
+	
+  
+	
+});
 
+$(document).ready(function(){
+	$('#nav-admin-tab').addClass('active');
+	 $('#nav-admin').addClass('active');
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	});
+	
 </script>
+<!-- <script src=<c:url value="/resources/js/fileUpload.js"/> type="text/javascript"></script> -->
+<!-- <script src=<c:url value="/resources/js/fileinput.js"/> type="text/javascript"></script> -->
 </body>
 </html>

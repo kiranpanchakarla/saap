@@ -1,70 +1,90 @@
 package com.ap.mis.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "administrative_section")
-public class AdministrativeSection implements Serializable{
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7281661295866227383L;
+@Table(name = "tbl_sa_administrative_section")
+public class AdministrativeSection extends AuditModel implements Serializable {
 
+	private static final long serialVersionUID = -7281661295866227383L;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
 	@Column(name = "work_name")
 	private String workName;
 
 	@Column(name = "work_number")
 	private String workNumber;
-	
+
 	@Column(name = "sanctioned_details")
 	private String sanctionedDetails;
-	
-	@Column(name = "typeof_grant")
-	private int typeOfGrant;	
 
-	@Column(name = "financial_year")
-	private int financialYear;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "typeof_grant", referencedColumnName = "id")
+	private GrantType typeOfGrant;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "financial_year", referencedColumnName = "id")
+	private FinancialYear financialYear;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "executive_dept", referencedColumnName = "id")
+	private ExecutiveDept executiveDept;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "consultant", referencedColumnName = "id")
+	private ExecutiveConsultant consultant;
+
+	@OneToOne(targetEntity = Works.class)
+	@JoinColumn(name = "work_id", referencedColumnName = "id")
+	private Works work;
 	
-	@Column(name = "executive_dept")
-	private int executiveDept;
+	/*@OneToMany(cascade=CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+	@JoinColumn(name = "module_id", referencedColumnName = "id")
+    private List<Attachements> attachements;*/
 	
-	@Column(name = "consultant")
-	private int consultant;
 	
-	@OneToOne(targetEntity=User.class)
-	@JoinColumn(name="user_id", referencedColumnName="user_id")
+	
+	
+	/*@Column(name = "path")
+	private String path;*/
+
+	@OneToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
-	 
-	 @Column(name = "path")
-	 private String path;
 
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public String getPath() {
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/*public String getPath() {
 		return path;
 	}
 
 	public void setPath(String path) {
 		this.path = path;
-	}
+	}*/
 
 	public void setId(int id) {
 		this.id = id;
@@ -86,37 +106,12 @@ public class AdministrativeSection implements Serializable{
 		this.workNumber = workNumber;
 	}
 
-
 	public String getSanctionedDetails() {
 		return sanctionedDetails;
 	}
 
 	public void setSanctionedDetails(String sanctionedDetails) {
 		this.sanctionedDetails = sanctionedDetails;
-	}
-
-	public int getTypeOfGrant() {
-		return typeOfGrant;
-	}
-
-	public void setTypeOfGrant(int typeOfGrant) {
-		this.typeOfGrant = typeOfGrant;
-	}
-
-	public int getExecutiveDept() {
-		return executiveDept;
-	}
-
-	public void setExecutiveDept(int executiveDept) {
-		this.executiveDept = executiveDept;
-	}
-
-	public int getConsultant() {
-		return consultant;
-	}
-
-	public void setConsultant(int consultant) {
-		this.consultant = consultant;
 	}
 
 	public User getUser() {
@@ -127,22 +122,75 @@ public class AdministrativeSection implements Serializable{
 		this.user = user;
 	}
 
-	public int getFinancialYear() {
+	public Works getWork() {
+		return work;
+	}
+
+	public void setWork(Works work) {
+		this.work = work;
+	}
+
+	public GrantType getTypeOfGrant() {
+		return typeOfGrant;
+	}
+
+	public void setTypeOfGrant(GrantType typeOfGrant) {
+		this.typeOfGrant = typeOfGrant;
+	}
+
+	public FinancialYear getFinancialYear() {
 		return financialYear;
 	}
 
-	public void setFinancialYear(int financialYear) {
+	public void setFinancialYear(FinancialYear financialYear) {
 		this.financialYear = financialYear;
 	}
+
+	public ExecutiveDept getExecutiveDept() {
+		return executiveDept;
+	}
+
+	public void setExecutiveDept(ExecutiveDept executiveDept) {
+		this.executiveDept = executiveDept;
+	}
+
+	public ExecutiveConsultant getConsultant() {
+		return consultant;
+	}
+
+	public void setConsultant(ExecutiveConsultant consultant) {
+		this.consultant = consultant;
+	}
+	
+	/*public List<Attachements> getAttachements() {
+	return attachements;
+}
+
+public void setAttachements(List<Attachements> attachements) {
+	this.attachements = attachements;
+}*/
 
 	@Override
 	public String toString() {
 		return "AdministrativeSection [id=" + id + ", workName=" + workName + ", workNumber=" + workNumber
 				+ ", sanctionedDetails=" + sanctionedDetails + ", typeOfGrant=" + typeOfGrant + ", financialYear="
-				+ financialYear + ", executiveDept=" + executiveDept + ", consultant=" + consultant + ", user=" + user
-				+ "]";
+				+ financialYear + ", executiveDept=" + executiveDept + ", consultant=" + consultant + ", work=" + work
+				+ ", user=" + user + "]";
 	}
+
 	
 
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
 
 }

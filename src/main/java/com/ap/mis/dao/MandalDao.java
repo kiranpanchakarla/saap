@@ -7,4 +7,5 @@ import com.ap.mis.entity.Mandal;
 public interface MandalDao {
 	List<Mandal> findAll();
 	Mandal findById(int id);
+	public List<Mandal> findByConstituencyId(int id);
 }

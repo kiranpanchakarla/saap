@@ -8,5 +8,5 @@ public interface ConstituencyDao {
 	
 	 public List<Constituency> findAll();
      public Constituency findById(int id);
-
+     public List<Constituency> findByDistrictId(int id);
 }

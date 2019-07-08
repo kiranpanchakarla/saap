@@ -25,4 +25,9 @@ public class MandalServiceImpl implements MandalService {
 		return mandalDao.findById(id);
 	}
 
+	@Override
+	public List<Mandal> findByConstituencyId(int id) {
+		return mandalDao.findByConstituencyId(id);
+	}
+
 }

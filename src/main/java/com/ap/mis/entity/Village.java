@@ -3,32 +3,32 @@ package com.ap.mis.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "villages")
+@Table(name = "tbl_sa_villages")
 
 public class Village {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "village_id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "village_id")
+	private Integer id;
 
-    @Column(name = "village_name")
-    private String name;
+	@Column(name = "village_name")
+	private String name;
 
-    @Column(name = "mandal_id")
-    private Long mandalId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "mandal_id", referencedColumnName = "mandal_id")
+	private Mandal mandalId;
 
-    @Column(name = "village_isactive")
-    private boolean active;
+	@Column(name = "village_isactive")
+	private boolean active;
 
-    @Column(name = "village_isdeleted")
-    private boolean deleted;
+	@Column(name = "village_isdeleted")
+	private boolean deleted;
 
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -38,14 +38,6 @@ public class Village {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Long getMandalId() {
-		return mandalId;
-	}
-
-	public void setMandalId(Long mandalId) {
-		this.mandalId = mandalId;
 	}
 
 	public boolean isActive() {
@@ -63,6 +55,19 @@ public class Village {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-    
-    
+
+	public Mandal getMandalId() {
+		return mandalId;
+	}
+
+	public void setMandalId(Mandal mandalId) {
+		this.mandalId = mandalId;
+	}
+
+	@Override
+	public String toString() {
+		return "Village [id=" + id + ", name=" + name + ", mandalId=" + mandalId + ", active=" + active + ", deleted="
+				+ deleted + "]";
+	}
+
 }

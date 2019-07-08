@@ -36,4 +36,14 @@ public class ConstituencyDaoImpl implements ConstituencyDao {
 		return constituency;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Constituency> findByDistrictId(int id) {
+		
+		List<Constituency> list = sessionFactory.getCurrentSession()
+		        .createQuery( "from Constituency c where c.districtId=' "+ id +"'" )
+		        .list();
+		return list;
+	}
+
 }

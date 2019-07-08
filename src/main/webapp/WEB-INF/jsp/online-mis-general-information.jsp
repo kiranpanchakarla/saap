@@ -18,7 +18,7 @@
 <!--==========================
     Intro Section
   ============================-->
-<section id="intro-inner">
+<!-- <section id="intro-inner">
   <div class="page-header">
     <section id="page-title" class="parralax">
       <div class="container rel">
@@ -32,7 +32,7 @@
       </div>
     </section>
   </div>
-</section>
+</section> -->
 <!-- #intro -->
 
 <main id="main"> 
@@ -46,7 +46,7 @@
     
     <div class="row">
     <div class="col-md-12">
-       <c:url value="/landDetails/generalInfo" var="createUrl" />
+       <c:url value="/adminloggedin" var="createUrl" />
       <form id="msform" method="GET" action="${createUrl}" >
 
            <input type="hidden" name="${_csrf.parameterName}"
@@ -61,42 +61,42 @@
                 <ul class="fs-list-details">
                 <li><p>Types of Work <span class="red">*</span></p></li>
                 <li><!-- <input type="text" title="New" id="typeworkid" name="typeworkid" class="form-control mb-md" readonly value="New">  -->
-                <input type="text" title="New" id="typeworkid" name="typeOfWork" class="form-control mb-md" readonly value="${generalInfo.works.typeOfWork}">
+                <input type="text" title="New" id="typeworkid" name="typeOfWork" class="form-control mb-md" readonly value="${workInfo.typeOfWork.name}">
                  </li> 
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><input type="text" title="NTR KVK (Constituency KVKs)" id="worknatureid" name="natureOfWork" class="form-control mb-md" readonly value="${generalInfo.works.natureOfWork}"> 
+                <li><input type="text" title="NTR KVK (Constituency KVKs)" id="worknatureid" name="natureOfWork" class="form-control mb-md" readonly value="${workInfo.natureOfWork.name}"> 
                </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>District <span class="red">*</span></p></li>
-                <li><input type="text" title="Ananthapuramu" id="districtid" name="districtid" class="form-control mb-md" readonly value="${districts.name}">
+                <li><input type="text" title="Ananthapuramu" id="districtid" name="districtid" class="form-control mb-md" readonly value="${workInfo.district.name}">
                </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Constituency <span class="red">*</span></p></li>
-                <li><input type="text" title="Ichchapuram" id="constituancyId" name="constituancyId" class="form-control mb-md" readonly value="${constituency.name}">
+                <li><input type="text" title="Ichchapuram" id="constituancyId" name="constituancyId" class="form-control mb-md" readonly value="${workInfo.constituency.name}">
             </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Mandal <span class="red">*</span></p></li>
-                <li><input type="text" title="Amadalavalasa" id="mandalId" name="mandalId" class="form-control mb-md" readonly value="${mandal.name}">
+                <li><input type="text" title="Amadalavalasa" id="mandalId" name="mandalId" class="form-control mb-md" readonly value="${workInfo.mandal.name}">
             </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Village <span class="red">*</span></p></li>
-                <li><input type="text" title="Alikam" id="villagesId" name="villagesId" class="form-control mb-md" readonly value="${village.name}"></li>
+                <li><input type="text" title="Alikam" id="villagesId" name="villagesId" class="form-control mb-md" readonly value="${workInfo.village.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Location <span class="red">*</span></p></li>
-                <li><input type="text" title="1" name="location" class="form-control mb-md" readonly value="${generalInfo.works.district}">
+                <li><input type="text" title="1" name="location" class="form-control mb-md" readonly value="${workInfo.district.name}">
                 </ul>
                 
                 <ul class="fs-list-details">
@@ -112,13 +112,13 @@
                 <ul class="fs-list-details">
                 <li><p>Work Detail <span class="red">*</span></p></li>
                 <li><input type="text" title="SAAP" name="s.no" class="form-control mb-md" readonly 
-               value="${generalInfo.works.workDetails}"></li>
+               value="${workLineItems.workDetails}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Estimated Cost <span class="red">*</span></p></li>
                 <li><input type="text" title="SAAP" name="work-details-new" class="form-control mb-md" readonly 
-               value="${generalInfo.works.cost}"></li>
+               value="${workLineItems.cost}"></li>
                 </ul>
                 
                
@@ -132,7 +132,7 @@
                 <ul class="fs-list-details">
                 <li><p>Name of Work <span class="red">*</span></p></li>
                 <li><input type="text" title="SAAP" name="work-name" class="form-control mb-md" readonly 
-                value="${generalInfo.administrativeesction.workName}">
+                value="${workLineItems.workDetails}">
                 </li>
                 </ul>
                 
@@ -150,43 +150,34 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Grant<span class="red">*</span></p></li>
-                <li><input type="text" title="1" name="grantid" class="form-control mb-md" readonly value="${typeOfGrant.name}"></li>
+                <li><input type="text"  title="1" name="grantid" class="form-control mb-md" readonly value="${adminInfo.typeOfGrant.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Financial Year <span class="red">*</span></p></li>
-                <li><input type="text" title="2017-2018" name="grantid" class="form-control mb-md" readonly value="${financialYear.year}">
+                <li><input type="text" title="2017-2018" name="grantid" class="form-control mb-md" readonly value="${adminInfo.financialYear.year}">
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Engagement of executive dept by <span class="red">*</span></p></li>
-                <li><input type="text" title="Govt" name="grantid" class="form-control mb-md" readonly value="${executiveDept.name}">
+                <li><input type="text" title="Govt" name="grantid" class="form-control mb-md" readonly value="${adminInfo.executiveDept.name}">
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Engagement of consultant by <span class="red">*</span></p></li>
-                <li><input type="text" title="SAAP" name="grantid" class="form-control mb-md" readonly value="${consultant.name}">
+                <li><input type="text" title="SAAP" name="grantid" class="form-control mb-md" readonly value="${adminInfo.consultant.name}">
                 </li>
                 </ul>
              
                 
                 <ul class="fs-list-details">
                 <li><div id="page-title1"></div>
-                <p>Upload Adminstrative Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li> <img  src="${filePath}"    width="100" height="70"/> 
-               </li> 
-              
-               
-           
-				
-			</td>
-		</tr>
-	</table>
-
-</body>
-</html>
+                <p>Uploaded Documents (pdf/jpg/png) <span class="red">*</span></p></li>
+               <c:forEach items="${adminFile}" var="file">
+			      <li><a href="${file.value}" target="_blank" id="docView" name="image" style="float: left;">${file.key}</a></li><br>
+		       </c:forEach>
                 </ul>
                 
                 
@@ -207,7 +198,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><input type="text" title="work" name="dept-work-nature" class="form-control mb-md" readonly value="${generalInfo.departmentlinkingine.workNature}">
+                <li><input type="text" title="work" name="dept-work-nature" class="form-control mb-md" readonly value="${workLineItems.workDetails}">
                 </li>
                 </ul>
                 
@@ -219,17 +210,17 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Division <span class="red">*</span></p></li>
-                <li><input type="text" title="PIU DIVISION SRIKAKULAM" name="divisionId" class="form-control mb-md" readonly value="${division.name}"></li>
+                <li><input type="text" title="PIU DIVISION SRIKAKULAM" name="divisionId" class="form-control mb-md" readonly value="${deptInfo.divisionName.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the SubDivision <span class="red">*</span></p></li>
-                <li><input type="text" title="SRIKAKULAM" name="subdivisionId" class="form-control mb-md" readonly value="${subdivisionName.name}"></li>
+                <li><input type="text" title="SRIKAKULAM" name="subdivisionId" class="form-control mb-md" readonly value="${deptInfo.subdivisionName.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Section <span class="red">*</span></p></li>
-                <li><input type="text" title="SRIKAKULAM" name="sectionId" class="form-control mb-md" readonly value="${sectionName.name}"></li>
+                <li><input type="text" title="SRIKAKULAM" name="sectionId" class="form-control mb-md" readonly value="${deptInfo.sectionName.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
@@ -260,7 +251,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Work <span class="red">*</span></p></li>
-                <li><input type="text" title="NTR KVK (Constituency KVKs)" name="activityName" class="form-control mb-md" readonly value="NTR KVK (Constituency KVKs)"></li>
+                <li><input type="text"  name="activityName" class="form-control mb-md" readonly value="${generalInfo.landdetails.natureofwork}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
@@ -293,17 +284,19 @@
                 <ul class="fs-list-details">
                 <li><p>Type Of Land  <span class="red">*</span></p></li>
                 <li><input type="text" title="Government" name="activityId" class="form-control mb-md" readonly 
-                value="${generalInfo.landdetails.typeOfLand}">
+                value="${landinfo.typeOfLand.name}">
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
-                <li><p>Upload Land Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
-                <li><img src="${landfilePath}"  width="100" height="70"/></li>
+                <li><p>Uploaded Documents <span class="red">*</span></p></li>
+                <c:forEach items="${landFile}" var="landfile">
+			      <li><a href="${landfile.value}" target="_blank" id="docView" name="image" style="float: left;" >${landfile.key}</a></li><br>
+		        </c:forEach>
                 </ul>
                 
                 </div>
-                <input type="submit" name="next" class="next action-button" value="Save and Continue">
+                <input type="button" id="backToHome" name="next" class="next action-button" value="Home">
                 
             </fieldset>
             
@@ -328,4 +321,14 @@
 <jsp:include page="online-mis-footer.jsp" />
 
 </body>
+
+<script>
+$(document).ready(function() {
+
+    $("#backToHome").click(function() {
+        <c:url value="/adminloggedin" var="homeUrl" />
+        window.location.href = "${homeUrl}"
+    });
+});
+</script>
 </html>

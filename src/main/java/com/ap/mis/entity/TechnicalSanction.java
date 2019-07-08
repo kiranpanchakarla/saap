@@ -5,73 +5,60 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 @Entity
-@Table(name ="technicalsanction")
-public class TechnicalSanction implements Serializable{
-	
+@Table(name = "tbl_sa_technicalsanction")
+public class TechnicalSanction extends AuditModel implements Serializable {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	/*@Column(name="natureof_work")
-	private String work;
-	
-	@Column(name = "work_number")
-	private int workNumber;
-	
-	@Column(name = "work_name")
-	private String workName;*/
-	
-	@Column(name="techsanction_number")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
+
+	@Column(name = "techsanction_number")
 	private int techSanction_no;
-	
-	@Column(name="date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
-	private Date date;
-	
-	@Column(name="amount")
+
+	@Column(name = "doc_date")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	private Date docDate;
+
+	@Column(name = "amount")
 	private double amount;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "work_id", referencedColumnName = "id")
+	private Works work;
 	
-	@Column(name="work_id")
-	private int workId;
+	private transient String natureOfWork;
+	
+	private transient String workNumber;
+	
+	private transient String workName;
+	
+	
 
-	public int getWorkId() {
-		return workId;
+	public String getNatureOfWork() {
+		return natureOfWork;
 	}
 
-	public void setWorkId(int workId) {
-		this.workId = workId;
+	public void setNatureOfWork(String natureOfWork) {
+		this.natureOfWork = natureOfWork;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	/*public String getWork() {
-		return work;
-	}
-
-	public void setWork(String work) {
-		this.work = work;
-	}
-
-	public int getWorkNumber() {
+	public String getWorkNumber() {
 		return workNumber;
 	}
 
-	public void setWorkNumber(int workNumber) {
+	public void setWorkNumber(String workNumber) {
 		this.workNumber = workNumber;
 	}
 
@@ -81,7 +68,15 @@ public class TechnicalSanction implements Serializable{
 
 	public void setWorkName(String workName) {
 		this.workName = workName;
-	}*/
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public int getTechSanction_no() {
 		return techSanction_no;
@@ -89,14 +84,6 @@ public class TechnicalSanction implements Serializable{
 
 	public void setTechSanction_no(int techSanction_no) {
 		this.techSanction_no = techSanction_no;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public double getAmount() {
@@ -107,22 +94,28 @@ public class TechnicalSanction implements Serializable{
 		this.amount = amount;
 	}
 
-	@Override
-	public String toString() {
-		return "TechnicalSanction [id=" + id + ", techSanction_no=" + techSanction_no + ", date=" + date + ", amount="
-				+ amount + ", workId=" + workId + "]";
+	public Works getWork() {
+		return work;
 	}
 
-	/*@Override
-	public String toString() {
-		return "TechnicalSanction [id=" + id + ", work=" + work + ", workNumber=" + workNumber + ", workName="
-				+ workName + ", techSanction_no=" + techSanction_no + ", date=" + date + ", amount=" + amount
-				+ ", workId=" + workId + "]";
-	}*/
+	public void setWork(Works work) {
+		this.work = work;
+	}
 
-	
-	
-	
+	public Date getDocDate() {
+		return docDate;
+	}
+
+	public void setDocDate(Date docDate) {
+		this.docDate = docDate;
+	}
+
+	@Override
+	public String toString() {
+		return "TechnicalSanction [id=" + id + ", techSanction_no=" + techSanction_no + ", docDate=" + docDate
+				+ ", amount=" + amount + ", work=" + work + "]";
+	}
+    
 	
 
 }

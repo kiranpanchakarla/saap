@@ -8,4 +8,5 @@ import com.ap.mis.entity.Village;
 public interface VillageService {
 	 public List<Village> findAll();
      public Village findById(int id);
+     public List<Village> findByMandalId(int id);
 }

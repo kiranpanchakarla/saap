@@ -1,37 +1,34 @@
 package com.ap.mis.entity;
 
-
 import java.io.Serializable;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "districts")
+@Table(name = "tbl_sa_districts")
 public class District implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "district_id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "district_id",nullable = false, unique = true)
+	private Integer id;
 
-    @Column(name = "district_name")
-    private String name;
+	@Column(name = "district_name")
+	private String name;
 
-    @Column(name = "state_id")
-    private Long stateId;
+	@Column(name = "state_id")
+	private Integer stateId;
 
-    @Column(name = "district_isactive")
-    private boolean active;
+	@Column(name = "district_isactive")
+	private boolean active;
 
-    @Column(name = "district_isdeleted")
-    private boolean deleted;
+	@Column(name = "district_isdeleted")
+	private boolean deleted;
 
-
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -43,11 +40,11 @@ public class District implements Serializable {
 		this.name = name;
 	}
 
-	public Long getStateId() {
+	public Integer getStateId() {
 		return stateId;
 	}
 
-	public void setStateId(Long stateId) {
+	public void setStateId(Integer stateId) {
 		this.stateId = stateId;
 	}
 
@@ -66,6 +63,11 @@ public class District implements Serializable {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-    
-    
+
+	@Override
+	public String toString() {
+		return "District [id=" + id + ", name=" + name + ", stateId=" + stateId + ", active=" + active + ", deleted="
+				+ deleted + "]";
+	}
+
 }

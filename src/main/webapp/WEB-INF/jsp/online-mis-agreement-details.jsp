@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -8,7 +10,20 @@
 <title>SAAP : Agreement Details</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 </head>
+ <script type="text/javascript"> 
 
+ $(document).ready(function() {  
+	    
+	    $('#siteHandOverDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#siteHandOverDate').datepicker('setDate', $('#shDate').val());
+	    
+	    $('#agreementCouncludedDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#agreementCouncludedDate').datepicker('setDate', $('#agreDate').val());
+	    
+	    $('#expectedCompletionDate').datepicker({dateFormat: 'yy-mm-dd'});
+	    $('#expectedCompletionDate').datepicker('setDate', $('#ecDate').val());
+	 }); 
+ </script>   
 <body>
 
 <!--=== Header ====-->
@@ -17,7 +32,7 @@
 <!--==========================
     Intro Section
   ============================-->
-<section id="intro-inner">
+<!-- <section id="intro-inner">
   <div class="page-header">
     <section id="page-title" class="parralax">
       <div class="container rel">
@@ -31,7 +46,7 @@
       </div>
     </section>
   </div>
-</section>
+</section> -->
 <!-- #intro -->
 
 <main id="main"> 
@@ -47,9 +62,20 @@
     <div class="col-md-12">
      
           <c:url value="/agreementDetails/save" var="createUrl" />
-      <form id="msform" method="POST" action="${createUrl}" modelAttribute="agreementDetailsObj"  >
+      <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="agreementDetailsObj"  >
       <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />     
             
+        <c:choose>
+		<c:when test="${!empty agreementDetailsObj.id}">
+			<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+			<input type="hidden" name="shDate" id ="shDate" value="${agreementDetailsObj.siteHandOverDate}"> 
+			<input type="hidden" name="agreDate" id ="agreDate" value="${agreementDetailsObj.agreementCouncludedDate}"> 
+			<input type="hidden" name="ecDate" id ="ecDate" value="${agreementDetailsObj.expectedCompletionDate}"> 
+			
+			
+		</c:when>
+		</c:choose>
+		
             <!-- fieldsets -->
             <fieldset>
             <div class="fs-list-full"> 
@@ -57,78 +83,76 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of Work <span class="red">*</span></p></li>
-                <li><input type="text" id="natureOfWork" name="natureOfWork"  class="form-control mb-md" readonly value="${workInfo.natureOfWork}">
+                <li><form:input type="text" id="natureOfWork" path="natureOfWork"  class="form-control mb-md" readOnly="true" value="${workInfo.natureOfWork.name}"/>
                 <span id="natureOfWorkErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Work Number  <span class="red">*</span></p></li>
-                <li><input type="text" id="workNo" name="workNo" title="workno" class="form-control mb-md" readonly value="${workInfo.workNo}">
+                <li><form:input type="text" id="workNo" path="workNo" title="workno" class="form-control mb-md" readonly="true" value="${workInfo.workNo}"/>
                 <span id="workNoErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Contractor Name<span class="red">*</span></p></li>
-                <li><input type="text"  id="contratorName" name="contratorName" class="form-control mb-md" readonly value="${tenderingInfo.angencyName}">
+                <li><form:input type="text"  id="contratorName" path="contratorName" class="form-control mb-md" readonly="true" value="${tenderingInfo.angencyName.name}"/>
                 <span id="contratorNameErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Amount(in Rs.) <span class="red">*</span></p></li>
-                <li><input type="text" name="bgAmount" id="bgAmount"  class="form-control mb-md" maxlength="9"  value ="00.00">
+                <li><form:input type="text" path="bgAmount" id="bgAmount"  class="form-control mb-md" maxlength="9"  value =""/>
                 <span id="bgAmountErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Performance Security Amount(in Rs.)   <span class="red">*</span></p></li>
-                <li><input type="text" name="performanceSecurityAmount" id="performanceSecurityAmount"  class="form-control mb-md" maxlength="9"  value ="00.00">
+                <li><form:input type="text" path="performanceSecurityAmount" id="performanceSecurityAmount"  class="form-control mb-md" maxlength="9"  value =""/>
                 <span id="performanceSecurityAmountErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Site Hand Over Date: <span class="red">*</span></p></li>
-                <li><input type="date" name="siteHandOverDate" id="siteHandOverDate" placeholder="DD/MM/YYYY" class="datepicker form-control mb-md hasDatepicker">
+                <li>
+                <form:input type="date" path="siteHandOverDate" id="siteHandOverDate" placeholder="DD/MM/YYYY" />
+                
                 <span id="siteHandOverDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Agreement Concluded Date: <span class="red">*</span></p></li>
-                <li><input type="date" name="agreementCouncludedDate" id="agreementCouncludedDate" placeholder="DD/MM/YYYY" class="form-control mb-md hasDatepicker">
+                <li><form:input type="date" path="agreementCouncludedDate" id="agreementCouncludedDate" placeholder="DD/MM/YYYY" />
                 <span id="agreementCouncludedDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Period of Contract (No. of Months): <span class="red">*</span></p></li>
-                <li><input type="text" name="periodOfContract" id="periodOfContract" class="form-control mb-md" maxlength="9">
+                <li><form:input type="text" path="periodOfContract" id="periodOfContract" class="form-control mb-md" maxlength="9"/>
                 <span id="periodOfContractErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Expected date of Completion as per Agreement: <span class="red">*</span></p></li>
-                <li><input type="date" name="expectedCompletionDate" id="expectedCompletionDate" placeholder="DD/MM/YYYY" class="form-control mb-md" ><!-- readonly -->
+                <li><form:input type="date" path="expectedCompletionDate" id="expectedCompletionDate" placeholder="DD/MM/YYYY"  />
                <span id="expectedCompletionDateErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Agreement Number: <span class="red">*</span></p></li>
-                <li><input type="text" name="agreementNumber" id="agreementNumber" class="form-control mb-md" placeholder="Agreement Number">
+                <li><form:input type="text" path="agreementNumber" id="agreementNumber" class="form-control mb-md" placeholder="Agreement Number" />
                 <span id="agreementNumberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
-               
-                
                 </div>
-                
-                
             </fieldset>
             
             
@@ -139,15 +163,15 @@
                 
                 <ul class="fs-list-details fs-list-full inline-mis-list">
                 <li><p>Bank Guarantee Details</p></li>
-                <li><p><input type="radio" id="bankGuarantee" name="bankGuaranteeDetails" value="yes" class="radioClass">Yes</p>
-                <p><input type="radio" id="bankGuarantee" name="bankGuaranteeDetails" value="no" class="radioClass" checked=""> No</p>
+                <li><p><form:radiobutton id="bankGuarantee" path="bankGuaranteeDetails" value="yes" class="radioClass"/>Yes</p>
+                <p><form:radiobutton id="bankGuarantee" path="bankGuaranteeDetails" value="no" class="radioClass" checked=""/> No</p>
                </li>
                </ul>
                
                <ul class="fs-list-details fs-list-full inline-mis-list">
                 <li><p>Demand Draft Details</p></li>
-                <li><p><input type="radio" id="demandDraft" name="demandDraftDetails" value="yes" class="radioClassOne">Yes</p>
-                <p><input type="radio" id="demandDraft" name="demandDraftDetails" value="no" class="radioClassOne" checked=""> No</p>
+                <li><p><form:radiobutton id="demandDraft" path="demandDraftDetails" value="yes" class="radioClassOne"/>Yes</p>
+                <p><form:radiobutton id="demandDraft" path="demandDraftDetails" value="no" class="radioClassOne" checked=""/> No</p>
                </li>
                </ul>
                
@@ -159,22 +183,21 @@
                </ul>
                
                </div>
-               <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
+                <c:if test="${agreementDetailsObj.id==null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
+                </c:if>
+                <c:if test="${agreementDetailsObj.id!=null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="update and Continue">
+                </c:if>
+               
                </fieldset>
-               
-               
-            
-            
-            
-        </form>
-        
+               <input type="hidden" id="workid" name="work.id" value="${workInfo.id}">
+        </form:form>>
     </div>
 </div>
 <!-- /.MultiStep Form -->
-    
-
-    </div>
-  </section>
+</div>
+</section>
       
   <!-- #contact -->   
 </main>
@@ -186,9 +209,9 @@
 
 <script type="text/javascript">
 
-$("#performanceSecurityAmount,#bgAmount").on('input', function () {
+ $("#performanceSecurityAmount,#bgAmount").on('input', function () {
     this.value = this.value.match(/^\d+\.?\d{0,2}/);
-});
+});  
 $("#periodOfContract").on('input', function () {
     this.value = this.value.match(/^\d+/);
 });

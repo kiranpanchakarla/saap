@@ -8,25 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_workcreation_natureofwork")
+@Table(name = "tbl_sa_works_natureofwork")
 public class NatureOfWork {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id")
-	private int id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id",nullable = false, unique = true)
+	private Integer id;
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "isactive")
 	private boolean active;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -45,6 +45,10 @@ public class NatureOfWork {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "NatureOfWork [id=" + id + ", name=" + name + ", active=" + active + "]";
+	}
+	
 }

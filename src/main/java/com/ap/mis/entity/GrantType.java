@@ -1,5 +1,7 @@
 package com.ap.mis.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,46 +10,49 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_adminsection_typeofgrant")
-public class GrantType {
-	
-	  	@Id
-	    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-	    @Column(name = "id")
-	    private int id;
+@Table(name = "tbl_sa_adminsection_typeofgrant")
+public class GrantType implements Serializable {
 
-	    @Column(name = "name")
-	    private String name;
-	    
-	    @Column(name = "isactive")
-	    private boolean active;
+	private static final long serialVersionUID = 1L;
 
-	    
-	    
-		public int getId() {
-			return id;
-		}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
-		public void setId(int id) {
-			this.id = id;
-		}
+	@Column(name = "name")
+	private String name;
 
-		public String getName() {
-			return name;
-		}
+	@Column(name = "isactive")
+	private boolean active;
 
-		public void setName(String name) {
-			this.name = name;
-		}
+	public Integer getId() {
+		return id;
+	}
 
-		public boolean isActive() {
-			return active;
-		}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-		public void setActive(boolean active) {
-			this.active = active;
-		}
-	    
-	    
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean getActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	@Override
+	public String toString() {
+		return "GrantType [id=" + id + ", name=" + name + ", active=" + active + "]";
+	}
 
 }

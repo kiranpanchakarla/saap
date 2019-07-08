@@ -1,70 +1,147 @@
 package com.ap.mis.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "works")
-public class Works implements Serializable {
-	
+@Table(name = "tbl_sa_works")
+public class Works extends AuditModel implements Serializable {
 
 	private static final long serialVersionUID = -3465813074586302847L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "typeof_work", referencedColumnName = "id")
+	private TypeOfWork typeOfWork;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "natureof_work", referencedColumnName = "id")
+	private NatureOfWork natureOfWork;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "District", referencedColumnName = "district_id")
+	private District district;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "village", referencedColumnName = "village_id")
+	private Village village;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "mandal", referencedColumnName = "mandal_id")
+	private Mandal mandal;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "constituency", referencedColumnName = "constituency_id")
+	private Constituency constituency;
 	
-	@Column(name = "typeof_work")
-	private String typeOfWork;
-
-	@Column(name = "natureof_work")
-	private String natureOfWork;
-
-	@Column(name = "noof_works")
-	private int noOfWorks;
-
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER )
+	@JoinColumn(name = "worklineitems_id", referencedColumnName = "id")
+    private List<WorkLineItemsList> WorkLineItemsList;
+	
+	@Column(name = "status")
+	private String status;
+	
+	@Column(name = "work_status")
+	private String workStatus;
+ 
 	@Column
 	private String location;
 
-	@Column
-	private int district;
-	
-	@Column
-	private int village;
-	
-	@Column
-	private int mandal;
-	
-	@Column
-	private int constituency;
-	
-	@Column(name = "work_username")
-	private String workUserName;
-	
+	@Column(name = "noof_works")
+	private Integer noOfWorks;
+
 	@Column(name = "work_number")
 	private String workNo;
-	
+
 	@Column(name = "work_details")
 	private String workDetails;
-	
+
 	@Column(name = "estimated_cost")
 	private double cost;
-	
-	@OneToOne(targetEntity=User.class)
-	@JoinColumn(name="user_id", referencedColumnName="user_id")
+
+	@OneToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
-	 public String getWorkDetails() {
+	@Column(name="is_active")
+	private Boolean isActive = true;
+	
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public TypeOfWork getTypeOfWork() {
+		return typeOfWork;
+	}
+
+	public void setTypeOfWork(TypeOfWork typeOfWork) {
+		this.typeOfWork = typeOfWork;
+	}
+
+	public NatureOfWork getNatureOfWork() {
+		return natureOfWork;
+	}
+
+	public void setNatureOfWork(NatureOfWork natureOfWork) {
+		this.natureOfWork = natureOfWork;
+	}
+
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+	}
+
+	public Village getVillage() {
+		return village;
+	}
+
+	public void setVillage(Village village) {
+		this.village = village;
+	}
+
+	public Mandal getMandal() {
+		return mandal;
+	}
+
+	public void setMandal(Mandal mandal) {
+		this.mandal = mandal;
+	}
+
+	public Constituency getConstituency() {
+		return constituency;
+	}
+
+	public void setConstituency(Constituency constituency) {
+		this.constituency = constituency;
+	}
+
+	public String getWorkDetails() {
 		return workDetails;
 	}
 
@@ -88,35 +165,19 @@ public class Works implements Serializable {
 		this.user = user;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getTypeOfWork() {
-		return typeOfWork;
-	}
-
-	public void setTypeOfWork(String typeOfWork) {
-		this.typeOfWork = typeOfWork;
-	}
-
-	public String getNatureOfWork() {
-		return natureOfWork;
-	}
-
-	public void setNatureOfWork(String natureOfWork) {
-		this.natureOfWork = natureOfWork;
-	}
-
-	public int getNoOfWorks() {
+	public Integer getNoOfWorks() {
 		return noOfWorks;
 	}
 
-	public void setNoOfWorks(int noOfWorks) {
+	public void setNoOfWorks(Integer noOfWorks) {
 		this.noOfWorks = noOfWorks;
 	}
 
@@ -128,15 +189,6 @@ public class Works implements Serializable {
 		this.location = location;
 	}
 
-	
-
-	public String getWorkUserName() {
-		return workUserName;
-	}
-
-	public void setWorkUserName(String workUserName) {
-		this.workUserName = workUserName;
-	}
 
 	public String getWorkNo() {
 		return workNo;
@@ -145,40 +197,41 @@ public class Works implements Serializable {
 	public void setWorkNo(String workNo) {
 		this.workNo = workNo;
 	}
-
-	public int getDistrict() {
-		return district;
+	
+	public List<WorkLineItemsList> getWorkLineItemsList() {
+		return WorkLineItemsList;
 	}
 
-	public void setDistrict(int district) {
-		this.district = district;
+	public void setWorkLineItemsList(List<WorkLineItemsList> workLineItemsList) {
+		WorkLineItemsList = workLineItemsList;
 	}
 
-	public int getVillage() {
-		return village;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setVillage(int village) {
-		this.village = village;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-
-	public int getMandal() {
-		return mandal;
-	}
-
-	public void setMandal(int mandal) {
-		this.mandal = mandal;
-	}
-
-	public int getConstituency() {
-		return constituency;
-	}
-
-	public void setConstituency(int constituency) {
-		this.constituency = constituency;
-	}
-
 	
 	
-	
+
+	public String getWorkStatus() {
+		return workStatus;
+	}
+
+	public void setWorkStatus(String workStatus) {
+		this.workStatus = workStatus;
+	}
+
+	@Override
+	public String toString() {
+		return "Works [id=" + id + ", typeOfWork=" + typeOfWork + ", natureOfWork=" + natureOfWork + ", district="
+				+ district + ", village=" + village + ", mandal=" + mandal + ", constituency=" + constituency
+				+ ", WorkLineItemsList=" + WorkLineItemsList + ", status=" + status + ", workStatus=" + workStatus
+				+ ", location=" + location + ", noOfWorks=" + noOfWorks + ", workNo=" + workNo + ", workDetails="
+				+ workDetails + ", cost=" + cost + ", user=" + user + ", isActive=" + isActive + "]";
+	}
+
+	 
 }

@@ -7,57 +7,116 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="agreement_details")
-public class AgreementDetails {
-	
+@Table(name = "tbl_sa_agreement_details")
+public class AgreementDetails extends AuditModel {
+
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	@Column(name="perf_securityAmount")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
+
+	@Column(name = "perf_securityAmount")
 	private double performanceSecurityAmount;
 	
-	@Column(name="sitehandover_date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
-	private Date siteHandOverDate;
-	
-	@Column(name="agreementConcluded_date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
-	private Date agreementCouncludedDate;
-	
-	@Column(name="periodofcontract")
-	private int periodOfContract;
-	
-	@Column(name="expcompletion_date")
-	@DateTimeFormat(pattern = "yy-mm-dd") 
-	private Date expectedCompletionDate;
-	
-	@Column(name="agreement_number")
-	private String agreementNumber;
-	
-	@Column(name="bank_gauranteedetails")
-	private String bankGuaranteeDetails;
-	
-	@Column(name="demanddraft_details")
-	private String demandDraftDetails;
-	
-	@Column(name="others")
-	private String others;
-	
-	@Column(name="work_id")
-	private int workId;
+	@Column(name = "bgAmount")
+	private double bgAmount;
 
-	public int getId() {
+	@Column(name = "sitehandover_date")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	private Date siteHandOverDate;
+
+	@Column(name = "agreementConcluded_date")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	private Date agreementCouncludedDate;
+
+	@Column(name = "periodofcontract")
+	private int periodOfContract;
+
+	@Column(name = "expcompletion_date")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	private Date expectedCompletionDate;
+
+	@Column(name = "agreement_number")
+	private String agreementNumber;
+
+	@Column(name = "bank_gauranteedetails")
+	private String bankGuaranteeDetails;
+
+	@Column(name = "demanddraft_details")
+	private String demandDraftDetails;
+
+	@Column(name = "others")
+	private String others;
+
+	@OneToOne(targetEntity = Works.class)
+	@JoinColumn(name = "work_id", referencedColumnName = "id")
+	private Works work;
+	
+    private transient String natureOfWork;
+	
+	private transient String workNo;
+	
+	private transient String contratorName;
+	
+	//private transient double bgAmount;
+	
+	@OneToOne(targetEntity = TenderingProcess.class)
+	   @JoinColumn(name = "tender_id", referencedColumnName = "id")
+	   private TenderingProcess tenderingProcess;
+
+	   public TenderingProcess getTenderingProcess() {
+	       return tenderingProcess;
+	   }
+
+	   public void setTenderingProcess(TenderingProcess tenderingProcess) {
+	       this.tenderingProcess = tenderingProcess;
+	   }
+	
+
+	public String getNatureOfWork() {
+		return natureOfWork;
+	}
+
+	public void setNatureOfWork(String natureOfWork) {
+		this.natureOfWork = natureOfWork;
+	}
+
+	public String getWorkNo() {
+		return workNo;
+	}
+
+	public void setWorkNo(String workNo) {
+		this.workNo = workNo;
+	}
+
+	public String getContratorName() {
+		return contratorName;
+	}
+
+	public void setContratorName(String contratorName) {
+		this.contratorName = contratorName;
+	}
+
+	public double getBgAmount() {
+		return bgAmount;
+	}
+
+	public void setBgAmount(double bgAmount) {
+		this.bgAmount = bgAmount;
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -133,12 +192,12 @@ public class AgreementDetails {
 		this.others = others;
 	}
 
-	public int getWorkId() {
-		return workId;
+	public Works getWork() {
+		return work;
 	}
 
-	public void setWorkId(int workId) {
-		this.workId = workId;
+	public void setWork(Works work) {
+		this.work = work;
 	}
 
 	@Override
@@ -147,9 +206,9 @@ public class AgreementDetails {
 				+ ", siteHandOverDate=" + siteHandOverDate + ", agreementCouncludedDate=" + agreementCouncludedDate
 				+ ", periodOfContract=" + periodOfContract + ", expectedCompletionDate=" + expectedCompletionDate
 				+ ", agreementNumber=" + agreementNumber + ", bankGuaranteeDetails=" + bankGuaranteeDetails
-				+ ", demandDraftDetails=" + demandDraftDetails + ", others=" + others + ", workId=" + workId + "]";
+				+ ", demandDraftDetails=" + demandDraftDetails + ", others=" + others + ", work=" + work + "]";
 	}
-	
-	
-	
+
+
+
 }

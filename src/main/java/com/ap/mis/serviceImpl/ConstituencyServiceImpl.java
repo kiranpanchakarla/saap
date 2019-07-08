@@ -26,4 +26,10 @@ public class ConstituencyServiceImpl implements ConstituencyService {
 		return constituencyDao.findById(id);
 	}
 
+	@Override
+	public List<Constituency> findByDistrictId(int id) {
+		 
+		return constituencyDao.findByDistrictId(id);
+	}
+
 }

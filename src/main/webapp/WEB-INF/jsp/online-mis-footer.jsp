@@ -7,11 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!--==========================
+<!-- ==========================
     Footer
   ============================-->
 <footer id="footer">
-  <div class="footer-connect">
+  <!-- <div class="footer-connect">
     <div class="container">
       <div class="footer-social">
         <label class="font-heading" for="">Follow us</label>
@@ -20,25 +20,13 @@
         <a target="_blank" href="https://www.linkedin.com/company/sports-authority-of-ap/" href="#" title="Linkedin"><i class="fa fa-linkedin-square"></i></a> 
         <a target="_blank" href="https://www.youtube.com/channel/UCy3mdgAFCimIxl60stdXopQ" href="#" title="Youtube"><i class="fa fa-youtube"></i></a></div>
     </div>
-  </div>
+  </div> -->
   <div class="footer-top">
     <div class="container">
       <div class="row">
-        <div class="col-lg-3 col-md-6 footer-info">
-          <h4>Know more about Us</h4>
-          <p>Sports Authority of Andhra Pradesh is an Apex body for Promotion of Sports in the state. SAAP is implementing the Sports development programs, Schemes of Govt. of India / SAI, besides Construction / Maintenance of Stadia, Establishment / Sports Authority of India.</p>
-        </div>
-        <div class="col-lg-3 col-md-6 footer-links">
-          <h4>Company </h4>
-          <ul>
-            <li> <a href="index.html">Home</a></li>
-            <li> <a href="about-us.html">About us</a></li>
-            <li> <a href="online-mis.html">Online Mis</a></li>
-            <li> <a href="feedback.html">Feedback</a></li>
-            <li> <a href="contact.html">Contact Us</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-3 col-md-6 footer-contact">
+        
+        
+        <div class="col-lg-10 col-md-6 footer-contact">
           <h4>Our location</h4>
           <div class="contact-info-box">
             <div class="contact-info-item">
@@ -56,22 +44,14 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-3 col-md-6 footer-newsletter">
-          <h4>Business Hours</h4>
-          <div class="contact-info-box">
-            <p>Our support available to help you 24 hours a day, seven days a week.</p>
-            <ul class="hours">
-              <li>Monday-Friday: <span>9am to 5pm</span></li>
-              <li>Saturday: <span>10am to 2pm</span></li>
-              <li>Sunday: <span>Closed</span></li>
-            </ul>
-          </div>
+        <div class="col-lg-2 col-md-6 footer-newsletter">
+          <div class="pull-right"><a href=""><img src="/OnlineMisApplication/resources/img/logo.png" alt="" title=""></a></div>
         </div>
       </div>
     </div>
   </div>
   <div class="container">
-    <div class="copyright"> &copy; copyright © 2019 <strong>Sports Authority of Andhra Pradesh</strong> . All rights reserved. </div>
+    <div class="copyright"> <b>Manuh Global Technologies Pvt. Ltd </b> | Works management system &copy; copyright 2019 <strong>Sports Authority of Andhra Pradesh</strong> . All rights reserved. </div>
   </div>
 </footer>
 <!-- #footer --> 
@@ -80,7 +60,7 @@
 <div id="preloader"></div>
 
 <!-- JavaScript Libraries --> 
-<script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery.min.js"></script> 
+<%--  <script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery.min.js"></script>   --%>
 <script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery-migrate.min.js"></script> 
 <script src="${pageContext.request.contextPath}/resources/lib/bootstrap/js/bootstrap.bundle.min.js"></script> 
 <script src="${pageContext.request.contextPath}/resources/lib/easing/easing.min.js"></script> 

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ap.mis.dao.LineDepartmentDao;
+import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.Division;
 import com.ap.mis.entity.Section;
 import com.ap.mis.entity.Subdivision;
@@ -39,5 +41,61 @@ public class LineDepartmentDaoImpl implements LineDepartmentDao {
 		List<Section> sectionList= sessionFactory.getCurrentSession().createQuery("from Section").getResultList();
 		return sectionList;
 	}
+
+	
+	
+	@Override
+	public DepartmentLinkingLine departmentLinkingLineSave(DepartmentLinkingLine departmentLink) {
+		
+		try{
+			sessionFactory.getCurrentSession().save(departmentLink);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return departmentLink;
+	}
+
+	@Override
+	public DepartmentLinkingLine getDeptInfo(int id) {
+		return (DepartmentLinkingLine)sessionFactory.getCurrentSession().get(DepartmentLinkingLine.class, id);
+	}
+
+	@Override
+	public DepartmentLinkingLine getdepartDetails(int id) {
+		/*DepartmentLinkingLine departInfo=null;
+		departInfo=(DepartmentLinkingLine) sessionFactory.getCurrentSession().createQuery("from DepartmentLinkingLine where work.id="+id).getSingleResult();
+		return departInfo;*/
+		
+		DepartmentLinkingLine departInfo = null;
+		try {
+			@SuppressWarnings("unchecked")
+			List<DepartmentLinkingLine> deptList = sessionFactory.getCurrentSession()
+					.createQuery("from DepartmentLinkingLine where work.id=" + id).list();
+			if (deptList.size() != 0) {
+				for (DepartmentLinkingLine dept : deptList) {
+					departInfo = dept;
+				}
+			} else {
+				departInfo = null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return departInfo;
+		
+	}
+
+	@Override
+	public DepartmentLinkingLine departmentLinkingLineUpdate(DepartmentLinkingLine lineDept) {
+		try{
+			sessionFactory.getCurrentSession().update(lineDept);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return lineDept;
+	}
+	
 
 }

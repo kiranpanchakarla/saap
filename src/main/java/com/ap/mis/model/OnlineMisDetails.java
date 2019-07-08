@@ -24,6 +24,11 @@ public class OnlineMisDetails {
 	public void setEstimatedCost(double estimatedCost) {
 		this.estimatedCost = estimatedCost;
 	}
+	@Override
+	public String toString() {
+		return "OnlineMisDetails [departmentName=" + departmentName + ", noOfWorks=" + noOfWorks + ", estimatedCost="
+				+ estimatedCost + "]";
+	}
 	
 	
 

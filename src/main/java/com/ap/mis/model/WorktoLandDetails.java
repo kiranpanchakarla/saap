@@ -9,36 +9,22 @@ import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.Works;
 
-public class WorktoLandDetails implements Serializable{
-	
+public class WorktoLandDetails implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5723112479319013984L;
-	
-	
+
 	private Works works;
-	
+
 	private AdministrativeSection administrativeesction;
-	
+
 	private DepartmentLinkingLine departmentlinkingine;
-	 
-	private LandDetails  landdetails;
+
+	private LandDetails landdetails;
+
 	
-	 private MultipartFile file;
-	 
-	 
-		
-		public MultipartFile getFile() {
-			return file;
-		}
-
-
-
-		public void setFile(MultipartFile file) {
-			this.file = file;
-		}
-
 
 	public Works getWorks() {
 		return works;
@@ -71,6 +57,13 @@ public class WorktoLandDetails implements Serializable{
 	public void setLanddetails(LandDetails landdetails) {
 		this.landdetails = landdetails;
 	}
+
+	@Override
+	public String toString() {
+		return "WorktoLandDetails [works=" + works + ", administrativeesction=" + administrativeesction
+				+ ", departmentlinkingine=" + departmentlinkingine + ", landdetails=" + landdetails + "]";
+	}
+
 	
-	
+
 }

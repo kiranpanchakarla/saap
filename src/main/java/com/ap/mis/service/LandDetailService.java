@@ -3,9 +3,11 @@ package com.ap.mis.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.Division;
 import com.ap.mis.entity.Land;
+import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.Section;
 import com.ap.mis.entity.Subdivision;
 
@@ -16,5 +18,9 @@ public interface LandDetailService {
 	public Division findByDivisionId(int id);
 	public Subdivision findBySubDivision(int id);
 	public  Section findBySectionId(int id);
+	public LandDetails getLandinfo(int id);
+	public LandDetails getLandDetails(int id);
+	public LandDetails landDetailsUpdate(LandDetails landDetails);
+	public LandDetails landDetailsSave(LandDetails landDetails);
 
 }

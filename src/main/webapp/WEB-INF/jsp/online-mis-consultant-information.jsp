@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -18,7 +20,7 @@
 <!--==========================
     Intro Section
   ============================-->
-<section id="intro-inner">
+<!-- <section id="intro-inner">
   <div class="page-header">
     <section id="page-title" class="parralax">
       <div class="container rel">
@@ -32,7 +34,7 @@
       </div>
     </section>
   </div>
-</section>
+</section> -->
 <!-- #intro -->
 
 <main id="main"> 
@@ -47,10 +49,13 @@
     <div class="row">
     <div class="col-md-12">
        		   <c:url value="/ConsultantInfo/save" var="createUrl" />
-		   <form id="msform" method="post" action="${createUrl}" modelAttribute="consultantInfoObject">
-              <input type="hidden" name="${_csrf.parameterName}"
-          value="${_csrf.token}" />
-           
+		 <%--   <form id="msform" method="post" action="${createUrl}" modelAttribute="consultantInfoObject"> --%>
+		       <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="consultantInfoObject" >  
+		       <c:choose>
+				<c:when test="${!empty consultantInfoObject.id}">
+					<form:input type="hidden" path="id" class="form-control" id="id" ></form:input>
+				</c:when>
+				</c:choose> 
             
             <!-- fieldsets -->
             <fieldset>
@@ -59,49 +64,49 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of Consultant Firm<span class="red">*</span></p></li>
-                <li><input type="text" title="consultant-firm" id="consultant_firm" name="consultant_firm" class="form-control mb-md" placeholder="Name of Consultant Firm">  
+                <li><form:input type="text" title="consultant-firm" id="consultant_firm" path="consultant_firm" class="form-control mb-md" placeholder="Name of Consultant Firm"/>  
                 <span id="consultant_firmErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>PAN Number <span class="red">*</span></p></li>
-                <li><input type="text" title="pan-number" id="pan_number" name="pan_number" class="form-control mb-md" placeholder="PAN Number"> 
+                <li><form:input type="text" title="pan-number" id="pan_number" path="pan_number" maxlength='10' class="form-control mb-md" placeholder="PAN Number" /> 
                  <span id="pan_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>TIN Number <span class="red">*</span></p></li>
-                <li><input type="text" title="tin-number" id="tin_number" name="tin_number" class="form-control mb-md" placeholder="TIN Number"> 
+                <li><form:input type="text" title="tin-number" id="tin_number" maxlength='10' path="tin_number" class="form-control mb-md" placeholder="TIN Number" /> 
                  <span id="tin_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Mobile Number<span class="red">*</span></p></li>
-                <li><input type="text" title="mobile-number" id="mobile_no" name="mobile_no" maxlength="10" class="form-control mb-md"  placeholder="Mobile Number"> 
+                <li><form:input type="text" title="mobile-number" id="mobile_no" path="mobile_no" maxlength="10" class="form-control mb-md"  placeholder="Mobile Number" /> 
                 <span id="mobile_noErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Landline Number <span class="red">*</span></p></li>
-                <li><input type="text" title="landline-number" id="landline_no" name="landline_no" maxlength="10" class="form-control mb-md" placeholder="landline Number"> 
+                <li><form:input type="text" title="landline-number" id="landline_no" path="landline_no" maxlength="10" class="form-control mb-md" placeholder="landline Number" /> 
                <span id="landline_noErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Email Id<span class="red">*</span></p></li>
-                <li><input type="text" title="email-id" id="emailId" name="emailId" class="form-control mb-md" placeholder="Email Number"> 
+                <li><form:input type="text" title="email-id" id="emailId" path="emailId" class="form-control mb-md" placeholder="Email Number" /> 
                <span id="emailIdErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Address<span class="red">*</span></p></li>
-                <li><textarea title="address" id="address" name="address" class="form-control mb-md" placeholder="Address"> </textarea>
+                <li><form:textarea title="address" id="address" path="address" class="form-control mb-md" placeholder="Address"/>  
                <span id="addressErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -114,45 +119,54 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Bank <span class="red">*</span></p></li>
-                <li><input type="text" title="bank" id="bank" name="bank_name" class="form-control mb-md" placeholder="Bank"> 
+                <li><form:input type="text" title="bank" id="bank" path="bank_name" class="form-control mb-md" placeholder="Bank"/> 
                  <span id="bankErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Branch <span class="red">*</span></p></li>
-                <li><input type="text" title="branch" id="branch" name="branch" class="form-control mb-md" placeholder="Branch">
+                <li><form:input type="text" title="branch" id="branch" path="branch" class="form-control mb-md" placeholder="Branch"/>
                <span id="branchErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Account Type<span class="red">*</span></p></li>
-                <li><input type="text" title="account-type" id="account_type" name="account_type" class="form-control mb-md" placeholder="Account Type">
+                <li><form:input type="text" title="account-type" id="account_type" path="account_type" class="form-control mb-md" placeholder="Account Type"/>
                <span id="account_typeErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>A/c Number<span class="red">*</span></p></li>
-                <li><input type="text" title="account-number" id="account_number" name="account_number" class="form-control mb-md" placeholder="Account Number">
+                <li><form:input type="text" title="account-number" id="account_number" path="account_number" class="form-control mb-md" maxlength='18' placeholder="Account Number"/>
                <span id="account_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>IFSC Code<span class="red">*</span></p></li>
-                <li><input type="text" title="ifsc-code" id="ifsc_code" name="ifsc_code" class="form-control mb-md" placeholder="IFSC Code">
+                <li><form:input type="text" title="ifsc-code" id="ifsc_code" path="ifsc_code" class="form-control mb-md" pattern="[a-zA-Z]{4}[0-9]{7}" placeholder="IFSC Code" />
                 <span id="ifsc_codeErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                 
                 </div>
+                <!-- <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue"> -->
+                <c:if test="${consultantInfoObject.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
+                </c:if>
+                <c:if test="${consultantInfoObject.id!=null}">
+                <input type="submit" id="submit" name="next" class="next action-button" value="update and Continue">
+                </c:if>
+                
                 
             </fieldset>
-            
-        </form>
+            <input type="hidden" id="work.id" name="work.id" value="${workIdSession}">
+        <%-- </form> --%>
+        </form:form>
+        
         
     </div>
 </div>

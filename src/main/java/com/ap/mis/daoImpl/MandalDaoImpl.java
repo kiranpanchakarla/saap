@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ap.mis.dao.MandalDao;
+import com.ap.mis.entity.Constituency;
 import com.ap.mis.entity.Mandal;
 import com.ap.mis.entity.Village;
 
@@ -33,6 +34,14 @@ public class MandalDaoImpl implements MandalDao {
 		Mandal mandal = new Mandal();
 		mandal = (Mandal) sessionFactory.getCurrentSession().get(Mandal.class, id);
 		return mandal;
+	}
+
+	@Override
+	public List<Mandal> findByConstituencyId(int id) {
+		List<Mandal> list = sessionFactory.getCurrentSession()
+		        .createQuery( "from Mandal m where m.constituencyId=' "+ id +"'" )
+		        .list();
+		return list;
 	}
 
 }

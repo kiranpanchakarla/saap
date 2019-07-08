@@ -8,83 +8,65 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="consultant_Info")
-public class ConsultantInfo implements Serializable{
+@Table(name = "tbl_sa_consultant_Info")
+public class ConsultantInfo extends AuditModel implements Serializable {
 	private static final long serialVersionUID = -3465813074586302847L;
-	
+
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	@Column(name="consultant_firm")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
+
+	@Column(name = "consultant_firm")
 	private String consultant_firm;
-	
-	@Column(name="pan_number")
+
+	@Column(name = "pan_number")
 	private String pan_number;
-	
-	@Column(name="tin_number")
+
+	@Column(name = "tin_number")
 	private String tin_number;
-	
-	@Column(name="mobile_no")
+
+	@Column(name = "mobile_no")
 	private String mobile_no;
-	
-	@Column(name="landline_no")
+
+	@Column(name = "landline_no")
 	private String landline_no;
-	
-	@Column(name="emailId")
+
+	@Column(name = "emailId")
 	private String emailId;
-	
-	@Column(name="address")
+
+	@Column(name = "address")
 	private String address;
-	
-	@Column(name="bank_name")
+
+	@Column(name = "bank_name")
 	private String bank_name;
-	
-	@Column(name="branch")
+
+	@Column(name = "branch")
 	private String branch;
-	
-	@Column(name="account_type")
+
+	@Column(name = "account_type")
 	private String account_type;
-	
-	@Column(name="account_number")
+
+	@Column(name = "account_number")
 	private long account_number;
-	
-	@Column(name="ifsc_code")
+
+	@Column(name = "ifsc_code")
 	private String ifsc_code;
-	
-	@Column(name="work_id")
-	private int workId;
-	
-	public int getWorkId() {
-		return workId;
-	}
 
-	public void setWorkId(int workId) {
-		this.workId = workId;
-	}
+	@OneToOne(targetEntity = Works.class)
+	@JoinColumn(name = "work_id", referencedColumnName = "id")
+	private Works work;
 	
-	/*@Column(name="work_id")
-	private String workId;
-	
-	 public String getWorkId() {
-		return workId;
-	}
-
-	public void setWorkId(String workId) {
-		this.workId = workId;
-	}*/
-	
-	
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -184,18 +166,23 @@ public class ConsultantInfo implements Serializable{
 		this.ifsc_code = ifsc_code;
 	}
 
+	public Works getWork() {
+		return work;
+	}
+
+	public void setWork(Works work) {
+		this.work = work;
+	}
+
 	@Override
 	public String toString() {
 		return "ConsultantInfo [id=" + id + ", consultant_firm=" + consultant_firm + ", pan_number=" + pan_number
 				+ ", tin_number=" + tin_number + ", mobile_no=" + mobile_no + ", landline_no=" + landline_no
 				+ ", emailId=" + emailId + ", address=" + address + ", bank_name=" + bank_name + ", branch=" + branch
 				+ ", account_type=" + account_type + ", account_number=" + account_number + ", ifsc_code=" + ifsc_code
-				+ "]";
+				+ ", work=" + work + "]";
 	}
-  
-	
-	
-	
-	
-	
+
+
+
 }

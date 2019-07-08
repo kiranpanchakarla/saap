@@ -8,25 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_tendering_agency")
-public class Agency {
-	
-  	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
-    private int id;
+@Table(name = "tbl_sa_tendering_agency")
+public class Agency extends AuditModel {
 
-    @Column(name = "name")
-    private String name;
-    
-    @Column(name = "isactive")
-    private boolean active;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer id;
 
-	public int getId() {
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "isactive")
+	private boolean active;
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -45,7 +45,10 @@ public class Agency {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-    
-    
 
+	@Override
+	public String toString() {
+		return "Agency [id=" + id + ", name=" + name + ", active=" + active + "]";
+	}
+	
 }
