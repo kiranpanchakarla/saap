@@ -178,17 +178,6 @@
                <c:forEach items="${adminFile}" var="file">
 			      <li><a href="${file.value}" target="_blank" id="docView" name="image" style="float: left;">${file.key}</a></li><br>
 		       </c:forEach>
-               </li> 
-              
-               
-           
-				
-			</td>
-		</tr>
-	</table>
-
-</body>
-</html>
                 </ul>
                 
                 
@@ -307,7 +296,7 @@
                 </ul>
                 
                 </div>
-                <input type="submit" name="next" class="next action-button" value="Save and Continue">
+                <input type="button" id="backToHome" name="next" class="next action-button" value="Home">
                 
             </fieldset>
             
@@ -332,4 +321,14 @@
 <jsp:include page="online-mis-footer.jsp" />
 
 </body>
+
+<script>
+$(document).ready(function() {
+
+    $("#backToHome").click(function() {
+        <c:url value="/adminloggedin" var="homeUrl" />
+        window.location.href = "${homeUrl}"
+    });
+});
+</script>
 </html>

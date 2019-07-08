@@ -71,7 +71,7 @@
             <!-- fieldsets -->  
             <fieldset>
              <div class="fs-list-full"> 
-                <h2 class="fs-title">Administrative Section</h2>
+                <h2 class="fs-title">Administrative Sanction</h2>
                 <ul class="fs-list-details">
                 <li><p>Name of Work <span class="red">*</span></p></li>
                 <li>
@@ -87,7 +87,7 @@
                 </ul>
                 
                 <ul class="fs-list-details">
-                <li><p>AS Sanctioned Details <span class="red">*</span></p></li>
+                <li><p>Sanctioned Details <span class="red">*</span></p></li>
                 <li><form:input type="text" path="sanctionedDetails" id="sanctionedDetails" placeholder="AS Sanctioned Details "/>
                 	<br><span id="sanctionedDetailsErr" class="errors" style="color:red;float:right;"></span> </li>
                 </ul>

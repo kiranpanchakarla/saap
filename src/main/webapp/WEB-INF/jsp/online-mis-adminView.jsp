@@ -82,7 +82,7 @@
                 <li><div id="page-title1"></div>
                 <p>Upload Adminstrative Details Document(pdf/jpg/png) <span class="red">*</span></p></li>
                 <c:forEach items="${filePath}" var="entry">
-			      <li><a href="${entry.key}" target="_self" id="docView" name="image" >${entry.value}</a></li>
+			      <li><a href="${entry.key}" target="_self" id="docView" name="image" style="float: left;">${entry.value}</a></li><br>
 		       </c:forEach>
                </li> 
                </ul>

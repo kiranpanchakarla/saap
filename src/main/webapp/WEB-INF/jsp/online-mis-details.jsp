@@ -8,7 +8,10 @@
 <title>SAAP : Online MIS Details</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 </head>
-
+<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
+    rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
+    rel="stylesheet" type="text/css" />
 <body>
 
 <!--=== Header ====-->
@@ -40,17 +43,19 @@
       Contact Us Section
     ============================-->
   
-  <section id="contact" class="section-bg-con wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-    <div class="container">
+  <section id="contact" class="section-bg-con">
+    <div class="container-full">
     <div class="row">
-    <table class="table table-striped" width="100%" border="1" class="table">
-  <tr>
+     <div class="col-md-12">
+    <table id="viewTable" class="display table-hover table-striped table-bordered " >
+    <thead>
+  <!-- <tr>
     <th colspan="12"><h6 class="highlight text-center">SPORTS AUTHORITY OF ANDHRA PRADESH</h6></th>
   </tr>
   <tr>
-    <td colspan="11"><p class="text-center"><strong>Abstract of status of SAAP infra work entrusted to various Executing Departments in AP State</strong></p></td>
-   <td>Dt. 26.12.2019</td> 
-  </tr>
+    <td colspan="12"><p class="text-center"><strong>Abstract of status of SAAP infra work entrusted to various Executing Departments in AP State</strong></p></td>
+  </tr> -->
+  
   <tr>
     <td rowspan="2">S.No.</td>
     <td rowspan="2">Name of the Department</td>
@@ -62,15 +67,17 @@
     <td rowspan="2">No. Agreement entered</td>
     <td rowspan="2">No. of works in progress</td>
     <td rowspan="2">No.of works Completed</td>
-    <td rowspan="2">Remarks</td> 
+    <td rowspan="2">Remarks</td>
   </tr>
-  <tr>
+  <!-- <tr>
     <td>Sites identified</td>
     <td>DPRs completed</td> 
-  </tr>
-  <tr>
+  </tr> -->
+ <!--  <tr>
     <td colspan="12"><strong>KVK Works</strong></td> 
-  </tr>
+  </tr> -->
+  </thead>
+  <tbody>
   <c:forEach items="${reportList}" var="product">
   <tr>
     <td><c:set var="count" value="${count + 1}"
@@ -78,400 +85,20 @@
     <td>${product.departmentName}</td>
     <td>${product.noOfWorks}</td>
     <td>${product.estimatedCost}</td>
+   <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  </c:forEach>
-  <!-- <tr>
-    <td>2</td>
-    <td>APMSIDC</td>
-    <td>7</td>
-    <td>14.00</td>
-    <td>7</td>
-    <td>6</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>6</td>
-    <td>6</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>APSHCL</td>
-    <td>74</td>
-    <td>152.79</td>
-    <td>71</td>
-    <td>69</td>
-    <td>2</td>
-    <td>11</td>
-    <td>58</td>
-    <td>29</td>
-    <td>26</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>APSPHCL</td>
-    <td>11</td>
-    <td>22.57</td>
-    <td>10</td>
-    <td>10</td>
-    <td>1</td>
-    <td>6</td>
-    <td>4</td>
-    <td>2</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td>R & B</td>
-    <td>23</td>
-    <td>47.07</td>
-    <td>17</td>
-    <td>17</td>
-    <td>5</td>
-    <td>3</td>
-    <td>9</td>
-    <td>8</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>PR</td>
-    <td>12</td>
-    <td>24.00</td>
-    <td>11</td>
-    <td>8</td>
-    <td>4</td>
-    <td>2</td>
-    <td>5</td>
-    <td>4</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>7</td>
-    <td>PH</td>
-    <td>1</td>
-    <td>2.00</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>8</td>
-    <td>RWS & S</td>
-    <td>1</td>
-    <td>2.00</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>9</td>
-    <td>Municipal Engineering, RJY</td>
-    <td>1</td>
-    <td>2.00</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>10</td>
-    <td>RVM/SSA</td>
-    <td>3</td>
-    <td>6.00</td>
-    <td>3</td>
-    <td>3</td>
-    <td>&nbsp;</td>
-    <td>1</td>
-    <td>2</td>
-    <td>2</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td><strong>Total</strong></td>
-    <td><strong>167</strong></td>
-    <td><strong>340.43</strong></td>
-    <td><strong>154</strong></td>
-    <td><strong>144</strong></td>
-    <td><strong>16</strong></td>
-    <td><strong>30</strong></td>
-    <td><strong>104</strong></td>
-    <td><strong>70</strong></td>
-    <td><strong>26</strong></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="12"><strong>Other Works</strong></td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>CPWD</td>
-    <td>5</td>
-    <td>32.50</td>
-    <td>4</td>
-    <td>3</td>
-    <td>1</td>
-    <td>1</td>
-    <td>4</td>
-    <td>2</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>APEWIDC</td>
-    <td>18</td>
-    <td>19.06</td>
-    <td>18</td>
-    <td>16</td>
-    <td>2</td>
-    <td>3</td>
-    <td>13</td>
-    <td>5</td>
-    <td>7</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>APMSIDC</td>
-    <td>3</td>
-    <td>14.00</td>
-    <td>3</td>
-    <td>3</td>
-    <td>&nbsp;</td>
-    <td>2</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>APSHCL</td>
-    <td>31</td>
-    <td>54.94</td>
-    <td>30</td>
-    <td>28</td>
-    <td>2</td>
-    <td>3</td>
-    <td>25</td>
-    <td>12</td>
-    <td>11</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td>APSPHCL</td>
-    <td>224</td>
-    <td>303.34</td>
-    <td>47</td>
-    <td>40</td>
-    <td>184</td>
-    <td>19</td>
-    <td>21</td>
-    <td>16</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>R & B</td>
-    <td>13</td>
-    <td>57.01</td>
-    <td>11</td>
-    <td>10</td>
-    <td>5</td>
-    <td>1</td>
-    <td>5</td>
-    <td>5</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>7</td>
-    <td>PR</td>
-    <td>15</td>
-    <td>15.57</td>
-    <td>13</td>
-    <td>11</td>
-    <td>3</td>
-    <td>4</td>
-    <td>6</td>
-    <td>2</td>
-    <td>4</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>8</td>
-    <td>PH</td>
-    <td>5</td>
-    <td>7.59</td>
-    <td>5</td>
-    <td>5</td>
-    <td>&nbsp;</td>
-    <td>3</td>
-    <td>2</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>9</td>
-    <td>RWS & S</td>
-    <td>5</td>
-    <td>6.20</td>
-    <td>5</td>
-    <td>5</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>4</td>
-    <td>1</td>
-    <td>2</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>10</td>
-    <td>Municipal Engineering, RJY</td>
-    <td>3</td>
-    <td>18.15</td>
-    <td>3</td>
-    <td>3</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>2</td>
-    <td>2</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>11</td>
-    <td>SAAP</td>
-    <td>30</td>
-    <td>3.51</td>
-    <td>30</td>
-    <td>29</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>29</td>
-    <td>5</td>
-    <td>24</td>
     <td>&nbsp;</td> 
   </tr>
-  <tr>
-    <td>12</td>
-    <td>Muncipal Corp., Chittoore</td>
-    <td>1</td>
-    <td>0.93</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>13</td>
-    <td>RVM/SSA</td>
-    <td>1</td>
-    <td>1.50</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>14</td>
-    <td>Muncipal Coprp., Machilipatnam</td>
-    <td>1</td>
-    <td>1.50</td>
-    <td>1</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>0</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>15</td>
-    <td>ANU</td>
-    <td>4</td>
-    <td>27.60</td>
-    <td>4</td>
-    <td>4</td>
-    <td>&nbsp;</td>
-    <td>2</td>
-    <td>2</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>16</td>
-    <td>NPCC</td>
-    <td>1</td>
-    <td>15.00</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>1</td>
-    <td>1</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td><strong>360</strong></td>
-    <td><strong>578.39</strong></td>
-    <td><strong>177</strong></td>
-    <td><strong>161</strong></td>
-    <td><strong>200</strong></td>
-    <td><strong>38</strong></td>
-    <td><strong>117</strong></td>
-    <td><strong>55</strong></td>
-    <td><strong>51</strong></td>
-    <td>&nbsp;</td>
-  </tr> -->
+  </c:forEach>
+  </tbody>
 </table>
 
- <table width="100%" border="1" class="table">
+ <!-- <table width="100%" border="1" class="table">
  <tr>
     <td>Entrusted</td>
     <td></td>
@@ -508,8 +135,9 @@
     <td><strong></strong></td>
     <td><strong></strong></td>
  </tr>
-</table> 
+</table>  -->
     
+    </div>
     </div>
     </div>
   </section>
@@ -525,4 +153,18 @@
 <jsp:include page="online-mis-footer.jsp" />
 
 </body>
+<script type="text/javascript">
+$(document).ready(function() {
+	 
+    $('#viewTable').DataTable({
+        "scrollX" : false,
+        "searching": false,
+			"info": false,
+			"responsive": true,
+			"dom": '<"top"i>rt<"bottom"flp><"clear">'
+    });
+});
+</script>
+<script src=<c:url value="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"/>
+        type="text/javascript"></script>
 </html>

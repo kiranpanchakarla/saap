@@ -71,14 +71,14 @@
                 
                 <ul class="fs-list-details">
                 <li><p>PAN Number <span class="red">*</span></p></li>
-                <li><form:input type="text" title="pan-number" id="pan_number" path="pan_number" class="form-control mb-md" placeholder="PAN Number" /> 
+                <li><form:input type="text" title="pan-number" id="pan_number" path="pan_number" maxlength='10' class="form-control mb-md" placeholder="PAN Number" /> 
                  <span id="pan_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>TIN Number <span class="red">*</span></p></li>
-                <li><form:input type="text" title="tin-number" id="tin_number" path="tin_number" class="form-control mb-md" placeholder="TIN Number" /> 
+                <li><form:input type="text" title="tin-number" id="tin_number" maxlength='10' path="tin_number" class="form-control mb-md" placeholder="TIN Number" /> 
                  <span id="tin_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -140,14 +140,14 @@
                
                <ul class="fs-list-details">
                 <li><p>A/c Number<span class="red">*</span></p></li>
-                <li><form:input type="text" title="account-number" id="account_number" path="account_number" class="form-control mb-md" placeholder="Account Number"/>
+                <li><form:input type="text" title="account-number" id="account_number" path="account_number" class="form-control mb-md" maxlength='18' placeholder="Account Number"/>
                <span id="account_numberErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>IFSC Code<span class="red">*</span></p></li>
-                <li><form:input type="text" title="ifsc-code" id="ifsc_code" path="ifsc_code" class="form-control mb-md" placeholder="IFSC Code" />
+                <li><form:input type="text" title="ifsc-code" id="ifsc_code" path="ifsc_code" class="form-control mb-md" pattern="[a-zA-Z]{4}[0-9]{7}" placeholder="IFSC Code" />
                 <span id="ifsc_codeErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>

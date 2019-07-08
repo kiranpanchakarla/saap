@@ -1,7 +1,9 @@
 package com.ap.mis.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -60,12 +62,13 @@ public class ConsultantRoleController {
 		
         AdministrativeSection adminInfo = admService.getAdminDetails(Integer.parseInt(workId));
         List<Attachements> adminattachements=attachService.getAttachementsDetails(Integer.parseInt(workId),EnumFilter.ADMIN.getStatus());
-		List<String> filePath = new ArrayList<String>();
+        Map<String, String> adminFile = new HashMap<String, String>();
 		for(Attachements adminattachDetails :adminattachements) {
 			if (adminattachDetails.getPath() != null && !adminattachDetails.getPath().equals("")) {
 				String adminattachmentPath=ContextUtil.populateContext(request) + adminattachDetails.getPath();
-				filePath.add(adminattachmentPath);
-				model.addAttribute("filePath",filePath);
+				String fileNameVal=adminattachDetails.getPath().substring(adminattachDetails.getPath().lastIndexOf('\\') + 1);
+				adminFile.put(fileNameVal, adminattachmentPath);
+				model.addAttribute("adminFile",adminFile);
 				
 			} else {
 				model.addAttribute("filePath", null);
@@ -73,13 +76,14 @@ public class ConsultantRoleController {
 		}
 		model.addAttribute("adminInfo",adminInfo);
 		LandDetails landInfo = landDetailService.getLandDetails(Integer.parseInt(workId));
-		List<String> landFilePath = new ArrayList<String>();
+		Map<String, String> landFile = new HashMap<String, String>();
 		List<Attachements> landattachements=attachService.getAttachementsDetails(Integer.parseInt(workId),EnumFilter.LANDDETAILS.getStatus());
 		for(Attachements landattachDetails :landattachements) {
 			if (landattachDetails.getPath() != null && !landattachDetails.getPath().equals("")) {
 				String landattachmentPath=ContextUtil.populateContext(request) + landattachDetails.getPath();
-				landFilePath.add(landattachmentPath);
-				model.addAttribute("landfilePath",landFilePath);
+				String fileNameVal=landattachDetails.getPath().substring(landattachDetails.getPath().lastIndexOf('\\') + 1);
+				landFile.put(fileNameVal, landattachmentPath);
+				model.addAttribute("landFile",landFile);
 				
 			} else {
 				model.addAttribute("landfilePath", null);

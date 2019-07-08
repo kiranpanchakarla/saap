@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.ap.mis.dao.ViewDetailsDao;
 import com.ap.mis.entity.User;
-import com.ap.mis.model.ViewDetails;
-import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.EnumMap;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.SecurityUtil;
 
 @Repository
@@ -46,7 +45,7 @@ public class ViewDetailsDaoImpl implements  ViewDetailsDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getApprovalDetials() {
-		String status = EnumFilter.APPROVAL.getStatus();
+		String status = EnumWorkStatus.PENDING_SAAP_APPROVAL.getStatus();
 		
 	List<Object[]> details=sessionFactory.getCurrentSession().
 			createQuery("select distinct(a.id),d.name,e.name,a.workDetails,a.workNo,f.departmentName,g.surveyNo,h.consultant_firm,j.name,a.id,a.workStatus from Works a\r\n" + 

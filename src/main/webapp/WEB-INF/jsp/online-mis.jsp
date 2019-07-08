@@ -19,8 +19,12 @@
 
                                 $("#work_detailsErr").html("");
                                 var count = $("#noOfWorks").val();
-                               /*  alert(count); */
-                                if (count > 0) {
+                                /*  alert(count);  */
+                                 if(count > 5){
+                                	 alertify.alert("Number of Works","Max 5 works are Allowed!");
+                                	 $("#noOfWorks").val("");
+                                 }
+                                if (count <= 5) {
                                     $("#createval").val(1);
                                     $("#work_table tr").remove();
 
