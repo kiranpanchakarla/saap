@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,11 @@ public class PreliminaryPreparationLayoutController {
 
 	@Autowired
 	AttachmentService attachmentService;
+	
+	private Integer maxFileSize = (1024 * 1024 * 10);
+	
+	@Value("${file.upload.extensions}") 
+	private String allowedExtensions;
 
 	@GetMapping(path = { "/create", "/edit", "/view" })
 	public String createPreliminaryPreparationLayout(Model model, HttpSession session) {
@@ -43,6 +49,8 @@ public class PreliminaryPreparationLayoutController {
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		model.addAttribute("preliminaryPreparationLayoutAttachmentFiles", attachments);
 		model.addAttribute("moduleName", workModuleStatus.getStatus());
+		model.addAttribute("maxFileSize", maxFileSize);
+		model.addAttribute("allowedExtensions", allowedExtensions);
 
 		return "online-mis-preliminary-preparation-layout";
 	}

@@ -85,6 +85,7 @@ public class PreliminaryDrawingController {
 		model.addAttribute("PPLayoutAttachmentFiles", PPLayoutAttachmentFiles);
 		model.addAttribute("GIAttachmentFiles", GIAttachmentFiles);
 		model.addAttribute("SAAP_APPROVED_STATUS", EnumWorkStatus.SAAP_APPROVED.getStatus());
+		model.addAttribute("PENDING_SAAP_APPROVAL", EnumWorkStatus.PENDING_SAAP_APPROVAL.getStatus());
 
 		return "online-mis-preliminary-drawings";
 	}

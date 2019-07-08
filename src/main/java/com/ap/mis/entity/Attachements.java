@@ -34,7 +34,7 @@ public class Attachements extends AuditModel implements Serializable {
 	private Boolean isActive = true;
 	
 	@Column(name="file_size")
-	private long fileSize;
+	private Long fileSize;
 	
 	@Transient
 	private String convertFileSize;
@@ -96,12 +96,12 @@ public class Attachements extends AuditModel implements Serializable {
 	
 	
 
-	public long getFileSize() {
+	public Long getFileSize() {
 		
 		return fileSize;
 	}
 
-	public void setFileSize(long fileSize) {
+	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
 	
 	}

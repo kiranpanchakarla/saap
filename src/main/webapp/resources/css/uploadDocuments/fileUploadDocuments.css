@@ -22,14 +22,16 @@
 	display: none;
 }
 
-.warning-alertjs-model .ajs-header {
+.ajs-button:focus, .ajs-button:active {
+	outline: none !important;
+}
+
+/* .warning-alertjs-model .ajs-header {
 	background-color: #ffc107 !important;
 	color: #fff;
 }
 
-.ajs-button:focus, .ajs-button:active {
-	outline: none !important;
-}
+
 
 .ajs-button:hover {
 	box-shadow: 0 0 0 2px white, 0 0 0 3px #1cb9c8;
@@ -38,7 +40,7 @@
 .danger-alertjs-model .ajs-header {
 	background-color: #dc3545 !important;
 	color: #fff;
-}
+} */
 
 .ajs-button {
 	width: auto;

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,11 @@ public class LandSurveyDetailsController {
 	@Autowired
 	LandSurveyDetailService landSurveyDetailsService;
 
+	private Integer maxFileSize = (1024 * 1024 * 10);
+	
+	@Value("${file.upload.extensions}") 
+	private String allowedExtensions;
+
 	@GetMapping(path = { "/create", "/edit" })
 	public String createLandSurveyDetails(Model model, HttpSession session) {
 
@@ -71,6 +77,9 @@ public class LandSurveyDetailsController {
 		model.addAttribute("landSurveyAttachmentFiles", landSurveyAttachments);
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		model.addAttribute("moduleName", EnumFilter.LAND_SURVEY_DETAILS.getStatus());
+		model.addAttribute("maxFileSize", maxFileSize);
+		model.addAttribute("allowedExtensions", allowedExtensions);		
+		
 
 		return "online-mis-land-survey-details";
 	}
@@ -104,10 +113,10 @@ public class LandSurveyDetailsController {
 	public String saveLandSurveyDetails(@ModelAttribute LandSurveyDetails landSurveyDetails, Model model) {
 
 		boolean isNewLandSurveyDetails = landSurveyDetails.getId() == null;
-		
+
 		landSurveyDetailsService.save(landSurveyDetails);
-		
-		if(!isNewLandSurveyDetails) {
+
+		if (!isNewLandSurveyDetails) {
 			return "redirect:/preliminaryPreparationLayout/edit";
 		}
 
@@ -130,6 +139,7 @@ public class LandSurveyDetailsController {
 		model.addAttribute("landSurveyDetails", existedLandSurveyDetails);
 		model.addAttribute("landAttachmentFiles", attachments);
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
+		model.addAttribute("maxFileSize", maxFileSize);
 
 		return "online-mis-land-survey-details-view";
 	}

@@ -17,7 +17,7 @@
 	href="${pageContext.request.contextPath}/resources/css/uploadDocuments/fileUploadDocuments.css"
 	rel="stylesheet" />
 <style>
-.fileViewButton {
+/*.fileViewButton {
 	line-height: 2.10;
 }
 
@@ -39,10 +39,10 @@
 	background: transparent;
 }
 
-/* .tableCollapseButton:hover span {
+ .tableCollapseButton:hover span {
 	transform: translate(-50%, -50%) rotate(360deg);
 	transition: transform .5s linear;
-} */
+} 
 .tableCollapseButton span {
 	top: 50%;
 	position: absolute;
@@ -81,6 +81,8 @@
 	visibility: hidden;
 	transition: all .5s ease-out;
 }
+
+*/
 </style>
 </head>
 
@@ -168,7 +170,7 @@
 										value="${landSurveyDetails.landDetails.typeOfLand.name}" /></li>
 								</ul>
 
-								<ul class="fs-list-details">
+								<%-- <ul class="fs-list-details">
 									<li><p>Uploaded Land Details Document</p></li>
 									<li>
 										<Button type="button" class="fileViewButton"
@@ -177,7 +179,44 @@
 											<span>View files </span>
 										</Button>
 									</li>
+								</ul> --%>
+
+
+								<ul class="fs-list-details">
+									<li><p>Uploaded Land Details Document</p></li>
+									<li>
+										<table class="text-left w-50">
+											<tbody>
+												<c:forEach items="${landAttachmentFiles}" var="file"
+													varStatus="loop">
+													<c:set var="filePathParts"
+														value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+													<tr>
+
+														<td><a
+															href="${pageContext.request.contextPath}${file.path}"
+															target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a>
+														</td>
+														<td>${file.convertFileSize}</td>
+													</tr>
+
+												</c:forEach>
+												<c:if test="${fn:length(landAttachmentFiles) == 0}">
+													<tr>
+														<td colspan="4">
+															<p class="text-center pt-4 mb-0">No attachments found</p>
+														</td>
+													</tr>
+												</c:if>
+
+											</tbody>
+										</table>
+									</li>
 								</ul>
+
+
+
+
 
 
 
@@ -199,6 +238,17 @@
 
 								<ul class="fs-list-details">
 									<li><p>Upload Land Details Document(pdf/jpg/png)</p></li>
+									<li><label for="files" class="fileuploadLabel mb-0">Select
+											files</label> <input type="file" name="file" id="files" multiple
+										class="d-none"> <small id="selectedFilesCount">*
+											Files count : ${fn:length(landSurveyAttachmentFiles)}</small></li>
+
+								</ul>
+
+
+								<%-- With show hide of view files button
+								<ul class="fs-list-details">
+									<li><p>Upload Land Details Document(pdf/jpg/png)</p></li>
 									<li>
 										<div class="d-flex flex-row">
 											<div class="w-100">
@@ -215,19 +265,25 @@
 
 									</li>
 
-								</ul>
+								</ul> --%>
 							</div>
 							<div class="table-responsive landDetailsAttachmentTableShow">
 								<div class="landDetailsAttachmentTableOuter">
+								
+								
+									<!-- 
+									table close button on top left to hide this table
 									<button class="tableCollapseButton" type="button">
 										<span> <i class="fa fa-close"></i></span>
-									</button>
+									</button> -->
+									
 									<table class="table table-hover mb-3 table-bordered">
 										<thead class="thead-light">
 											<tr>
 												<th style="width: 5%">S.No.</th>
 												<th style="width: 60%">Name</th>
-												<th style="width: 27%">Upload on</th>
+												<th style="width: 10%">Size</th>
+												<th style="width: 18%">Upload on</th>
 												<th style="width: 8%">Action</th>
 											</tr>
 										</thead>
@@ -236,9 +292,10 @@
 												varStatus="loop">
 												<c:set var="filePathParts"
 													value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
-												<tr data-attachment-id="${file.id}">
+												<tr data-attachment-id="${file.id}" data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
 													<td>${loop.index + 1}</td>
 													<td>${filePathParts[fn:length(filePathParts)-1]}</td>
+													<td>${file.convertFileSize}</td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 															value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 													<td class="text-center"><a href="#" name="remove"><i
@@ -310,19 +367,21 @@
 								<tr>
 									<th style="width: 5%">S.No.</th>
 									<th style="width: 60%">Name</th>
-									<th style="width: 30%">Upload on</th>
+									<th style="width: 10%">Size</th>
+									<th style="width: 20%">Upload on</th>
 									<th style="width: 5%">Action</th>
 								</tr>
 							</thead>
-							<tbody id="landDetailsAttachmentsTable" class="">
+							<tbody id="landDetailsAttachmentsModalTable" class="">
 
 								<c:forEach items="${landAttachmentFiles}" var="file"
 									varStatus="loop">
 									<c:set var="filePathParts"
 										value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
-									<tr>
+									<tr data-file-size="2565423">
 										<td>${loop.index+1}</td>
 										<td>${filePathParts[fn:length(filePathParts)-1]}</td>
+										<td>${file.convertFileSize}</td>
 										<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 												value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 										<td class="text-center"><a href="${file.path}"
@@ -332,7 +391,7 @@
 								</c:forEach>
 								<c:if test="${fn:length(landAttachmentFiles) == 0}">
 									<tr>
-										<td colspan="4">
+										<td colspan="5">
 											<p class="text-center pt-4 mb-0">No attachments found</p>
 										</td>
 									</tr>
@@ -360,11 +419,14 @@
 
 	<script>
 		$(document).ready(function() {
-
+			/*
+			// Show uploaded files on model
 			$("#viewUploadsLandDetails").off().on('click', function() {
 
 				$("#landDetailsAttachmentsModalView").modal('show');
 			});
+			
+			 */
 
 			$(".tableCollapseButton").off().on('click', function() {
 
@@ -409,18 +471,30 @@
 		//var filesList = [];
 
 		// vallid file extensions
-		var allowedFileExtensions = [ '.pdf', '.jpg', '.png' ];
+		/* var allowedFileExtensions = [ '.pdf', '.jpg', '.png' ]; */		
+		var allowedFileExtensions = "${allowedExtensions}".replace(/\s/g,'').split(",");
+		
+		/* $(document).ready(function(){
+			
+			var tempAllowdFileExtensions = allowedFileExtensions.split(",")
+		}); */
 
 		var moduleName = "${moduleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"
-
-		var maxFileSize = 1024 * 1024 * 2;
+			
+		var maxFileSize = "${maxFileSize}";
 
 		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
 		var contextPath = "${pageContext.request.contextPath}";
 	</script>
 	<script
+		src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"
+		type="text/javascript"></script>
+
+	<script
 		src="${pageContext.request.contextPath}/resources/js/uploadDocuments/fileUploadDocuments.js"
 		type="text/javascript"></script>
+
+
 
 
 </body>

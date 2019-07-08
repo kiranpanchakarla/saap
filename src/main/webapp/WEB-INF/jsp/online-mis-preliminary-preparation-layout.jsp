@@ -71,7 +71,7 @@
 									<li><p>Upload Document(pdf/jpg/png)</p></li>
 									<li><label for="files" class="fileuploadLabel">Select
 											Files</label> <input type="file" name="file" id="files" multiple
-										class="form-control mb-md" accept=".pdf, .jpg, .png">
+										class="form-control mb-md" >
 										<small id="selectedFilesCount">* file selected
 											${fn:length(preliminaryPreparationLayoutAttachmentFiles)}</small></li>
 								</ul>
@@ -83,7 +83,8 @@
 										<tr>
 											<th style="width: 5%">S.No.</th>
 											<th style="width: 60%">Name</th>
-											<th style="width: 30%">Upload on</th>
+											<th style="width: 10%">Size</th>
+											<th style="width: 20%">Upload on</th>
 											<th style="width: 5%">Action</th>
 										</tr>
 									</thead>
@@ -93,9 +94,10 @@
 											var="file" varStatus="loop">
 											<c:set var="filePathParts"
 												value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />											
-											<tr data-attachment-id="${file.id}">
+											<tr data-attachment-id="${file.id}" data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
 												<td>${loop.index + 1}</td>
 												<td>${filePathParts[fn:length(filePathParts)-1]}</td>
+												<td>${file.convertFileSize}</td>
 												<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 														value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 												<td class="text-center"><a href="#" name="remove"><i
@@ -146,15 +148,20 @@
 		//var filesList = [];
 
 		// vallid file extensions
-		var allowedFileExtensions = [ '.pdf', '.jpg', '.png' ];
+		/* var allowedFileExtensions = [ '.pdf', '.jpg', '.png' ]; */		
+		var allowedFileExtensions = "${allowedExtensions}".replace(/\s/g,'').split(",");
 
 		var moduleName = "${moduleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"
 
-		var maxFileSize = 1024 * 1024 * 2;
+		/* var maxFileSize = 1024 * 1024 * 2; */
+		var maxFileSize = "${maxFileSize}";
 
 		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
 		var contextPath = "${pageContext.request.contextPath}";
 	</script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"
+		type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/uploadDocuments/fileUploadDocuments.js" type="text/javascript"></script>
 	<!--=== Footer ====-->
 	<jsp:include page="online-mis-footer.jsp" />

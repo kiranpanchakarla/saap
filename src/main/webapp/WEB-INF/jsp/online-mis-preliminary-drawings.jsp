@@ -258,13 +258,84 @@
 											Uploaded Land Details Document <span class="red">*</span>
 										</p></li>
 									<li>
+
+										<table class="w-50 text-left">
+											<tbody>
+												<c:forEach items="${landAttachmentFiles}" var="file"
+													varStatus="loop">
+													<c:set var="filePathParts"
+														value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+													<tr class="landDetailsUploadDocuments">
+
+														<td><a
+															href="${pageContext.request.contextPath}${file.path}"
+															target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
+
+														<td>${file.convertFileSize}</td>
+													</tr>
+
+												</c:forEach>
+												<c:if test="${fn:length(filePathParts) == 0}">
+													<tr class="landDetailsUploadDocuments">
+														<td colspan="4">
+															<p class="text-center p-4 mb-0">No attachments found</p>
+														</td>
+													</tr>
+												</c:if>
+											</tbody>
+										</table>
+									</li>
+								</ul>
+
+								<ul class="fs-list-details">
+									<li><p>
+											Uploaded Land Survey Details Document <span class="red">*</span>
+										</p></li>
+									<li>
+
+										<table class="w-50 text-left">
+											<tbody>
+												<c:forEach items="${landSurveyAttachmentFiles}" var="file"
+													varStatus="loop">
+													<c:set var="filePathParts"
+														value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+													<tr class="landSurveyDetailsUploadDocuments">
+														<td><a
+															href="${pageContext.request.contextPath}${file.path}"
+															target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
+														<td>${file.convertFileSize}</td>
+													</tr>
+
+												</c:forEach>
+												<c:if test="${fn:length(landSurveyAttachmentFiles) == 0}">
+													<tr class="landSurveyDetailsUploadDocuments">
+														<td colspan="4">
+															<p class="text-center p-4 mb-0">No attachments found</p>
+														</td>
+													</tr>
+												</c:if>
+											</tbody>
+										</table>
+
+									</li>
+								</ul>
+
+
+
+								<%--
+								show hide button for file upload model handling
+								 <ul class="fs-list-details">
+									<li><p>
+											Uploaded Land Details Document <span class="red">*</span>
+										</p></li>
+									<li>
 										<Button type="button" class="fileViewButton"
 											id="landAttachmentFiles" class="btn btn-block">
 											<span>file&nbsp;uploads&nbsp;&nbsp;:${fn:length(landAttachmentFiles) }
 											</span> <span>View files </span>
-											<%-- <span>file uploads&nbsp;:
+											<span>file uploads&nbsp;:
 												${fn:length(landAttachmentFiles) == 0 ? 'No' : fn:length(landAttachmentFiles)  }
-											</span> --%>
+											</span>
 
 										</Button>
 									</li>
@@ -278,14 +349,14 @@
 										<Button type="button" class="fileViewButton"
 											id="landSurveyAttachmentFiles" class="btn btn-block">
 
-											<%-- <span>file uploads&nbsp;:
+											<span>file uploads&nbsp;:
 												${fn:length(landSurveyAttachmentFiles) == 0 ? 'No' : fn:length(landSurveyAttachmentFiles)  }
-											</span> --%>
+											</span>
 											<span>file&nbsp;uploads&nbsp;&nbsp;:${fn:length(landSurveyAttachmentFiles) }
 											</span><span>View files </span>
 										</Button>
 									</li>
-								</ul>
+								</ul> --%>
 
 							</div>
 
@@ -301,17 +372,54 @@
 												class="red">*</span>
 										</p></li>
 									<li>
+										<table class="text-left w-50">
+											<tbody>
+												<c:forEach items="${PPLayoutAttachmentFiles}" var="file"
+													varStatus="loop">
+													<c:set var="filePathParts"
+														value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+													<tr class="PPLayoutUploadDocuments">
+														<td><a
+															href="${pageContext.request.contextPath}${file.path}"
+															target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
+														<td>${file.convertFileSize}</td>
+
+													</tr>
+
+												</c:forEach>
+												<c:if test="${fn:length(PPLayoutAttachmentFiles) == 0}">
+													<tr class="PPLayoutUploadDocuments">
+														<td colspan="4">
+															<p class="text-center p-4 mb-0">No attachments found</p>
+														</td>
+													</tr>
+												</c:if>
+
+
+											</tbody>
+										</table>
+									</li>
+								</ul>
+
+
+
+								<%-- <ul class="fs-list-details">
+									<li><p>
+											Uploaded preliminary prepartion layout Document <span
+												class="red">*</span>
+										</p></li>
+									<li>
 										<Button type="button" class="fileViewButton"
 											id="PPLayoutAttachmentFiles" class="btn btn-block">
 
-											<%-- <span>file uploads&nbsp;:
+											<span>file uploads&nbsp;:
 											${fn:length(PPLayoutAttachmentFiles) == 0 ? 'No' : fn:length(PPLayoutAttachmentFiles)  }
-										</span> --%>
+										</span>
 											<span>file&nbsp;uploads&nbsp;&nbsp;: ${ fn:length(PPLayoutAttachmentFiles)  }</span>
 											<span>View files </span>
 										</Button>
 									</li>
-								</ul>
+								</ul> --%>
 							</div>
 						</fieldset>
 
@@ -330,6 +438,37 @@
 								</ul>
 
 								<ul class="fs-list-details">
+									<li><p>Uploaded geotehnical investigation Document</p></li>
+									<li>
+										<table class="text-left w-50">
+											<tbody>
+												<c:forEach items="${GIAttachmentFiles}" var="file"
+													varStatus="loop">
+													<c:set var="filePathParts"
+														value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+													<tr class="GIUploadDocuments">
+														<td><a
+															href="${pageContext.request.contextPath}${file.path}"
+															target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
+														<td>${file.convertFileSize}</td>
+													</tr>
+
+												</c:forEach>
+												<c:if test="${fn:length(GIAttachmentFiles) == 0}">
+													<tr class="GIUploadDocuments">
+														<td colspan="4">
+															<p class="text-center pt-4 mb-0">No attachments found</p>
+														</td>
+													</tr>
+												</c:if>
+											</tbody>
+										</table>
+									</li>
+								</ul>
+
+
+
+								<%-- <ul class="fs-list-details">
 									<li><p>
 											Uploaded geotehnical investigation Document <span class="red">*</span>
 										</p></li>
@@ -337,10 +476,10 @@
 											class="fileViewButton" class="btn btn-block">
 											<span>file&nbsp;uploads&nbsp;&nbsp;:${fn:length(GIAttachmentFiles)}</span>
 											<span>View files </span>
-											<%-- <span>file uploads&nbsp;:
-											${fn:length(GIAttachmentFiles) == 0 ? 'No' : fn:length(GIAttachmentFiles)  }</span> --%>
+											<span>file uploads&nbsp;:
+											${fn:length(GIAttachmentFiles) == 0 ? 'No' : fn:length(GIAttachmentFiles)  }</span>
 										</button></li>
-								</ul>
+								</ul> --%>
 
 
 
@@ -355,7 +494,13 @@
 								class="next action-button" value="Home">
 						</c:if>
 
-						<c:if test="${!(SAAP_APPROVED_STATUS eq work.workStatus)}">
+						<c:if test="${PENDING_SAAP_APPROVAL eq work.workStatus}">
+							<input type="button" id="backToHome" name="next"
+								class="next action-button" value="Home">
+						</c:if>
+						
+						<c:if
+							test="${!(SAAP_APPROVED_STATUS eq work.workStatus) and !(PENDING_SAAP_APPROVAL eq work.workStatus)}">
 							<input type="submit" id="submit" name="next"
 								class="next action-button" value="Send for approval">
 						</c:if>
@@ -372,6 +517,8 @@
 	</section>
 
 
+	<%-- 
+	Modal for show uploaded files based on selected file upload button
 	<div class="modal fade" id="fileUploadsModal" tabindex="-1"
 		role="dialog">
 		<div class="modal-dialog" role="document">
@@ -410,7 +557,7 @@
 									<tr class="landDetailsUploadDocuments">
 										<td>${loop.index+1}</td>
 										<td>${filePathParts[fn:length(filePathParts)-1]}</td>
-										<%-- <td>${fn:length(filePathParts)}</td> --%>
+										<td>${fn:length(filePathParts)}</td>
 										<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 												value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 										<td class="text-center"><a
@@ -435,7 +582,7 @@
 									<tr class="landSurveyDetailsUploadDocuments">
 										<td>${loop.index+1}</td>
 										<td>${filePathParts[fn:length(filePathParts)-1]}</td>
-										<%-- <td>${fn:length(filePathParts)}</td> --%>
+										<td>${fn:length(filePathParts)}</td>
 										<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 												value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 										<td class="text-center"><a
@@ -461,7 +608,7 @@
 									<tr class="PPLayoutUploadDocuments">
 										<td>${loop.index+1}</td>
 										<td>${filePathParts[fn:length(filePathParts)-1]}</td>
-										<%-- <td>${fn:length(filePathParts)}</td> --%>
+										<td>${fn:length(filePathParts)}</td>
 										<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 												value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 										<td class="text-center"><a
@@ -486,7 +633,7 @@
 									<tr class="GIUploadDocuments">
 										<td>${loop.index+1}</td>
 										<td>${filePathParts[fn:length(filePathParts)-1]}</td>
-										<%-- <td>${fn:length(filePathParts)}</td> --%>
+										<td>${fn:length(filePathParts)}</td>
 										<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 												value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 										<td class="text-center"><a
@@ -514,18 +661,15 @@
 						data-dismiss="modal">Close</button>
 				</div>
 			</div>
-			<!-- /.modal-content -->
+			
 		</div>
-		<!-- /.modal-dialog -->
-	</div>
-
-
-	<!-- #contact --> </main>
+		
+	</div> --%> <!-- #contact --> </main>
 	<!--=== Footer ====-->
 	<jsp:include page="online-mis-footer.jsp" />
 
 	<script>
-		<c:if test="${SAAP_APPROVED_STATUS eq work.workStatus}">
+		<c:if test="${SAAP_APPROVED_STATUS eq work.workStatus || PENDING_SAAP_APPROVAL eq work.workStatus}">
 
 		$(document).ready(function() {
 
@@ -537,6 +681,7 @@
 
 		</c:if>
 
+		/* files show hide on model and filter rows based on selected attachment details button
 		$(".fileViewButton")
 				.on(
 						'click',
@@ -598,6 +743,8 @@
 											}).modal('show');
 
 						});
+		
+		 */
 	</script>
 </body>
 </html>

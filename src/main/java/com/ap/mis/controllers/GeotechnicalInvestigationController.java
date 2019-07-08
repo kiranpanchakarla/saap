@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,11 @@ public class GeotechnicalInvestigationController {
 
 	@Autowired
 	AttachmentService attachmentService;
+	
+	private Integer maxFileSize = (1024 * 1024 * 10);
+	
+	@Value("${file.upload.extensions}") 
+	private String allowedExtensions;
 
 	@GetMapping(path = { "/create", "/edit", "/view" })
 	public String getGeotechnicalInvestigation(Model model, HttpSession session, HttpServletRequest request) {
@@ -74,6 +80,8 @@ public class GeotechnicalInvestigationController {
 		model.addAttribute("moduleName", workModuleStatus.getStatus());
 		model.addAttribute("geotechnicalInvestigationDetails", geotechnicalInvestigationDetails);
 		model.addAttribute("disableWriteControllers", disableWriteControllers);
+		model.addAttribute("maxFileSize", maxFileSize);
+		model.addAttribute("allowedExtensions", allowedExtensions);
 
 		return "online-mis-geotechnical-investigation";
 	}

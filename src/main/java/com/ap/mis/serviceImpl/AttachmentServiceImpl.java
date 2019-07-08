@@ -73,7 +73,7 @@ public class AttachmentServiceImpl implements AttachmentService{
 	public List<Attachements> getAttachementsDetails(int workId, String module) {
 		List<Attachements> attachments=attachDao.getAttachementsDetails(workId,module);
 		
-		for(Attachements attach:attachments) {
+		for(Attachements attach:attachments) {			
 			attach.setConvertFileSize(readableFileSize(attach.getFileSize()));
 		}
 		return attachments;
@@ -98,9 +98,9 @@ public class AttachmentServiceImpl implements AttachmentService{
 
 
 	
-	  private String readableFileSize(long size) {
+	  private String readableFileSize(Long size) {
 		
-		    if(size <= 0) return "0 B";
+		    if( size == null || size <= 0) return "0 B";
 		    final String[] units = new String[] { "B", "kB", "MB", "GB", "TB" };
 		    int digitGroups = (int) (Math.log10(size)/Math.log10(1024));
 		    return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
