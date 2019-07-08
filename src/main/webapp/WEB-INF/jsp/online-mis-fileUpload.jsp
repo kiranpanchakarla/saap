@@ -29,15 +29,25 @@
     	   	    	  currentFileLength += filesLength;
     			      if(currentFileLength > 5 ){
     			 	              alertify.alert("File Upload","You are allowed to upload a maximum of 5 files. Thanks!!");
+    			 	             currentFileLength=currentFileLength-filesLength;
     			 	              $("#files").val('');
     			 	          } 
     			 	
     		           	for (var i = 0, f; f = files[i]; i++) {
-    		    			attachments.push(f);
-    		    			if (ParseFile(f) === false) {
-    		    				alert('not enought space - there\'s only ' + remainSize.toFixed(2) + ' MB left');
-    		    				break;
+    		           	if (attachments.indexOf(files[i].name) === -1) {
+    		    		   if (ParseFile(f) === false) {
+    		    				  alertify.alert('not enought space - there\'s only ' + remainSize.toFixed(2) + ' MB left');
+    		    				  currentFileLength=currentFileLength-filesLength;
+    		    				  $("#files").val('');
+    		    				
     		    			}
+    		    			attachments.push(files[i].name);
+    		           	 }else {
+    		           		 alertify.alert(files[i].name + " already Exists");
+    		           		currentFileLength=currentFileLength-filesLength;
+    		           		 $("#files").val('');
+    		              } 
+    		    			
     		           	}
     			 	 
     		    			function ParseFile(file) {
@@ -53,7 +63,8 @@
     			    				remainSize = maxSize - currentSize;
     			    				}
     			    			else {
-    			    				alert('Only JPG, PDF n PNG files are allowed to upload.');
+    			    				alertify.alert('Only JPG, PDF n PNG files are allowed to upload.');
+    			    				 $("#files").val('');
     			    			}
     			    			document.querySelector("#files").onchange=attachments;
     			    		}
@@ -84,6 +95,7 @@
         								  var fileName = str.substring(str.lastIndexOf("\\") + 1, str.length);
         								  $("#filedetails").append("<tr data-fileId='" + item.path + "' ><td ><a href="+ contextPath + item.path+">"+fileName+"</td><td >"+item.convertFileSize+"</td><td><a class='delete' id='delete_"+item.id+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
         								 }); 
+        							   currentFileLength=$("#filedetails tr").length;
         					            }
     						 /*  else{
     								alert("Unable to upload File");
@@ -116,7 +128,7 @@
     	    		        headers: { 'X-CSRF-TOKEN': csrf_tokenvalue},
     	    		       success: function (data) {
     	    		    	   if(data=="success"){
-    	    		    		  attachments.splice( attachments.indexOf($parent), 1 );
+    	    		    		  attachments.splice( attachments.indexOf($parent.find("td").eq(0).text()), 1 );
  	    			   	   	      $parent.remove();
     	    		    	   }else{
     	    		    		   alert("unable to delete");
@@ -135,6 +147,7 @@
         
     		var workid=$('#workid').val();
     		var moduleName= $('#moduleName').val();
+    		
     		if(workid == undefined){
     			
           	 }else{
@@ -142,12 +155,15 @@
  	    		        url : "<c:url value='/upload/edit'/>?workId="+workid+"&moduleName="+moduleName,
  	    		        success: function(data) {
  	    		        	if(data.length>0){
+ 	    		        		
   							  $.each(data, function(index, item) {
   								  var str = item.path;
   								  var fileName = str.substring(str.lastIndexOf("\\") + 1, str.length);
   								  $("#filedetails").append("<tr data-fileId='" + item.path + "' ><td ><a href="+ contextPath + item.path+">"+fileName+"</td><td >"+item.convertFileSize+"</td><td><a class='delete' id='delete_"+item.id+"' href='#'><i class=\"glyphicon glyphicon-trash left\"></i></td></tr>");
-  								 }); 
-  							 currentFileLength=$("#filedetails tr").length;
+  								 attachments.push(fileName);
+  							  }); 
+  							    currentFileLength=$("#filedetails tr").length;
+  							   
   					            }
  	    		    	/* if(data.length>0){
                         var dataVal = JSON.parse(data); 
