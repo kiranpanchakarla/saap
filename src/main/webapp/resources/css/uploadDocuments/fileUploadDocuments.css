@@ -18,7 +18,7 @@
 	cursor: pointer;
 }
 
-.fileuploadLabel + input[type="file"] {
+.fileuploadLabel+input[type="file"] {
 	display: none;
 }
 
@@ -41,7 +41,6 @@
 	background-color: #dc3545 !important;
 	color: #fff;
 } */
-
 .ajs-button {
 	width: auto;
 	background: #1cb9c8 !important;
@@ -55,11 +54,9 @@
 	text-transform: capitalize !important;
 }
 
-
-
 .fileViewButton {
 	display: block;
-	width: 100%;	
+	width: 100%;
 	line-height: 2.5;
 	border: 1px solid #ccc !important;
 	background-color: #eee !important;
@@ -96,8 +93,6 @@
 	transition: opacity 0.3S ease-in;
 }
 
-
-
 .fileViewButton span:first-child {
 	opacity: 1;
 	height: auto;
@@ -114,4 +109,19 @@
 
 button:focus {
 	outline: none !important;
+}
+
+table.readOnlyTable{
+	width: 100%;
+}
+table.readOnlyTable tr td:first-child a {
+	width: 250px;
+	display: inline-block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	padding: 4px;
+	font-size: 14px;
+	margin-right: 3px;
+	color: #212529;
 }

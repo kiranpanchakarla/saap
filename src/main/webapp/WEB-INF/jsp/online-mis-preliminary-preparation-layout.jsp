@@ -68,7 +68,7 @@
 								<h2 class="fs-title">Preliminary preparation layout
 									documents</h2>
 								<ul class="fs-list-details">
-									<li><p>Upload Document(pdf/jpg/png)</p></li>
+									<li><p>Upload Document(${fn:replace(allowedExtensions,', ','/')})</p></li>
 									<li><label for="files" class="fileuploadLabel">Select
 											Files</label> <input type="file" name="file" id="files" multiple
 										class="form-control mb-md" >

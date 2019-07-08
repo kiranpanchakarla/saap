@@ -162,7 +162,7 @@ function getAttachmentsRow(index, attachment) {
 
 	return '<tr data-attachment-id = "'
 			+ attachment.id
-			+ '"><td>'
+			+ '" data-file-size="'+attachment.fileSize+'"><td>'
 			+ index
 			+ '</td>'
 			+ '	<td>'

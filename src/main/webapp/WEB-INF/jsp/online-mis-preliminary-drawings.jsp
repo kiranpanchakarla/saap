@@ -259,7 +259,7 @@
 										</p></li>
 									<li>
 
-										<table class="w-50 text-left">
+										<table class="text-left readOnlyTable">
 											<tbody>
 												<c:forEach items="${landAttachmentFiles}" var="file"
 													varStatus="loop">
@@ -293,7 +293,7 @@
 										</p></li>
 									<li>
 
-										<table class="w-50 text-left">
+										<table class="text-left readOnlyTable">
 											<tbody>
 												<c:forEach items="${landSurveyAttachmentFiles}" var="file"
 													varStatus="loop">
@@ -372,7 +372,7 @@
 												class="red">*</span>
 										</p></li>
 									<li>
-										<table class="text-left w-50">
+										<table class="text-left readOnlyTable">
 											<tbody>
 												<c:forEach items="${PPLayoutAttachmentFiles}" var="file"
 													varStatus="loop">
@@ -440,7 +440,7 @@
 								<ul class="fs-list-details">
 									<li><p>Uploaded geotehnical investigation Document</p></li>
 									<li>
-										<table class="text-left w-50">
+										<table class="text-left readOnlyTable">
 											<tbody>
 												<c:forEach items="${GIAttachmentFiles}" var="file"
 													varStatus="loop">

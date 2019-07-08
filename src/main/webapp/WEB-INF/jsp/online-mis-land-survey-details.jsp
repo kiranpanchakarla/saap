@@ -185,7 +185,7 @@
 								<ul class="fs-list-details">
 									<li><p>Uploaded Land Details Document</p></li>
 									<li>
-										<table class="text-left w-50">
+										<table class="text-left readOnlyTable tableresponsive">
 											<tbody>
 												<c:forEach items="${landAttachmentFiles}" var="file"
 													varStatus="loop">
@@ -237,7 +237,7 @@
 								</ul>
 
 								<ul class="fs-list-details">
-									<li><p>Upload Land Details Document(pdf/jpg/png)</p></li>
+									<li><p>Upload Land Details Document(${fn:replace(allowedExtensions,', ','/')})</p></li>
 									<li><label for="files" class="fileuploadLabel mb-0">Select
 											files</label> <input type="file" name="file" id="files" multiple
 										class="d-none"> <small id="selectedFilesCount">*
