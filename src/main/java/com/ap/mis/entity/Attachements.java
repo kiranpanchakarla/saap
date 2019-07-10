@@ -36,6 +36,9 @@ public class Attachements extends AuditModel implements Serializable {
 	@Column(name="file_size")
 	private Long fileSize;
 	
+	@Column(name="status")
+	private String status;
+	
 	@Transient
 	private String convertFileSize;
 	
@@ -107,11 +110,25 @@ public class Attachements extends AuditModel implements Serializable {
 	}
 	
 
-	@Override
-	public String toString() {
-		return "Attachements [id=" + id + ", path=" + path + ", module=" + module + ", workId=" + workId + "]";
+	public String getStatus() {
+		return status;
 	}
 
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Attachements [id=" + id + ", path=" + path + ", module=" + module + ", workId=" + workId + ", isActive="
+				+ isActive + ", fileSize=" + fileSize + ", status=" + status + ", convertFileSize=" + convertFileSize
+				+ "]";
+	}
+
+
+	
 	
 	 
 	

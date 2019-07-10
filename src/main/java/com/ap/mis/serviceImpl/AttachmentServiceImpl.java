@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ap.mis.dao.AttachmentDao;
 import com.ap.mis.entity.Attachements;
 import com.ap.mis.service.AttachmentService;
+import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.UploadUtil;
 @Service
 @Transactional
@@ -56,6 +57,7 @@ public class AttachmentServiceImpl implements AttachmentService{
 					    fileItems.setModule(moduleName);
 					    fileItems.setFileSize(fileSize);
 					    fileItems.setConvertFileSize(readableFileSize(fileSize));
+					    fileItems.setStatus(EnumFilter.OPEN.getStatus());
 						attachments.add(fileItems);
 					 
 		                }
