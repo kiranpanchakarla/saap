@@ -19,7 +19,7 @@ public class AttachmentHistoryDetailsDaoImpl implements AttachmentHistoryDetails
 	@Override
 	public List<AttachmentHistoryDetails> findHistoryListById(Integer id) {
 		@SuppressWarnings("unchecked")
-		List<AttachmentHistoryDetails> attachHistoryDetailsList =sessionFactory.getCurrentSession().createQuery("from AttachmentHistoryDetails").getResultList();
+		List<AttachmentHistoryDetails> attachHistoryDetailsList =sessionFactory.getCurrentSession().createQuery("from AttachmentHistoryDetails where attach.id=:attachmentId").setParameter("attachmentId", id).getResultList();
 		return attachHistoryDetailsList;
 	}
 	@Override
@@ -31,5 +31,6 @@ public class AttachmentHistoryDetailsDaoImpl implements AttachmentHistoryDetails
 	}
 		return attachHistDetails;
 	}
+	
 
 }

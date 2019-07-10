@@ -10,4 +10,6 @@ public interface AttachmentHistoryDetailsDao {
 
 	AttachmentHistoryDetails save(AttachmentHistoryDetails attachHistDetails);
 
+	
+
 }

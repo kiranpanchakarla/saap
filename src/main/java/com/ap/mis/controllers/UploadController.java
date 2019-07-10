@@ -52,6 +52,11 @@ public class UploadController {
     public String deleteFileUplaod(Model model,HttpServletRequest request, @RequestParam("uploadFileId") Integer uploadFileId, HttpSession session) {
         Attachements attachInfo=attachmentService.findById(uploadFileId);
         attachmentService.deleteAttachedDetails(attachInfo);
+        try {
+        	attachmentHistoryDetailsDelete(attachInfo);
+        }catch(Exception ex) {
+        	log.error("Error with AttachmentHistoryDetails in UploadController while cancelStage():"+ex);
+        }
         return "success";
         
     }
@@ -62,6 +67,11 @@ public class UploadController {
     @RequestMapping(value="/edit", method=RequestMethod.GET)
     public List<Attachements> editfileUplaod(Integer workId,String moduleName,HttpServletRequest request ) {
         List<Attachements> attachements=attachmentService.getAttachementsDetails(workId,moduleName);
+        try {
+        	attachmentHistoryDetailsSave(attachements);
+        }catch(Exception ex) {
+        	log.error("Error with AttachmentHistoryDetails in UploadController while cancelStage():"+ex);
+        }
 		return attachements;
         
     }
@@ -76,15 +86,16 @@ public class UploadController {
 		    	attachHistDetails.setCreatedBy(loggedInUser.getName());
 		    	attachmentList=attachHistoryService.findHistoryListById(attachdetails.getId());
 		    	if(attachmentList.size()>0) {
-		        	if(attachdetails.getStatus().equalsIgnoreCase(EnumFilter.OPEN.getStatus())) {
+		    		 if(attachdetails.getStatus().equalsIgnoreCase(EnumFilter.OPEN.getStatus())) {
+		        		attachHistDetails.setLog(EnumFilter.UPDATED.getStatus());
+		        	}
+		        	
+		        }else {
+		        	 if(attachdetails.getStatus().equalsIgnoreCase(EnumFilter.OPEN.getStatus())) {
 		        		attachHistDetails.setLog(EnumFilter.SAVED.getStatus());
 		        	}/*else if(attachdetails.getStatus().equalsIgnoreCase(EnumFilter.OPEN.getStatus())) {
 		        		attachHistDetails.setLog(EnumFilter.SAVE.getStatus());
 		        	}*/
-		        }else {
-		        	if(attachdetails.getStatus().equalsIgnoreCase(EnumFilter.OPEN.getStatus())) {
-		        		attachHistDetails.setLog(EnumFilter.UPDATED.getStatus());
-		        	}
 		        }
 		    	log.info("==attachHistDetails===:"+attachHistDetails);
 		    	attachHistoryService.save(attachHistDetails);
@@ -92,6 +103,19 @@ public class UploadController {
 		    	
     	
     		}
+    }
+    
+    
+    private void attachmentHistoryDetailsDelete(Attachements  attachInfo) {
+    	 User loggedInUser = SecurityUtil.getLoggedUser();
+    	 AttachmentHistoryDetails attachHistDetails=new AttachmentHistoryDetails();
+	    	attachHistDetails.setAttach(attachInfo);
+	    	attachHistDetails.setCreatedBy(loggedInUser.getName());
+	    	log.info("active status=="+attachInfo.getIsActive());
+	    	if(attachInfo.getIsActive()==false){
+	    	attachHistDetails.setLog(EnumFilter.DELETED.getStatus());
+	    	}
+	    	attachHistoryService.save(attachHistDetails);
     }
 
 }
