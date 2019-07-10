@@ -9,9 +9,15 @@ $("#files")
 
 						var totalFiles = $(this).get(0).files.length;
 						var formObj = new FormData();
-						
+
 						formObj.append("moduleName", moduleName);
 						var currentSelectedFilesSize = 0;
+
+						// Check total size doesn't exceed allowed max size
+						if (!checkNumberOfFileUploadExceedThenAllowedMaxUpload(totalFiles)) {
+							showMaximumUploadableFilesExceedsWarning(totalFiles);
+							return false;
+						}
 
 						var fileSizeArray = $.map($(this).get(0).files,
 								function(e) {
@@ -34,8 +40,8 @@ $("#files")
 									return e.name;
 
 								})
-								
-						// Check any duplicate file names found 			
+
+						// Check any duplicate file names found
 						if (checkDuplicateFileNames(selectedFileNameArray)) {
 							showCurrentSelectionContainsDuplicateFileNamesWarning();
 							return false;
@@ -47,7 +53,7 @@ $("#files")
 									// Check for invalid file
 									// formats
 									if ($.inArray(v.name.substring(v.name
-											.lastIndexOf(".")+1),
+											.lastIndexOf(".") + 1),
 											allowedFileExtensions) === -1) {
 
 										showIndalidFileFormatSelectedWarning();
@@ -90,12 +96,11 @@ function showWarnigModel(header, messageBody) {
 
 }
 
-function showSelectedFileSizeExceedsWarning(fileIndx) {
-	var size = humanReadableFileSize(maxFileSize);
+function showMaximumUploadableFilesExceedsWarning(fileIndx) {
 
-	showWarnigModel("Invalid file size", (fileIndx > 1 ? "Some of files"
-			: "File")
-			+ " exceeds max allowed file size limit : <b> " + size + "</b>");
+	showWarnigModel("Invalid file uploads count",
+			"Your file selection exceeds max allowed file upload limit : <b> "
+					+ maxFileUploadCount + "</b>");
 
 }
 
@@ -162,7 +167,9 @@ function getAttachmentsRow(index, attachment) {
 
 	return '<tr data-attachment-id = "'
 			+ attachment.id
-			+ '" data-file-size="'+attachment.fileSize+'"><td>'
+			+ '" data-file-size="'
+			+ attachment.fileSize
+			+ '"><td>'
 			+ index
 			+ '</td>'
 			+ '	<td>'
@@ -299,7 +306,13 @@ function deletedFileOnServer() {
 
 // update files count on screen below file controller
 function updateTotalFileCount(fileCount) {
-	$("#selectedFilesCount").text("* file selected " + fileCount);
+	$("#selectedFilesCount").text(
+			"* file selected " + fileCount + "/" + maxFileUploadCount);
+	$("input[name=file]")
+			.prop('disabled', fileCount >= maxFileUploadCount)
+			.siblings("label.fileuploadLabel")
+			.css("cursor",
+					fileCount >= maxFileUploadCount ? 'not-allowed' : 'pointer')
 }
 
 function getLoacalDateString(datetime) {
@@ -331,7 +344,6 @@ function checkTotalFilesSizeIsExceedThenAllowedSize(currentSelectedFileSize) {
 
 	var totalFileSize = currentSelectedFileSize + existedUploadedFileSize;
 
-	
 	console.log("Total file sizes Till now : "
 			+ humanReadableFileSize(totalFileSize));
 
@@ -341,8 +353,14 @@ function checkTotalFilesSizeIsExceedThenAllowedSize(currentSelectedFileSize) {
 
 }
 
-function checkNumberOfFileUploadExceedThenAllowedMaxUpload() {
+function checkNumberOfFileUploadExceedThenAllowedMaxUpload(selectedFilesCount) {
 
+	var existedFilesArray = $("#landDetailsAttachmentsTable tr").filter(
+			function(i, e) {
+				return $(e).data("attachmentId") !== -1;
+			});
+
+	return existedFilesArray.length + selectedFilesCount <= maxFileUploadCount;
 }
 
 function checkDuplicateFileNames(selectedFilesArray) {

@@ -237,11 +237,13 @@
 								</ul>
 
 								<ul class="fs-list-details">
-									<li><p>Upload Land Details Document(${fn:replace(allowedExtensions,', ','/')})</p></li>
+									<li><p>Upload Land Details
+											Document(${fn:replace(fileUploadConstraint.allowedExtensions,', ','/')})</p></li>
 									<li><label for="files" class="fileuploadLabel mb-0">Select
 											files</label> <input type="file" name="file" id="files" multiple
 										class="d-none"> <small id="selectedFilesCount">*
-											Files count : ${fn:length(landSurveyAttachmentFiles)}</small></li>
+											Files count :
+											${fn:length(landSurveyAttachmentFiles)}/${fileUploadConstraint.maxFileUploadCount}</small></li>
 
 								</ul>
 
@@ -269,14 +271,14 @@
 							</div>
 							<div class="table-responsive landDetailsAttachmentTableShow">
 								<div class="landDetailsAttachmentTableOuter">
-								
-								
+
+
 									<!-- 
 									table close button on top left to hide this table
 									<button class="tableCollapseButton" type="button">
 										<span> <i class="fa fa-close"></i></span>
 									</button> -->
-									
+
 									<table class="table table-hover mb-3 table-bordered">
 										<thead class="thead-light">
 											<tr>
@@ -292,7 +294,8 @@
 												varStatus="loop">
 												<c:set var="filePathParts"
 													value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
-												<tr data-attachment-id="${file.id}" data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
+												<tr data-attachment-id="${file.id}"
+													data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
 													<td>${loop.index + 1}</td>
 													<td>${filePathParts[fn:length(filePathParts)-1]}</td>
 													<td>${file.convertFileSize}</td>
@@ -472,19 +475,23 @@
 
 		// vallid file extensions
 		/* var allowedFileExtensions = [ '.pdf', '.jpg', '.png' ]; */		
-		var allowedFileExtensions = "${allowedExtensions}".replace(/\s/g,'').split(",");
 		
-		/* $(document).ready(function(){
+		
+		 $(document).ready(function(){
+			updateTotalFileCount( ${fn:length(landSurveyAttachmentFiles)} );
 			
-			var tempAllowdFileExtensions = allowedFileExtensions.split(",")
-		}); */
+		}); 
 
 		var moduleName = "${moduleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"
 			
-		var maxFileSize = "${maxFileSize}";
+		var maxFileSize = ${fileUploadConstraint.maxFileUploadSize};
+		var maxFileUploadCount = ${fileUploadConstraint.maxFileUploadCount};
+		var allowedFileExtensions = "${fileUploadConstraint.allowedExtensions}".replace(/\s/g,'').split(",");
 
 		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
 		var contextPath = "${pageContext.request.contextPath}";
+		
+		
 	</script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"

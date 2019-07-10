@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +23,7 @@ import com.ap.mis.service.LandDetailService;
 import com.ap.mis.service.LandSurveyDetailService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.FileUploadConstraintsUtil;
 
 @Controller
 @RequestMapping(path = "/landSurveyDetails")
@@ -43,10 +43,8 @@ public class LandSurveyDetailsController {
 	@Autowired
 	LandSurveyDetailService landSurveyDetailsService;
 
-	private Integer maxFileSize = (1024 * 1024 * 10);
-	
-	@Value("${file.upload.extensions}") 
-	private String allowedExtensions;
+	@Autowired
+	FileUploadConstraintsUtil fileUploadConstraint;
 
 	@GetMapping(path = { "/create", "/edit" })
 	public String createLandSurveyDetails(Model model, HttpSession session) {
@@ -77,9 +75,7 @@ public class LandSurveyDetailsController {
 		model.addAttribute("landSurveyAttachmentFiles", landSurveyAttachments);
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		model.addAttribute("moduleName", EnumFilter.LAND_SURVEY_DETAILS.getStatus());
-		model.addAttribute("maxFileSize", maxFileSize);
-		model.addAttribute("allowedExtensions", allowedExtensions);		
-		
+		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
 
 		return "online-mis-land-survey-details";
 	}
@@ -139,7 +135,7 @@ public class LandSurveyDetailsController {
 		model.addAttribute("landSurveyDetails", existedLandSurveyDetails);
 		model.addAttribute("landAttachmentFiles", attachments);
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
-		model.addAttribute("maxFileSize", maxFileSize);
+		model.addAttribute("maxFileSize", 0L);
 
 		return "online-mis-land-survey-details-view";
 	}

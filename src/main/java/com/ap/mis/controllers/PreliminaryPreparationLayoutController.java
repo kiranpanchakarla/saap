@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +17,7 @@ import com.ap.mis.entity.Works;
 import com.ap.mis.service.AttachmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.FileUploadConstraintsUtil;
 
 @Controller
 @RequestMapping(path = "/preliminaryPreparationLayout")
@@ -29,11 +29,9 @@ public class PreliminaryPreparationLayoutController {
 
 	@Autowired
 	AttachmentService attachmentService;
-	
-	private Integer maxFileSize = (1024 * 1024 * 10);
-	
-	@Value("${file.upload.extensions}") 
-	private String allowedExtensions;
+
+	@Autowired
+	FileUploadConstraintsUtil fileUploadConstraint;
 
 	@GetMapping(path = { "/create", "/edit", "/view" })
 	public String createPreliminaryPreparationLayout(Model model, HttpSession session) {
@@ -49,20 +47,17 @@ public class PreliminaryPreparationLayoutController {
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		model.addAttribute("preliminaryPreparationLayoutAttachmentFiles", attachments);
 		model.addAttribute("moduleName", workModuleStatus.getStatus());
-		model.addAttribute("maxFileSize", maxFileSize);
-		model.addAttribute("allowedExtensions", allowedExtensions);
+		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
 
 		return "online-mis-preliminary-preparation-layout";
 	}
-	
-	
-	@PostMapping(path = { "/save"})
+
+	@PostMapping(path = { "/save" })
 	public String savePreliminaryPreparationLayout(Model model, HttpSession session) {
 
-		int workId = (int) session.getAttribute("workIdSession");
-		
+//		int workId = (int) session.getAttribute("workIdSession");
+
 		return "online-mis-preliminary-preparation-layout";
 	}
-	
-	
+
 }

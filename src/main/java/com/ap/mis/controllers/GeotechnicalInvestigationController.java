@@ -1,6 +1,5 @@
 package com.ap.mis.controllers;
 
-import java.net.MalformedURLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,8 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +22,7 @@ import com.ap.mis.service.GeotechnicalInvestigationService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.EnumWorkStatus;
+import com.ap.mis.util.FileUploadConstraintsUtil;
 
 @Controller
 @RequestMapping(path = "/geotechnicalInvestigation")
@@ -39,11 +37,9 @@ public class GeotechnicalInvestigationController {
 
 	@Autowired
 	AttachmentService attachmentService;
-	
-	private Integer maxFileSize = (1024 * 1024 * 10);
-	
-	@Value("${file.upload.extensions}") 
-	private String allowedExtensions;
+
+	@Autowired
+	FileUploadConstraintsUtil fileUploadConstraint;
 
 	@GetMapping(path = { "/create", "/edit", "/view" })
 	public String getGeotechnicalInvestigation(Model model, HttpSession session, HttpServletRequest request) {
@@ -80,9 +76,7 @@ public class GeotechnicalInvestigationController {
 		model.addAttribute("moduleName", workModuleStatus.getStatus());
 		model.addAttribute("geotechnicalInvestigationDetails", geotechnicalInvestigationDetails);
 		model.addAttribute("disableWriteControllers", disableWriteControllers);
-		model.addAttribute("maxFileSize", maxFileSize);
-		model.addAttribute("allowedExtensions", allowedExtensions);
-
+		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
 		return "online-mis-geotechnical-investigation";
 	}
 

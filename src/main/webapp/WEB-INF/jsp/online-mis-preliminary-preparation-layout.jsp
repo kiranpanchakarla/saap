@@ -12,7 +12,9 @@
 <meta charset="utf-8">
 <title>SAAP : Preliminary preparation layout</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
-<link href="${pageContext.request.contextPath}/resources/css/uploadDocuments/fileUploadDocuments.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/uploadDocuments/fileUploadDocuments.css"
+	rel="stylesheet">
 </head>
 <body>
 	<!--=== Header ====-->
@@ -68,12 +70,13 @@
 								<h2 class="fs-title">Preliminary preparation layout
 									documents</h2>
 								<ul class="fs-list-details">
-									<li><p>Upload Document(${fn:replace(allowedExtensions,', ','/')})</p></li>
+									<li><p>Upload
+											Document(${fn:replace(fileUploadConstraint.allowedExtensions,', ','/')})</p></li>
 									<li><label for="files" class="fileuploadLabel">Select
 											Files</label> <input type="file" name="file" id="files" multiple
-										class="form-control mb-md" >
-										<small id="selectedFilesCount">* file selected
-											${fn:length(preliminaryPreparationLayoutAttachmentFiles)}</small></li>
+										class="form-control mb-md"> <small
+										id="selectedFilesCount">* file selected
+											${fn:length(preliminaryPreparationLayoutAttachmentFiles)}/${fileUploadConstraint.maxFileUploadCount}</small></li>
 								</ul>
 							</div>
 							<br />
@@ -93,20 +96,23 @@
 											items="${preliminaryPreparationLayoutAttachmentFiles}"
 											var="file" varStatus="loop">
 											<c:set var="filePathParts"
-												value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />											
-											<tr data-attachment-id="${file.id}" data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
+												value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+											<tr data-attachment-id="${file.id}"
+												data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
 												<td>${loop.index + 1}</td>
 												<td>${filePathParts[fn:length(filePathParts)-1]}</td>
 												<td>${file.convertFileSize}</td>
 												<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 														value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 												<td class="text-center"><a href="#" name="remove"><i
-														class="fa fa-trash"></i></a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}${file.path}"
+														class="fa fa-trash"></i></a>&nbsp;&nbsp;<a
+													href="${pageContext.request.contextPath}${file.path}"
 													target="_blank"><i class="fa fa-eye"></i></a></td>
 											</tr>
 
 										</c:forEach>
-										<c:if test="${fn:length(preliminaryPreparationLayoutAttachmentFiles) == 0}">
+										<c:if
+											test="${fn:length(preliminaryPreparationLayoutAttachmentFiles) == 0}">
 											<tr data-is-noupload="true" data-attachment-id="-1">
 												<td colspan="5">
 													<p class="text-center pt-4 mb-4 notfound">No file
@@ -139,6 +145,7 @@
 
 	<script>
 		$(document).ready(function() {
+			updateTotalFileCount(${fn:length(preliminaryPreparationLayoutAttachmentFiles)});
 			$("#msform").on('submit', function(e) {
 				e.preventDefault();
 				window.location.href = $(this).attr("action");
@@ -146,23 +153,25 @@
 		})
 
 		//var filesList = [];
-
-		// vallid file extensions
-		/* var allowedFileExtensions = [ '.pdf', '.jpg', '.png' ]; */		
-		var allowedFileExtensions = "${allowedExtensions}".replace(/\s/g,'').split(",");
-
+		
 		var moduleName = "${moduleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"
 
-		/* var maxFileSize = 1024 * 1024 * 2; */
-		var maxFileSize = "${maxFileSize}";
+				
+		var maxFileSize = ${fileUploadConstraint.maxFileUploadSize};
+		var maxFileUploadCount = ${fileUploadConstraint.maxFileUploadCount};
+		var allowedFileExtensions = "${fileUploadConstraint.allowedExtensions}".replace(/\s/g,'').split(",");
 
 		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
 		var contextPath = "${pageContext.request.contextPath}";
+		
+		
 	</script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"
 		type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/uploadDocuments/fileUploadDocuments.js" type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/uploadDocuments/fileUploadDocuments.js"
+		type="text/javascript"></script>
 	<!--=== Footer ====-->
 	<jsp:include page="online-mis-footer.jsp" />
 

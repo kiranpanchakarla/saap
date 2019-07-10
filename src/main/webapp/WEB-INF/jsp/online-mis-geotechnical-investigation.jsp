@@ -73,21 +73,20 @@
 								<h2 class="fs-title">Geotechnical investigation</h2>
 
 								<ul class="fs-list-details">
-									<li><p>
-											Comments 
-										</p></li>
+									<li><p>Comments</p></li>
 									<li><form:textarea id="natureofwork"
 											class="form-control mb-md" path="comments"
 											placeHolder="Comments"></form:textarea></li>
 								</ul>
 
 								<ul class="fs-list-details">
-									<li><p>Upload Document(${fn:replace(allowedExtensions,', ','/')})</p></li>
+									<li><p>Upload
+											Document(${fn:replace(fileUploadConstraint.allowedExtensions,', ','/')})</p></li>
 									<li><label for="files" class="fileuploadLabel">Select
 											Files</label> <input type="file" name="file" id="files" multiple
-										class="form-control mb-md">
-										<small id="selectedFilesCount">* file selected
-											${fn:length(geotehnicalInvestigationLayoutAttachmentFiles)}</small></li>
+										class="form-control mb-md"> <small
+										id="selectedFilesCount">* file selected
+											${fn:length(geotehnicalInvestigationLayoutAttachmentFiles)}/${fileUploadConstraint.maxFileUploadCount}</small></li>
 								</ul>
 							</div>
 							<br />
@@ -108,7 +107,8 @@
 											var="file" varStatus="loop">
 											<c:set var="filePathParts"
 												value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
-											<tr data-attachment-id="${file.id}" data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
+											<tr data-attachment-id="${file.id}"
+												data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
 												<td>${loop.index + 1}</td>
 												<td>${filePathParts[fn:length(filePathParts)-1]}</td>
 												<td>${file.convertFileSize}</td>
@@ -121,7 +121,7 @@
 											</tr>
 
 										</c:forEach>
-										<c:if test="${fn:length(filePathParts) == 0}">
+										<c:if test="${fn:length(geotehnicalInvestigationLayoutAttachmentFiles) == 0}">
 											<tr data-is-noupload="true" data-attachment-id="-1">
 												<td colspan="5">
 													<p class="text-center pt-4 mb-4 notfound">No file
@@ -159,18 +159,19 @@
 		
 		//var filesList = [];
 
-		// vallid file extensions
-		/* var allowedFileExtensions = [ '.pdf', '.jpg', '.png' ]; */
+		$(document).ready(function(){
+			updateTotalFileCount( ${fn:length(geotehnicalInvestigationLayoutAttachmentFiles)} );
+		});
 		
-		var allowedFileExtensions = "${allowedExtensions}".replace(/\s/g,'').split(",");
-
 		var moduleName = "${moduleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"
 
-		/* var maxFileSize = 1024 * 1024 * 2; */
-		var maxFileSize = "${maxFileSize}";
+		var maxFileSize = ${fileUploadConstraint.maxFileUploadSize};
+		var maxFileUploadCount = ${fileUploadConstraint.maxFileUploadCount};
+		var allowedFileExtensions = "${fileUploadConstraint.allowedExtensions}".replace(/\s/g,'').split(",");
 		
 		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
 		var contextPath = "${pageContext.request.contextPath}";
+		
 	</script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"
