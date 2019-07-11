@@ -46,9 +46,9 @@
   
   <section id="contact" class="section-bg-con">
     <div class="container">
-    <c:if test="${lineDeptObj.id != null}">
+    <%-- <c:if test="${!empty lineDeptObj.id}"> --%>
      <jsp:include page="online-mis-tabView.jsp" />
-     </c:if>
+    <%--  </c:if> --%>
       <div class="tab-content">
 	 <div class="tab-pane fade show" id="nav-department" role="tabpanel" aria-labelledby="nav-department-tab">
     <div class="row">
@@ -154,12 +154,15 @@
                 
                 </div>
                 
-                  <c:if test="${lineDeptObj.id==null}">
+                 <%--  <c:if test="${lineDeptObj.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
                 </c:if>
                 <c:if test="${lineDeptObj.id!=null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Update and Continue">
-                </c:if>
+                </c:if> --%>
+                 <input type="submit" id="submit" name="next"
+								class="next action-button float-right"
+								value="${empty lineDeptObj.id ? 'Save' : 'Update'} and Continue">
                 
             </fieldset>
             <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}"/>

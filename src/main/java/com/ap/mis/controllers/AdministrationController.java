@@ -1,6 +1,5 @@
 package com.ap.mis.controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,7 @@ import com.ap.mis.service.MISService;
 import com.ap.mis.util.ContextUtil;
 import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.EnumWorkStatus;
+import com.ap.mis.util.FileUploadConstraintsUtil;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -48,7 +48,13 @@ public class AdministrationController {
 
 	@Autowired
 	LineDepartmentService lineDepartmentService;
+	
+	@Autowired
+	FileUploadConstraintsUtil fileUploadConstraint;
 
+	@Autowired
+	AttachmentService attachmentService;
+	
 	@PostMapping(value = "/save")
 	public String administrativeSectionSave(@ModelAttribute AdministrativeSection adminSecObject, Model model,
 			HttpServletRequest request, HttpSession session) {
@@ -105,11 +111,15 @@ public class AdministrationController {
 		session.getAttribute("workInfo");
 		int workid = (int) session.getAttribute("workIdSession");
 		Works workInfo = misService.getWorkInfo(workid);
+		EnumFilter workModuleStatus = EnumFilter.ADMIN;
+		model.addAttribute("moduleName", workModuleStatus.getStatus());
+		model.addAttribute("workObject",workInfo);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("grantTypeList", admService.findAll());
 		model.addAttribute("finYearList", admService.getfinancialYearList());
 		model.addAttribute("executiveDeptList", admService.getExecutiveDeptList());
 		model.addAttribute("executiveConsultantList", admService.getExecutiveConsultantList());
+		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
 	    return "online-mis-administrative-section";
 	}
 	
@@ -136,16 +146,27 @@ public class AdministrationController {
 	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request,HttpSession session) {
 		
 		AdministrativeSection adminInfo = admService.getAdminDetails(id);
-		
-	
+		int workId = adminInfo.getWork().getId();
+		EnumFilter workModuleStatus = EnumFilter.ADMIN;
+		session.setAttribute("workIdSession", workId);
+		 
+		List<Attachements> attachments = attachmentService.getAttachementsDetails(workId, workModuleStatus.getStatus());
 		Works workInfo = misService.getWorkInfo(adminInfo.getWork().getId());
+		model.addAttribute("adminAttachmentFiles", attachments);
+		model.addAttribute("moduleName", workModuleStatus.getStatus());
+		model.addAttribute("workObject", adminInfo.getWork());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("grantTypeList", admService.findAll());
 		model.addAttribute("finYearList", admService.getfinancialYearList());
 		model.addAttribute("executiveDeptList", admService.getExecutiveDeptList());
 		model.addAttribute("executiveConsultantList", admService.getExecutiveConsultantList());
 		model.addAttribute("adminSecObject",adminInfo);
+		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
 		
+		WorktoLandDetails obj = new WorktoLandDetails();
+        obj.setWorks(workInfo);
+        session.setAttribute("generalInfo", obj);
+        
 		return "online-mis-administrative-section";
 	}
 	

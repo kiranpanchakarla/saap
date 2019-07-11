@@ -39,6 +39,7 @@ import com.ap.mis.service.VillageService;
 import com.ap.mis.util.ContextUtil;
 import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.EnumWorkStatus;
+import com.ap.mis.util.FileUploadConstraintsUtil;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -65,6 +66,8 @@ public class LandDetailsController {
 	ConsultantInfoService consultantInfoService;
 	@Autowired
 	AttachmentService attachService;
+	@Autowired
+	FileUploadConstraintsUtil fileUploadConstraint;
 
 	@PostMapping(value = "/save")
 	public String landDetailsSave(@ModelAttribute LandDetails landDetails, Model model, HttpServletRequest request,
@@ -78,7 +81,7 @@ public class LandDetailsController {
 		obj.setLanddetails(landDetails);
 		session.setAttribute("generalInfo", obj);
 
-		Works workInfo=misService.getWorkInfo(obj.getWorks().getId());
+		Works workInfo=misService.getWorkInfo(landDetails.getWork().getId());
 		if (landDetails.getId() == null) {
 			landDetailService.landDetailsSave(landDetails);
 			workInfo.setStatus(EnumFilter.OPEN.getStatus());
@@ -89,21 +92,21 @@ public class LandDetailsController {
 			landDetailService.landDetailsUpdate(landDetails);
 		}
 		
-		model.addAttribute("workInfo",workInfo);
-		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
-		
-		AdministrativeSection adminInfo = administrativeSectionService.getAdminInfo(obj.getAdministrativeesction().getId());
-		model.addAttribute("adminInfo",adminInfo);
-		
-		DepartmentLinkingLine deptInfo = lineDepartmentService.getDeptInfo(obj.getDepartmentlinkingine().getId());
-		model.addAttribute("deptInfo",deptInfo);
-		
-		LandDetails landinfo = landDetailService.getLandinfo(obj.getLanddetails().getId());
-		model.addAttribute("landinfo",landinfo);
-		
-		List<Attachements> adminattachements=attachService.getAttachementsDetails(obj.getWorks().getId(),EnumFilter.ADMIN.getStatus());
-		List<Attachements> landattachements=attachService.getAttachementsDetails(obj.getWorks().getId(),EnumFilter.LANDDETAILS.getStatus());
 		if (isSave == true) {
+			model.addAttribute("workInfo",workInfo);
+			model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
+			
+			AdministrativeSection adminInfo = administrativeSectionService.getAdminDetails(landDetails.getWork().getId());
+			model.addAttribute("adminInfo",adminInfo);
+			
+			DepartmentLinkingLine deptInfo = lineDepartmentService.getdepartDetails(landDetails.getWork().getId());
+			model.addAttribute("deptInfo",deptInfo);
+			
+			model.addAttribute("landinfo",landDetails);
+			
+			List<Attachements> adminattachements=attachService.getAttachementsDetails(landDetails.getWork().getId(),EnumFilter.ADMIN.getStatus());
+			List<Attachements> landattachements=attachService.getAttachementsDetails(landDetails.getWork().getId(),EnumFilter.LANDDETAILS.getStatus());
+			
 			Map<String, String> adminFile = new HashMap<String, String>();
 			for(Attachements adminattachDetails :adminattachements) {
 				if (adminattachDetails.getPath() != null && !adminattachDetails.getPath().equals("") && adminattachDetails.getIsActive().equals(true)) {
@@ -160,6 +163,10 @@ public class LandDetailsController {
 	    userObject =misService.verifyUser(userObject);
 		int workid = (int) session.getAttribute("workIdSession");
 		Works workInfo = misService.getWorkInfo(workid);
+		EnumFilter workModuleStatus = EnumFilter.LANDDETAILS;
+		model.addAttribute("moduleName", workModuleStatus.getStatus());
+		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
+		model.addAttribute("workObject",workInfo);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 	    model.addAttribute("landDetails", new LandDetails());
 		session.setAttribute("loggedInUserObj", userObject);
@@ -192,18 +199,26 @@ public class LandDetailsController {
 	
 	
 	@GetMapping(value = "/edit/{id}")
-	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request,HttpSession session) {
 		LandDetails landInfo = landDetailService.getLandDetails(id);
 		log.info("===landInfo===:"+landInfo);
+		int workId = landInfo.getWork().getId();
+		session.setAttribute("workIdSession", workId);
+		EnumFilter workModuleStatus = EnumFilter.LANDDETAILS;
+		model.addAttribute("moduleName", workModuleStatus.getStatus());
+		model.addAttribute("workObject", landInfo.getWork());
 		model.addAttribute("landDetails",landInfo);
 		model.addAttribute("LandTypeList", landDetailService.getLandTypeList());
+		model.addAttribute("workObject", landInfo.getWork());
 		Works workInfo = misService.getWorkInfo(landInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		
-		List<Attachements> attachements=attachService.getAttachementsDetails(id,EnumFilter.LANDDETAILS.getStatus());
-		List<String> filePath = new ArrayList<String>();
-		log.info("===attachements===:"+attachements);
-		for(Attachements attachDetails :attachements) {
+		List<Attachements> attachments=attachService.getAttachementsDetails(id,EnumFilter.LANDDETAILS.getStatus());
+		model.addAttribute("landAttachmentFiles", attachments);
+		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
+		/*List<String> filePath = new ArrayList<String>();
+		log.info("===attachements===:"+attachments);
+		for(Attachements attachDetails :attachments) {
 			if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
 				String attachmentPath=ContextUtil.populateContext(request) + attachDetails.getPath();
 				log.info("==attachmentPath==:"+attachmentPath);
@@ -213,7 +228,13 @@ public class LandDetailsController {
 			} else {
 				model.addAttribute("filePath", null);
 			}
-		}
+		}*/
+		
+		WorktoLandDetails obj = new WorktoLandDetails();
+        obj.setWorks(workInfo);
+        session.setAttribute("generalInfo", obj);
+        
+
 		
 		return "online-mis-land-details";
 		

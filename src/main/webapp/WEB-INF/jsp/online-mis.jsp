@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-    <%@ page isELIgnored="false"%>
-        <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-            <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-                <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-                    <!DOCTYPE html>
-                    <html lang="en">
+<%@ page isELIgnored="false"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!DOCTYPE html>
+<html lang="en">
 
-                    <head>
-                        <meta charset="utf-8">
-                        <title>SAAP : Online MIS</title>
-                        <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
-                    </head>
-                    <script>
+<head>
+<meta charset="utf-8">
+<title>SAAP : Online MIS</title>
+<c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
+</head>
+<script>
                         $(document).ready(function() {
                         	
                             $(".createClass").click(function() {
@@ -158,14 +158,14 @@
                         });
                     </script>
 
-                    <body>
-                        <!--=== Header ====-->
-                        <jsp:include page="online-mis-header.jsp" />
+<body>
+	<!--=== Header ====-->
+	<jsp:include page="online-mis-header.jsp" />
 
-                        <!--==========================
+	<!--==========================
     Intro Section
   ============================-->
-                       <!--  <section id="intro-inner">
+	<!--  <section id="intro-inner">
                             <div class="page-header">
                                 <section id="page-title" class="parralax">
                                     <div class="container rel">
@@ -180,216 +180,233 @@
                                 </section>
                             </div>
                         </section> -->
-                        <!-- #intro -->
+	<!-- #intro -->
 
-                        <main id="main">
-
-                            <!--==========================
+	<main id="main"> <!--==========================
       Contact Us Section
     ============================-->
 
-                            <section id="contact" class="section-bg-con">
-                                <div class="container">
+	<section id="contact" class="section-bg-con">
+		<div class="container">
+			<%-- <c:if test="${!empty workObject.id}"> --%>
+			<jsp:include page="online-mis-tabView.jsp" />
+			<%--   </c:if> --%>
+			<div class="tab-content">
 
-                                    <jsp:include page="online-mis-tabView.jsp" />
-                                    <div class="tab-content">
+				<!-- <div class="tab-pane" id="work" role="tabpanel" aria-labelledby="work-tab"> -->
+				<div class="tab-pane fade show" id="nav-work" role="tabpanel"
+					aria-labelledby="nav-work-tab">
+					<div class="row">
+						<div class="col-md-12">
 
-                                        <!-- <div class="tab-pane" id="work" role="tabpanel" aria-labelledby="work-tab"> -->
-                                        <div class="tab-pane fade show" id="nav-work" role="tabpanel" aria-labelledby="nav-work-tab">
-                                            <div class="row">
-                                                <div class="col-md-12">
+							<c:url value="/worksCreation/save" var="createUrl" />
+							<%-- <form id="msform"  method="post" action="${createUrl}" modelAttribute="workObject"> --%>
 
-                                                    <c:url value="/worksCreation/save" var="createUrl" />
-                                                    <%-- <form id="msform"  method="post" action="${createUrl}" modelAttribute="workObject"> --%>
+							<form:form id="msform" method="POST" action="${createUrl}"
+								modelAttribute="workObject">
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
 
-                                                        <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="workObject">
-                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                                            
-                                                            
-                                                            
-                                                            <!-- for Spring Security -->
-                                                            <c:choose>
-                                                                <c:when test="${!empty workObject.id}">
-                                                                    <form:input type="hidden" path="id" class="form-control" id="id" name="id"></form:input>
-                                                                    <form:input type="hidden" path="workStatus" class="form-control" id="workStatus" name="workStatus"></form:input>
-                                                                </c:when>
-                                                            </c:choose>
-                                                            <!-- fieldsets -->
-                                                            <fieldset>
-                                                                <h2 class="fs-title">Work Creation</h2>
-                                                                <!--<h3 class="fs-subtitle">Tell us something about you</h3>-->
 
-                                                                <ul class="fs-list-details">
-                                                                    <li>
-                                                                        <p>Types of Work <span class="red">*</span></p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form:select id="typeworkid" path="typeOfWork.id">
-                                                                            <form:option value="">--Select--</form:option>
-                                                                            <c:forEach items="${typeOfWork}" var="typeOfWork">
-                                                                                <form:option value="${typeOfWork.id}">${typeOfWork.name}</form:option>
-                                                                            </c:forEach>
-                                                                        </form:select>
-                                                                        <span id="typeworkErr" class="errors" style="color:red;float:right;"></span>
-                                                                </ul>
 
-                                                                <ul class="fs-list-details">
-                                                                    <li>
-                                                                        <p>Nature of work <span class="red">*</span></p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form:select id="natureOfWork" path="natureOfWork.id">
-                                                                            <form:option value="">--Select--</form:option>
-                                                                            <c:forEach items="${natureOfWork}" var="natureOfWork">
-                                                                                <form:option value="${natureOfWork.id}">${natureOfWork.name}</form:option>
-                                                                            </c:forEach>
-                                                                        </form:select>
-                                                                        <br><span id="natureOfWorkErr" class="errors" style="color:red;float:right;"></span>
-                                                                    </li>
-                                                                </ul>
+								<!-- for Spring Security -->
+								<c:choose>
+									<c:when test="${!empty workObject.id}">
+										<form:input type="hidden" path="id" class="form-control"
+											id="id" name="id"></form:input>
+										<form:input type="hidden" path="workStatus"
+											class="form-control" id="workStatus" name="workStatus"></form:input>
+									</c:when>
+								</c:choose>
+								<!-- fieldsets -->
+								<fieldset>
+									<h2 class="fs-title">Work Creation</h2>
+									<!--<h3 class="fs-subtitle">Tell us something about you</h3>-->
 
-                                                                <ul class="fs-list-details">
-                                                                    <li>
-                                                                        <p>District <span class="red">*</span></p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form:select id="district" path="district.id">
-                                                                            <form:option value="">--Select--</form:option>
-                                                                            <c:forEach items="${districts}" var="district">
-                                                                                <form:option value="${district.id}">${district.name}</form:option>
-                                                                            </c:forEach>
-                                                                        </form:select>
-                                                                        <br><span id="districtErr" class="errors" style="color:red;float:right;"></span>
-                                                                    </li>
-                                                                </ul>
+									<ul class="fs-list-details">
+										<li>
+											<p>
+												Types of Work <span class="red">*</span>
+											</p>
+										</li>
+										<li><form:select id="typeworkid" path="typeOfWork.id" onchange="hasChanged()">
+												<form:option value="">--Select--</form:option>
+												<c:forEach items="${typeOfWork}" var="typeOfWork">
+													<form:option value="${typeOfWork.id}">${typeOfWork.name}</form:option>
+												</c:forEach>
+											</form:select> <span id="typeworkErr" class="errors"
+											style="color: red; float: right;"></span>
+									</ul>
 
-                                                                <ul class="fs-list-details">
-                                                                    <li>
-                                                                        <p>Constituency <span class="red">*</span></p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form:select id="constituency" path="constituency.id">
-                                                                            <form:option value="" >--Select--</form:option>
-                                                                            <c:if test="${workObject.id != null}">
-                                                                             <c:forEach items="${constituency}" var="constituency">
-                                                                           <form:option value="${constituency.id}">${constituency.name}</form:option> 
-                                                                           </c:forEach>
-                                                                           </c:if>
-                                                                        </form:select>
-                                                                        <br><span id="constituencyErr" class="errors" style="color:red;float:right;"></span>
-                                                                    </li>
-                                                                </ul>
+									<ul class="fs-list-details">
+										<li>
+											<p>
+												Nature of work <span class="red">*</span>
+											</p>
+										</li>
+										<li><form:select id="natureOfWork" path="natureOfWork.id" onchange="hasChanged()">
+												<form:option value="">--Select--</form:option>
+												<c:forEach items="${natureOfWork}" var="natureOfWork">
+													<form:option value="${natureOfWork.id}">${natureOfWork.name}</form:option>
+												</c:forEach>
+											</form:select> <br>
+										<span id="natureOfWorkErr" class="errors"
+											style="color: red; float: right;"></span></li>
+									</ul>
 
-                                                                <ul class="fs-list-details">
-                                                                    <li>
-                                                                        <p>Mandal <span class="red">*</span></p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form:select id="mandal" path="mandal.id">
-                                                                            <form:option value="">--Select--</form:option>
-                                                                             <c:if test="${workObject.id != null}">
-                                                                             <c:forEach items="${mandal}" var="mandal">
-                                                                            <form:option value="${mandal.id}">${mandal.name}</form:option>
-                                                                            </c:forEach>
-                                                                            </c:if>
-                                                                        </form:select>
-                                                                        <span id="mandalErr" class="errors" style="color:red;float:right;"></span>
-                                                                    </li>
-                                                                </ul>
+									<ul class="fs-list-details">
+										<li>
+											<p>
+												District <span class="red">*</span>
+											</p>
+										</li>
+										<li><form:select id="district" path="district.id">
+												<form:option value="">--Select--</form:option>
+												<c:forEach items="${districts}" var="district">
+													<form:option value="${district.id}">${district.name}</form:option>
+												</c:forEach>
+											</form:select> <br>
+										<span id="districtErr" class="errors"
+											style="color: red; float: right;"></span></li>
+									</ul>
 
-                                                                <ul class="fs-list-details">
-                                                                    <li>
-                                                                        <p>Village <span class="red">*</span></p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form:select id="village" path="village.id">
-                                                                            <form:option value="">--Select--</form:option>
-                                                                            <c:if test="${workObject.id != null}">
-                                                                             <c:forEach items="${village}" var="village">
-                                                                            <form:option value="${village.id}">${village.name}</form:option>
-                                                                             </c:forEach>
-                                                                            </c:if>
-                                                                        </form:select>
-                                                                        <span id="villageErr" class="errors" style="color:red;float:right;"></span>
-                                                                    </li>
-                                                                </ul>
+									<ul class="fs-list-details">
+										<li>
+											<p>
+												Constituency <span class="red">*</span>
+											</p>
+										</li>
+										<li><form:select id="constituency" path="constituency.id">
+												<form:option value="">--Select--</form:option>
+												<c:if test="${workObject.id != null}">
+													<c:forEach items="${constituency}" var="constituency">
+														<form:option value="${constituency.id}">${constituency.name}</form:option>
+													</c:forEach>
+												</c:if>
+											</form:select> <br>
+										<span id="constituencyErr" class="errors"
+											style="color: red; float: right;"></span></li>
+									</ul>
 
-                                                                <ul class="fs-list-details">
-                                                                    <li>
-                                                                        <p>Location <span class="red">*</span></p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form:input type="text" id="location" placeholder='Location' path="location" />
-                                                                        <br><span id="locationErr" class="errors" style="color:red;float:right;"></span>
-                                                                    </li>
-                                                                </ul>
+									<ul class="fs-list-details">
+										<li>
+											<p>
+												Mandal <span class="red">*</span>
+											</p>
+										</li>
+										<li><form:select id="mandal" path="mandal.id">
+												<form:option value="">--Select--</form:option>
+												<c:if test="${workObject.id != null}">
+													<c:forEach items="${mandal}" var="mandal">
+														<form:option value="${mandal.id}">${mandal.name}</form:option>
+													</c:forEach>
+												</c:if>
+											</form:select> <span id="mandalErr" class="errors"
+											style="color: red; float: right;"></span></li>
+									</ul>
 
-                                                                <ul class="fs-list-details">
-                                                                    <li>
-                                                                        <p>Work Number <span class="red">*</span></p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <form:input type="text" id="workNo" path="workNo" placeholder="Work Number" />
-                                                                        <br><span id="workNoErr" class="errors" style="color:red;float:right;"></span>
-                                                                    </li>
-                                                                </ul>
+									<ul class="fs-list-details">
+										<li>
+											<p>
+												Village <span class="red">*</span>
+											</p>
+										</li>
+										<li><form:select id="village" path="village.id">
+												<form:option value="">--Select--</form:option>
+												<c:if test="${workObject.id != null}">
+													<c:forEach items="${village}" var="village">
+														<form:option value="${village.id}">${village.name}</form:option>
+													</c:forEach>
+												</c:if>
+											</form:select> <span id="villageErr" class="errors"
+											style="color: red; float: right;"></span></li>
+									</ul>
 
-                                                                <ul class="fs-list-details fs-list-full">
-                                                                    <li>
-                                                                        <p>No. of Works <span class="red">*</span></p>
-                                                                    </li>
-                                                                    <li class="work-space">
-                                                                        <form:input type="text" id="noOfWorks" path="noOfWorks" placeholder="No. of Works" />
-                                                                        <span id="noOfWorksErr" class="errors" style="color:red;float:center;"></span>
+									<ul class="fs-list-details">
+										<li>
+											<p>
+												Location <span class="red">*</span>
+											</p>
+										</li>
+										<li><form:input type="text" id="location"
+												placeholder='Location' path="location" /> <br>
+										<span id="locationErr" class="errors"
+											style="color: red; float: right;"></span></li>
+									</ul>
 
-                                                                        <input type="button" name="Create" id="Create" value="Create" class="create-button createClass">
-                                                                    </li>
-                                                                </ul>
+									<ul class="fs-list-details">
+										<li>
+											<p>
+												Work Number <span class="red">*</span>
+											</p>
+										</li>
+										<li><form:input type="text" id="workNo" path="workNo"
+												placeholder="Work Number" /> <br>
+										<span id="workNoErr" class="errors"
+											style="color: red; float: right;"></span></li>
+									</ul>
 
-                                                                <span id="work_detailsErr" class="errors" style="color:red;float:center;"></span>
-                                                                <div id="work_table_div">
-                                                                    <table id="work_table" class=" table table-bordered  table-striped mb-none table_head animated fadeInUp">
-                                                                        <!--<tbody>
-	            	<tr>
-	                  <th>S.No</th> 
-	            	  <th>Work Detail</th> 
-	            	  <th>Estimated Cost (in Lakhs)</th>
-	            	</tr>
-	            	<!-- <tr>
-	            	  <td><b>1</b></td>
-	                  <td><input type="text" class="form-control mb-md" id="s.no" name="s.no" value=""> </td> 
-	            	  <td><input type="text" class="form-control mb-md" id="work-details-new" maxlength="10" name="work-details-new"></td>
-	            	</tr> -->
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <c:if test="${workObject.id==null}">
-                                                                    <div id="saveDiv" style="display:none">
-                                                                        <input type="submit" id="submit" name="submit" class="next action-button float-right" value="Save and Continue" />
-                                                                    </div>
-                                                                </c:if>
-                                                                <c:if test="${workObject.id!=null}">
-                                                                    <input type="submit" id="submit" name="submit" class="next action-button float-right" value="Update and Continue" />
-                                                                </c:if>
-                                                                <!-- name="next" -->
-                                                            </fieldset>
-                                                            <input type="hidden" id="createval" name="createval" value="0">
-                                                            <%-- </form> --%>
-                                                        </form:form>
-                                                </div>
-                                            </div>
-                                            <!-- /.MultiStep Form -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                            <!-- #contact -->
-                        </main>
+									<ul class="fs-list-details fs-list-full">
+										<li>
+											<p>
+												No. of Works <span class="red">*</span>
+											</p>
+										</li>
+										<li class="work-space"><form:input type="text"
+												id="noOfWorks" path="noOfWorks" placeholder="No. of Works" />
+											<span id="noOfWorksErr" class="errors"
+											style="color: red; float: center;"></span> <input
+											type="button" name="Create" id="Create" value="Create"
+											class="create-button createClass"></li>
+									</ul>
 
-                        <!--=== Footer ====-->
-                        <jsp:include page="online-mis-footer.jsp" />
+									<span id="work_detailsErr" class="errors"
+										style="color: red; float: center;"></span>
+									<div id="work_table_div">
+										<table id="work_table"
+											class=" table table-bordered  table-striped mb-none table_head animated fadeInUp">
+											
+										</table>
+									</div>
+									<!-- <input type="text" id="test"/> -->
+									
+									<c:if test="${workObject.id==null}">
+										<div id="saveDiv" style="display: none">
+											<input type="submit" id="submit" name="submit"
+												class="next action-button float-right"
+												value="Save and Continue" />
+										</div>
+									</c:if>
+									<c:if test="${workObject.id!=null}">
+										<input type="submit" id="submit" name="submit"
+											class="next action-button float-right"
+											value="Update and Continue" />
+									</c:if>
+									<!-- name="next" -->
+								</fieldset>
+								<input type="hidden" id="createval" name="createval" value="0">
+								<%-- </form> --%>
+							</form:form>
+						</div>
+					</div>
+					<!-- /.MultiStep Form -->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- #contact --> </main>
 
-                        <script type="text/javascript">
+	<!--=== Footer ====-->
+	<jsp:include page="online-mis-footer.jsp" />
+
+	<script type="text/javascript">
+	
+	$(document).ready(function() {
+        $('#nav-work-tab').addClass('active');
+        $('#nav-work').addClass('active');
+        
+    });
+	
                             $("#workNo").on('input', function() {
                                 $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
                             })
@@ -431,6 +448,24 @@
                             })
 
                             $("#submit").click(function() {
+                            	
+                            	 $.ajax({
+             	    		        type: "POST",
+             	    		        url : "<c:url value="/worksCreation/save"/>",
+             	    		        data: isChange,
+             	    		        processData: false,
+             	    		        contentType: false,
+             	    		        cache: false,
+             	    		        timeout: 600000,
+             	    		        success: function (data) {
+             	    		        	if(data == true){
+                 							  alert(data);
+                 					            }
+             						 /*  else{
+             								alert("Unable to upload File");
+             							} */
+             	    		        } 
+             	    		    });
 
                                 if ($("#typeworkid option:selected").val() == "") {
                                     $("#typeworkErr").text("Select Types of Work");
@@ -531,11 +566,8 @@
 
                             });
 
-                            $(document).ready(function() {
-                                $('#nav-work-tab').addClass('active');
-                                $('#nav-work').addClass('active');
-                            });
+                            
                         </script>
-                    </body>
+</body>
 
-                    </html>
+</html>

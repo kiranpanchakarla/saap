@@ -85,7 +85,8 @@ public class LineDepartmentController {
 	    userObject =misService.verifyUser(userObject);
 	    model.addAttribute("lineDeptObj", new DepartmentLinkingLine());
 		session.setAttribute("loggedInUserObj", userObject);
-		session.getAttribute("workInfo");
+		Works workInfo = (Works) session.getAttribute("workInfo");
+		model.addAttribute("workObject",workInfo);
 		model.addAttribute("divisionList", lineDepartService.getDivisionList());
 		model.addAttribute("subdivisionList", lineDepartService.getSubdivisionList());
 		model.addAttribute("sectionList", lineDepartService.getSectionList());
@@ -104,6 +105,7 @@ public class LineDepartmentController {
 	@GetMapping(value = "/edit/{id}")
 	public String edit(Model model, String workId,@PathVariable("id") Integer id) {
 		DepartmentLinkingLine departInfo = lineDepartService.getdepartDetails(id);
+		model.addAttribute("workObject", departInfo.getWork());
 		model.addAttribute("divisionList", lineDepartService.getDivisionList());
 		model.addAttribute("subdivisionList", lineDepartService.getSubdivisionList());
 		model.addAttribute("sectionList", lineDepartService.getSectionList());
