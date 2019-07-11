@@ -221,7 +221,8 @@ $(document)
 								})
 								.setHeader(
 										'<h4 class="mb-0"> Delete file confirmation </h4> ')
-								.show('true', 'danger-alertjs-model');
+								.set('defaultFocus', 'cancel').show('true',
+										'danger-alertjs-model');
 
 					}
 				});
