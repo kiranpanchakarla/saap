@@ -10,13 +10,17 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Attachements;
@@ -170,6 +174,20 @@ public class WorkApprovalController {
 			model.addAttribute("SAAP_APPROVED_STATUS", EnumWorkStatus.SAAP_APPROVED.getStatus());
 			model.addAttribute("PENDING_SAAP_APPROVAL", EnumWorkStatus.PENDING_SAAP_APPROVAL.getStatus());
 			return "online-mis-work-consultancy-approvals";
+	}
+	
+	@PostMapping(path = "/work/{workId}/aprove")
+	@ResponseBody
+	public ResponseEntity<String> approveWork(@PathVariable(value = "workId") Integer workId) {
+		Works work = misService.getWorkInfo(workId);
+		if (work != null) {
+			work.setWorkStatus(EnumWorkStatus.SAAP_APPROVED.getStatus());
+			misService.updateWork(work);
+			log.info("Work with given id " + workId + " approved");
+			return new ResponseEntity<>("Work approved successfully", HttpStatus.OK);
+		}
+		log.info("Work with given id " + workId + " not found");
+		return new ResponseEntity<>("Work with given id " + workId + " not found", HttpStatus.NOT_FOUND);
 	}
 	
 }
