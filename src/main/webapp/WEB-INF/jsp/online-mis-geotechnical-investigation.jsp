@@ -95,9 +95,10 @@
 									<thead class="thead-light">
 										<tr>
 											<th style="width: 5%">S.No.</th>
-											<th style="width: 60%">Name</th>
+											<th style="width: 50%">Name</th>
 											<th style="width: 10%">Size</th>
 											<th style="width: 20%">Upload on</th>
+											<th style="width: 10%">Status</th>
 											<th style="width: 5%">Action</th>
 										</tr>
 									</thead>
@@ -112,6 +113,7 @@
 												<td>${loop.index + 1}</td>
 												<td>${filePathParts[fn:length(filePathParts)-1]}</td>
 												<td>${file.convertFileSize}</td>
+												<td>${file.status}</td>
 												<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 														value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 												<td class="text-center"><a href="#" name="remove"><i

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Attachements;
 import com.ap.mis.entity.LandDetails;
+import com.ap.mis.exceptions.AttachmentNotFoundException;
 
 public interface AttachmentService {
 
@@ -22,7 +23,7 @@ public interface AttachmentService {
 
 	
 
-	
+	Attachements updateAttachmentStatus(Attachements attachment) throws AttachmentNotFoundException;
 
 	
 	

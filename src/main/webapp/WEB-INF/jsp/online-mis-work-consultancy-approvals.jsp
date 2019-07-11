@@ -25,10 +25,11 @@
 	.approve-btn, .approve-btn:hover {
 	outline: none !important;
 	box-shadow: none !important;
-	color: #9c9c9c !important;
+	/* color: #9c9c9c !important; */
+	color: #383838;
 	transition: all .3S ease-out;
 	cursor: pointer;
-	opacity: .6;
+	/* opacity: .6; */
 }
 
 .undo-btn {
@@ -50,12 +51,12 @@
 	background-color: #89f3a0 !important;
 }
 
-.reject-btn:hover, .reject-btn:focus, .reject-btn:active, .approve-btn:hover,
+/* .reject-btn:hover, .reject-btn:focus, .reject-btn:active, .approve-btn:hover,
 	.approve-btn:focus, .approve-btn:active, .undo-btn:hover, .undo-btn:focus,
 	.undo-btn:active, .undo-btn.active {
 	opacity: 1;
 	color: #383838 !important;
-}
+} */
 
 .approve-btn.active, .reject-btn.active {
 	top: -5px;
@@ -68,6 +69,10 @@
 
 .not-allowed {
 	cursor: not-allowed !important;
+}
+
+button.btn {
+	padding: 6px 9px;
 }
 </style>
 
@@ -571,7 +576,7 @@
 															</c:forEach>
 															<c:if test="${fn:length(filePathParts) == 0}">
 																<tr class="landDetailsUploadDocuments">
-																	<td colspan="4">
+																	<td colspan="3">
 																		<p class="text-center p-4 mb-0">No attachments
 																			found</p>
 																	</td>
@@ -583,22 +588,22 @@
 											</li>
 										</ul>
 
-										<ul class="fs-list-details clear-fix w-98">
+										<ul class="fs-list-details clear-fix w-100">
 											<li><p>Uploaded Land Survey Details Document</p></li>
 											<li>
 
 												<table
-													class="text-left readOnlyTable w-100 table table-bordered">
+													class="text-left readOnlyTable w-98 table table-bordered">
 													<thead>
 														<tr>
-																<td style="width: 5%">S.no</td>
-																<td style="width: 20%">File Name</td>
-																<td style="width: 20%">Upload by</td>
-																<td style="width: 17%">Upload on</td>
-																<td style="width: 8%">Size</td>
-																<td style="width: 30%">Action</td>
+															<td style="width: 5%">S.no</td>
+															<td style="width: 20%">File Name</td>
+															<td style="width: 18%">Upload by</td>
+															<td style="width: 17%">Upload on</td>
+															<td style="width: 8%">Size</td>
+															<td style="width: 30%">Action</td>
 
-															</tr>
+														</tr>
 													</thead>
 													<tbody>
 														<c:forEach items="${landSurveyAttachmentFiles}" var="file"
@@ -610,20 +615,30 @@
 																<td><a
 																	href="${pageContext.request.contextPath}${file.path}"
 																	target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
-																<td>Test</td>
+																<td>${file.fileUploadUserName}</td>
 																<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 																		value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 																<td>${file.convertFileSize}</td>
-																<td>
-																	<button type="button" class="action-button">
-																		<i class="fa fa-undo"></i>Undo
-																	</button>
-																	<button type="button" class="action-button">
-																		<i class="fa fa-check"></i>Approve
-																	</button>
-																	<button type="button" class="action-button">
-																		<i class="fa fa-close"></i>Reject
-																	</button>
+																<td class="text-center">
+																	<div class="btn-group" role="group"
+																		data-attachment-id="${file.id}"
+																		aria-label="Basic example">
+																		<button type="button"
+																			class="btn undo-btn ${file.status == pendingAttachment ? 'not-allowed' :''}"
+																			${file.status == pendingAttachment ? 'disabled="true"' :''}>
+																			<i class="fa fa-undo"></i>&nbsp;Undo
+																		</button>
+																		<button type="button"
+																			class="btn approve-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == approvedAttachment ? 'active' :''}"
+																			${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																			<i class="fa fa-check"></i><span>Approve${file.status == approvedAttachment ? 'd' : ''}</span>
+																		</button>
+																		<button type="button"
+																			class="btn reject-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == rejectedAttachment ? 'active' :''}"
+																			${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																			<i class="fa fa-close"></i><span>Reject${file.status == rejectedAttachment ? 'ed' : ''}</span>
+																		</button>
+																	</div>
 																</td>
 															</tr>
 
@@ -657,12 +672,12 @@
 													Document</p></li>
 											<li>
 												<table
-													class="text-left readOnlyTable w-100 table table-bordered">
+													class="text-left readOnlyTable w-98 table table-bordered">
 													<thead>
 														<tr>
 															<td style="width: 5%">S.no</td>
 															<td style="width: 20%">File Name</td>
-															<td style="width: 20%">Upload by</td>
+															<td style="width: 18%">Upload by</td>
 															<td style="width: 17%">Upload on</td>
 															<td style="width: 8%">Size</td>
 															<td style="width: 30%">Action</td>
@@ -679,21 +694,28 @@
 																<td><a
 																	href="${pageContext.request.contextPath}${file.path}"
 																	target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
-																<td>Test</td>
+																<td>${file.fileUploadUserName}</td>
 																<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 																		value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 																<td>${file.convertFileSize}</td>
 																<td class="text-center">
 																	<div class="btn-group" role="group"
+																		data-attachment-id="${file.id}"
 																		aria-label="Basic example">
-																		<button type="button" class="btn undo-btn">
+																		<button type="button"
+																			class="btn undo-btn ${file.status == pendingAttachment ? 'not-allowed' :''}"
+																			${file.status == pendingAttachment ? 'disabled="true"' :''}>
 																			<i class="fa fa-undo"></i>&nbsp;Undo
 																		</button>
-																		<button type="button" class="btn approve-btn">
-																			<i class="fa fa-check"></i>&nbsp;Approve
+																		<button type="button"
+																			class="btn approve-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == approvedAttachment ? 'active' :''}"
+																			${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																			<i class="fa fa-check"></i><span>Approve${file.status == approvedAttachment ? 'd' : ''}</span>
 																		</button>
-																		<button type="button" class="btn reject-btn">
-																			<i class="fa fa-close"></i>&nbsp;Reject
+																		<button type="button"
+																			class="btn reject-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == rejectedAttachment ? 'active' :''}"
+																			${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																			<i class="fa fa-close"></i><span>Reject${file.status == rejectedAttachment ? 'ed' : ''}</span>
 																		</button>
 																	</div>
 																</td>
@@ -738,12 +760,12 @@
 											<li>
 												<div class="table-responsive">
 													<table
-														class="text-left readOnlyTable w-100 table table-bordered">
+														class="text-left readOnlyTable w-98 table table-bordered">
 														<thead>
 															<tr>
 																<td style="width: 5%">S.no</td>
 																<td style="width: 20%">File Name</td>
-																<td style="width: 20%">Upload by</td>
+																<td style="width: 18%">Upload by</td>
 																<td style="width: 17%">Upload on</td>
 																<td style="width: 8%">Size</td>
 																<td style="width: 30%">Action</td>
@@ -760,21 +782,28 @@
 																	<td><a
 																		href="${pageContext.request.contextPath}${file.path}"
 																		target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
-																	<td>Test</td>
+																	<td>${file.fileUploadUserName}</td>
 																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 																			value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
 																	<td>${file.convertFileSize}</td>
 																	<td class="text-center">
 																		<div class="btn-group" role="group"
+																			data-attachment-id="${file.id}"
 																			aria-label="Basic example">
-																			<button type="button" class="btn undo-btn">
+																			<button type="button"
+																				class="btn undo-btn ${file.status == pendingAttachment ? 'not-allowed' :''}"
+																				${file.status == pendingAttachment ? 'disabled="true"' :''}>
 																				<i class="fa fa-undo"></i>&nbsp;Undo
 																			</button>
-																			<button type="button" class="btn approve-btn">
-																				<i class="fa fa-check"></i>&nbsp;Approve
+																			<button type="button"
+																				class="btn approve-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == approvedAttachment ? 'active' :''}"
+																				${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																				<i class="fa fa-check"></i><span>Approve${file.status == approvedAttachment ? 'd' : ''}</span>
 																			</button>
-																			<button type="button" class="btn reject-btn">
-																				<i class="fa fa-close"></i>&nbsp;Reject
+																			<button type="button"
+																				class="btn reject-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == rejectedAttachment ? 'active' :''}"
+																				${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																				<i class="fa fa-close"></i><span>Reject${file.status == rejectedAttachment ? 'ed' : ''}</span>
 																			</button>
 																		</div>
 																	</td>
@@ -799,21 +828,16 @@
 									</div>
 								</fieldset>
 								<div>
-									
+
 									<input type="button" name="previous" class="next action-button"
 										value="Previous">
 
-									<c:if test="${SAAP_APPROVED_STATUS eq work.workStatus}">
-										<input type="button" id="backToHome"
-											class="next action-button" value="Home">
-									</c:if>
-
 									<c:if test="${PENDING_SAAP_APPROVAL eq work.workStatus}">
-										
+
 										<input type="button" id="approveWork"
 											class="next action-button" value="Approve">
 									</c:if>
-									<input type="hidden" name="workId" value="${work.id}"/>
+									<input type="hidden" id="workid" value="${work.id}" />
 								</div>
 
 							</form>
@@ -839,7 +863,18 @@
 	<script
 		src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/>
 		type="text/javascript"></script>
+	<script>
+		<c:url value="/workApprovals/work/${work.id}/aprove" var="workApprovalUrl" />
+		var workApprovalUrl = "${workApprovalUrl}";
+		<c:url value="/upload/updateAttachmentStatus" var="attachmentStatusUpdateUrl" />
+		var attachmentStatusUpdateUrl = "${attachmentStatusUpdateUrl}";
 
+		var FILE_UPLOAD_STATUS = {
+			APPROVED : '${approvedAttachment}',
+			REJECTED : '${rejectedAttachment}',
+			UNDO : '${pendingAttachment}'
+		}
+	</script>
 	<script
 		src=<c:url value="/resources/js/uploadDocuments/work-consultancy-approvals.js"/>
 		type="text/javascript"></script>

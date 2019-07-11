@@ -1,5 +1,8 @@
 package com.ap.mis.serviceImpl;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserById(int id) {
 		return userDao.findUserById(id);
+	}
+
+	@Override
+	public List<User> findByUserIds(Set<Integer> userIdList) {
+		// TODO Auto-generated method stub
+		return userDao.findUsersByIds(userIdList);
 	}
 
 }

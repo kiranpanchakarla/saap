@@ -14,6 +14,7 @@ public interface AttachmentDao {
 
 	Attachements deleteAttachedDetails(Attachements attachInfo);
 
+	Attachements updateAttachement(Attachements attachInfo);
 	
 
 }

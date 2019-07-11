@@ -42,7 +42,8 @@ public class Attachements extends AuditModel implements Serializable {
 	@Transient
 	private String convertFileSize;
 	
-	
+	@Transient
+	private String fileUploadUserName;
 	
 	
 	public String getConvertFileSize() {
@@ -117,6 +118,17 @@ public class Attachements extends AuditModel implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	
+
+	public String getFileUploadUserName() {
+		return fileUploadUserName;
+	}
+
+
+	public void setFileUploadUserName(String fileUploadUserName) {
+		this.fileUploadUserName = fileUploadUserName;
 	}
 
 

@@ -1,12 +1,5 @@
 const APPROVE = "approve-btn", REJECT = "reject-btn", UNDO = "undo-btn", ACTIVE = "active", NOT_ALLOWED = "not-allowed";
 
-var FILE_UPLOAD_STATUS = {
-	APPROVED : 'APPRVD',
-	REJECTED : 'REJCTD',
-	UNDO : 'OPEN',
-	WORK_APPROVE_STATUS : "WORK_APPROVE_STATUS"
-}
-
 $(document).on('click', '.btn-group button', function() {
 	var $btnRef = $(this);
 	if ($btnRef.hasClass(REJECT)) {
@@ -28,10 +21,14 @@ $(document).on('click', '.btn-group button', function() {
 
 	if ($("#approveWork").length) {
 		$("#approveWork").on('click', function() {
-			$(this).prop('disabled', true);
+			showHideWorkApproveButton(true);
 			sendRequestToServerForApproveWork();
 		});
 	}
+
+	$('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
+		scrollToTabStart();
+	});
 
 });
 
@@ -50,7 +47,8 @@ function sendRequestForRejectFileUploadDocument($btnRef) {
 }
 
 function rejectFileUploadDocument($btnRef) {
-	$btnRef.addClass(ACTIVE + " " + NOT_ALLOWED).prop("disabled", true);
+	$btnRef.addClass(ACTIVE + " " + NOT_ALLOWED).prop("disabled", true).find(
+			"span").text("Rejected");
 	$btnRef.siblings("." + APPROVE).addClass(NOT_ALLOWED)
 			.prop("disabled", true);
 	$btnRef.siblings("." + UNDO).removeClass(NOT_ALLOWED).prop("disabled",
@@ -67,7 +65,9 @@ function sendRequestForApproveFileUploadDocument($btnRef) {
 }
 
 function approveFileUploadDocument($btnRef) {
-	$btnRef.addClass(ACTIVE + " " + NOT_ALLOWED).prop("disabled", true);
+	$btnRef.addClass(ACTIVE + " " + NOT_ALLOWED).prop("disabled", true).find(
+			"span").text("Approved");
+
 	$btnRef.siblings("." + REJECT).addClass(NOT_ALLOWED).prop("disabled", true)
 	$btnRef.siblings("." + UNDO).removeClass(NOT_ALLOWED).prop("disabled",
 			false);
@@ -98,9 +98,16 @@ function sendRequestForUndoRejectOrApproveFileUploadDocument($btnRef) {
 function undoRejectOrApproveFileUploadDocument($btnRef) {
 	var fileName = getFileName($btnRef);
 	var undoType = getUndoType($btnRef);
-	raiseNotificatrion(`Unod File : <b>${fileName}</b> ${undoType}`, 'success');
+	if (undoType == "Approve") {
+		$btnRef.siblings("." + APPROVE).find("span").text("Approve");
+	} else if (undoType == "Reject") {
+		$btnRef.siblings("." + REJECT).find("span").text("Reject");
+	}
+
+	raiseNotificatrion(`Undo ${undoType} file : <b>${fileName}</b>`, 'success');
 	$btnRef.siblings().prop("disabled", false).removeClass(
 			ACTIVE + " " + NOT_ALLOWED);
+
 	$btnRef.prop("disabled", true).addClass(NOT_ALLOWED);
 }
 
@@ -134,43 +141,89 @@ function showCofirmationDialog(header, message, callback, callbackArg,
 function sendRequestToServer(status, $btnRef, callback) {
 	var reqPayload = getApproveOrRejectOrUndoAttachementRequestPayload(
 			getAttachmentId($btnRef), status);
-	if (typeof callback === "function")
-		callback($btnRef);
-
 	/*
-	 * var successFunction = function() { if (typeof callback === "function")
-	 * callback($btnRef); } var errorFunction = function(e) {
-	 * raiseNotificatrion( "There is something happen on server please try again ",
-	 * "error"); }
-	 * 
-	 * $.ajax({ type : "POST", url :
-	 * "/updateAttachmentApproveOrRejectOrUndoStatus", data :
-	 * JSON.stringify(reqPayload), beforeSend : startAjaxLoadAnimation, complete :
-	 * stopAjaxLoadAnimation, success : successFunction, error : errorFunction
-	 * });
+	 * if (typeof callback === "function") callback($btnRef);
 	 */
+
+	var successFunction = function(data, textStatus, jqXHR) {
+
+		if (jqXHR.status === 200) {
+			if (typeof callback === "function")
+				callback($btnRef);
+		}
+	};
+
+	var errorFunction = function(jqXHR, textStatus, errorThrown) {
+
+		if (jqXHR.status !== 404) {
+			console.error("Attachment status failed due to " + errorThrown);
+			raiseNotificatrion("Attachment status updation failed ", "error");
+		}
+
+	};
+
+	$.ajax({
+		type : "post",
+		url : attachmentStatusUpdateUrl,
+		statusCode : {
+			404 : function() {
+				raiseNotificatrion("Invalid attachment", "error");
+			}
+		},
+		contentType : "application/json",
+		data : JSON.stringify(reqPayload),
+		beforeSend : startAjaxLoadAnimation,
+		complete : stopAjaxLoadAnimation,
+		success : successFunction,
+		error : errorFunction
+	});
+
 }
 
 function sendRequestToServerForApproveWork() {
 
-	var reqPayload = getApproveOrRejectOrUndoAttachementRequestPayload($(
-			"input[name='workId']").val(),
-			FILE_UPLOAD_STATUS.WORK_APPROVE_STATUS);
+	var workId = $("#workid").val();
 
-	/*
-	 * var successFunction = function() { $("#approveWork").prop('disabled',
-	 * false); raiseNotificatrion("work approved successfully", "success"); var
-	 * timeOutId = setTimeout(function() { clearTimeout(timeOutId);
-	 * window.location.href = ""; }, 3000); } var errorFunction = function(e) {
-	 * raiseNotificatrion("work approve failed " + e.getMessage(), "error");
-	 * $("#approveWork").prop('disabled', false); }
-	 * 
-	 * $.ajax({ type : "POST", url :
-	 * "/updateAttachmentApproveOrRejectOrUndoStatus", data :
-	 * JSON.stringify(reqPayload), beforeSend : startAjaxLoadAnimation, complete :
-	 * stopAjaxLoadAnimation, success : successFunction, error : errorFunction
-	 * });
-	 */
+	if (!workId) {
+		return false;
+	}
+
+	var successFunction = function(data, textStatus, jqXHR) {
+
+		if (jqXHR.status === 200) {
+			console.log("data " + workId + " textStatus " + textStatus);
+			showHideWorkApproveButton(false);
+			raiseNotificatrion("work approved successfully", "success");
+			var timeOutId = setTimeout(function() {
+				clearTimeout(timeOutId);
+				window.location.href = "";
+			}, 3000);
+		}
+
+	};
+
+	var errorFunction = function(jqXHR, textStatus, errorThrown) {
+		showHideWorkApproveButton(false);
+		if (jqXHR.status !== 404) {
+			raiseNotificatrion("work approve failed " + errorThrown, "error");
+		}
+
+	};
+
+	$.ajax({
+		type : "POST",
+		url : workApprovalUrl,
+		statusCode : {
+			404 : function() {
+				raiseNotificatrion("Invalid work id", "error");
+				showHideWorkApproveButton(false);
+			}
+		},
+		beforeSend : startAjaxLoadAnimation,
+		complete : stopAjaxLoadAnimation,
+		success : successFunction,
+		error : errorFunction
+	});
 
 }
 
@@ -179,7 +232,7 @@ function getFileName($btnRef) {
 }
 
 function getAttachmentId($btnRef) {
-	return $btnRef.parent("tr").data("attachmentId");
+	return $btnRef.parent().data("attachmentId");
 }
 
 function getUndoType($btnRef) {
@@ -203,6 +256,10 @@ function stopAjaxLoadAnimation() {
 }
 function scrollToTabStart() {
 	$('html, body').animate({
-		scrollTop : 0
-	}, 1500, 'easeInOutExpo');
+		scrollTop : 70
+	}, 500, 'easeInOutExpo');
+}
+
+function showHideWorkApproveButton(disabled) {
+	$("#approveWork").prop('disabled', disabled);
 }
