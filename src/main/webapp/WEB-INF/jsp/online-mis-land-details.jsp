@@ -258,8 +258,8 @@
 var contextPath = "${pageContext.request.contextPath}";
 $(document).ready(function(){
 	updateTotalFileCount( ${fn:length(adminAttachmentFiles)} );
-	$('#nav-admin-tab').addClass('active');
-	 $('#nav-admin').addClass('active');
+	$('#nav-land-tab').addClass('active');
+	 $('#nav-land').addClass('active');
 });
 
 var moduleName = "${moduleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"
