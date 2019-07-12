@@ -187,6 +187,7 @@
 		FILE_UPLOAD_APPROVED = "${FILE_UPLOAD_APPROVED}",
 		FILE_UPLOAD_REJECTED="${FILE_UPLOAD_REJECTED}";
 		
+		var isFileUploadStatusColumnSupported = true;
 		
 	</script>
 	<script

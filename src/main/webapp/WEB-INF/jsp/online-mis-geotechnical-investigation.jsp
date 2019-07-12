@@ -194,6 +194,7 @@
 		var FILE_UPLOAD_PENDING = "${FILE_UPLOAD_PENDING}",
 		FILE_UPLOAD_APPROVED = "${FILE_UPLOAD_APPROVED}",
 		FILE_UPLOAD_REJECTED="${FILE_UPLOAD_REJECTED}";
+		var isFileUploadStatusColumnSupported = true;
 	</script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"

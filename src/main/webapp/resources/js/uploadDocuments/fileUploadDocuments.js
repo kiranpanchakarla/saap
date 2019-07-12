@@ -52,8 +52,9 @@ $("#files")
 
 									// Check for invalid file
 									// formats
-									if ($.inArray(v.name.substring(v.name
-											.lastIndexOf(".") + 1).toLowerCase(),
+									if ($.inArray(v.name.substring(
+											v.name.lastIndexOf(".") + 1)
+											.toLowerCase(),
 											allowedFileExtensions) === -1) {
 
 										showIndalidFileFormatSelectedWarning();
@@ -164,8 +165,8 @@ function getFileNameFromPath(path) {
 }
 
 function getAttachmentsRow(index, attachment) {
-
-	return '<tr data-attachment-id = "'
+	var rowHtml = "";
+	rowHtml = '<tr data-attachment-id = "'
 			+ attachment.id
 			+ '" data-file-size="'
 			+ attachment.fileSize
@@ -178,20 +179,33 @@ function getAttachmentsRow(index, attachment) {
 			+ '	<td>'
 			+ attachment.convertFileSize
 			+ '</td>'
-			+ '	<td>'
+			+ '<td>'
 			+ getLoacalDateString(attachment.updatedAt == null ? attachment.createdAt
-					: attachment.updatedAt)
-			+ '</td>'
-			+ '	<td>'
-			+ getStatusHtml(attachment.status)
-			+ '</td>'
-			+ '<td class="text-center"><a href="#" name="remove" data-disabled="'
-			+ (FILE_UPLOAD_APPROVED == attachment.status ? 1 : 0)
-			+ '"><i class="fa fa-trash '
-			+ (FILE_UPLOAD_APPROVED == attachment.status ? "text-muted cursor-not-allowed"
-					: "") + '"/></a>&nbsp;&nbsp;<a href="' + contextPath
-			+ attachment.path
-			+ '" target="_blank"><i class="fa fa-eye"/></a></td>' + '</tr>'
+					: attachment.updatedAt) + '</td>';
+
+	if (typeof isFileUploadStatusColumnSupported !== "undefined"
+			&& isFileUploadStatusColumnSupported) {
+		rowHtml += '	<td>' + getStatusHtml(attachment.status) + '</td>';
+	}
+
+	rowHtml += '<td class="text-center">';
+
+	if (typeof isFileUploadStatusColumnSupported !== "undefined"
+			&& isFileUploadStatusColumnSupported) {
+		rowHtml += '<a href="#" name="remove" data-disabled="'
+				+ (FILE_UPLOAD_APPROVED == attachment.status ? 1 : 0)
+				+ '"><i class="fa fa-trash '
+				+ (FILE_UPLOAD_APPROVED == attachment.status ? "text-muted cursor-not-allowed"
+						: "") + '"/></a>';
+	} else {
+		rowHtml += '<a href="#" name="remove" ><i class="fa fa-trash"/></a>';
+	}
+
+	rowHtml += '&nbsp;&nbsp;<a href="' + contextPath + attachment.path
+			+ '" target="_blank"><i class="fa fa-eye"/></a></td>' + '</tr>';
+
+	return rowHtml;
+
 }
 
 function getStatusHtml(status) {
