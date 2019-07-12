@@ -53,7 +53,7 @@ $("#files")
 									// Check for invalid file
 									// formats
 									if ($.inArray(v.name.substring(v.name
-											.lastIndexOf(".") + 1),
+											.lastIndexOf(".") + 1).toLowerCase(),
 											allowedFileExtensions) === -1) {
 
 										showIndalidFileFormatSelectedWarning();
@@ -182,9 +182,29 @@ function getAttachmentsRow(index, attachment) {
 			+ getLoacalDateString(attachment.updatedAt == null ? attachment.createdAt
 					: attachment.updatedAt)
 			+ '</td>'
-			+ '<td class="text-center"><a href="#" name="remove"><i class="fa fa-trash"/></a>&nbsp;&nbsp;<a href="'
-			+ contextPath + attachment.path
+			+ '	<td>'
+			+ getStatusHtml(attachment.status)
+			+ '</td>'
+			+ '<td class="text-center"><a href="#" name="remove" data-disabled="'
+			+ (FILE_UPLOAD_APPROVED == attachment.status ? 1 : 0)
+			+ '"><i class="fa fa-trash '
+			+ (FILE_UPLOAD_APPROVED == attachment.status ? "text-muted cursor-not-allowed"
+					: "") + '"/></a>&nbsp;&nbsp;<a href="' + contextPath
+			+ attachment.path
 			+ '" target="_blank"><i class="fa fa-eye"/></a></td>' + '</tr>'
+}
+
+function getStatusHtml(status) {
+	switch (status) {
+	case FILE_UPLOAD_APPROVED:
+		return '<span class="text-success"><i class="fa fa-check"></i>&nbsp;Approved</span>';
+
+	case FILE_UPLOAD_REJECTED:
+		return '<span class="text-danger"><i class="fa fa-close"></i>&nbsp;Rejected</span>';
+
+	default:
+		return '<span class="text-muted"><i class="fa fa-hourglass"></i>&nbsp;Pending</span>';
+	}
 }
 
 function getNoAttachmentsFoundRow() {
@@ -197,6 +217,9 @@ $(document)
 				'click',
 				"#landDetailsAttachmentsTable tr td:last-child a[name='remove']",
 				function() {
+					if ($(this).data("disabled") === 1) {
+						return false;
+					}
 					var trRef = $(this).parents("tr");
 					var attachmentId = trRef.data("attachmentId");
 

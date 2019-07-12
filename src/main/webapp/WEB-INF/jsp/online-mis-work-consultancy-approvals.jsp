@@ -57,7 +57,6 @@
 	opacity: 1;
 	color: #383838 !important;
 } */
-
 .approve-btn.active, .reject-btn.active {
 	top: -5px;
 	box-shadow: 0px 5px 4px 0px #908f8f !important;
@@ -73,6 +72,12 @@
 
 button.btn {
 	padding: 6px 9px;
+}
+
+.btn-group {
+	display: -webkit-inline-box !important;
+	display: -ms-inline-flexbox !important;
+	display: inline-flex !important;
 }
 </style>
 
@@ -591,69 +596,69 @@ button.btn {
 										<ul class="fs-list-details clear-fix w-100">
 											<li><p>Uploaded Land Survey Details Document</p></li>
 											<li>
+												<div class="table-responsive">
+													<table
+														class="text-left readOnlyTable w-98 table table-bordered">
+														<thead>
+															<tr>
+																<td style="width: 5%">S.no</td>
+																<td style="width: 20%">File Name</td>
+																<td style="width: 18%">Upload by</td>
+																<td style="width: 17%">Upload on</td>
+																<td style="width: 8%">Size</td>
+																<td style="width: 30%">Action</td>
 
-												<table
-													class="text-left readOnlyTable w-98 table table-bordered">
-													<thead>
-														<tr>
-															<td style="width: 5%">S.no</td>
-															<td style="width: 20%">File Name</td>
-															<td style="width: 18%">Upload by</td>
-															<td style="width: 17%">Upload on</td>
-															<td style="width: 8%">Size</td>
-															<td style="width: 30%">Action</td>
-
-														</tr>
-													</thead>
-													<tbody>
-														<c:forEach items="${landSurveyAttachmentFiles}" var="file"
-															varStatus="loop">
-															<c:set var="filePathParts"
-																value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
-															<tr class="landSurveyDetailsUploadDocuments">
-																<td>${loop.index + 1 }</td>
-																<td><a
-																	href="${pageContext.request.contextPath}${file.path}"
-																	target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
-																<td>${file.fileUploadUserName}</td>
-																<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
-																		value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
-																<td>${file.convertFileSize}</td>
-																<td class="text-center">
-																	<div class="btn-group" role="group"
-																		data-attachment-id="${file.id}"
-																		aria-label="Basic example">
-																		<button type="button"
-																			class="btn undo-btn ${file.status == pendingAttachment ? 'not-allowed' :''}"
-																			${file.status == pendingAttachment ? 'disabled="true"' :''}>
-																			<i class="fa fa-undo"></i>&nbsp;Undo
-																		</button>
-																		<button type="button"
-																			class="btn approve-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == approvedAttachment ? 'active' :''}"
-																			${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
-																			<i class="fa fa-check"></i><span>Approve${file.status == approvedAttachment ? 'd' : ''}</span>
-																		</button>
-																		<button type="button"
-																			class="btn reject-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == rejectedAttachment ? 'active' :''}"
-																			${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
-																			<i class="fa fa-close"></i><span>Reject${file.status == rejectedAttachment ? 'ed' : ''}</span>
-																		</button>
-																	</div>
-																</td>
 															</tr>
+														</thead>
+														<tbody>
+															<c:forEach items="${landSurveyAttachmentFiles}"
+																var="file" varStatus="loop">
+																<c:set var="filePathParts"
+																	value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+																<tr class="landSurveyDetailsUploadDocuments">
+																	<td>${loop.index + 1 }</td>
+																	<td><a
+																		href="${pageContext.request.contextPath}${file.path}"
+																		target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
+																	<td>${file.fileUploadUserName}</td>
+																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
+																			value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
+																	<td>${file.convertFileSize}</td>
+																	<td class="text-center">
+																		<div class="btn-group" role="group"
+																			data-attachment-id="${file.id}"
+																			aria-label="Basic example">
+																			<button type="button"
+																				class="btn undo-btn ${file.status == pendingAttachment ? 'not-allowed' :''}"
+																				${file.status == pendingAttachment ? 'disabled="true"' :''}>
+																				<i class="fa fa-undo"></i>&nbsp;Undo
+																			</button>
+																			<button type="button"
+																				class="btn approve-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == approvedAttachment ? 'active' :''}"
+																				${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																				<i class="fa fa-check"></i><span>Approve${file.status == approvedAttachment ? 'd' : ''}</span>
+																			</button>
+																			<button type="button"
+																				class="btn reject-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == rejectedAttachment ? 'active' :''}"
+																				${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																				<i class="fa fa-close"></i><span>Reject${file.status == rejectedAttachment ? 'ed' : ''}</span>
+																			</button>
+																		</div>
+																	</td>
+																</tr>
 
-														</c:forEach>
-														<c:if test="${fn:length(landSurveyAttachmentFiles) == 0}">
-															<tr class="landSurveyDetailsUploadDocuments">
-																<td colspan="6">
-																	<p class="text-center p-4 mb-0">No attachments
-																		found</p>
-																</td>
-															</tr>
-														</c:if>
-													</tbody>
-												</table>
-
+															</c:forEach>
+															<c:if test="${fn:length(landSurveyAttachmentFiles) == 0}">
+																<tr class="landSurveyDetailsUploadDocuments">
+																	<td colspan="6">
+																		<p class="text-center p-4 mb-0">No attachments
+																			found</p>
+																	</td>
+																</tr>
+															</c:if>
+														</tbody>
+													</table>
+												</div>
 											</li>
 										</ul>
 
@@ -671,70 +676,72 @@ button.btn {
 											<li><p>Uploaded preliminary preparation layout
 													Document</p></li>
 											<li>
-												<table
-													class="text-left readOnlyTable w-98 table table-bordered">
-													<thead>
-														<tr>
-															<td style="width: 5%">S.no</td>
-															<td style="width: 20%">File Name</td>
-															<td style="width: 18%">Upload by</td>
-															<td style="width: 17%">Upload on</td>
-															<td style="width: 8%">Size</td>
-															<td style="width: 30%">Action</td>
-
-														</tr>
-													</thead>
-													<tbody>
-														<c:forEach items="${PPLayoutAttachmentFiles}" var="file"
-															varStatus="loop">
-															<c:set var="filePathParts"
-																value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
-															<tr class="PPLayoutUploadDocuments">
-																<td>${loop.index + 1}</td>
-																<td><a
-																	href="${pageContext.request.contextPath}${file.path}"
-																	target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
-																<td>${file.fileUploadUserName}</td>
-																<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
-																		value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
-																<td>${file.convertFileSize}</td>
-																<td class="text-center">
-																	<div class="btn-group" role="group"
-																		data-attachment-id="${file.id}"
-																		aria-label="Basic example">
-																		<button type="button"
-																			class="btn undo-btn ${file.status == pendingAttachment ? 'not-allowed' :''}"
-																			${file.status == pendingAttachment ? 'disabled="true"' :''}>
-																			<i class="fa fa-undo"></i>&nbsp;Undo
-																		</button>
-																		<button type="button"
-																			class="btn approve-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == approvedAttachment ? 'active' :''}"
-																			${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
-																			<i class="fa fa-check"></i><span>Approve${file.status == approvedAttachment ? 'd' : ''}</span>
-																		</button>
-																		<button type="button"
-																			class="btn reject-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == rejectedAttachment ? 'active' :''}"
-																			${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
-																			<i class="fa fa-close"></i><span>Reject${file.status == rejectedAttachment ? 'ed' : ''}</span>
-																		</button>
-																	</div>
-																</td>
+												<div class="table-responsive">
+													<table
+														class="text-left readOnlyTable w-98 table table-bordered">
+														<thead>
+															<tr>
+																<td style="width: 5%">S.no</td>
+																<td style="width: 20%">File Name</td>
+																<td style="width: 18%">Upload by</td>
+																<td style="width: 17%">Upload on</td>
+																<td style="width: 8%">Size</td>
+																<td style="width: 30%">Action</td>
 
 															</tr>
+														</thead>
+														<tbody>
+															<c:forEach items="${PPLayoutAttachmentFiles}" var="file"
+																varStatus="loop">
+																<c:set var="filePathParts"
+																	value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+																<tr class="PPLayoutUploadDocuments">
+																	<td>${loop.index + 1}</td>
+																	<td><a
+																		href="${pageContext.request.contextPath}${file.path}"
+																		target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a></td>
+																	<td>${file.fileUploadUserName}</td>
+																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
+																			value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
+																	<td>${file.convertFileSize}</td>
+																	<td class="text-center">
+																		<div class="btn-group" role="group"
+																			data-attachment-id="${file.id}"
+																			aria-label="Basic example">
+																			<button type="button"
+																				class="btn undo-btn ${file.status == pendingAttachment ? 'not-allowed' :''}"
+																				${file.status == pendingAttachment ? 'disabled="true"' :''}>
+																				<i class="fa fa-undo"></i>&nbsp;Undo
+																			</button>
+																			<button type="button"
+																				class="btn approve-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == approvedAttachment ? 'active' :''}"
+																				${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																				<i class="fa fa-check"></i><span>Approve${file.status == approvedAttachment ? 'd' : ''}</span>
+																			</button>
+																			<button type="button"
+																				class="btn reject-btn ${(file.status == approvedAttachment or file.status == rejectedAttachment)  ? 'not-allowed' :''} ${file.status == rejectedAttachment ? 'active' :''}"
+																				${(file.status == approvedAttachment or file.status == rejectedAttachment) ? 'disabled="true"' :''}>
+																				<i class="fa fa-close"></i><span>Reject${file.status == rejectedAttachment ? 'ed' : ''}</span>
+																			</button>
+																		</div>
+																	</td>
 
-														</c:forEach>
-														<c:if test="${fn:length(PPLayoutAttachmentFiles) == 0}">
-															<tr class="PPLayoutUploadDocuments">
-																<td colspan="6">
-																	<p class="text-center p-4 mb-0">No attachments
-																		found</p>
-																</td>
-															</tr>
-														</c:if>
+																</tr>
+
+															</c:forEach>
+															<c:if test="${fn:length(PPLayoutAttachmentFiles) == 0}">
+																<tr class="PPLayoutUploadDocuments">
+																	<td colspan="6">
+																		<p class="text-center p-4 mb-0">No attachments
+																			found</p>
+																	</td>
+																</tr>
+															</c:if>
 
 
-													</tbody>
-												</table>
+														</tbody>
+													</table>
+												</div>
 											</li>
 										</ul>
 
@@ -832,12 +839,15 @@ button.btn {
 									<input type="button" name="previous" class="next action-button"
 										value="Previous">
 
-									<c:if test="${PENDING_SAAP_APPROVAL eq work.workStatus}">
+									<%-- <c:if test="${PENDING_SAAP_APPROVAL eq work.workStatus}">
 
-										<input type="button" id="approveWork"
-											class="next action-button" value="Approve">
-									</c:if>
-									<input type="hidden" id="workid" value="${work.id}" />
+										
+									</c:if> --%>
+									<input type="button" id="approveWork"
+										class="next action-button" value="Approve"> <input
+										type="button" id="home" class="next action-button"
+										value="Home"> <input type="hidden" id="workid"
+										value="${work.id}" />
 								</div>
 
 							</form>
@@ -869,6 +879,8 @@ button.btn {
 		<c:url value="/upload/updateAttachmentStatus" var="attachmentStatusUpdateUrl" />
 		var attachmentStatusUpdateUrl = "${attachmentStatusUpdateUrl}";
 
+		<c:url value="/workApprovals/pending" var="homeUrl" />
+		var homeUrl = "${homeUrl}";
 		var FILE_UPLOAD_STATUS = {
 			APPROVED : '${approvedAttachment}',
 			REJECTED : '${rejectedAttachment}',

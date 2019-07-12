@@ -97,8 +97,8 @@
 											<th style="width: 5%">S.No.</th>
 											<th style="width: 50%">Name</th>
 											<th style="width: 10%">Size</th>
-											<th style="width: 20%">Upload on</th>
-											<th style="width: 10%">Status</th>
+											<th style="width: 18%">Upload on</th>
+											<th style="width: 12%">Status</th>
 											<th style="width: 5%">Action</th>
 										</tr>
 									</thead>
@@ -113,19 +113,37 @@
 												<td>${loop.index + 1}</td>
 												<td>${filePathParts[fn:length(filePathParts)-1]}</td>
 												<td>${file.convertFileSize}</td>
-												<td>${file.status}</td>
 												<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
 														value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
-												<td class="text-center"><a href="#" name="remove"><i
-														class="fa fa-trash"></i></a>&nbsp;&nbsp;<a
+												<td><c:choose>
+
+														<c:when test="${FILE_UPLOAD_APPROVED == file.status}">
+															<span class="text-success"><i class="fa fa-check"></i>&nbsp;Approved</span>
+														</c:when>
+
+														<c:when test="${FILE_UPLOAD_REJECTED == file.status}">
+															<span class="text-danger"><i class="fa fa-close"></i>&nbsp;Rejected</span>
+														</c:when>
+
+														<c:otherwise>
+															<span class="text-muted"><i
+																class="fa fa-hourglass"></i>&nbsp;Pending</span>
+														</c:otherwise>
+													</c:choose></td>
+
+
+												<td class="text-center"><a href="#" name="remove"
+													data-disabled="${FILE_UPLOAD_APPROVED == file.status ? 1 :0}"><i
+														class="fa fa-trash ${FILE_UPLOAD_APPROVED == file.status ? 'text-muted cursor-not-allowed' :'' }"></i></a>&nbsp;&nbsp;<a
 													href="${pageContext.request.contextPath}${file.path}"
 													target="_blank"><i class="fa fa-eye"></i></a></td>
 											</tr>
 
 										</c:forEach>
-										<c:if test="${fn:length(geotehnicalInvestigationLayoutAttachmentFiles) == 0}">
+										<c:if
+											test="${fn:length(geotehnicalInvestigationLayoutAttachmentFiles) == 0}">
 											<tr data-is-noupload="true" data-attachment-id="-1">
-												<td colspan="5">
+												<td colspan="6">
 													<p class="text-center pt-4 mb-4 notfound">No file
 														uploads found</p>
 												</td>
@@ -173,7 +191,9 @@
 		
 		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
 		var contextPath = "${pageContext.request.contextPath}";
-		
+		var FILE_UPLOAD_PENDING = "${FILE_UPLOAD_PENDING}",
+		FILE_UPLOAD_APPROVED = "${FILE_UPLOAD_APPROVED}",
+		FILE_UPLOAD_REJECTED="${FILE_UPLOAD_REJECTED}";
 	</script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"

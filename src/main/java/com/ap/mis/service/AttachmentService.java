@@ -23,7 +23,7 @@ public interface AttachmentService {
 
 	
 
-	Attachements updateAttachmentStatus(Attachements attachment) throws AttachmentNotFoundException;
+	Attachements updateAttachmentStatus(Attachements attachment, String actionPerformedBy) throws AttachmentNotFoundException;
 
 	
 	

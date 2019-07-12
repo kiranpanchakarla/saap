@@ -26,7 +26,7 @@
 <body>
 
 	<c:choose>
-		<c:when test="${consultantInfoObject != null && workInfo.workStatus eq 'Land_Details'}">
+		<c:when test="${consultantInfoObject != null && (workInfo.workStatus eq 'Land_Details' or  workInfo.workStatus eq 'PEND_SAAP_APRVL')}">
 			<c:url value="/ConsultantInfo/edit/${consultantInfoObject.work.id}"
 				var="createUrl" />
 		</c:when>
@@ -292,7 +292,7 @@
 							<%--  <c:if test="${userRole eq 'ROLE_CONSULTANT'}"> --%>
 							<div class="col-md-12" align="right">
 								<c:choose>
-									<c:when test="${workInfo.workStatus eq 'Land_Details'}">
+									<c:when test="${workInfo.workStatus eq 'Land_Details' or workInfo.workStatus eq 'PEND_SAAP_APRVL'}">
 										<button type="submit" class="btn btn-info">Consultant Info</button>
 									</c:when>
 									<c:otherwise>

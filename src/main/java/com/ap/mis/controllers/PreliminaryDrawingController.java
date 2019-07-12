@@ -86,6 +86,10 @@ public class PreliminaryDrawingController {
 		model.addAttribute("GIAttachmentFiles", GIAttachmentFiles);
 		model.addAttribute("SAAP_APPROVED_STATUS", EnumWorkStatus.SAAP_APPROVED.getStatus());
 		model.addAttribute("PENDING_SAAP_APPROVAL", EnumWorkStatus.PENDING_SAAP_APPROVAL.getStatus());
+		model.addAttribute("FILE_UPLOAD_PENDING", EnumFilter.OPEN.getStatus());
+		model.addAttribute("FILE_UPLOAD_APPROVED", EnumFilter.ATTACHMENT_APPROVED.getStatus());
+		model.addAttribute("FILE_UPLOAD_REJECTED", EnumFilter.ATTACHMENT_REJECTED.getStatus());
+		
 
 		return "online-mis-preliminary-drawings";
 	}

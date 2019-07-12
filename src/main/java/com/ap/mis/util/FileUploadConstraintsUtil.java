@@ -64,13 +64,13 @@ public class FileUploadConstraintsUtil {
 	public Integer getMaxFileUploadCount() {
 		return maxFileUploadCount;
 	}
-	
+
 	public Long getMaxFileUploadSize() {
 		return maxFileUploadSize;
 	}
-	
+
 	public String getAllowedExtensions() {
-		return allowedExtensions;
+		return allowedExtensions.toLowerCase();
 	}
 
 }

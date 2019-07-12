@@ -26,6 +26,12 @@ $(document).on('click', '.btn-group button', function() {
 		});
 	}
 
+	if ($("#home").length) {
+		$("#home").on('click', function() {
+			window.location.href = homeUrl;
+		});
+	}
+
 	$('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
 		scrollToTabStart();
 	});
@@ -83,9 +89,15 @@ function takeConfirmationForUndo($btnRef, approveOrReject) {
 		return false;
 	}
 
+	if (approveOrReject === "Approve") {
+		approveOrReject = approveOrReject + "d";
+	} else if (approveOrReject === "Reject") {
+		approveOrReject = approveOrReject + "ed";
+	}
+
 	showCofirmationDialog(
-			`Undo ${approveOrReject} file confirmation`,
-			`Are you sure want to undo ${approveOrReject} file : <b> ${fileName} </b>`,
+			`Undo ${approveOrReject.toLowerCase()} file confirmation`,
+			`Are you sure want to undo ${approveOrReject.toLowerCase()} file : <b> ${fileName} </b>`,
 			sendRequestForUndoRejectOrApproveFileUploadDocument, $btnRef, "");
 }
 

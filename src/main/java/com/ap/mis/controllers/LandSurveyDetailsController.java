@@ -76,6 +76,9 @@ public class LandSurveyDetailsController {
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		model.addAttribute("moduleName", EnumFilter.LAND_SURVEY_DETAILS.getStatus());
 		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
+		model.addAttribute("FILE_UPLOAD_PENDING", EnumFilter.OPEN.getStatus());
+		model.addAttribute("FILE_UPLOAD_APPROVED", EnumFilter.ATTACHMENT_APPROVED.getStatus());
+		model.addAttribute("FILE_UPLOAD_REJECTED", EnumFilter.ATTACHMENT_REJECTED.getStatus());
 
 		return "online-mis-land-survey-details";
 	}

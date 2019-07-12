@@ -125,3 +125,6 @@ table.readOnlyTable tr td:first-child a {
 	margin-right: 3px;
 	color: #212529;
 }
+.cursor-not-allowed{
+	cursor: not-allowed;	
+}

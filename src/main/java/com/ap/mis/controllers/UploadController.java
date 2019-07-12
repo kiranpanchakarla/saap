@@ -1,6 +1,5 @@
 package com.ap.mis.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,8 +81,10 @@ public class UploadController {
 	@PostMapping(path = "/updateAttachmentStatus")
 	public ResponseEntity<String> updateAttachmentStatus(@RequestBody Attachements attachment)
 			throws AttachmentNotFoundException {
-		
-		attachmentService.updateAttachmentStatus(attachment);
+
+		User loggedInUser = SecurityUtil.getLoggedUser();
+
+		attachmentService.updateAttachmentStatus(attachment, loggedInUser.getName());
 
 		return new ResponseEntity<>("successfully attachment status updated", HttpStatus.OK);
 
@@ -133,6 +134,7 @@ public class UploadController {
 
 	@ExceptionHandler(AttachmentNotFoundException.class)
 	public ResponseEntity<String> attachmentNotFoundException(AttachmentNotFoundException attachmentNotFoundException) {
+
 		return new ResponseEntity<>(attachmentNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
 	}
 

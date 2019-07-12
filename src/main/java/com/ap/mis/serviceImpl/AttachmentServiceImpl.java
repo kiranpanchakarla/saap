@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.dao.AttachmentDao;
+import com.ap.mis.dao.AttachmentHistoryDetailsDao;
 import com.ap.mis.entity.Attachements;
+import com.ap.mis.entity.AttachmentHistoryDetails;
 import com.ap.mis.exceptions.AttachmentNotFoundException;
 import com.ap.mis.service.AttachmentService;
 import com.ap.mis.util.EnumFilter;
@@ -30,6 +32,9 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 	@Autowired
 	AttachmentDao attachDao;
+
+	@Autowired
+	private AttachmentHistoryDetailsDao attachmentHistoryDetailsDao;
 
 	@Override
 	public List<Attachements> saveAttachedDetails(int workId, String moduleName, MultipartFile[] file) {
@@ -104,7 +109,8 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	@Override
-	public Attachements updateAttachmentStatus(Attachements attachment) throws AttachmentNotFoundException {
+	public Attachements updateAttachmentStatus(Attachements attachment, String actionPerformedBy)
+			throws AttachmentNotFoundException {
 		// TODO Auto-generated method stub
 
 		Attachements existedAttachment = findById(attachment.getId());
@@ -112,9 +118,20 @@ public class AttachmentServiceImpl implements AttachmentService {
 		if (existedAttachment == null)
 			throw new AttachmentNotFoundException("No attachment found for given id" + attachment.getId());
 
-		existedAttachment.setStatus(attachment.getStatus());
+		String logMessage = attachment.getStatus().equals(EnumFilter.OPEN.getStatus())
+				? "UNDO-" + existedAttachment.getStatus()
+				: attachment.getStatus();
 
-		return attachDao.updateAttachement(existedAttachment);
+		existedAttachment.setStatus(attachment.getStatus());
+		attachment = attachDao.updateAttachement(existedAttachment);
+
+		AttachmentHistoryDetails attachHistDetails = new AttachmentHistoryDetails();
+		attachHistDetails.setAttach(attachment);
+		attachHistDetails.setCreatedBy(actionPerformedBy);
+		attachHistDetails.setLog(logMessage);
+		attachmentHistoryDetailsDao.save(attachHistDetails);
+
+		return attachment;
 
 	}
 

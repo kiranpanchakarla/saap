@@ -48,6 +48,9 @@ public class PreliminaryPreparationLayoutController {
 		model.addAttribute("preliminaryPreparationLayoutAttachmentFiles", attachments);
 		model.addAttribute("moduleName", workModuleStatus.getStatus());
 		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
+		model.addAttribute("FILE_UPLOAD_PENDING", EnumFilter.OPEN.getStatus());
+		model.addAttribute("FILE_UPLOAD_APPROVED", EnumFilter.ATTACHMENT_APPROVED.getStatus());
+		model.addAttribute("FILE_UPLOAD_REJECTED", EnumFilter.ATTACHMENT_REJECTED.getStatus());
 
 		return "online-mis-preliminary-preparation-layout";
 	}
@@ -55,7 +58,7 @@ public class PreliminaryPreparationLayoutController {
 	@PostMapping(path = { "/save" })
 	public String savePreliminaryPreparationLayout(Model model, HttpSession session) {
 
-//		int workId = (int) session.getAttribute("workIdSession");
+		// int workId = (int) session.getAttribute("workIdSession");
 
 		return "online-mis-preliminary-preparation-layout";
 	}
