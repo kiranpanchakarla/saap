@@ -39,6 +39,7 @@
  <section id="contact" class="section-bg-con">
         <div class="container-full">
         <div class="row">
+        <div class="respo-table">
         <form id="msform"  method="get" action="${createUrl}" modelAttribute="workObject">
          
      <%--  <c:if test="${userRole eq 'ROLE_ADMIN'}">
@@ -48,7 +49,8 @@
       </c:if> --%>
       
       <div class="col-md-12">
-        <table id="viewTable" class="display table-hover table-striped table-bordered " >
+      
+       <table id="viewTable" class="display table-hover table-striped table-bordered"> 
             <thead>
                 <tr>
                     <th>S.No</th>
@@ -108,6 +110,8 @@
 
 </form>
 </div>
+
+</div>
 </div>
 </section>
  <script>
@@ -117,7 +121,7 @@
  $(document).ready(function() {
 	 
      $('#viewTable').DataTable({
-         "scrollX" : false,
+         "scrollX" : true,
          "searching": false,
 			"info": false,
 			"responsive": true,

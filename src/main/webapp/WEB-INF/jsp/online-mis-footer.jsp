@@ -57,7 +57,7 @@
 <!-- #footer --> 
 
 <a href="#" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
-<div id="preloader"></div>
+<div id="preloader"></div> 
 
 <!-- JavaScript Libraries --> 
 <%--  <script src="${pageContext.request.contextPath}/resources/lib/jquery/jquery.min.js"></script>   --%>
