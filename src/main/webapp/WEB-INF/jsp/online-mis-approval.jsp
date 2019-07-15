@@ -36,7 +36,7 @@
   </div>
 </section> -->
  <c:url value="/worksCreation/create" var="createUrl" />
- <section id="contact" class="section-bg-con">
+ <section id="contact" class="signIn-contact section-bg-con">
         <div class="container-full">
         <div class="row">
         <form id="msform" class="col-md-12" method="get" action="${createUrl}" modelAttribute="workObject">

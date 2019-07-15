@@ -64,7 +64,7 @@
       Contact Us Section
     ============================-->
   
-  <section id="contact" class="section-bg-con wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+  <section id="contact" class="signIn-contact signIn-contact-gap section-bg-con wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
     <div class="container">
     <div class="row">
     <div class="wrapper fadeInDown">
