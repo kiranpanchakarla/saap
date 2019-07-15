@@ -161,8 +161,7 @@
                 
                 <ul class="fs-list-details">
                 
-									<li><p>Upload
-											Document(${fn:replace(fileUploadConstraint.allowedExtensions,', ','/')})</p></li>
+									<li><p>Upload Document</p></li>
 									<li><label for="files" class="fileuploadLabel">Select
 											Files</label> <input type="file" name="file" id="files" multiple
 										class="form-control mb-md"> <small
@@ -178,7 +177,7 @@
 											<th style="width: 5%">S.No.</th>
 											<th style="width: 60%">Name</th>
 											<th style="width: 10%">Size</th>
-											<th style="width: 20%">Upload on</th>
+											<th style="width: 20%">Uploaded Date</th>
 											<th style="width: 5%">Action</th>
 										</tr>
 									</thead>

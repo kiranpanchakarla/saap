@@ -83,12 +83,12 @@
 				<c:when test="${userRole eq 'ROLE_ADMIN'}">
 				 <a class="btn btn-edit"  href="<c:url value="/worksCreation/edit?workId=${viewDetails.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
                    		  class="glyphicon glyphicon-pencil left"></i></a>
-                   		 <a class="btn btn-delete" href="<c:url value="/worksCreation/delete?workId=${viewDetails.id}"/>"
-                   		 onclick="" data-toggle="tooltip" data-placement="top" title="Delete"><i
-                		 class="glyphicon glyphicon-trash left"></i></a> 
-       					<a class="btn btn-view"
+                <a class="btn btn-view"
            				  href="<c:url value="/worksCreation/view?workId=${viewDetails.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
                 		  class="fa fa-eye left"></i></a>
+                <a class="btn btn-delete" href="<c:url value="/worksCreation/delete?workId=${viewDetails.id}"/>"
+                   		 onclick="" data-toggle="tooltip" data-placement="top" title="Delete"><i
+                		 class="glyphicon glyphicon-trash left"></i></a> 
 				</c:when>
 				<c:otherwise>
 				  <a class="btn btn-edit"  href="<c:url value="/consultant/view?workId=${viewDetails.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i

@@ -19,7 +19,7 @@
 <header id="header">
    <div class="container social-links">
    <div class="main-header"><h1>Sports Authority Of Andhra Pradesh
-   <span>(Works management system)</span></h1></div>
+   <span>(Works Management System)</span></h1></div>
     
   </div>
    <div class="container-fluid">

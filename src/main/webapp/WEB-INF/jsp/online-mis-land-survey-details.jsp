@@ -247,8 +247,7 @@
 								</ul>
 
 								<ul class="fs-list-details">
-									<li><p>Upload Land Details
-											Document(${fn:replace(fileUploadConstraint.allowedExtensions,', ','/')})</p></li>
+									<li><p>Upload Document</p></li>
 									<li><label for="files" class="fileuploadLabel mb-0">Select
 											files</label> <input type="file" name="file" id="files" multiple
 										class="d-none"> <small id="selectedFilesCount">*
