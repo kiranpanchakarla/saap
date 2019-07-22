@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
 
@@ -28,32 +29,18 @@
 
 <body>
 
-	
-	<c:choose>
-		<c:when
-			test="${consultantInfoObject != null && (workInfo.workStatus eq 'Land_Details' or  workInfo.workStatus eq 'PEND_SAAP_APRVL')}">
-			<c:url value="/ConsultantInfo/edit/${consultantInfoObject.work.id}"
-				var="createUrl" />
-		</c:when>
 
-		<c:when
-			test="${workInfo.workStatus != 'Land_Details'}">
-			<c:url value="/preliminaryDrawings/view" var="createUrl" />
-		</c:when>
-	
-		<c:otherwise>
-			<c:url value="/ConsultantInfo/create" var="createUrl" />
-		</c:otherwise>
-
-	</c:choose>
 
 	<section id="contact" class="section-bg-con">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<form id="msform" method="get" action="${createUrl}" >
+					<c:url value="/work/${workInfo.id}/estimation/save" var="createUrl" />
+					<form:form id="msform" method="post" action="${createUrl}"
+						modelAttribute="workEstimation">
 
-					<fieldset>
+
+						<fieldset>
 							<div class="col-md-6">
 								<div class="text-center">
 									<h4 class="section-title">Work</h4>
@@ -303,17 +290,33 @@
 
 							<%--  <c:if test="${userRole eq 'ROLE_CONSULTANT'}"> --%>
 							<div class="col-md-12" align="right">
-								<c:choose>
-									<c:when
-										test="${workInfo.workStatus eq 'Land_Details'}">
-										<button type="submit" class="btn btn-info">Consultant
-											Info</button>
-									</c:when>
-									
-									<c:otherwise>
-										<button type="submit" class="btn btn-info">Next</button>
-									</c:otherwise>
-								</c:choose>
+
+								<div class="fs-list-full">
+
+
+									<ul class="fs-list-details">
+										<li><p>
+												Estimation cost <span class="red">*</span>
+											</p></li>
+										<li><form:input type="text" id="estimation" path="cost"
+												placeholder="Enter estimation" class="form-control mb-md" />
+											<span id="estimation_empty_Err" class="errors d-none"
+											style="color: red; float: right;">Estimation should
+												not be empty</span></li>
+									</ul>
+								</div>
+
+								<button type="submit" class="btn btn-info">${workEstimation.id != null ? 'Update' : 'Save'}
+									estimation</button>
+								<form:input type="hidden" path="id" />
+
+
+								<form:input type="hidden" path="work.id" />
+
+
+
+
+
 							</div>
 							<%--  </c:if> --%>
 
@@ -321,7 +324,7 @@
 
 
 
-					</form>
+					</form:form>
 				</div>
 			</div>
 		</div>
@@ -333,6 +336,16 @@
 
 	<script>
 		$(document).ready(function() {
+
+			$("#msform").on('submit', function(e) {
+				$("#estimation_empty_Err").addClass("d-none");
+				if ($("#estimation").val() === "") {
+					$("#estimation_empty_Err").removeClass("d-none");
+					$("#estimation").focus();
+					return false;
+				}
+			});
+
 			/* 	 alert( $.fn.jquery ) */
 			$('#viewTable').DataTable({
 				"scrollX" : false,

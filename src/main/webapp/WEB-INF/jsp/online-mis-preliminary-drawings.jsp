@@ -522,7 +522,7 @@ margin-left: 10px;
 						</fieldset>
 
 						<c:if test="${SAAP_APPROVED_STATUS eq work.workStatus}">
-							<input type="button" id="approved" name="next" disabled="true"
+							<input type="button" id="approved" name="next" disabled="true" style="cursor: not-allowed;"
 								class="next action-button" value="Approved">
 							<input type="button" id="backToHome" name="next"
 								class="next action-button" value="Home">

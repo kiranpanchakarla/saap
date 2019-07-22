@@ -20,6 +20,7 @@ import com.ap.mis.entity.Works;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.TechnicalSanctionService;
 import com.ap.mis.service.TenderingProcessService;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.SecurityUtil;
 
 @Controller
@@ -39,76 +40,84 @@ public class TechnicalSanctionController {
 	public String technicalSanctionSave(@ModelAttribute TechnicalSanction techsanc, Model model,
 			HttpServletRequest request, HttpSession session) {
 
-		boolean isSave=false;
-/*		if (session.getAttribute("loggedInUserObj") == null) {
-			model.addAttribute("sessionTimeout", "sessionTimeout");
-			return "online-admin";
-		}*/
+		/*
+		 * if (session.getAttribute("loggedInUserObj") == null) {
+		 * model.addAttribute("sessionTimeout", "sessionTimeout"); return
+		 * "online-admin"; }
+		 */
+		Works work = misService.getWorkInfo(techsanc.getWork().getId());
 
-		int workId = (int) session.getAttribute("workIdSession");
-//		techsanc.setWorkId(workId);
-//		techSanction.saveTechSanction(techsanc);
-		
-		if (techsanc.getId() == null) {
-			techSanction.saveTechSanction(techsanc);
-			isSave = true;
-		} else {
-			techSanction.updateTechSanction(techsanc);
-			//checking... TenderProcess is created or not
-			TenderingProcess tenderProcess = tenderingProcessService.getTenderDetails(workId);
-			        if(tenderProcess == null) {
-			            isSave = true;
-			        }  
-		}
+		work.setWorkStatus(EnumWorkStatus.TECHNICAL_SANCTION_COMPLETED.getStatus());
+		techSanction.saveTechSanction(techsanc);
+		misService.updateWork(work);
 
-		Works workInfo = misService.getWorkInfo(workId);
-		model.addAttribute("workInfo", workInfo);
-		model.addAttribute("authoritiesTypeList", tenderingProcessService.getAuthoritiesList());
-		model.addAttribute("agencyList", tenderingProcessService.getAgencyList());
+		return "redirect:/adminloggedin";
 
-		
-		if(isSave==true) {
-			return "redirect:/tenderProcess/create";
-		}else {
-			return "redirect:/tenderProcess/edit/"+workId;
-		}
-
+		/*
+		 * boolean isSave = false; int workId = (int)
+		 * session.getAttribute("workIdSession"); // techsanc.setWorkId(workId); //
+		 * techSanction.saveTechSanction(techsanc); if (techsanc.getId() == null) {
+		 * techSanction.saveTechSanction(techsanc); isSave = true; }
+		 * 
+		 * else { techSanction.updateTechSanction(techsanc); // checking...
+		 * TenderProcess is created or not TenderingProcess tenderProcess =
+		 * tenderingProcessService.getTenderDetails(workId); if (tenderProcess == null)
+		 * { isSave = true; } }
+		 * 
+		 * Works workInfo = misService.getWorkInfo(workId);
+		 * model.addAttribute("workInfo", workInfo);
+		 * model.addAttribute("authoritiesTypeList",
+		 * tenderingProcessService.getAuthoritiesList());
+		 * model.addAttribute("agencyList", tenderingProcessService.getAgencyList());
+		 * 
+		 * if (isSave == true) { return "redirect:/tenderProcess/create"; } else {
+		 * return "redirect:/tenderProcess/edit/" + workId; }
+		 */
 
 	}
-	
+
 	@GetMapping(value = "/create")
-	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request,HttpSession session) {
-		userObject = SecurityUtil.getLoggedUser();
-	    userObject =misService.verifyUser(userObject);
-	    model.addAttribute("techsanc", new TechnicalSanction());
-	    session.getAttribute("workInfo");
-		session.setAttribute("loggedInUserObj", userObject);
-		int workid = (int) session.getAttribute("workIdSession");
-		Works workInfo = misService.getWorkInfo(workid);
+	public String create(String workId, Model model, HttpServletRequest request, HttpSession session) {
+		Works workInfo = misService.getWorkInfo(Integer.parseInt(workId));
+		TechnicalSanction techSancksn = new TechnicalSanction();
+		techSancksn.setWork(workInfo);
+		/*
+		 * userObject = SecurityUtil.getLoggedUser(); userObject =
+		 * misService.verifyUser(userObject);
+		 */
+
+		/*
+		 * session.getAttribute("workInfo"); session.setAttribute("loggedInUserObj",
+		 * userObject);
+		 */
+		// int workid = (int) session.getAttribute("workIdSession");
+
+		model.addAttribute("techsanc", techSancksn);
+		model.addAttribute("workInfo", workInfo);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
-		
-	    return "online-mis-technical-sanction";
+
+		return "online-mis-technical-sanction";
 	}
-	
+
 	@GetMapping(value = "/view")
 	public String view(Model model, String workId) {
 		TechnicalSanction techInfo = techSanction.getTechDetails(Integer.parseInt(workId));
 		Works workInfo = misService.getWorkInfo(techInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
-		model.addAttribute("techInfo",techInfo);
+		model.addAttribute("techInfo", techInfo);
 		TenderingProcess tenderInfo = tenderingProcessService.getTenderDetails(Integer.parseInt(workId));
-		model.addAttribute("tenderInfo",tenderInfo);
+		model.addAttribute("tenderInfo", tenderInfo);
 		return "online-mis-techSanctionView";
 	}
-	
+
 	@GetMapping(value = "/edit/{id}")
-	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+	public String edit(Model model, @PathVariable("id") Integer id, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		TechnicalSanction techInfo = techSanction.getTechDetails(id);
 		session.getAttribute("workInfo");
 		Works workInfo = misService.getWorkInfo(techInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
-		model.addAttribute("techsanc",techInfo);
+		model.addAttribute("techsanc", techInfo);
 		return "online-mis-technical-sanction";
 	}
 

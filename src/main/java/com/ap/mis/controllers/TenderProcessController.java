@@ -35,156 +35,188 @@ import com.ap.mis.util.SecurityUtil;
 @RequestMapping("/tenderProcess")
 public class TenderProcessController {
 
-	@Autowired MISService misService;
+	@Autowired
+	MISService misService;
 
-	@Autowired TenderingProcessService tenderProcess;
-	
-	@Autowired AgreementDetailService agreementDetailService;
-	
+	@Autowired
+	TenderingProcessService tenderProcessService;
+
+	@Autowired
+	AgreementDetailService agreementDetailService;
+
 	@Autowired
 	AttachmentService attachService;
-	
+
 	@PostMapping(value = "/save")
-	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj ,Model model,HttpServletRequest request,@RequestParam("engfile") MultipartFile[] engfile,@RequestParam("telugufile") MultipartFile[] telugufile,HttpSession session) {	
-		
-		boolean isSave=false;
-		int workId =(int) session.getAttribute("workIdSession");
-		String engModule=EnumFilter.TENDERPROCESSFORENG.getStatus();
-		String telModule=EnumFilter.TENDERPROCESSFORTEL.getStatus();
-        if (tenderingProcessObj.getId() == null) {
-			
-			tenderProcess.saveTenderingProcess(tenderingProcessObj);
-			attachService.saveAttachedDetails(workId,engModule, engfile);
-			attachService.saveAttachedDetails(workId,telModule, telugufile);
-			isSave = true;
-		} else {
-		/*	tenderProcess.updateTenderingProcess(tenderingProcessObj,engfile,telugufile);*/
-			 //checking... agreementDetails is created or not
-			   AgreementDetails agreementDetails = agreementDetailService.getAgreementDetails(workId);
-				        if(agreementDetails == null) {
-				            isSave = true;
-				        }  
-		}
-		
-		Works workInfo=misService.getWorkInfo(workId);
-		model.addAttribute("workInfo", workInfo);
-		
-		   session.setAttribute("tenderingIdSession", tenderingProcessObj.getId());
-		    
-				   
-			if(isSave==true) {
-				 return "redirect:/agreementDetails/create";
-			}else {
-				return "redirect:/agreementDetails/edit/"+workId;
-			}
+	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj, Model model,
+			HttpServletRequest request, @RequestParam("engfile") MultipartFile[] engfile,
+			@RequestParam("telugufile") MultipartFile[] telugufile, HttpSession session) {
 
+		boolean isSave = tenderingProcessObj.getId() == null;
+		int workId = (int) session.getAttribute("workIdSession");
 
-   }
-	
+		tenderProcessService.saveTenderingProcess(tenderingProcessObj);
+		attachService.saveAttachedDetails(workId, EnumFilter.TENDERPROCESSFORENG.getStatus(), engfile);
+		attachService.saveAttachedDetails(workId, EnumFilter.TENDERPROCESSFORTEL.getStatus(), telugufile);
+
+		return "redirect:/tenderEvaluation/" + (isSave ? "create" : "edit");
+
+		/*
+		 * String engModule = EnumFilter.TENDERPROCESSFORENG.getStatus(); String
+		 * telModule = EnumFilter.TENDERPROCESSFORTEL.getStatus();
+		 * 
+		 * if (tenderingProcessObj.getId() == null) {
+		 * 
+		 * tenderProcessService.saveTenderingProcess(tenderingProcessObj);
+		 * attachService.saveAttachedDetails(workId, engModule, engfile);
+		 * attachService.saveAttachedDetails(workId, telModule, telugufile); isSave =
+		 * true; } else {
+		 * 
+		 * //
+		 * tenderProcess.updateTenderingProcess(tenderingProcessObj,engfile,telugufile);
+		 * 
+		 * // checking... agreementDetails is created or not AgreementDetails
+		 * agreementDetails = agreementDetailService.getAgreementDetails(workId); if
+		 * (agreementDetails == null) { isSave = true; } }
+		 * 
+		 * 
+		 * 
+		 * 
+		 * Works workInfo = misService.getWorkInfo(workId);
+		 * model.addAttribute("workInfo", workInfo);
+		 * 
+		 * session.setAttribute("tenderingIdSession", tenderingProcessObj.getId());
+		 * 
+		 * 
+		 * 
+		 * if (isSave == true) { return "redirect:/agreementDetails/create"; } else {
+		 * return "redirect:/agreementDetails/edit/" + workId; }
+		 */
+
+	}
+
 	@GetMapping(value = "/create")
-	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		userObject = SecurityUtil.getLoggedUser();
-	    userObject =misService.verifyUser(userObject);
-	    model.addAttribute("tenderingProcessObj", new TenderingProcess());
-	    session.getAttribute("workInfo");
-	    int workid = (int) session.getAttribute("workIdSession");
-		Works workInfo = misService.getWorkInfo(workid);
-		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
-		session.setAttribute("loggedInUserObj", userObject);
-		model.addAttribute("authoritiesTypeList", tenderProcess.getAuthoritiesList());
-		model.addAttribute("agencyList", tenderProcess.getAgencyList());
+	public String create(String workId, Model model, HttpServletRequest request) {
+		/*
+		 * HttpSession session = request.getSession(); userObject =
+		 * SecurityUtil.getLoggedUser(); userObject =misService.verifyUser(userObject);
+		 * model.addAttribute("tenderingProcessObj", new TenderingProcess());
+		 * session.getAttribute("workInfo"); int workid = (int)
+		 * session.getAttribute("workIdSession"); Works workInfo =
+		 * misService.getWorkInfo(workid); model.addAttribute("workLineItems",
+		 * workInfo.getWorkLineItemsList().get(0));
+		 * session.setAttribute("loggedInUserObj", userObject);
+		 * model.addAttribute("authoritiesTypeList",
+		 * tenderProcess.getAuthoritiesList()); model.addAttribute("agencyList",
+		 * tenderProcess.getAgencyList());
+		 * 
+		 * return "online-mis-tendering-process";
+		 */
 
+		HttpSession session = request.getSession();
+		Works workInfo = misService.getWorkInfo(Integer.parseInt(workId));
+		TenderingProcess tenderProcess = new TenderingProcess();
+		tenderProcess.setWork(workInfo);
+		model.addAttribute("tenderingProcessObj", tenderProcess);
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
+		model.addAttribute("workInfo", workInfo);
+		model.addAttribute("authoritiesTypeList", tenderProcessService.getAuthoritiesList());
+		model.addAttribute("agencyList", tenderProcessService.getAgencyList());
+		session.setAttribute("workIdSession", workInfo.getId());
 		return "online-mis-tendering-process";
 	}
-	
+
 	@GetMapping(value = "/view")
-	public String view(Model model, String workId,HttpServletRequest request) {
-		TenderingProcess tenderInfo = tenderProcess.getTenderDetails(Integer.parseInt(workId));
-		List<Attachements> engAttachements=attachService.getAttachementsDetails(Integer.parseInt(workId),EnumFilter.TENDERPROCESSFORENG.getStatus());
+	public String view(Model model, String workId, HttpServletRequest request) {
+		TenderingProcess tenderInfo = tenderProcessService.getTenderDetails(Integer.parseInt(workId));
+		List<Attachements> engAttachements = attachService.getAttachementsDetails(Integer.parseInt(workId),
+				EnumFilter.TENDERPROCESSFORENG.getStatus());
 		List<String> engFilePath = new ArrayList<String>();
-		if(engAttachements.size()>0) {
-		for(Attachements engAttachDetails :engAttachements) {
-			if (engAttachDetails.getPath() != null && !engAttachDetails.getPath().equals("")) {
-				String engAttachmentPath=ContextUtil.populateContext(request) + engAttachDetails.getPath();
-				engFilePath.add(engAttachmentPath);
-				model.addAttribute("engUpload",engFilePath);
-				
-			} else {
-				model.addAttribute("engUpload", null);
+		if (engAttachements.size() > 0) {
+			for (Attachements engAttachDetails : engAttachements) {
+				if (engAttachDetails.getPath() != null && !engAttachDetails.getPath().equals("")) {
+					String engAttachmentPath = ContextUtil.populateContext(request) + engAttachDetails.getPath();
+					engFilePath.add(engAttachmentPath);
+					model.addAttribute("engUpload", engFilePath);
+
+				} else {
+					model.addAttribute("engUpload", null);
+				}
 			}
 		}
-		}
-		List<Attachements> telAttachements=attachService.getAttachementsDetails(Integer.parseInt(workId),EnumFilter.TENDERPROCESSFORTEL.getStatus());
+		List<Attachements> telAttachements = attachService.getAttachementsDetails(Integer.parseInt(workId),
+				EnumFilter.TENDERPROCESSFORTEL.getStatus());
 		List<String> telFilePath = new ArrayList<String>();
-		if(telAttachements.size()>0) {
-		for(Attachements telAttachDetails :telAttachements) {
-			if (telAttachDetails.getPath() != null && !telAttachDetails.getPath().equals("")) {
-				String telAttachmentPath=ContextUtil.populateContext(request) + telAttachDetails.getPath();
-				telFilePath.add(telAttachmentPath);
-				model.addAttribute("telUpload",telFilePath);
-				
-			} else {
-				model.addAttribute("telUpload", null);
+		if (telAttachements.size() > 0) {
+			for (Attachements telAttachDetails : telAttachements) {
+				if (telAttachDetails.getPath() != null && !telAttachDetails.getPath().equals("")) {
+					String telAttachmentPath = ContextUtil.populateContext(request) + telAttachDetails.getPath();
+					telFilePath.add(telAttachmentPath);
+					model.addAttribute("telUpload", telFilePath);
+
+				} else {
+					model.addAttribute("telUpload", null);
+				}
 			}
 		}
-		}
-		
-		model.addAttribute("tenderInfo",tenderInfo);
+
+		model.addAttribute("tenderInfo", tenderInfo);
 		Works workInfo = misService.getWorkInfo(tenderInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
-		AgreementDetails  agreementInfo = agreementDetailService.getAgreementDetails(Integer.parseInt(workId));
-		model.addAttribute("agreementInfo",agreementInfo);
-		
-		return "online-mis-tenderView";		 
+		AgreementDetails agreementInfo = agreementDetailService.getAgreementDetails(Integer.parseInt(workId));
+		model.addAttribute("agreementInfo", agreementInfo);
+
+		return "online-mis-tenderView";
 	}
-	
+
 	@GetMapping(value = "/edit/{id}")
-	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
-		TenderingProcess tenderInfo = tenderProcess.getTenderDetails(id);
-		List<Attachements> engAttachements=attachService.getAttachementsDetails(id,EnumFilter.TENDERPROCESSFORENG.getStatus());
+	public String edit(Model model, @PathVariable("id") Integer id, HttpServletRequest request) {
+		TenderingProcess tenderInfo = tenderProcessService.getTenderDetails(id);
+		List<Attachements> engAttachements = attachService.getAttachementsDetails(id,
+				EnumFilter.TENDERPROCESSFORENG.getStatus());
 		List<String> engFilePath = new ArrayList<String>();
-		if(engAttachements.size()>0) {
-		for(Attachements engAttachDetails :engAttachements) {
-			if (engAttachDetails.getPath() != null && !engAttachDetails.getPath().equals("")) {
-				String engAttachmentPath=ContextUtil.populateContext(request) + engAttachDetails.getPath();
-				engFilePath.add(engAttachmentPath);
-				model.addAttribute("engUpload",engFilePath);
-				
-			} else {
-				model.addAttribute("engUpload", null);
+		if (engAttachements.size() > 0) {
+			for (Attachements engAttachDetails : engAttachements) {
+				if (engAttachDetails.getPath() != null && !engAttachDetails.getPath().equals("")) {
+					String engAttachmentPath = ContextUtil.populateContext(request) + engAttachDetails.getPath();
+					engFilePath.add(engAttachmentPath);
+					model.addAttribute("engUpload", engFilePath);
+
+				} else {
+					model.addAttribute("engUpload", null);
+				}
 			}
 		}
-		}
-		List<Attachements> telAttachements=attachService.getAttachementsDetails(id,EnumFilter.TENDERPROCESSFORTEL.getStatus());
+		List<Attachements> telAttachements = attachService.getAttachementsDetails(id,
+				EnumFilter.TENDERPROCESSFORTEL.getStatus());
 		List<String> telFilePath = new ArrayList<String>();
-		if(telAttachements.size()>0) {
-		for(Attachements telAttachDetails :telAttachements) {
-			if (telAttachDetails.getPath() != null && !telAttachDetails.getPath().equals("")) {
-				String telAttachmentPath=ContextUtil.populateContext(request) + telAttachDetails.getPath();
-				telFilePath.add(telAttachmentPath);
-				model.addAttribute("telUpload",telFilePath);
-				
-			} else {
-				model.addAttribute("telUpload", null);
+		if (telAttachements.size() > 0) {
+			for (Attachements telAttachDetails : telAttachements) {
+				if (telAttachDetails.getPath() != null && !telAttachDetails.getPath().equals("")) {
+					String telAttachmentPath = ContextUtil.populateContext(request) + telAttachDetails.getPath();
+					telFilePath.add(telAttachmentPath);
+					model.addAttribute("telUpload", telFilePath);
+
+				} else {
+					model.addAttribute("telUpload", null);
+				}
 			}
 		}
-		}
-		/*if (tenderInfo.getEngUpload() != null && !tenderInfo.getEngUpload().equals("")) {
-			model.addAttribute("engUpload",ContextUtil.populateContext(request) + tenderInfo.getEngUpload());
-		} else {
-			model.addAttribute("engUpload", null);
-		}
-		if (tenderInfo.getTelUpload() != null && !tenderInfo.getTelUpload().equals("")) {
-			model.addAttribute("telUpload",ContextUtil.populateContext(request) + tenderInfo.getTelUpload());
-		} else {
-			model.addAttribute("telUpload", null);
-		}*/
+		/*
+		 * if (tenderInfo.getEngUpload() != null &&
+		 * !tenderInfo.getEngUpload().equals("")) {
+		 * model.addAttribute("engUpload",ContextUtil.populateContext(request) +
+		 * tenderInfo.getEngUpload()); } else { model.addAttribute("engUpload", null); }
+		 * if (tenderInfo.getTelUpload() != null &&
+		 * !tenderInfo.getTelUpload().equals("")) {
+		 * model.addAttribute("telUpload",ContextUtil.populateContext(request) +
+		 * tenderInfo.getTelUpload()); } else { model.addAttribute("telUpload", null); }
+		 */
 		Works workInfo = misService.getWorkInfo(tenderInfo.getWork().getId());
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
-		model.addAttribute("authoritiesTypeList", tenderProcess.getAuthoritiesList());
-		model.addAttribute("agencyList", tenderProcess.getAgencyList());
-		model.addAttribute("tenderingProcessObj",tenderInfo);
+		model.addAttribute("authoritiesTypeList", tenderProcessService.getAuthoritiesList());
+		model.addAttribute("agencyList", tenderProcessService.getAgencyList());
+		model.addAttribute("tenderingProcessObj", tenderInfo);
 		return "online-mis-tendering-process";
 	}
 

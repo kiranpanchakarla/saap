@@ -9,8 +9,8 @@ public enum EnumMap {
 	/* UI_Columns  DB_pojo_Columns*/
 	ADMIN("ROLE_ADMIN","'Work_Created','Admin_Sanction','Line_Department','Land_Details','COMPLETED'"),
 	SAAP("ROLE_SAAP","'Work_Created','Admin_Sanction','Line_Department','Land_Details','COMPLETED'"),
-	DEPARTMENT("ROLE_DEPARTMENT","'Land_Details'"),
-	CONSULTANT("ROLE_CONSULTANT","'Land_Details','PEND_SAAP_APRVL','SAAP_APRVD'");
+	DEPARTMENT("ROLE_DEPARTMENT","'Land_Details','SAAP_APRVD','TECHNICL_SANKSN_CMPLTD'"),
+	CONSULTANT("ROLE_CONSULTANT","'Land_Details','PEND_SAAP_APRVL','SAAP_APRVD','WORK_ESTMASN_CMPLTD'");
 	
 	private String status;
 	private String value;

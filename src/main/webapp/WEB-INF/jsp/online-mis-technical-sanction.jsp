@@ -121,15 +121,15 @@
                 
                 </div>
                 
-                <c:if test="${techsanc.id==null}">
+               <%--  <c:if test="${techsanc.id==null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
                 </c:if>
                 <c:if test="${techsanc.id!=null}">
                 <input type="submit" id="submit" name="next" class="next action-button" value="update and Continue">
-                </c:if>
-                
+                </c:if> --%>
+                <input type="submit" id="submit" name="next" class="next action-button" value="Save">
             </fieldset>
-             <input type="hidden" id="workid" name="work.id" value="${workInfo.id}"> 
+             <form:input type="hidden" id="workid" path="work.id" /> 
         </form:form>
         
         

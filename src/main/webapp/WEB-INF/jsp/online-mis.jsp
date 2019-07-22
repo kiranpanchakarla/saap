@@ -13,7 +13,16 @@
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 </head>
 <script>
+
+		if(window.history){			
+			var url = window.location.href.substring(0,window.location.href.lastIndexOf("=")+1)+"existedWork";			
+			window.history.pushState(null, null, url)			
+		}
+
+
                         $(document).ready(function() {
+                        	
+                        	
                         	
                             $(".createClass").click(function() {
 
@@ -156,8 +165,12 @@
                                 this.value = this.value.match(/^\d+/);
                             });
                         });
+                        /*  window.history.forward();
+                        function noBack() { window.history.forward(); } */
+                        
                     </script>
 
+<!-- <body onload="noBack();" onpageshow="if (event.persisted) noBack();"> -->
 <body>
 	<!--=== Header ====-->
 	<jsp:include page="online-mis-header.jsp" />
@@ -229,7 +242,8 @@
 												Types of Work <span class="red">*</span>
 											</p>
 										</li>
-										<li><form:select id="typeworkid" path="typeOfWork.id" onchange="hasChanged()">
+										<li><form:select id="typeworkid" path="typeOfWork.id"
+												onchange="hasChanged()">
 												<form:option value="">--Select--</form:option>
 												<c:forEach items="${typeOfWork}" var="typeOfWork">
 													<form:option value="${typeOfWork.id}">${typeOfWork.name}</form:option>
@@ -244,13 +258,13 @@
 												Nature of work <span class="red">*</span>
 											</p>
 										</li>
-										<li><form:select id="natureOfWork" path="natureOfWork.id" onchange="hasChanged()">
+										<li><form:select id="natureOfWork" path="natureOfWork.id"
+												onchange="hasChanged()">
 												<form:option value="">--Select--</form:option>
 												<c:forEach items="${natureOfWork}" var="natureOfWork">
 													<form:option value="${natureOfWork.id}">${natureOfWork.name}</form:option>
 												</c:forEach>
-											</form:select> <br>
-										<span id="natureOfWorkErr" class="errors"
+											</form:select> <br> <span id="natureOfWorkErr" class="errors"
 											style="color: red; float: right;"></span></li>
 									</ul>
 
@@ -265,8 +279,7 @@
 												<c:forEach items="${districts}" var="district">
 													<form:option value="${district.id}">${district.name}</form:option>
 												</c:forEach>
-											</form:select> <br>
-										<span id="districtErr" class="errors"
+											</form:select> <br> <span id="districtErr" class="errors"
 											style="color: red; float: right;"></span></li>
 									</ul>
 
@@ -283,8 +296,7 @@
 														<form:option value="${constituency.id}">${constituency.name}</form:option>
 													</c:forEach>
 												</c:if>
-											</form:select> <br>
-										<span id="constituencyErr" class="errors"
+											</form:select> <br> <span id="constituencyErr" class="errors"
 											style="color: red; float: right;"></span></li>
 									</ul>
 
@@ -329,8 +341,8 @@
 											</p>
 										</li>
 										<li><form:input type="text" id="location"
-												placeholder='Location' path="location" /> <br>
-										<span id="locationErr" class="errors"
+												placeholder='Location' path="location" /> <br> <span
+											id="locationErr" class="errors"
 											style="color: red; float: right;"></span></li>
 									</ul>
 
@@ -341,9 +353,8 @@
 											</p>
 										</li>
 										<li><form:input type="text" id="workNo" path="workNo"
-												placeholder="Work Number" /> <br>
-										<span id="workNoErr" class="errors"
-											style="color: red; float: right;"></span></li>
+												placeholder="Work Number" /> <br> <span id="workNoErr"
+											class="errors" style="color: red; float: right;"></span></li>
 									</ul>
 
 									<ul class="fs-list-details fs-list-full">
@@ -365,11 +376,11 @@
 									<div id="work_table_div">
 										<table id="work_table"
 											class=" table table-bordered  table-striped mb-none table_head animated fadeInUp">
-											
+
 										</table>
 									</div>
 									<!-- <input type="text" id="test"/> -->
-									
+
 									<c:if test="${workObject.id==null}">
 										<div id="saveDiv" style="display: none">
 											<input type="submit" id="submit" name="submit"

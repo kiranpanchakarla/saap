@@ -610,12 +610,13 @@ button.btn {
 
 															</tr>
 														</thead>
-														<tbody>
+														<tbody class="uploadedFileDetails">
 															<c:forEach items="${landSurveyAttachmentFiles}"
 																var="file" varStatus="loop">
 																<c:set var="filePathParts"
 																	value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
-																<tr class="landSurveyDetailsUploadDocuments">
+																<tr class="landSurveyDetailsUploadDocuments"
+																	data-allow-work-approval="${file.status == pendingAttachment ? '0' :'1'}">
 																	<td>${loop.index + 1 }</td>
 																	<td><a
 																		href="${pageContext.request.contextPath}${file.path}"
@@ -649,7 +650,8 @@ button.btn {
 
 															</c:forEach>
 															<c:if test="${fn:length(landSurveyAttachmentFiles) == 0}">
-																<tr class="landSurveyDetailsUploadDocuments">
+																<tr class="landSurveyDetailsUploadDocuments"
+																	data-allow-work-approval="1">
 																	<td colspan="6">
 																		<p class="text-center p-4 mb-0">No attachments
 																			found</p>
@@ -690,12 +692,13 @@ button.btn {
 
 															</tr>
 														</thead>
-														<tbody>
+														<tbody class="uploadedFileDetails">
 															<c:forEach items="${PPLayoutAttachmentFiles}" var="file"
 																varStatus="loop">
 																<c:set var="filePathParts"
 																	value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
-																<tr class="PPLayoutUploadDocuments">
+																<tr class="PPLayoutUploadDocuments"
+																	data-allow-work-approval="${file.status == pendingAttachment ? '0' :'1'}">
 																	<td>${loop.index + 1}</td>
 																	<td><a
 																		href="${pageContext.request.contextPath}${file.path}"
@@ -730,7 +733,8 @@ button.btn {
 
 															</c:forEach>
 															<c:if test="${fn:length(PPLayoutAttachmentFiles) == 0}">
-																<tr class="PPLayoutUploadDocuments">
+																<tr class="PPLayoutUploadDocuments"
+																	data-allow-work-approval="1">
 																	<td colspan="6">
 																		<p class="text-center p-4 mb-0">No attachments
 																			found</p>
@@ -779,12 +783,13 @@ button.btn {
 
 															</tr>
 														</thead>
-														<tbody>
+														<tbody class="uploadedFileDetails">
 															<c:forEach items="${GIAttachmentFiles}" var="file"
 																varStatus="loop">
 																<c:set var="filePathParts"
 																	value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
-																<tr class="GIUploadDocuments">
+																<tr class="GIUploadDocuments"
+																	data-allow-work-approval="${file.status == pendingAttachment ? '0' :'1'}">
 																	<td>${loop.index + 1 }</td>
 																	<td><a
 																		href="${pageContext.request.contextPath}${file.path}"
@@ -818,7 +823,8 @@ button.btn {
 
 															</c:forEach>
 															<c:if test="${fn:length(GIAttachmentFiles) == 0}">
-																<tr class="GIUploadDocuments">
+																<tr class="GIUploadDocuments"
+																	data-allow-work-approval="1">
 																	<td colspan="6">
 																		<p class="text-center pt-4 mb-0">No attachments
 																			found</p>
@@ -840,12 +846,11 @@ button.btn {
 										value="Previous">
 
 									<%-- <c:if test="${PENDING_SAAP_APPROVAL eq work.workStatus}">
-
 										
 									</c:if> --%>
 									<input type="button" id="approveWork"
-										class="next action-button" value="Approve"> <input
-										type="button" id="home" class="next action-button"
+											class="next action-button" value="Approve">
+									<input type="button" id="home" class="next action-button"
 										value="Home"> <input type="hidden" id="workid"
 										value="${work.id}" />
 								</div>

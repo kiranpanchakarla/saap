@@ -1,42 +1,64 @@
 const APPROVE = "approve-btn", REJECT = "reject-btn", UNDO = "undo-btn", ACTIVE = "active", NOT_ALLOWED = "not-allowed";
 
-$(document).on('click', '.btn-group button', function() {
-	var $btnRef = $(this);
-	if ($btnRef.hasClass(REJECT)) {
-		takeConfirmationForReject($btnRef);
-	} else if ($btnRef.hasClass(APPROVE)) {
-		sendRequestForApproveFileUploadDocument($btnRef);
-	} else if ($btnRef.hasClass(UNDO)) {
-		takeConfirmationForUndo($btnRef, getUndoType($btnRef));
-	}
+$(document)
+		.on('click', '.btn-group button', function() {
+			var $btnRef = $(this);
+			if ($btnRef.hasClass(REJECT)) {
+				takeConfirmationForReject($btnRef);
+			} else if ($btnRef.hasClass(APPROVE)) {
+				takeConfirmationForApprove($btnRef);
+			} else if ($btnRef.hasClass(UNDO)) {
+				takeConfirmationForUndo($btnRef, getUndoType($btnRef));
+			}
 
-}).ready(function() {
+		})
+		.ready(
+				function() {
 
-	$('input[name="previous"]').on('click', function() {
-		$("#nav-tab > ul.nav > li > a#pills-work-info-tab").trigger('click');
-	});
-	$('input[name="next"]').on('click', function() {
-		$("#nav-tab > ul.nav > li > a#pills-attachments-tab").trigger('click');
-	});
+					$('input[name="previous"]')
+							.on(
+									'click',
+									function() {
+										$(
+												"#nav-tab > ul.nav > li > a#pills-work-info-tab")
+												.trigger('click');
+									});
+					$('input[name="next"]')
+							.on(
+									'click',
+									function() {
+										$(
+												"#nav-tab > ul.nav > li > a#pills-attachments-tab")
+												.trigger('click');
+									});
 
-	if ($("#approveWork").length) {
-		$("#approveWork").on('click', function() {
-			showHideWorkApproveButton(true);
-			sendRequestToServerForApproveWork();
-		});
-	}
+					if ($("#approveWork").length) {
+						$("#approveWork")
+								.on(
+										'click',
+										function() {
+											if (isAnyDocumentsNeedtoEitherApproveOrRejected()) {
+												showWarnigModel(
+														"Approve forbidden",
+														"There are some files in pending, you should be either approve or reject it")
+												return false;
+											}
+											showHideWorkApproveButton(true);
+											sendRequestToServerForApproveWork();
+										});
+					}
 
-	if ($("#home").length) {
-		$("#home").on('click', function() {
-			window.location.href = homeUrl;
-		});
-	}
+					if ($("#home").length) {
+						$("#home").on('click', function() {
+							window.location.href = homeUrl;
+						});
+					}
 
-	$('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
-		scrollToTabStart();
-	});
+					$('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
+						scrollToTabStart();
+					});
 
-});
+				});
 
 /* Reject file handling */
 
@@ -59,11 +81,18 @@ function rejectFileUploadDocument($btnRef) {
 			.prop("disabled", true);
 	$btnRef.siblings("." + UNDO).removeClass(NOT_ALLOWED).prop("disabled",
 			false);
+	updateWorkAllowStatus($btnRef, true);
 	var fileName = getFileName($btnRef);
-	raiseNotificatrion(`File : <b>${fileName}</b> rejected`, 'success');
+	raiseNotification(`File : <b>${fileName}</b> rejected`, 'success');
 }
 
 /* Approve file handling */
+function takeConfirmationForApprove($btnRef) {
+	var fileName = getFileName($btnRef);
+	showCofirmationDialog("Approve file confirmation",
+			"Are you sure want to approve file : <b>" + fileName + "</b>",
+			sendRequestForApproveFileUploadDocument, $btnRef, "");
+}
 
 function sendRequestForApproveFileUploadDocument($btnRef) {
 	sendRequestToServer(FILE_UPLOAD_STATUS.APPROVED, $btnRef,
@@ -77,8 +106,9 @@ function approveFileUploadDocument($btnRef) {
 	$btnRef.siblings("." + REJECT).addClass(NOT_ALLOWED).prop("disabled", true)
 	$btnRef.siblings("." + UNDO).removeClass(NOT_ALLOWED).prop("disabled",
 			false);
+	updateWorkAllowStatus($btnRef, true);
 	var fileName = getFileName($btnRef);
-	raiseNotificatrion(`File : <b>${fileName}</b> approved`, 'success');
+	raiseNotification(`File : <b>${fileName}</b> approved`, 'success');
 }
 
 /* Undo Approved or Rejected file handling */
@@ -115,8 +145,8 @@ function undoRejectOrApproveFileUploadDocument($btnRef) {
 	} else if (undoType == "Reject") {
 		$btnRef.siblings("." + REJECT).find("span").text("Reject");
 	}
-
-	raiseNotificatrion(`Undo ${undoType} file : <b>${fileName}</b>`, 'success');
+	updateWorkAllowStatus($btnRef, false);
+	raiseNotification(`Undo ${undoType} file : <b>${fileName}</b>`, 'success');
 	$btnRef.siblings().prop("disabled", false).removeClass(
 			ACTIVE + " " + NOT_ALLOWED);
 
@@ -125,7 +155,20 @@ function undoRejectOrApproveFileUploadDocument($btnRef) {
 
 /* Utility functions */
 
-function raiseNotificatrion(message, notificationType) {
+function showWarnigModel(header, messageBody) {
+
+	alertify.alert().setting({
+		'label' : 'Ok',
+		'message' : messageBody,
+		'onok' : function() {
+			$("#files").val('');
+		}
+	}).setHeader('<h4 class="mb-0"> ' + header + ' </h4> ').show(true,
+			'warning-alertjs-model');
+
+}
+
+function raiseNotification(message, notificationType) {
 
 	var notification = alertify.notify(message, notificationType, 5,
 			function() {
@@ -169,7 +212,7 @@ function sendRequestToServer(status, $btnRef, callback) {
 
 		if (jqXHR.status !== 404) {
 			console.error("Attachment status failed due to " + errorThrown);
-			raiseNotificatrion("Attachment status updation failed ", "error");
+			raiseNotification("Attachment status updation failed ", "error");
 		}
 
 	};
@@ -179,7 +222,7 @@ function sendRequestToServer(status, $btnRef, callback) {
 		url : attachmentStatusUpdateUrl,
 		statusCode : {
 			404 : function() {
-				raiseNotificatrion("Invalid attachment", "error");
+				raiseNotification("Invalid attachment", "error");
 			}
 		},
 		contentType : "application/json",
@@ -204,11 +247,12 @@ function sendRequestToServerForApproveWork() {
 
 		if (jqXHR.status === 200) {
 			console.log("data " + workId + " textStatus " + textStatus);
-			showHideWorkApproveButton(false);
-			raiseNotificatrion("work approved successfully", "success");
+
+			raiseNotification("work approved successfully", "success");
 			var timeOutId = setTimeout(function() {
 				clearTimeout(timeOutId);
-				window.location.href = "";
+				showHideWorkApproveButton(false);
+				$("#home").trigger('click')
 			}, 3000);
 		}
 
@@ -217,7 +261,7 @@ function sendRequestToServerForApproveWork() {
 	var errorFunction = function(jqXHR, textStatus, errorThrown) {
 		showHideWorkApproveButton(false);
 		if (jqXHR.status !== 404) {
-			raiseNotificatrion("work approve failed " + errorThrown, "error");
+			raiseNotification("work approve failed " + errorThrown, "error");
 		}
 
 	};
@@ -227,7 +271,7 @@ function sendRequestToServerForApproveWork() {
 		url : workApprovalUrl,
 		statusCode : {
 			404 : function() {
-				raiseNotificatrion("Invalid work id", "error");
+				raiseNotification("Invalid work id", "error");
 				showHideWorkApproveButton(false);
 			}
 		},
@@ -273,5 +317,25 @@ function scrollToTabStart() {
 }
 
 function showHideWorkApproveButton(disabled) {
-	$("#approveWork").prop('disabled', disabled);
+	var approveWorkBtnRef = $("#approveWork");
+	if (disabled) {
+		approveWorkBtnRef.addClass("not-allowed");
+	} else {
+		approveWorkBtnRef.removeClass("not-allowed");
+	}
+
+	approveWorkBtnRef.prop('disabled', disabled);
+}
+
+function updateWorkAllowStatus($btnRef, isAllowed) {
+	$btnRef.parents("tr").data("allow-work-approval", isAllowed ? 1 : 0);
+}
+
+function isAnyDocumentsNeedtoEitherApproveOrRejected() {
+	var anyPendingDocuments = $("tbody.uploadedFileDetails tr").filter(
+			function(i, e) {
+				return parseInt($(e).data("allowWorkApproval")) === 0;
+			});
+
+	return anyPendingDocuments.length > 0;
 }
