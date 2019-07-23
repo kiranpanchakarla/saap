@@ -12,23 +12,23 @@
 <title>SAAP : Online MIS</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 </head>
+    <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js" /> type="text/javascript"></script>
 <script>
 
-		if(window.history){			
-			var url = window.location.href.substring(0,window.location.href.lastIndexOf("=")+1)+"existedWork";			
-			window.history.pushState(null, null, url)			
-		}
+if(window.history){        
+    if(window.location.href.substring(0, window.location.href.lastIndexOf("?")).endsWith("/create")){
+    var url = window.location.href.substring(0,window.location.href.lastIndexOf("=")+1)+"existedWork";            
+    window.history.pushState(null, null, url)    
+    }
+}
 
 
                         $(document).ready(function() {
-                        	
-                        	
-                        	
+                        	/* 
                             $(".createClass").click(function() {
 
                                 $("#work_detailsErr").html("");
                                 var count = $("#noOfWorks").val();
-                                /*  alert(count);  */
                                  if(count > 5){
                                 	 alertify.alert("Number of Works","Max 5 works are Allowed!");
                                 	 $("#noOfWorks").val("");
@@ -46,9 +46,7 @@
                                         $('#work_table')
                                             .append(
                                                 '<tr><td><b>' + sno + '<b></td>' + '<td>'
-                                                /* + '<input type="text" name="workDetails" id="work_details'+i+'"  onkeyup="return isText(this)" class="form-control mb-md" />' */
                                                 + '<input type="text" name="WorkLineItemsList[' + i + '].workDetails" id="work_details' + i + '"  onkeyup="return isText(this)" class="form-control mb-md" />' + '</td>' + '<td>'
-                                                /* + '<input type="text" name="cost" id="estimated_cost'+i+'" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' */
                                                 + '<input type="text" name="WorkLineItemsList[' + i + '].cost" id="estimated_cost' + i + '" onkeypress="return isNumber(event)" maxlength="9" class="form-control mb-md" />' + '</td>' + '</tr>');
                                         sno = sno + 1;
                                     }
@@ -59,10 +57,10 @@
                                     $("#createval").val(0);
                                 }
 
-                            });
+                            }); */
                            
                            
-                          var workIdVal=$('#id').val();
+                          /* var workIdVal=$('#id').val();
                           if(workIdVal == undefined){
                         	 
                           }else{
@@ -83,7 +81,7 @@
 
                                }
                            });
-                          }
+                          } */
                          
                           
                             $(document).on("change", "#district", function() {
@@ -215,7 +213,7 @@
 							<c:url value="/worksCreation/save" var="createUrl" />
 							<%-- <form id="msform"  method="post" action="${createUrl}" modelAttribute="workObject"> --%>
 
-							<form:form id="msform" method="POST" action="${createUrl}"
+							<form:form id="msform" method="POST" data-toggle="validator" action="${createUrl}"
 								modelAttribute="workObject">
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
@@ -353,33 +351,91 @@
 											</p>
 										</li>
 										<li><form:input type="text" id="workNo" path="workNo"
+												onchange="isValidWorkNumber('workNo','/worksCreation/isValidWorkNumber','1_errorContainer','Work Number Already Exists')"
 												placeholder="Work Number" /> <br> <span id="workNoErr"
 											class="errors" style="color: red; float: right;"></span></li>
 									</ul>
 
 									<ul class="fs-list-details fs-list-full">
-										<li>
+										<!-- <li>
 											<p>
 												No. of Works <span class="red">*</span>
 											</p>
-										</li>
-										<li class="work-space"><form:input type="text"
+											
+										</li> -->
+										<li class="work-space"><form:input type="hidden"
 												id="noOfWorks" path="noOfWorks" placeholder="No. of Works" />
 											<span id="noOfWorksErr" class="errors"
-											style="color: red; float: center;"></span> <input
-											type="button" name="Create" id="Create" value="Create"
-											class="create-button createClass"></li>
+											style="color: red; float: center;"></span> <!-- <input type="button" name="Create" id="Create" value="Add Work Details"
+											class="create-button createClass"> --> <input type="button"
+											name="addRow" id="addRow" onclick="addItem()"
+											value="Add Work Details" class="create-button float-right">
+										</li>
 									</ul>
 
 									<span id="work_detailsErr" class="errors"
 										style="color: red; float: center;"></span>
-									<div id="work_table_div">
+									<!-- <div id="work_table_div">
 										<table id="work_table"
 											class=" table table-bordered  table-striped mb-none table_head animated fadeInUp">
+											
+										</table>
+									</div> -->
+									<!-- Work Line Items -->
+									<input type="hidden" id="addressCount" value="0">
+									<c:if test="${empty workLineItemsList}">
+									<div id="work_table_div1">
+										<table id="work_table1"
+											class=" table table-bordered  table-striped mb-none table_head animated fadeInUp">
+											<thead>
+												<tr>
+													<th>Work Detail</th>
+													<th>Estimated Cost (in Lakhs)</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
 
+											</tbody>
 										</table>
 									</div>
-									<!-- <input type="text" id="test"/> -->
+									</c:if>
+									<c:if test="${not empty workLineItemsList}">
+
+										<table id="work_table1_edit"
+											class=" table table-bordered  table-striped mb-none table_head animated fadeInUp">
+											<thead>
+												<tr>
+													<th>Work Detail</th>
+													<th>Estimated Cost (in Lakhs)</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:set var="count" value="0" scope="page" />
+												<c:forEach items="${workLineItemsList}" var="list">
+													<tr class="multTot multTot${count}">
+														<td><form:input type="text" path="workLineItemsList[${count}].workDetails"
+															value="${list.workDetails}" class="form-control workDetails"></form:input>
+														</td>
+														
+														<td><form:input type="text" path="workLineItemsList[${count}].cost"
+															value="${list.cost}" class="form-control mb-md"></form:input>
+														</td>
+
+														<td class="text-center"><a
+															onclick="removeData2(${count})" class="btn btn-delete"
+															data-toggle="tooltip" data-placement="top" title="Delete"><i
+																class="glyphicon glyphicon-trash left"></i></a></td>
+													</tr>
+													<c:set var="count" value="${count + 1}" scope="page" />
+												</c:forEach>
+											</tbody>
+										</table>
+										<input type="hidden" id="edit_table" value="${count-1}">
+									</c:if>
+
+									<!-- Work Line Items -->
 
 									<c:if test="${workObject.id==null}">
 										<div id="saveDiv" style="display: none">
@@ -411,171 +467,340 @@
 	<jsp:include page="online-mis-footer.jsp" />
 
 	<script type="text/javascript">
-	
+	 var inc=0;
+	 var edit_table=0;
+	 
+	 if ($('#edit_table').val() != undefined ) {
+		//alert("edit");
+		 inc = $("#edit_table").val();
+		 
+		 inc++;
+		 
+	}
+
+	if ($('#edit_table').val() != undefined ) {
+		 
+	}else{
+		addItem();
+	}
 	$(document).ready(function() {
         $('#nav-work-tab').addClass('active');
         $('#nav-work').addClass('active');
-        
+		$("#saveDiv").show();
     });
 	
-                            $("#workNo").on('input', function() {
-                                $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
-                            })
-                            $('#location').on('input', function() {
-                                $(this).val($(this).val().replace(/[^a-z]/gi, ''));
-                            });
+	function addItem() {
+		
+		var item_table_data = '<tr class="multTot multTot'+inc+'">'
+		
+		+'<td>'
+		+'<input type="text" name="WorkLineItemsList['+inc+'].workDetails" placeholder="Work Details" autocomplete="off" onkeyup="return isText(this)"  class="form-control workDetails'+inc+'" id="work_details'+inc+'"   />'
+		+'</td>'
+		
+		+'<td>'
+		+'<input type="text" name="WorkLineItemsList['+inc+'].cost" placeholder="Estimated Cost" onkeypress="return isNumericKey(event)" autocomplete="off"  maxlength="5" required="true"  class="form-control validatePrice validateQuantity requiredQuantity requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+		+'</td>'
+		
+		+ ' <td class="text-center"><a  onclick="removeData('+inc+')" class="btn btn-delete" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-trash left"></i></a>'
+		+ '</td>'
+		+'</tr>';
+		
+		 
+	$("#work_table1_edit").append(item_table_data);
 
-                            function isText(txtVal) {
-                                txtVal.value = txtVal.value.replace(/[^a-z0-9 ]/gi, '');
-                            }
+	 $("#work_table1").append(item_table_data);
+  
+     
+  	   //$("#work_table1").append(item_table_data);
+  
+ 	      // $("#work_table1_edit").append(item_table_data);
+ 	 
+		inc++;
+	}
+	
+	function removeData(index){
+    	//alert("ff"+index);
+    	
+    	  var rowCount = $('#work_table1 tr').length-2;
+    	  var rowCount_edit = $('#work_table1_edit tr').length-2;
+    	if(rowCount==0){
+    		$('#work_table1 input[type="text"]').val('');
+    		return false;
+    	}  else{
+    		if(rowCount>0){
+    			alertify
+				.confirm()
+				.setting(
+						{
+							'labels' : {
+								'ok' : 'Yes',
+								'cancel' : 'No'
+							},
+							'message' : "Are you sure. Want to delete this row permanently"
 
-                            function isNumber(evt) {
-                                evt = (evt) ? evt : window.event;
-                                var charCode = (evt.which) ? evt.which : evt.keyCode;
-                                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                                    return false;
-                                }
-                                return true;
-                            }
-                            $("#noOfWorks").on('input', function() {
-                                this.value = this.value.match(/^\d+/);
-                            });
+						})
+				.set('onok', function() {
+					$('#work_table1 tr.multTot'+index).remove();
+				})
+				.setHeader(
+						'<h4 class="mb-0"> Delete Row confirmation </h4> ')
+				.set('defaultFocus', 'cancel').show('true',
+						'danger-alertjs-model');
+    		}
+    		if(rowCount_edit>0){
+    		
+    		alertify
+			.confirm()
+			.setting(
+					{
+						'labels' : {
+							'ok' : 'Yes',
+							'cancel' : 'No'
+						},
+						'message' : "Are you sure. Want to delete this row permanently"
 
-                            $('#Create').on('click', function() {
-                                var noofworks = $("#noOfWorks").val();
-                                if (noofworks == "" || noofworks == null) {
-                                    $("#noOfWorksErr").html("Please Enter No. of Works");
-                                    $("#noOfWorks").focus();
-                                    return false;
-                                } else {
-                                    $("#noOfWorksErr").html("");
-                                }
+					})
+			.set('onok', function() {
+				$('#work_table1_edit tr.multTot'+index).remove();
+			})
+			.setHeader(
+					'<h4 class="mb-0"> Delete Row confirmation </h4> ')
+			.set('defaultFocus', 'cancel').show('true',
+					'danger-alertjs-model');
+    		}
+    	}
+    		 
+    		$("#msform").validator("update");
+    }
+	
+	function removeData2(index){
+    	//alert("ff"+index);
+    	var rowCount = $('#work_table1_edit tr').length-2;
+    	var rowCount1 = $('#work_table1 tr').length-2;
+    	if(rowCount==0){
+    		alertify
+			.confirm()
+			.setting(
+					{
+						'labels' : {
+							'ok' : 'Yes',
+							'cancel' : 'No'
+						},
+						'message' : "Are you sure. Want to delete this row permanently"
 
-                                if (noofworks <= 0) {
-                                    $("#work_details").val("");
-                                    $("#estimated_cost").val("");
-                                    $("#work_detailsErr").html("");
-                                }
-                            })
+					})
+			.set('onok', function() {
+				$('#work_table1_edit input[type="text"]').val('');
+			})
+			.setHeader(
+					'<h4 class="mb-0"> Delete Row confirmation </h4> ')
+			.set('defaultFocus', 'cancel').show('true',
+					'danger-alertjs-model');
+    		
+    		return false;
+    	}
+    	if(rowCount > 0){
+    	alertify
+		.confirm()
+		.setting(
+				{
+					'labels' : {
+						'ok' : 'Yes',
+						'cancel' : 'No'
+					},
+					'message' : "Are you sure. Want to delete this row permanently"
 
-                            $("#submit").click(function() {
+				})
+		.set('onok', function() {
+			$('#work_table1_edit tr.multTot'+index).remove();
+		})
+		.setHeader(
+				'<h4 class="mb-0"> Delete Row confirmation </h4> ')
+		.set('defaultFocus', 'cancel').show('true',
+				'danger-alertjs-model');
+    	}
+    	
+    	if(rowCount1 > 0){
+        	alertify
+    		.confirm()
+    		.setting(
+    				{
+    					'labels' : {
+    						'ok' : 'Yes',
+    						'cancel' : 'No'
+    					},
+    					'message' : "Are you sure. Want to delete this row permanently"
+
+    				})
+    		.set('onok', function() {
+    			$('#work_table1 tr.multTot'+index).remove();
+    		})
+    		.setHeader(
+    				'<h4 class="mb-0"> Delete Row confirmation </h4> ')
+    		.set('defaultFocus', 'cancel').show('true',
+    				'danger-alertjs-model');
+        	}
+    	$("#msform").validator("update");
+    }
+	
+	function isValidWorkNumber(nameId,url,displayId,msg){
+	      var parts = url.split('/');
+	      var answer = parts[parts.length - 1];
+	      var dataString  ="name="+$('#'+nameId).val();
+	      $.ajax({
+	             type:"GET",
+	              url: answer,
+	             data : dataString,
+	             success: function(data){
+	                 if(data == true){
+	                	 alertify.warning(msg);
+	                     $('#'+nameId).val('');
+	                     $('#'+displayId).html(msg);
+	                 }else {
+	                     $('#'+displayId).html('');
+	                 }
+	            }});
+	      
+	 }
+	
+          $("#workNo").on('input', function() {
+              $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
+          })
+          $('#location').on('input', function() {
+              $(this).val($(this).val().replace(/[^a-z]/gi, ''));
+          });
+
+          function isText(txtVal) {
+              txtVal.value = txtVal.value.replace(/[^a-z0-9 ]/gi, '');
+          }
+
+          function isNumber(evt) {
+              evt = (evt) ? evt : window.event;
+              var charCode = (evt.which) ? evt.which : evt.keyCode;
+              if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                  return false;
+              }
+              return true;
+          }
+          $("#noOfWorks").on('input', function() {
+              this.value = this.value.match(/^\d+/);
+          });
+
+          $('#Create').on('click', function() {
+              var noofworks = $("#noOfWorks").val();
+              if (noofworks == "" || noofworks == null) {
+                  $("#noOfWorksErr").html("Please Enter No. of Works");
+                  $("#noOfWorks").focus();
+                  return false;
+              } else {
+                  $("#noOfWorksErr").html("");
+              }
+
+              if (noofworks <= 0) {
+                  $("#work_details").val("");
+                  $("#estimated_cost").val("");
+                  $("#work_detailsErr").html("");
+              }
+          })
+
+       $("#submit").click(function() {
                             	
-                            	 $.ajax({
-             	    		        type: "POST",
-             	    		        url : "<c:url value="/worksCreation/save"/>",
-             	    		        data: isChange,
-             	    		        processData: false,
-             	    		        contentType: false,
-             	    		        cache: false,
-             	    		        timeout: 600000,
-             	    		        success: function (data) {
-             	    		        	if(data == true){
-                 							  alert(data);
-                 					            }
-             						 /*  else{
-             								alert("Unable to upload File");
-             							} */
-             	    		        } 
-             	    		    });
+          	 $.ajax({
+		        type: "POST",
+		        url : "<c:url value="/worksCreation/save"/>",
+		        data: isChange,
+		        processData: false,
+		        contentType: false,
+		        cache: false,
+		        timeout: 600000,
+		        success: function (data) {
+		        	if(data == true){
+						  alert(data);
+				            }
+	 /*  else{
+			alert("Unable to upload File");
+		} */
+		        } 
+		    });
 
-                                if ($("#typeworkid option:selected").val() == "") {
-                                    $("#typeworkErr").text("Select Types of Work");
-                                    $("#typeworkid").focus();
-                                    return false;
-                                } else {
-                                    $("#typeworkErr").text("");
-                                }
+              if ($("#typeworkid option:selected").val() == "") {
+                  $("#typeworkErr").text("Select Types of Work");
+                  $("#typeworkid").focus();
+                  return false;
+              } else {
+                  $("#typeworkErr").text("");
+              }
 
-                                if ($("#natureOfWork option:selected").val() == "") {
-                                    $("#natureOfWorkErr").text("Select Nature of work");
-                                    $("#natureOfWork").focus();
-                                    return false;
-                                } else {
-                                    $("#natureOfWorkErr").text("");
-                                }
+              if ($("#natureOfWork option:selected").val() == "") {
+                  $("#natureOfWorkErr").text("Select Nature of work");
+                  $("#natureOfWork").focus();
+                  return false;
+              } else {
+                  $("#natureOfWorkErr").text("");
+              }
 
-                                if ($("#district option:selected").val() == "") {
-                                    $("#districtErr").text("Select District");
-                                    $("#district").focus();
-                                    return false;
-                                } else {
-                                    $("#districtErr").text("");
-                                }
+              if ($("#district option:selected").val() == "") {
+                  $("#districtErr").text("Select District");
+                  $("#district").focus();
+                  return false;
+              } else {
+                  $("#districtErr").text("");
+              }
 
-                                if ($("#constituency option:selected").val() == "") {
-                                    $("#constituencyErr").text("Select Constituency");
-                                    $("#constituency").focus();
-                                    return false;
-                                } else {
-                                    $("#constituencyErr").text("");
-                                }
+              if ($("#constituency option:selected").val() == "") {
+                  $("#constituencyErr").text("Select Constituency");
+                  $("#constituency").focus();
+                  return false;
+              } else {
+                  $("#constituencyErr").text("");
+              }
 
-                                if ($("#mandal option:selected").val() == "") {
-                                    $("#mandalErr").text("Select Mandal");
-                                    $("#mandal").focus();
-                                    return false;
-                                } else {
-                                    $("#mandalErr").text("");
-                                }
+              if ($("#mandal option:selected").val() == "") {
+                  $("#mandalErr").text("Select Mandal");
+                  $("#mandal").focus();
+                  return false;
+              } else {
+                  $("#mandalErr").text("");
+              }
 
-                                if ($("#village option:selected").val() == "") {
-                                    $("#villageErr").text("Select Village ");
-                                    $("#village").focus();
-                                    return false;
-                                } else {
-                                    $("#villageErr").text("");
-                                }
+              if ($("#village option:selected").val() == "") {
+                  $("#villageErr").text("Select Village ");
+                  $("#village").focus();
+                  return false;
+              } else {
+                  $("#villageErr").text("");
+              }
 
-                                var location = $("#location").val();
-                                if (location == "" || location == null) {
-                                    $("#locationErr").html("Please Enter location");
-                                    $("#location").focus();
-                                    return false;
-                                } else {
-                                    $("#locationErr").html("");
-                                }
+              var location = $("#location").val();
+              if (location == "" || location == null) {
+                  $("#locationErr").html("Please Enter location");
+                  $("#location").focus();
+                  return false;
+              } else {
+                  $("#locationErr").html("");
+              }
 
-                                var workNo = $("#workNo").val();
-                                if (workNo == "" || workNo == null) {
-                                    $("#workNoErr").html("Please Enter Work Number");
-                                    $("#workNo").focus();
-                                    return false;
-                                } else {
-                                    $("#workNoErr").html("");
-                                }
+              var workNo = $("#workNo").val();
+              if (workNo == "" || workNo == null) {
+                  $("#workNoErr").html("Please Enter Work Number");
+                  $("#workNo").focus();
+                  return false;
+              } else {
+                  $("#workNoErr").html("");
+              }
 
-                                var noofworks = $("#noOfWorks").val();
-                                if (noofworks == "" || noofworks == null) {
-                                    $("#noOfWorksErr").html("Please Enter No. of Works");
-                                    $("#noOfWorks").focus();
-                                    return false;
-                                } else {
-                                    $("#noOfWorksErr").html("");
-                                }
+              var noofworks = $("#noOfWorks").val();
+              if (noofworks == "" || noofworks == null) {
+                  $("#noOfWorksErr").html("Please Enter No. of Works");
+                  $("#noOfWorks").focus();
+                  return false;
+              } else {
+                  $("#noOfWorksErr").html("");
+              }
 
-                                if (noofworks >= 1) {
-                                    if ($("#createval").val() == 1) {
-                                        for (var i = 1; i <= noofworks; i++) {
-                                            if ($('#work_details' + i + '').val() == "" || $('#work_details' + i + '').val() == null) {
-                                                $("#work_detailsErr").html("Please Enter Work Details");
-                                                $('#work_details' + i + '').focus();
-                                                return false;
-                                            }
-                                            if ($('#estimated_cost' + i + '').val() == "" || $('#estimated_cost' + i + '').val() == null) {
-                                                $("#work_detailsErr").html("Please Enter Estimated Cost");
-                                                $('#estimated_cost' + i + '').focus();
-                                                return false;
-                                            }
-                                        }
-                                    } else {
-                                        $("#work_detailsErr").html("Create Work Details");
-                                        return false;
-                                    }
-                                } else {
-                                    $("#work_detailsErr").html("");
-                                }
+             
 
-                            });
+          });
 
                             
                         </script>

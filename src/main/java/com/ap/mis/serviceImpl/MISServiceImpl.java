@@ -121,9 +121,14 @@ public class MISServiceImpl implements MISService {
 		
 		return misDao.lineItemDetails(workId);
 	}
-	
-	
-	
+
+	@Override
+	public Works findByWorkNumber(String workNo) {
+		
+        Works work = misDao.findByWorkNumber(workNo);
+		return  work;
+	}
+
 	
 
 }

@@ -34,6 +34,7 @@ public interface MISService {
     public Works updateWork(Works work);
     public Works deleteWork(Works workInfo);
     public List<WorkLineItemsList> lineItemDetails(int workId);
+    public Works findByWorkNumber(String workNo);
     
 
 	

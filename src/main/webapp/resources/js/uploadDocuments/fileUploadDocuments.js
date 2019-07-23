@@ -250,7 +250,7 @@ $(document)
 											'message' : "Are you sure want to delete file : <b>"
 													+ trRef.find("td").eq(1)
 															.text()
-													+ "</b> permenently"
+													+ "</b> permanently"
 
 										})
 								.set('onok', function() {

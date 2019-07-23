@@ -112,7 +112,9 @@ public class WorkCreationController {
 		if (request.getRequestURI().endsWith("/create") && request.getParameter("source") != null
 				&& request.getParameter("source").equalsIgnoreCase("newWork")) {
 			workId = null;
-		}
+		}else if (request.getRequestURI().endsWith("/edit") && request.getParameter("workId") != null && workId == null) {
+            workId = Integer.parseInt(request.getParameter("workId"));
+        }
 
 		Works work = new Works();
 
@@ -126,7 +128,7 @@ public class WorkCreationController {
 
 		model.addAttribute("districts", districtsService.findAll());
 		model.addAttribute("workObject", work);
-
+		model.addAttribute("workLineItemsList",work.getWorkLineItemsList());
 		List<TypeOfWork> typeOfWork = misService.findAll();
 		model.addAttribute("typeOfWork", typeOfWork);
 		List<NatureOfWork> natureOfWork = misService.natureOfDetails();
@@ -193,5 +195,17 @@ public class WorkCreationController {
 		List<WorkLineItemsList> workLineItemsList = work.getWorkLineItemsList();
 		Gson gson = new Gson();
 		return new Gson().toJson(workLineItemsList);
+	}
+
+	@GetMapping(value = "/isValidWorkNumber")
+	@ResponseBody
+	public Boolean isValidWorkNumber(String name) {
+		Works work = misService.findByWorkNumber(name);
+		if (work.getWorkNo()!= null && work.getWorkNo().equals(name)) {
+			log.info("Work Number Already Exists");
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

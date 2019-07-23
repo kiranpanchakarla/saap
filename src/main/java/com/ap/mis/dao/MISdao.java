@@ -35,9 +35,8 @@ public interface MISdao {
 
 	public List<WorkLineItemsList> lineItemDetails(int workId);
 
-	
-	
-	
+    public Works findByWorkNumber(String workNo);
+
 	/*public int landDetailsSave(LandDetails landDetails);*/
 	/*public int adminstrativeSectionSave(AdministrativeSection adminSec);*/
 	/**/
