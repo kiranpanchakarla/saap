@@ -9,8 +9,9 @@
 <meta charset="utf-8">
 <title>SAAP : Tendering Process</title>
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <script type="text/javascript">
 	$(document).ready(
@@ -61,57 +62,88 @@
 						});
 
 				$('#ifbPreperationDate').datepicker({
-					dateFormat : 'yy-mm-dd'
+					altField : "#ifbDate",
+					altFormat : "yy-mm-dd",
+					dateFormat : 'dd-mm-yy'
 				});
-				$('#ifbPreperationDate').datepicker('setDate',
-						$('#ifbDate').val());
 
 				$('#tenderNoticeIssuedDate').datepicker({
-					dateFormat : 'yy-mm-dd'
+					altField : "#tendDate",
+					altFormat : "yy-mm-dd",
+					dateFormat : 'dd-mm-yy'
 				});
-				$('#tenderNoticeIssuedDate').datepicker('setDate',
-						$('#tendDate').val());
 
 				$('#engNewsPaperDate').datepicker({
-					dateFormat : 'yy-mm-dd'
+					altField : "#engDate",
+					altFormat : "yy-mm-dd",
+					dateFormat : 'dd-mm-yy'
 				});
-				$('#engNewsPaperDate').datepicker('setDate',
-						$('#engDate').val());
 
 				$('#telNewspaperDate').datepicker({
-					dateFormat : 'yy-mm-dd'
+					altField : "#telDate",
+					altFormat : "yy-mm-dd",
+					dateFormat : 'dd-mm-yy'
 				});
-				$('#telNewspaperDate').datepicker('setDate',
-						$('#telDate').val());
 
 				$('#bidStrartDate').datepicker({
-					dateFormat : 'yy-mm-dd'
+					altField : "#bsDate",
+					altFormat : "yy-mm-dd",
+					dateFormat : 'dd-mm-yy'
 				});
-				$('#bidStrartDate').datepicker('setDate', $('#bsDate').val());
 
 				$('#bidClosingDate').datepicker({
-					dateFormat : 'yy-mm-dd'
+					altField : "#bcDate",
+					altFormat : "yy-mm-dd",
+					dateFormat : 'dd-mm-yy'
 				});
-				$('#bidClosingDate').datepicker('setDate', $('#bcDate').val());
 
 				$('#bidOpeningDate').datepicker({
-					dateFormat : 'yy-mm-dd'
+					altField : "#boDate",
+					altFormat : "yy-mm-dd",
+					dateFormat : 'dd-mm-yy'
 				});
-				$('#bidOpeningDate').datepicker('setDate', $('#boDate').val());
 
 				$('#dateOfEvaluationCompleted').datepicker({
-					dateFormat : 'yy-mm-dd'
+					altField : "#evalDate",
+					altFormat : "yy-mm-dd",
+					dateFormat : 'dd-mm-yy'
 				});
-				$('#dateOfEvaluationCompleted').datepicker('setDate',
-						$('#evalDate').val());
 
 				$('#dateOfLoaIssued').datepicker({
-					dateFormat : 'yy-mm-dd'
+					altField : "#loaDate",
+					altFormat : "yy-mm-dd",
+					dateFormat : 'dd-mm-yy'
 				});
+
+				$('#ifbPreperationDate').datepicker('setDate',
+						convertDateToLocalFormat($('#ifbDate').val()));
+
+				$('#tenderNoticeIssuedDate').datepicker('setDate',
+						convertDateToLocalFormat($('#tendDate').val()));
+
+				$('#engNewsPaperDate').datepicker('setDate',
+						convertDateToLocalFormat($('#engDate').val()));
+
+				$('#telNewspaperDate').datepicker('setDate',
+						convertDateToLocalFormat($('#telDate').val()));
+
+				$('#bidStrartDate').datepicker('setDate', convertDateToLocalFormat($('#bsDate').val()));
+
+				$('#bidClosingDate').datepicker('setDate', convertDateToLocalFormat($('#bcDate').val()));
+
+				$('#bidOpeningDate').datepicker('setDate', convertDateToLocalFormat($('#boDate').val()));
+
+				$('#dateOfEvaluationCompleted').datepicker('setDate',
+						convertDateToLocalFormat($('#evalDate').val()));
+
 				$('#dateOfLoaIssued')
-						.datepicker('setDate', $('#loaDate').val());
+						.datepicker('setDate',convertDateToLocalFormat( $('#loaDate').val()));
 
 			});
+	
+	function convertDateToLocalFormat(date){
+		return new moment(date, "YYYY-MM-DD").format("DD-MM-YYYY");
+	}
 </script>
 <body>
 
@@ -152,7 +184,7 @@
 
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
-					<c:choose>
+					<%-- <c:choose>
 						<c:when test="${!empty tenderingProcessObj.id}">
 							<form:input type="hidden" path="id" class="form-control" id="id"></form:input>
 							<input type="hidden" name="ifbDate" id="ifbDate"
@@ -174,7 +206,22 @@
 							<input type="hidden" name="loaDate" id="loaDate"
 								value="${tenderingProcessObj.dateOfLoaIssued}">
 						</c:when>
-					</c:choose>
+					</c:choose> --%>
+
+					<form:input type="hidden" path="id" class="form-control" id="id"></form:input>
+					<form:input type="hidden" id="ifbDate" path="ifbPreperationDate" />
+					<form:input type="hidden" id="tendDate"
+						path="tenderNoticeIssuedDate" />
+					<form:input type="hidden" id="engDate" path="engNewsPaperDate" />
+					<form:input type="hidden" id="telDate" path="telNewspaperDate" />
+					<form:input type="hidden" id="bsDate" path="bidStrartDate" />
+					<form:input type="hidden" id="bcDate" path="bidClosingDate" />
+					<form:input type="hidden" id="boDate" path="bidOpeningDate" />
+					<form:input type="hidden" id="evalDate"
+						path="dateOfEvaluationCompleted" />
+					<form:input type="hidden" id="loaDate" path="dateOfLoaIssued" />
+
+
 					<!-- fieldsets -->
 					<fieldset>
 						<div class="fs-list-full">
@@ -205,8 +252,8 @@
 								<li><p>
 										Date of Preparation of IFB<span class="red">*</span>
 									</p></li>
-								<li><form:input type="date" id="ifbPreperationDate"
-										path="ifbPreperationDate" /> <!-- class="form-control mb-md hasDatepicker" -->
+								<li><input type="text" id="ifbPreperationDate"
+										path="ifbPreperationDate" placeholder="DD/MM/YYYY"  autocomplete="off"/> <!-- class="form-control mb-md hasDatepicker" -->
 									<span id="ifbPreperationDateErr" class="errors"
 									style="color: red; float: right;"></span></li>
 							</ul>
@@ -226,8 +273,8 @@
 								<li><p>
 										Tender Notice Issued date <span class="red">*</span>
 									</p></li>
-								<li><form:input type="date" id="tenderNoticeIssuedDate"
-										path="tenderNoticeIssuedDate" placeholder="DD/MM/YYYY" /> <span
+								<li><input type="text" id="tenderNoticeIssuedDate"
+										path="tenderNoticeIssuedDate" placeholder="DD/MM/YYYY" autocomplete="off"/> <span
 									id="tenderNoticeIssuedDateErr" class="errors"
 									style="color: red; float: right;"></span></li>
 							</ul>
@@ -265,9 +312,10 @@
 
 							<ul class="fs-list-details">
 								<li><p>Date</p></li>
-								<li><form:input type="date" path="engNewsPaperDate"
-										id="engNewsPaperDate" /> <span id="engNewsPaperDateErr"
-									class="errors" style="color: red; float: right;"></span></li>
+								<li><input type="text" path="engNewsPaperDate"
+										id="engNewsPaperDate" placeholder="DD/MM/YYYY"  autocomplete="off"/> <span
+									id="engNewsPaperDateErr" class="errors"
+									style="color: red; float: right;"></span></li>
 							</ul>
 
 							<ul class="fs-list-details">
@@ -299,9 +347,10 @@
 
 							<ul class="fs-list-details">
 								<li><p>Date</p></li>
-								<li><form:input type="date" path="telNewspaperDate"
-										id="telNewspaperDate" /> <span id="telNewspaperDateErr"
-									class="errors" style="color: red; float: right;"></span></li>
+								<li><input type="text" path="telNewspaperDate"
+										id="telNewspaperDate" placeholder="DD/MM/YYYY"  autocomplete="off"/> <span
+									id="telNewspaperDateErr" class="errors"
+									style="color: red; float: right;"></span></li>
 							</ul>
 
 
@@ -324,23 +373,26 @@
 
 							<ul class="fs-list-details">
 								<li><p>Bid Start Date</p></li>
-								<li><form:input type="date" path="bidStrartDate"
-										id="bidStrartDate" /> <span id="bidStrartDateErr"
-									class="errors" style="color: red; float: right;"></span></li>
+								<li><input type="text" path="bidStrartDate"
+										id="bidStrartDate" placeholder="DD/MM/YYYY"  autocomplete="off"/> <span
+									id="bidStrartDateErr" class="errors"
+									style="color: red; float: right;"></span></li>
 							</ul>
 
 							<ul class="fs-list-details">
 								<li><p>Bid Closing Date</p></li>
-								<li><form:input type="date" path="bidClosingDate"
-										id="bidClosingDate" /> <span id="bidClosingDateErr"
-									class="errors" style="color: red; float: right;"></span></li>
+								<li><input type="text" path="bidClosingDate"
+										id="bidClosingDate" placeholder="DD/MM/YYYY"  autocomplete="off"/> <span
+									id="bidClosingDateErr" class="errors"
+									style="color: red; float: right;"></span></li>
 							</ul>
 
 							<ul class="fs-list-details">
 								<li><p>Bid Opening Date</p></li>
-								<li><form:input type="date" path="bidOpeningDate"
-										id="bidOpeningDate" /> <span id="bidOpeningDateErr"
-									class="errors" style="color: red; float: right;"></span></li>
+								<li><input type="text" path="bidOpeningDate"
+										id="bidOpeningDate" placeholder="DD/MM/YYYY"  autocomplete="off"/> <span
+									id="bidOpeningDateErr" class="errors"
+									style="color: red; float: right;"></span></li>
 							</ul>
 
 							<ul class="fs-list-details">
@@ -370,9 +422,9 @@
 
 							<ul class="fs-list-details">
 								<li><p>Date of Evaluation Completed</p></li>
-								<li><form:input type="date" id="dateOfEvaluationCompleted"
-										path="dateOfEvaluationCompleted" /> <span
-									id="dateOfEvaluationCompletedErr" class="errors"
+								<li><input type="text" id="dateOfEvaluationCompleted"
+										path="dateOfEvaluationCompleted" placeholder="DD/MM/YYYY"  autocomplete="off"/>
+									<span id="dateOfEvaluationCompletedErr" class="errors"
 									style="color: red; float: right;"></span></li>
 							</ul>
 
@@ -431,9 +483,10 @@
 
 							<ul class="fs-list-details">
 								<li><p>Date of LOA Issued to Contractor</p></li>
-								<li><form:input type="date" path="dateOfLoaIssued"
-										id="dateOfLoaIssued" /> <span id="dateOfLoaIssuedErr"
-									class="errors" style="color: red; float: right;"></span></li>
+								<li><input type="text" 
+										id="dateOfLoaIssued" placeholder="DD/MM/YYYY"  autocomplete="off"/> <span
+									id="dateOfLoaIssuedErr" class="errors"
+									style="color: red; float: right;"></span></li>
 							</ul>
 
 							<ul class="fs-list-details">
@@ -592,5 +645,8 @@
 							}
 						});
 	</script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"
+		type="text/javascript"></script>
 </body>
 </html>

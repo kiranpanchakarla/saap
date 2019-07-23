@@ -51,7 +51,7 @@ public class TenderProcessController {
 	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj, Model model,
 			HttpServletRequest request, @RequestParam("engfile") MultipartFile[] engfile,
 			@RequestParam("telugufile") MultipartFile[] telugufile, HttpSession session) {
-
+		System.out.println("Save called");
 		boolean isSave = tenderingProcessObj.getId() == null;
 		int workId = (int) session.getAttribute("workIdSession");
 
@@ -115,8 +115,12 @@ public class TenderProcessController {
 
 		HttpSession session = request.getSession();
 		Works workInfo = misService.getWorkInfo(Integer.parseInt(workId));
-		TenderingProcess tenderProcess = new TenderingProcess();
-		tenderProcess.setWork(workInfo);
+		TenderingProcess tenderProcess = tenderProcessService.getTenderDetails(Integer.parseInt(workId));
+		if (tenderProcess == null) {
+			tenderProcess = new TenderingProcess();
+			tenderProcess.setWork(workInfo);
+		}
+
 		model.addAttribute("tenderingProcessObj", tenderProcess);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("workInfo", workInfo);
@@ -171,6 +175,8 @@ public class TenderProcessController {
 
 	@GetMapping(value = "/edit/{id}")
 	public String edit(Model model, @PathVariable("id") Integer id, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.setAttribute("workIdSession", id);
 		TenderingProcess tenderInfo = tenderProcessService.getTenderDetails(id);
 		List<Attachements> engAttachements = attachService.getAttachementsDetails(id,
 				EnumFilter.TENDERPROCESSFORENG.getStatus());
