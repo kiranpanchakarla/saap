@@ -94,14 +94,22 @@
                 <li><p>Estimated Cost <span class="red">*</span></p></li>
                 <li><input type="text" title="SAAP" name="work-details-new" class="form-control mb-md" readonly value="${workLineItems.cost}"></li>
                 </ul>
+                
+                 <ul class="fs-list-details">
+                 </ul>
+                
+                 <ul class="fs-list-details">
+                 <li><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></li>
+                 </ul>
+                 
+                  <ul class="fs-list-details">
+                 <c:if test="${adminInfo != null}">
+                  <li><a href="<c:url value="/administrativeSection/view?workId=${workInfo.id}"/>" class="btn btn-info ">Administrative Page</a></li>
+                 </c:if>
+                  </ul>
             </fieldset>
             
-          <div class="row">
-          <div class="col-sm-6 form-group"><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></div>
-           <c:if test="${adminInfo != null}">
-          <div class="col-sm-6 form-group"><a href="<c:url value="/administrativeSection/view?workId=${workInfo.id}"/>" class="btn btn-info ">Administrative Page</a></div>
-         </c:if>
-         </div>
+     
         </form>
     </div>
  </div>

@@ -111,15 +111,26 @@
                 <li><input type="text" title="ifsc-code" id="ifsc_code" name="ifsc_code" class="form-control mb-md" readonly value="${consultInfo.ifsc_code}">
                </li>
                </ul>
+               
+                <ul class="fs-list-details">
+                </ul>
+                
+                 <ul class="fs-list-details">
+                 <li><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></li>
+                 </ul>
+                 
+                  <ul class="fs-list-details">
+                  <c:if test="${techInfo!=null}">
+                  <li><a href="<c:url value="/technicalSanction/view?workId=${consultInfo.work.id}"/>" class="btn btn-info ">Technical Sanction Page</a></li>
+                  </c:if>
+                  </ul>
+               
+               
+           
                 
                 </div>
              </fieldset> 
-          <div class="row">
-          <div class="col-sm-6 form-group"><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></div>
-          <c:if test="${techInfo!=null}">
-          <div class="col-sm-6 form-group"><a href="<c:url value="/technicalSanction/view?workId=${consultInfo.work.id}"/>" class="btn btn-info ">Technical Sanction Page</a></div>
-         </c:if>
-        </div>  
+       
         </form>
     </div>
     

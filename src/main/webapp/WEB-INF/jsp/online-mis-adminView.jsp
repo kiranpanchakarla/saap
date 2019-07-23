@@ -84,17 +84,23 @@
                 <c:forEach items="${filePath}" var="entry">
 			      <li><a href="${entry.key}" target="_self" id="docView" name="image" style="float: left;">${entry.value}</a></li><br>
 		       </c:forEach>
-               </li> 
-               </ul>
-               </div>
+              </ul>
+              
+             
+              <ul class="fs-list-details">
+              <li><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></li>
+              </ul>
+              
+               <ul class="fs-list-details">
+               <c:if test="${deptInfo!=null}">
+               <li><a href="<c:url value="/lineDepartment/view?workId=${adminInfo.work.id}"/>" class="btn btn-info ">Linking with Line Department Page</a></li>
+               </c:if>
+              </ul>
+               
+            </div>
            </fieldset>
             
-          <div class="row">
-          <div class="col-sm-6 form-group"><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></div>
-          <c:if test="${deptInfo!=null}">
-          <div class="col-sm-6 form-group"><a href="<c:url value="/lineDepartment/view?workId=${adminInfo.work.id}"/>" class="btn btn-info ">Linking with Line Department Page</a></div>
-          </c:if>
-          </div>
+        
         </form>
     </div>
  

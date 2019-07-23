@@ -85,15 +85,23 @@
                 <li><p>Email Id <span class="red">*</span></p></li>
                 <li><input type="text" title="a@gmail.com" name="emailId" class="form-control mb-md" readonly value="${deptInfo.email}"></li>
                 </ul>
+                
+                 <ul class="fs-list-details">
+                 </ul>
+                 
+                  <ul class="fs-list-details">
+                  <li><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></li>
+                  </ul>
+                  
+                   <ul class="fs-list-details">
+                    <c:if test="${landInfo!=null}">
+                    <li><a href="<c:url value="/landDetails/view?workId=${deptInfo.work.id}"/>" class="btn btn-info ">Land details Page</a></li>
+                    </c:if>
+                   </ul>
               </div>
             </fieldset>
             
-          <div class="row">
-          <div class="col-sm-6 form-group"><a href="#" onclick="goBack()" class="btn btn-info ">Back</a></div>
-          <c:if test="${landInfo!=null}">
-          <div class="col-sm-6 form-group"><a href="<c:url value="/landDetails/view?workId=${deptInfo.work.id}"/>" class="btn btn-info ">Land details Page</a></div>
-          </c:if>
-        </div>
+    
         </form>
     </div>
 </div>

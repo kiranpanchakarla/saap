@@ -115,7 +115,7 @@
 												</p></li>
 											<li><form:input type="text" id="landExtend"
 													path="landExtend" placeholder="Land Extend"
-													class="form-control mb-md" /> <span id="landExtendErr"
+													class="form-control mb-md alpha-and-spaces"  maxlength="30"/> <span id="landExtendErr"
 												class="errors" style="color: red; float: right;"></span></li>
 										</ul>
 
@@ -125,7 +125,7 @@
 												</p></li>
 											<li><form:input type="text" id="surveyNo"
 													path="surveyNo" placeholder="Survey Number"
-													class="form-control mb-md" /> <span id="surveyNoErr"
+													class="form-control mb-md" maxlength="10" /> <span id="surveyNoErr"
 												class="errors" style="color: red; float: right;"></span></li>
 										</ul>
 
@@ -135,7 +135,7 @@
 												</p></li>
 											<li><form:input type="text" id="bookDetails"
 													path="bookDetails" placeholder="Mesurment Book Details"
-													class="form-control mb-md" /> <span id="bookDetailsErr"
+													class="form-control mb-md" maxlength="15"/> <span id="bookDetailsErr"
 												class="errors" style="color: red; float: right;"></span></li>
 										</ul>
 
@@ -154,16 +154,7 @@
 										</ul>
 
 
-										<%-- <form method="POST"  id="fileUploadForm"> 
-                 <ul class="fs-list-details">
-                <li><p>Upload Land Details Document(pdf/jpg/png)<span class="red">*</span></p>
-                <label for="files"  class="fileuploadLabel">Upload Image</label>
-                <input type="file" name="file" id="files" style="display: none" accept=".png, .jpg, .jpeg, .pdf" value="${filePath}" multiple="multiple"> 
-                <table id="filedetails"></table>
-	            </li>
-                <span id="file_error" class="errors" style="color:red;float:right;"></span>
-                </ul>
-                </form> --%>
+										
 
 										<ul class="fs-list-details">
 
@@ -272,9 +263,33 @@ var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocument
 </script>
 
 	<script type="text/javascript">
-		$("#landExtend,#bookDetails,#surveyNo").on('input', function() {
-			$(this).val($(this).val().replace(/[^a-z0-9 ]/gi, ''));
-		})
+	$(document).on('keyup','#bookDetails',function(){
+		 var enteredValue = $(this).val();
+		 enteredValue = $.trim(enteredValue);
+		 if("" === enteredValue){
+			 $(this).val("");
+		 }else{
+			var regExPattern =/^[a-zA-Z0-9]*$/;
+			var isValidInput = enteredValue.match(regExPattern);
+			if(!isValidInput){
+				$(this).val("");
+			}
+		 }
+	});
+	
+	$(document).on('keyup','#surveyNo',function(){
+		 var enteredValue = $(this).val();
+		 enteredValue = $.trim(enteredValue);
+		 if("" === enteredValue){
+			 $(this).val("");
+		 }else{
+			var regExPattern =  /^\d*$/;
+			var isValidInput = enteredValue.match(regExPattern);
+			if(!isValidInput){
+				$(this).val("");
+			}
+		 }
+	});
 		$("#submit").click(function() {
 
 			var natureofwork = $("#natureofwork").val();

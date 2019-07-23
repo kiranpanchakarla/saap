@@ -70,7 +70,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of Department <span class="red">*</span></p></li>
-                <li><form:input type="text" id="departmentName" path="departmentName" placeholder="Name of Department"/>
+                <li><form:input type="text" id="departmentName" path="departmentName" placeholder="Name of Department" class="alpha-and-spaces" maxlength="30"/>
                 <br><span id="departmentNameErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -84,7 +84,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Circle <span class="red">*</span></p></li>
-                <li><form:input type="text" id="circle"  path="circle" placeholder="Circle"/>
+                <li><form:input type="text" id="circle"  path="circle" placeholder="Circle" class="alpha-and-spaces" maxlength="30"/>
                 <br><span id="circleErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -103,7 +103,7 @@
                 </ul>
                 
                 <ul class="fs-list-details">
-                <li><p>Name of the SubDivision <span class="red">*</span></p></li>
+                <li><p>Name of the Subdivision <span class="red">*</span></p></li>
                 <li>
 	            <form:select id="subdivisionName" path="subdivisionName.id">
 					<form:option value="" selected="" disabled="">--Select subdivision --</form:option>
@@ -131,7 +131,7 @@
                 <ul class="fs-list-details">
                 <li><p>Name of the Section officer <span class="red">*</span></p></li>
                 <li>
-                <form:input type="text" id="sectionOfficerName" path="sectionOfficerName" placeholder="Name of the Section officer"/>
+                <form:input type="text" id="sectionOfficerName" path="sectionOfficerName" placeholder="Name of the Section officer" class="alpha-and-spaces" maxlength="30"/>
                 <span id="sectionOfficerNameErr" class="errors" style="color:red;float:right;"></span> 
                 </li>
                 </ul>
@@ -147,8 +147,8 @@
                 <ul class="fs-list-details">
                 <li><p>Email Id <span class="red">*</span></p></li>
                 <li>
-                <form:input type="text" id="email" path="email" class="form-control mb-md" />
-                <br><span id="emailErr" class="errors" style="color:red;float:right;"></span>
+                <form:input type="text" id="email" path="email" class="form-control mb-md emailValidation" />
+                <br><span id="emailIdErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
                 
@@ -191,11 +191,8 @@ $("#mobileNo").on('input', function () {
     this.value = this.value.match(/^\d+/);
 });
 	
- function isEmail(email) {
-	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	  return regex.test(email);
-	}
 
+ 
 $("#submit").click(function(){
 	
 	var departmentName=$("#departmentName").val();
@@ -269,18 +266,18 @@ $("#submit").click(function(){
     
     var email=$("#email").val();
     if(email=="" || email==null){
-        $("#emailErr").html("Please Enter Email");
+        $("#emailIdErr").html("Please Enter Email");
         $("#email").focus();
         return false;
     }else{
-        $("#emailErr").html("");
+        $("#emailIdErr").html("");
     }    
      if( !isEmail(email)) { 
-    	 $("#emailErr").html("Please Enter Valid Email");
+    	 $("#emailIdErr").html("Please Enter Valid Email");
     	 $("#email").focus();
         return false;
     } else{
-        $("#emailErr").html("");
+        $("#emailIdErr").html("");
     } 
     
 }) 

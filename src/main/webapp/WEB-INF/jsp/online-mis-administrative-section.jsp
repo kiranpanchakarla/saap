@@ -92,7 +92,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Sanctioned Details <span class="red">*</span></p></li>
-                <li><form:input type="text" path="sanctionedDetails" id="sanctionedDetails" placeholder="AS Sanctioned Details "/>
+                <li><form:input type="text" path="sanctionedDetails" id="sanctionedDetails" placeholder="AS Sanctioned Details " class="alpha-and-spaces" maxlength="50"/>
                 	<br><span id="sanctionedDetailsErr" class="errors" style="color:red;float:right;"></span> </li>
                 </ul>
                 
@@ -148,16 +148,7 @@
                 </li>
                 </ul>
                 
-                <%-- <form method="POST"  id="fileUploadForm"> 
-                 <ul class="fs-list-details">
-                <li><p>Upload Adminstrative Details Document(pdf/jpg/png)<span class="red">*</span></p>
-                <label for="files"  class="fileuploadLabel">Upload Image</label>
-                <input type="file" name="file" id="files" style="display: none" accept=".png, .jpg, .jpeg, .pdf" value="${filePath}" multiple="multiple"> 
-                <table id="filedetails"></table>
-	            </li>
-	            <span id="file_error" class="errors" style="color:red;float:right;"></span>
-                </ul>
-                </form> --%>
+              
                 
                 <ul class="fs-list-details">
                 

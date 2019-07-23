@@ -64,7 +64,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of Consultant Firm<span class="red">*</span></p></li>
-                <li><form:input type="text" title="consultant-firm" id="consultant_firm" path="consultant_firm" class="form-control mb-md" placeholder="Name of Consultant Firm"/>  
+                <li><form:input type="text" title="consultant-firm" id="consultant_firm" path="consultant_firm" class="form-control mb-md alpha-and-spaces" placeholder="Name of Consultant Firm" maxlength="30"/>  
                 <span id="consultant_firmErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -99,14 +99,14 @@
                
                <ul class="fs-list-details">
                 <li><p>Email Id<span class="red">*</span></p></li>
-                <li><form:input type="text" title="email-id" id="emailId" path="emailId" class="form-control mb-md" placeholder="Email Number" /> 
+                <li><form:input type="text" title="email-id" id="emailId" path="emailId" class="form-control mb-md emailValidation" placeholder="Email Number" /> 
                <span id="emailIdErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Address<span class="red">*</span></p></li>
-                <li><form:textarea title="address" id="address" path="address" class="form-control mb-md" placeholder="Address"/>  
+                <li><form:textarea title="address" id="address" path="address" class="form-control mb-md alphanumeric-and-spaces" placeholder="Address" maxlength="255"/>  
                <span id="addressErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -119,21 +119,21 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Bank <span class="red">*</span></p></li>
-                <li><form:input type="text" title="bank" id="bank" path="bank_name" class="form-control mb-md" placeholder="Bank"/> 
+                <li><form:input type="text" title="bank" id="bank" path="bank_name" class="form-control mb-md alpha-and-spaces" placeholder="Bank"/> 
                  <span id="bankErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Branch <span class="red">*</span></p></li>
-                <li><form:input type="text" title="branch" id="branch" path="branch" class="form-control mb-md" placeholder="Branch"/>
+                <li><form:input type="text" title="branch" id="branch" path="branch" class="form-control mb-md alpha-and-spaces" placeholder="Branch"/>
                <span id="branchErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
                
                <ul class="fs-list-details">
                 <li><p>Account Type<span class="red">*</span></p></li>
-                <li><form:input type="text" title="account-type" id="account_type" path="account_type" class="form-control mb-md" placeholder="Account Type"/>
+                <li><form:input type="text" title="account-type" id="account_type" path="account_type" class="form-control mb-md alpha-and-spaces" placeholder="Account Type"/>
                <span id="account_typeErr" class="errors" style="color:red;float:right;"></span>
                </li>
                </ul>
@@ -196,13 +196,13 @@
 	  $(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
 	})
 	
- $("#consultant_firm,#bank,#branch,#account_type").on('input', function() {
+/*  $("#consultant_firm,#bank,#branch,#account_type").on('input', function() {
 	  $(this).val($(this).val().replace(/[^a-z ]/gi, ''));
 	})
 function isEmail(email) {
 	 var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	 return regex.test(email);	
-	}
+	} */
 $("#submit").click(function(){
 	
 	var consultant_firm=$("#consultant_firm").val();

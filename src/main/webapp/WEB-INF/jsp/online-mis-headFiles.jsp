@@ -56,6 +56,53 @@
 <!-- alertfy-->
 
 <!-- file upload -->
+
+<script>
+$(document).on('keyup','.alpha-and-spaces',function(){
+		 var enteredValue = $(this).val();
+		 enteredValue = $.trim(enteredValue);
+		 if("" === enteredValue){
+			 $(this).val("");
+		 }else{
+			var regExPattern =  /^[A-Za-z\s,;.#/-]+$/;
+			var isValidInput = enteredValue.match(regExPattern);
+			if(!isValidInput){
+				$(this).val("");
+			}
+		 }
+	});
+	
+$(document).on('keyup','.alphanumeric-and-spaces',function(){
+	 var enteredValue = $(this).val();
+	 enteredValue = $.trim(enteredValue);
+	 if("" === enteredValue){
+		 $(this).val("");
+	 }else{
+		var regExPattern =  /^[0-9a-zA-Z\s/-.#]+$/;
+		var isValidInput = enteredValue.match(regExPattern);
+		if(!isValidInput){
+			$(this).val("");
+		}
+	 }
+});
+
+$(document).on('blur','.emailValidation',function(){
+	 $("#emailErr").html("");
+	 var enteredVal=$(this).val();
+	 enteredVal=$.trim(enteredVal);
+	 if("" === enteredVal){
+		 $(this).val("");
+	 }else{
+		 var regExp= /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+		 var isValidInput=enteredVal.match(regExp);
+		 if(!isValidInput){
+			 $("#emailIdErr").html("Please Enter Valid Email");
+			 $(this).val("");
+		 }
+	 }
+});
+</script>
+
 </head>
 <body>
 
