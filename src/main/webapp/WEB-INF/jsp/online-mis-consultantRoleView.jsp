@@ -101,12 +101,12 @@
 											</tr>
 											<tr>
 												<th>Work Detail</th>
-												<td>${workInfo.workDetails}</td>
+												<td>${workLineItems.workDetails}</td>
 
 											</tr>
 											<tr>
 												<th>Estimated Cost</th>
-												<td>${workInfo.cost}</td>
+												<td>${workLineItems.cost}</td>
 											</tr>
 
 										</thead>
@@ -126,7 +126,7 @@
 										<thead>
 
 											<tr>
-												<th>Nature of work</th>
+												<th>Name of Work</th>
 												<td>${adminInfo.workName}</td>
 											</tr>
 											<tr>
@@ -134,7 +134,7 @@
 												<td>${adminInfo.workNumber}</td>
 											</tr>
 											<tr>
-												<th>AS Sanctioned Details</th>
+												<th>Sanctioned Details</th>
 												<td>${adminInfo.sanctionedDetails}</td>
 
 											</tr>
@@ -189,7 +189,7 @@
 									<table class="table table-bordered" style="width: 100%">
 										<thead>
 											<tr>
-												<th>Name of Department</th>
+												<th>Department</th>
 												<td>${deptInfo.departmentName}</td>
 											</tr>
 											<tr>
@@ -201,22 +201,22 @@
 												<td>${deptInfo.circle}</td>
 											</tr>
 											<tr>
-												<th>Name of the Division</th>
+												<th>Division</th>
 												<td>${deptInfo.divisionName.name}</td>
 
 											</tr>
 											<tr>
-												<th>Name of the SubDivision</th>
+												<th>SubDivision</th>
 												<td>${deptInfo.subdivisionName.name}</td>
 
 											</tr>
 											<tr>
-												<th>Name of the Section</th>
+												<th>Section</th>
 												<td>${deptInfo.sectionName.name}</td>
 
 											</tr>
 											<tr>
-												<th>Section officer</th>
+												<th>Section Officer</th>
 												<td>${deptInfo.sectionOfficerName}</td>
 
 											</tr>
@@ -255,8 +255,8 @@
 												<td>${landInfo.work.workNo}</td>
 											</tr>
 											<tr>
-												<th>Name of the Work</th>
-												<td>${landInfo.work.workDetails}</td>
+												<th>Name of Work</th>
+												<td>${adminInfo.workName}</td>
 											</tr>
 											<tr>
 												<th>Land Extend</th>

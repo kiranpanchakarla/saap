@@ -101,12 +101,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Work Number <span class="red">*</span></p></li>
-                <li><input type="text" title="1" name="work-number" class="form-control mb-md" readonly value="${generalInfo.works.workNo}"></li>
-                </ul>
-                
-                <ul class="fs-list-details">
-                <li><p>No. of Works <span class="red">*</span></p></li>
-                <li><input type="text" title="1" name="no-of-work" class="form-control mb-md" readonly  value="${generalInfo.works.noOfWorks}"></li>
+                <li><input type="text" title="1" name="work-number" class="form-control mb-md" readonly value="${workInfo.workNo}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
@@ -139,13 +134,13 @@
                 <ul class="fs-list-details">
                 <li><p>Work Number <span class="red">*</span></p></li>
                 <li><input type="text" title="1" name="word-number" class="form-control mb-md" readonly 
-                value="${generalInfo.administrativeesction.workNumber}"></li>
+                value="${adminInfo.workNumber}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>AS Sanctioned Details <span class="red">*</span></p></li>
                 <li><input type="text" title="1" name="detail-sanctioned" class="form-control mb-md" readonly 
-                value="${generalInfo.administrativeesction.sanctionedDetails}"></li>
+                value="${adminInfo.sanctionedDetails}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
@@ -192,7 +187,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of Department <span class="red">*</span></p></li>
-                <li><input type="text" title="department" name="department-name" class="form-control mb-md" readonly value="${generalInfo.departmentlinkingine.departmentName}">
+                <li><input type="text" title="department" name="department-name" class="form-control mb-md" readonly value="${deptInfo.departmentName}">
                 </li>
                 </ul>
                 
@@ -204,7 +199,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Circle <span class="red">*</span></p></li>
-                <li><input type="text" title="circle" name="circle-name" class="form-control mb-md" readonly value="${generalInfo.departmentlinkingine.circle}">
+                <li><input type="text" title="circle" name="circle-name" class="form-control mb-md" readonly value="${deptInfo.circle}">
 </li>
                 </ul>
                 
@@ -225,19 +220,19 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Section officer <span class="red">*</span></p></li>
-                <li><input type="text" title="Section officer" name="sectionId" class="form-control mb-md" readonly value="${generalInfo.departmentlinkingine.sectionOfficerName}">
+                <li><input type="text" title="Section officer" name="sectionId" class="form-control mb-md" readonly value="${deptInfo.sectionOfficerName}">
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Mobile No <span class="red">*</span></p></li>
-                <li><input type="text" title="7689765432" name="mobileNo" class="form-control mb-md" readonly value="${generalInfo.departmentlinkingine.mobileNo}">
+                <li><input type="text" title="7689765432" name="mobileNo" class="form-control mb-md" readonly value="${deptInfo.mobileNo}">
                 </li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Email Id <span class="red">*</span></p></li>
-                <li><input type="text" title="a@gmail.com" name="emailId" class="form-control mb-md" readonly value="${generalInfo.departmentlinkingine.email}"></li>
+                <li><input type="text" title="a@gmail.com" name="emailId" class="form-control mb-md" readonly value="${deptInfo.email}"></li>
                 </ul>
                 
                 
@@ -251,34 +246,34 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Work <span class="red">*</span></p></li>
-                <li><input type="text"  name="activityName" class="form-control mb-md" readonly value="${generalInfo.landdetails.natureofwork}"></li>
+                <li><input type="text"  name="activityName" class="form-control mb-md" readonly value="${workInfo.natureOfWork.name}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
-                <li><p>Work Number <span class="red">*</span></p></li>
-                <li><input type="text" name="packageNumber" title="1" class="form-control mb-md" readonly value="${generalInfo.administrativeesction.workNumber}"></li>
+                <li><p>Work Number<span class="red">*</span></p></li>
+                <li><input type="text" name="packageNumber" title="1" class="form-control mb-md" readonly value="${landinfo.work.workNo}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Name of the Work <span class="red">*</span></p></li>
-                <li><input type="text" title="Land work" name="fullLand" class="form-control mb-md" readonly value="${generalInfo.administrativeesction.workName}"></li>
+                <li><input type="text" title="Land work" name="fullLand" class="form-control mb-md" readonly value="${workLineItems.workDetails}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Land Extend <span class="red">*</span></p></li>
-                <li><input type="text" title="Land" name="fullRapFile" class="form-control mb-md" readonly value="${generalInfo.landdetails.landExtend}"></li>
+                <li><input type="text" title="Land" name="fullRapFile" class="form-control mb-md" readonly value="${landinfo.landExtend}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
                 <li><p>Survey Number <span class="red">*</span></p></li>
                 <li><input type="text" title="survey" name="SurveyFile" class="form-control mb-md" readonly 
-                value="${generalInfo.landdetails.surveyNo}"></li>
+                value="${landinfo.surveyNo}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">
-                <li><p>Field Mesurment Book Details <span class="red">*</span></p></li>
+                <li><p>Field Measurement Book Details <span class="red">*</span></p></li>
                 <li><input type="text" title="book" name="bookDetails" class="form-control mb-md" readonly 
-                value="${generalInfo.landdetails.bookDetails}"></li>
+                value="${landinfo.bookDetails}"></li>
                 </ul>
                 
                 <ul class="fs-list-details">

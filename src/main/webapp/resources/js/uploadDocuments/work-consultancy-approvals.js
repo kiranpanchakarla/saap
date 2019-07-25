@@ -39,8 +39,8 @@ $(document)
 										function() {
 											if (isAnyDocumentsNeedtoEitherApproveOrRejected()) {
 												showWarnigModel(
-														"Approve forbidden",
-														"There are some files in pending, you should be either approve or reject it")
+														"Approval Pending",
+														"Please either Approve or Reject the files to continue!")
 												return false;
 											}
 											showHideWorkApproveButton(true);

@@ -158,12 +158,12 @@ button.btn {
 													</tr>
 													<tr>
 														<th>Work Detail</th>
-														<td>${work.workDetails}</td>
+														<td>${workLineItems.workDetails}</td>
 
 													</tr>
 													<tr>
 														<th>Estimated Cost</th>
-														<td>${work.cost}</td>
+														<td>${workLineItems.cost}</td>
 													</tr>
 
 												</tbody>
@@ -190,7 +190,7 @@ button.btn {
 														<td>${adminInfo.workNumber}</td>
 													</tr>
 													<tr>
-														<th>AS Sanctioned Details</th>
+														<th>Sanctioned Details</th>
 														<td>${adminInfo.sanctionedDetails}</td>
 
 													</tr>
@@ -245,7 +245,7 @@ button.btn {
 
 												<tbody>
 													<tr>
-														<th>Name of Department</th>
+														<th>Department</th>
 														<td>${deptInfo.departmentName}</td>
 													</tr>
 													<tr>
@@ -257,17 +257,17 @@ button.btn {
 														<td>${deptInfo.circle}</td>
 													</tr>
 													<tr>
-														<th>Name of the Division</th>
+														<th>Division</th>
 														<td>${deptInfo.divisionName.name}</td>
 
 													</tr>
 													<tr>
-														<th>Name of the SubDivision</th>
+														<th>SubDivision</th>
 														<td>${deptInfo.subdivisionName.name}</td>
 
 													</tr>
 													<tr>
-														<th>Name of the Section</th>
+														<th>Section</th>
 														<td>${deptInfo.sectionName.name}</td>
 
 													</tr>
@@ -311,7 +311,7 @@ button.btn {
 													</tr>
 													<tr>
 														<th>Name of the Work</th>
-														<td>${landInfo.work.workDetails}</td>
+														<td>${workLineItems.workDetails}</td>
 													</tr>
 													<tr>
 														<th>Land Extend</th>

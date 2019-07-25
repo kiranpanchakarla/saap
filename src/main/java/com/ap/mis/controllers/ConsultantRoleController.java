@@ -57,6 +57,7 @@ public class ConsultantRoleController {
 		/*Work Details*/
 		Works workInfo=misService.getWorkInfo(Integer.parseInt(workId));
 		model.addAttribute("workInfo",workInfo);
+		model.addAttribute("workLineItems",workInfo.getWorkLineItemsList().get(0));
 		session.setAttribute("workIdSession", Integer.parseInt(workId));
 		/*Administrative Sanction Details*/
 		

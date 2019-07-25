@@ -83,7 +83,7 @@
                 </ul>
                 
                 <ul class="fs-list-details">
-                <li><p>Circle <span class="red">*</span></p></li>
+                <li><p>Circle<span class="red">*</span></p></li>
                 <li><form:input type="text" id="circle"  path="circle" placeholder="Circle" class="alpha-and-spaces" maxlength="30"/>
                 <br><span id="circleErr" class="errors" style="color:red;float:right;"></span>
                 </li>
@@ -139,7 +139,7 @@
                 <ul class="fs-list-details">
                 <li><p>Mobile No <span class="red">*</span></p></li>
                 <li>
-                <form:input type="text" id="mobileNo" path="mobileNo" maxlength="10" class="numberId form-control mb-md" />
+                <form:input type="text" id="mobileNo" placeholder="mobile number" path="mobileNo" maxlength="10" class="numberId form-control mb-md" />
                 <span id="mobileNoErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -147,19 +147,13 @@
                 <ul class="fs-list-details">
                 <li><p>Email Id <span class="red">*</span></p></li>
                 <li>
-                <form:input type="text" id="email" path="email" class="form-control mb-md emailValidation" />
+                <form:input type="text" id="email" path="email" placeholder="email" class="form-control mb-md emailValidation" />
                 <br><span id="emailIdErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
                 
                 </div>
                 
-                 <%--  <c:if test="${lineDeptObj.id==null}">
-                <input type="submit" id="submit" name="next" class="next action-button" value="Save and Continue">
-                </c:if>
-                <c:if test="${lineDeptObj.id!=null}">
-                <input type="submit" id="submit" name="next" class="next action-button" value="Update and Continue">
-                </c:if> --%>
                  <input type="submit" id="submit" name="next"
 								class="next action-button float-right"
 								value="${empty lineDeptObj.id ? 'Save' : 'Update'} and Continue">

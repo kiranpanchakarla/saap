@@ -22,7 +22,6 @@ import com.ap.mis.entity.Attachements;
 import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
-import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.AttachmentService;
 import com.ap.mis.service.LineDepartmentService;
@@ -85,10 +84,10 @@ public class AdministrationController {
 		
 		session.setAttribute("workInfo", workInfo);
 
-		WorktoLandDetails obj = new WorktoLandDetails();
+		/*WorktoLandDetails obj = new WorktoLandDetails();
 		obj = (WorktoLandDetails) session.getAttribute("generalInfo");
-		obj.setAdministrativeesction(adminSecObject);
-		session.setAttribute("generalInfo", obj);
+		obj.setAdministrativeSection(adminSecObject);
+		session.setAttribute("generalInfo", obj);*/
 
 		
 		if (isSave == true) {
@@ -163,9 +162,9 @@ public class AdministrationController {
 		model.addAttribute("adminSecObject",adminInfo);
 		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
 		
-		WorktoLandDetails obj = new WorktoLandDetails();
+		/*WorktoLandDetails obj = new WorktoLandDetails();
         obj.setWorks(workInfo);
-        session.setAttribute("generalInfo", obj);
+        session.setAttribute("generalInfo", obj);*/
         
 		return "online-mis-administrative-section";
 	}

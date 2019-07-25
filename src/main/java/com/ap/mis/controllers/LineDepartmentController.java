@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
-import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.LandDetailService;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
@@ -66,10 +64,10 @@ public class LineDepartmentController {
 		}
 		
 		
-		WorktoLandDetails obj = new WorktoLandDetails();
+		/*WorktoLandDetails obj = new WorktoLandDetails();
         obj = (WorktoLandDetails) session.getAttribute("generalInfo");
-		obj.setDepartmentlinkingine(lineDeptObj);
-		session.setAttribute("generalInfo", obj);
+		obj.setDepartmentLinkingLine(lineDeptObj);
+		session.setAttribute("generalInfo", obj);*/
 		if(isSave==true) {
 		return "redirect:/landDetails/create";
 		}else {
@@ -103,8 +101,10 @@ public class LineDepartmentController {
 	}
 	
 	@GetMapping(value = "/edit/{id}")
-	public String edit(Model model, String workId,@PathVariable("id") Integer id) {
+	public String edit(Model model, String workId,@PathVariable("id") Integer id,HttpServletRequest request, HttpSession session) {
 		DepartmentLinkingLine departInfo = lineDepartService.getdepartDetails(id);
+		int workid = departInfo.getWork().getId();
+		session.setAttribute("workIdSession", workid);
 		model.addAttribute("workObject", departInfo.getWork());
 		model.addAttribute("divisionList", lineDepartService.getDivisionList());
 		model.addAttribute("subdivisionList", lineDepartService.getSubdivisionList());

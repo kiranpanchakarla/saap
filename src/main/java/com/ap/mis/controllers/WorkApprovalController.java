@@ -110,7 +110,7 @@ public class WorkApprovalController {
 		/* Work Details */
 		Works work = misService.getWorkInfo(workId);
 		model.addAttribute("work", work);
-
+		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		/* Administrative Sanction Details */
 
 		AdministrativeSection adminInfo = admService.getAdminDetails(workId);

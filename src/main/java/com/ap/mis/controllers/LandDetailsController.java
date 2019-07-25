@@ -1,6 +1,5 @@
 package com.ap.mis.controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,6 @@ import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
-import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.AttachmentService;
 import com.ap.mis.service.ConstituencyService;
@@ -76,11 +74,11 @@ public class LandDetailsController {
 		boolean isSave=false;
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		landDetails.setUser(loggedInUser);
-		WorktoLandDetails obj = new WorktoLandDetails();
+		/*WorktoLandDetails obj = new WorktoLandDetails();
 		obj = (WorktoLandDetails) session.getAttribute("generalInfo");
-		obj.setLanddetails(landDetails);
-		session.setAttribute("generalInfo", obj);
-
+		obj.setLandDetails(landDetails);
+		session.setAttribute("generalInfo", obj);*/
+		session.setAttribute("landDetails", landDetails);
 		Works workInfo=misService.getWorkInfo(landDetails.getWork().getId());
 		if (landDetails.getId() == null) {
 			landDetailService.landDetailsSave(landDetails);
@@ -93,7 +91,7 @@ public class LandDetailsController {
 		}
 		
 		if (isSave == true) {
-			model.addAttribute("workInfo",workInfo);
+			/*model.addAttribute("workInfo",workInfo);
 			model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 			
 			AdministrativeSection adminInfo = administrativeSectionService.getAdminDetails(landDetails.getWork().getId());
@@ -134,14 +132,14 @@ public class LandDetailsController {
 			}
 			
 			model.addAttribute("userRole", loggedInUser.getRole().getRoleName());
-			
+			*/
 			 //checking... ConsultantInfo is created or not
 			ConsultantInfo consultantInfo = consultantInfoService.getConsultDetails(landDetails.getWork().getId());
 	        if(consultantInfo == null) {
 	            isSave = true;
 	        }  
 			
-			return "online-mis-general-information";
+	        return "redirect:generalInfo";
 		} else {
 			return "redirect:/adminloggedin";
 		}
@@ -151,8 +149,54 @@ public class LandDetailsController {
 		 
 
 	@GetMapping(value = "/generalInfo")
-	public String generalInformation(Model model) {
-		return "online-mis-consultant-information";
+	public String generalInformation(Model model,HttpSession session,HttpServletRequest request) {
+		
+		 
+		
+		LandDetails obj = (LandDetails) session.getAttribute("landDetails");
+		Works workInfo=misService.getWorkInfo(obj.getWork().getId());
+		model.addAttribute("workInfo",workInfo);
+		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
+		
+		AdministrativeSection adminInfo = administrativeSectionService.getAdminDetails(obj.getWork().getId());
+		model.addAttribute("adminInfo",adminInfo);
+		
+		DepartmentLinkingLine deptInfo = lineDepartmentService.getdepartDetails(obj.getWork().getId());
+		model.addAttribute("deptInfo",deptInfo);
+		
+		LandDetails landInfo = landDetailService.getLandDetails(obj.getWork().getId());
+		model.addAttribute("landinfo",landInfo);
+		
+		List<Attachements> adminattachements=attachService.getAttachementsDetails(obj.getWork().getId(),EnumFilter.ADMIN.getStatus());
+		List<Attachements> landattachements=attachService.getAttachementsDetails(obj.getWork().getId(),EnumFilter.LANDDETAILS.getStatus());
+		
+		Map<String, String> adminFile = new HashMap<String, String>();
+		for(Attachements adminattachDetails :adminattachements) {
+			if (adminattachDetails.getPath() != null && !adminattachDetails.getPath().equals("") && adminattachDetails.getIsActive().equals(true)) {
+				String adminattachmentPath=ContextUtil.populateContext(request) + adminattachDetails.getPath();
+				String fileNameVal=adminattachDetails.getPath().substring(adminattachDetails.getPath().lastIndexOf('\\') + 1);
+				log.info("==attachmentPath==:"+adminattachmentPath);
+				adminFile.put(fileNameVal, adminattachmentPath);
+				model.addAttribute("adminFile",adminFile);
+			} else {
+				model.addAttribute("filePath", null);
+			}
+		}
+		Map<String, String> landFile = new HashMap<String, String>();
+		for(Attachements landattachDetails :landattachements) {
+			if (landattachDetails.getPath() != null && !landattachDetails.getPath().equals("") && landattachDetails.getIsActive().equals(true)) {
+				String landattachmentPath=ContextUtil.populateContext(request) + landattachDetails.getPath();
+				String fileNameVal=landattachDetails.getPath().substring(landattachDetails.getPath().lastIndexOf('\\') + 1);
+				log.info("==landattachmentPath==:"+landattachmentPath);
+				landFile.put(fileNameVal, landattachmentPath);
+				model.addAttribute("landFile",landFile);
+				
+			} else {
+				model.addAttribute("landfilePath", null);
+			}
+		}
+		
+		return "online-mis-general-information";
 
 	}
 	
@@ -230,9 +274,9 @@ public class LandDetailsController {
 			}
 		}*/
 		
-		WorktoLandDetails obj = new WorktoLandDetails();
+		/*WorktoLandDetails obj = new WorktoLandDetails();
         obj.setWorks(workInfo);
-        session.setAttribute("generalInfo", obj);
+        session.setAttribute("generalInfo", obj);*/
         
 
 		

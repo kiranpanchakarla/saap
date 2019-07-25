@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Constituency;
 import com.ap.mis.entity.Mandal;
@@ -22,7 +23,6 @@ import com.ap.mis.entity.User;
 import com.ap.mis.entity.Village;
 import com.ap.mis.entity.WorkLineItemsList;
 import com.ap.mis.entity.Works;
-import com.ap.mis.model.WorktoLandDetails;
 import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.ConstituencyService;
 import com.ap.mis.service.DistrictService;
@@ -75,9 +75,9 @@ public class WorkCreationController {
 				isSave = true;
 			}
 		}
-		WorktoLandDetails obj = new WorktoLandDetails();
+		/*WorktoLandDetails obj = new WorktoLandDetails();
 		obj.setWorks(workObject);
-		session.setAttribute("generalInfo", obj);
+		session.setAttribute("generalInfo", obj);*/
 		session.setAttribute("workIdSession", workObject.getId());
 		session.setAttribute("workInfo", workObject);
 		Integer idVal = workObject.getId();
