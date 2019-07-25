@@ -19,9 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.AgreementDetails;
 import com.ap.mis.entity.Attachements;
-import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.TenderingProcess;
-import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AgreementDetailService;
 import com.ap.mis.service.AttachmentService;
@@ -29,7 +27,7 @@ import com.ap.mis.service.MISService;
 import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.util.ContextUtil;
 import com.ap.mis.util.EnumFilter;
-import com.ap.mis.util.SecurityUtil;
+import com.ap.mis.util.FileUploadConstraintsUtil;
 
 @Controller
 @RequestMapping("/tenderProcess")
@@ -46,6 +44,9 @@ public class TenderProcessController {
 
 	@Autowired
 	AttachmentService attachService;
+
+	@Autowired
+	FileUploadConstraintsUtil fileUploadConstraint;
 
 	@PostMapping(value = "/save")
 	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj, Model model,
@@ -121,12 +122,26 @@ public class TenderProcessController {
 			tenderProcess.setWork(workInfo);
 		}
 
+		List<Attachements> engPublicationAttachements = attachService.getAttachementsDetails(Integer.parseInt(workId),
+				EnumFilter.TENDERPROCESSFORENG.getStatus());
+
+		List<Attachements> teluguPublicationAttachements = attachService
+				.getAttachementsDetails(Integer.parseInt(workId), EnumFilter.TENDERPROCESSFORTEL.getStatus());
+
 		model.addAttribute("tenderingProcessObj", tenderProcess);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("workInfo", workInfo);
 		model.addAttribute("authoritiesTypeList", tenderProcessService.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderProcessService.getAgencyList());
+
+		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
 		session.setAttribute("workIdSession", workInfo.getId());
+
+		model.addAttribute("engPublicationAttachements", engPublicationAttachements);
+		model.addAttribute("teluguPublicationAttachements", teluguPublicationAttachements);
+
+		model.addAttribute("englishPaperPublicationAttachmentModuleName", EnumFilter.TENDERPROCESSFORENG.getStatus());
+		model.addAttribute("teluguPaperPublicationAttachmentModuleName", EnumFilter.TENDERPROCESSFORTEL.getStatus());
 		return "online-mis-tendering-process";
 	}
 
@@ -180,34 +195,38 @@ public class TenderProcessController {
 		TenderingProcess tenderInfo = tenderProcessService.getTenderDetails(id);
 		List<Attachements> engAttachements = attachService.getAttachementsDetails(id,
 				EnumFilter.TENDERPROCESSFORENG.getStatus());
-		List<String> engFilePath = new ArrayList<String>();
-		if (engAttachements.size() > 0) {
-			for (Attachements engAttachDetails : engAttachements) {
-				if (engAttachDetails.getPath() != null && !engAttachDetails.getPath().equals("")) {
-					String engAttachmentPath = ContextUtil.populateContext(request) + engAttachDetails.getPath();
-					engFilePath.add(engAttachmentPath);
-					model.addAttribute("engUpload", engFilePath);
-
-				} else {
-					model.addAttribute("engUpload", null);
-				}
-			}
-		}
+		// List<String> engFilePath = new ArrayList<String>();
+		// if (engAttachements.size() > 0) {
+		// for (Attachements engAttachDetails : engAttachements) {
+		// if (engAttachDetails.getPath() != null &&
+		// !engAttachDetails.getPath().equals("")) {
+		// String engAttachmentPath = ContextUtil.populateContext(request) +
+		// engAttachDetails.getPath();
+		// engFilePath.add(engAttachmentPath);
+		// model.addAttribute("engUpload", engFilePath);
+		//
+		// } else {
+		// model.addAttribute("engUpload", null);
+		// }
+		// }
+		// }
 		List<Attachements> telAttachements = attachService.getAttachementsDetails(id,
 				EnumFilter.TENDERPROCESSFORTEL.getStatus());
-		List<String> telFilePath = new ArrayList<String>();
-		if (telAttachements.size() > 0) {
-			for (Attachements telAttachDetails : telAttachements) {
-				if (telAttachDetails.getPath() != null && !telAttachDetails.getPath().equals("")) {
-					String telAttachmentPath = ContextUtil.populateContext(request) + telAttachDetails.getPath();
-					telFilePath.add(telAttachmentPath);
-					model.addAttribute("telUpload", telFilePath);
-
-				} else {
-					model.addAttribute("telUpload", null);
-				}
-			}
-		}
+		// List<String> telFilePath = new ArrayList<String>();
+		// if (telAttachements.size() > 0) {
+		// for (Attachements telAttachDetails : telAttachements) {
+		// if (telAttachDetails.getPath() != null &&
+		// !telAttachDetails.getPath().equals("")) {
+		// String telAttachmentPath = ContextUtil.populateContext(request) +
+		// telAttachDetails.getPath();
+		// telFilePath.add(telAttachmentPath);
+		// model.addAttribute("telUpload", telFilePath);
+		//
+		// } else {
+		// model.addAttribute("telUpload", null);
+		// }
+		// }
+		// }
 		/*
 		 * if (tenderInfo.getEngUpload() != null &&
 		 * !tenderInfo.getEngUpload().equals("")) {
@@ -223,6 +242,14 @@ public class TenderProcessController {
 		model.addAttribute("authoritiesTypeList", tenderProcessService.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderProcessService.getAgencyList());
 		model.addAttribute("tenderingProcessObj", tenderInfo);
+		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
+
+		model.addAttribute("engPublicationAttachements", engAttachements);
+		model.addAttribute("teluguPublicationAttachements", telAttachements);
+
+		model.addAttribute("englishPaperNotificationAttachmentModuleName", EnumFilter.TENDERPROCESSFORENG.getStatus());
+		model.addAttribute("teluguPaperNotificationAttachmentModuleName", EnumFilter.TENDERPROCESSFORTEL.getStatus());
+
 		return "online-mis-tendering-process";
 	}
 

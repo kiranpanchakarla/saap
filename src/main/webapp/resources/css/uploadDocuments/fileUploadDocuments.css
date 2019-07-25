@@ -43,7 +43,8 @@
 } */
 .ajs-button {
 	width: auto;
-	background: #1cb9c8 !important;
+	background: #1cb9c8;	
+	background: #ff8800 !important;
 	font-weight: bold !important;
 	color: white !important;
 	border: 0 none !important;

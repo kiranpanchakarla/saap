@@ -3,6 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -11,13 +13,21 @@
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link
+	href="${pageContext.request.contextPath}/resources/css/uploadDocuments/fileUploadDocuments.css"
+	rel="stylesheet">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+.fileuploadLabel{
+line-height : 3;
+}
+</style>
 </head>
 <script type="text/javascript">
 	$(document).ready(
 			function() {
 
-				$('#englishPaperCopyLocationFile').change(
+				/*$('#englishPaperCopyLocationFile').change(
 						function(event) {
 							$('#engdocView').empty();
 							var file = URL
@@ -60,6 +70,8 @@
 								$(this).val('');
 							}
 						});
+				
+				*/
 
 				$('#ifbPreperationDate').datepicker({
 					altField : "#ifbDate",
@@ -318,22 +330,73 @@
 									style="color: red; float: right;"></span></li>
 							</ul>
 
-							<ul class="fs-list-details">
+							<%-- <ul class="fs-list-details d-none">
 								<li><p>soft copy upload - English (pdf/jpg/png)</p></li>
 								<li><input type="file" name="engfile"
 									id="englishPaperCopyLocationFile" multiple value="${engUpload}">
 									<c:if test="${tenderingProcessObj.id!=null}">
-										<%--  <li> <img id="image" src="${engUpload}"   width="100" height="70"/> </li> --%>
+										 <li> <img id="image" src="${engUpload}"   width="100" height="70"/> </li>
 										<li><a href="${engUpload}" target="_self" id="engdocView"
 											name="image">View Document</a></li>
-									</c:if> <%--  <form:input type="hidden" path="engUpload" class="form-control" id="engfileName" value="${tenderingProcessObj.engUpload}"></form:input> --%>
+									</c:if>  <form:input type="hidden" path="engUpload" class="form-control" id="engfileName" value="${tenderingProcessObj.engUpload}"></form:input>
 									<span id="file_error1" class="errors"
 									style="color: red; float: right;"></span></li>
-							</ul>
+							</ul> --%>
+							
+							
+							<ul class="fs-list-details clearfix">
 
+											<li><p>Upload Document</p></li>
+											<li><label for="engPaperPublicationFile" class="fileuploadLabel" ${fn:length(engPublicationAttachements) == fileUploadConstraint.maxFileUploadCount ? "style='cursor:not-allowed;'":""}>Select
+													Files</label> <input type="file" name="file" id="engPaperPublicationFile" multiple
+												class="form-control mb-md" data-target-table-id="engPaperPublicationDocumentFileTable" ${fn:length(engPublicationAttachements) == fileUploadConstraint.maxFileUploadCount ? "disabled='true'":""}> <small
+												class="counts">* file selected
+													${fn:length(engPublicationAttachements)}/${fileUploadConstraint.maxFileUploadCount}</small></li>
+										</ul>
+										
+										<div class="table-responsive" style="width:98%;">
+								<table class="table table-hover mb-3 table-bordered" id="engPaperPublicationDocumentFileTable" data-target-file-id="engPaperPublicationFile">
+									<thead class="thead-light">
+										<tr>
+											<th style="width: 5%">S.No.</th>
+											<th style="width: 60%">Name</th>
+											<th style="width: 10%">Size</th>
+											<th style="width: 20%">Uploaded Date</th>
+											<th style="width: 5%">Action</th>
+										</tr>
+									</thead>
+									<tbody class="publicationDocumentsTableBody text-left">
+										<c:forEach
+											items="${engPublicationAttachements}"
+											var="file" varStatus="loop">
+											<c:set var="filePathParts"
+												value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+											<tr data-attachment-id="${file.id}"
+												data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
+												<td>${loop.index + 1}</td>
+												<td>${filePathParts[fn:length(filePathParts)-1]}</td>
+												<td>${file.convertFileSize}</td>
+												<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
+														value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
+												<td class="text-center"><a href="#" name="remove"><i
+														class="fa fa-trash"></i></a>&nbsp;&nbsp;<a
+													href="${pageContext.request.contextPath}${file.path}"
+													target="_blank"><i class="fa fa-eye"></i></a></td>
+											</tr>
 
+										</c:forEach>
+										<c:if test="${fn:length(engPublicationAttachements) == 0}">
+											<tr data-is-noupload="true" data-attachment-id="-1">
+												<td colspan="5">
+													<p class="text-center pt-4 mb-4 notfound">No file
+														uploads found</p>
+												</td>
+											</tr>
+										</c:if>
 
-
+									</tbody>
+								</table>
+							</div> 
 
 
 							<ul class="fs-list-details">
@@ -354,20 +417,73 @@
 							</ul>
 
 
-							<ul class="fs-list-details">
+							<%-- <ul class="fs-list-details d-none">
 								<li><p>soft copy upload - Telugu (pdf/jpg/png)</p></li>
 								<li><input type="file" name="telugufile"
 									id="teluguPaperCopyLocationFile" multiple value="${telUpload}"
 									class="form-control mb-md" /> <c:if
 										test="${tenderingProcessObj.id!=null}">
-										<%--    <li> <img id="telimage" src="${telUpload}"   width="100" height="70"/> </li> --%>
+										   <li> <img id="telimage" src="${telUpload}"   width="100" height="70"/> </li>
 										<li><a href="${telUpload}" target="_self" id="teldocView"
 											name="image">View Document</a></li>
-									</c:if> <%--  <form:input type="hidden" path="telUpload" class="form-control" id="telfileName" value="${tenderingProcessObj.telUpload}"></form:input> --%>
+									</c:if>  <form:input type="hidden" path="telUpload" class="form-control" id="telfileName" value="${tenderingProcessObj.telUpload}"></form:input>
 									<span id="file_error2" class="errors"
 									style="color: red; float: right;"></span></li>
-							</ul>
+							</ul> --%>
 
+							<ul class="fs-list-details clearfix">
+
+											<li><p>Upload Document</p></li>
+											<li><label for="telPaperPublicationFile" class="fileuploadLabel" ${fn:length(teluguPublicationAttachements) == fileUploadConstraint.maxFileUploadCount ? "style='cursor:not-allowed;'":""}>Select
+													Files</label> <input type="file" name="file" id="telPaperPublicationFile" multiple
+												class="form-control mb-md" data-target-table-id="telPaperPublicationDocumentFileTable" ${fn:length(teluguPublicationAttachements) == fileUploadConstraint.maxFileUploadCount ? "disabled='true'":""}> <small
+												class="counts">* file selected
+													${fn:length(teluguPublicationAttachements)}/${fileUploadConstraint.maxFileUploadCount}</small></li>
+										</ul>
+										
+										<div class="table-responsive" style="width:98%;">
+								<table class="table table-hover mb-3 table-bordered" id="telPaperPublicationDocumentFileTable" data-target-file-id="telPaperPublicationFile">
+									<thead class="thead-light">
+										<tr>
+											<th style="width: 5%">S.No.</th>
+											<th style="width: 60%">Name</th>
+											<th style="width: 10%">Size</th>
+											<th style="width: 20%">Uploaded Date</th>
+											<th style="width: 5%">Action</th>
+										</tr>
+									</thead>
+									<tbody class="publicationDocumentsTableBody text-left">
+										<c:forEach
+											items="${teluguPublicationAttachements}"
+											var="file" varStatus="loop">
+											<c:set var="filePathParts"
+												value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+											<tr data-attachment-id="${file.id}"
+												data-file-size="${empty file.fileSize ? 0 : file.fileSize}">
+												<td>${loop.index + 1}</td>
+												<td>${filePathParts[fn:length(filePathParts)-1]}</td>
+												<td>${file.convertFileSize}</td>
+												<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
+														value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
+												<td class="text-center"><a href="#" name="remove"><i
+														class="fa fa-trash"></i></a>&nbsp;&nbsp;<a
+													href="${pageContext.request.contextPath}${file.path}"
+													target="_blank"><i class="fa fa-eye"></i></a></td>
+											</tr>
+
+										</c:forEach>
+										<c:if test="${fn:length(teluguPublicationAttachements) == 0}">
+											<tr data-is-noupload="true" data-attachment-id="-1">
+												<td colspan="5">
+													<p class="text-center pt-4 mb-4 notfound">No file
+														uploads found</p>
+												</td>
+											</tr>
+										</c:if>
+
+									</tbody>
+								</table>
+							</div> 
 
 
 
@@ -526,6 +642,19 @@
 	<jsp:include page="online-mis-footer.jsp" />
 
 	<script type="text/javascript">
+	var contextPath = "${pageContext.request.contextPath}";
+	
+	var english_paper_notification_module = "${englishPaperPublicationAttachmentModuleName}", telugu_paper_notification_module = "${teluguPaperPublicationAttachmentModuleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"
+
+	var maxFileSize = ${fileUploadConstraint.maxFileUploadSize};
+	var maxFileUploadCount = ${fileUploadConstraint.maxFileUploadCount};
+	var allowedFileExtensions = "${fileUploadConstraint.allowedExtensions}".replace(/\s/g,'').split(",");
+
+	var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
+	
+	
+	
+	
 		$(
 				"#percentageQuoted,#bidsReceived,#hardCopiesSubmitted,#noofBidsQualified")
 				.on('input', function() {
@@ -541,6 +670,61 @@
 		$('#tenderNoticeNumber').on('input', function() {
 			$(this).val($(this).val().replace(/[^a-z0-9]/gi, ''));
 		});
+		
+
+		function isInvalidInput(input){
+			return typeof input === "undefined" || input === null || input === "";
+		}
+		
+		function isBidOpenDateAfterCloseDate(openDate, closeDate){
+
+			if(!(isInvalidInput(openDate) && isInvalidInput(closeDate))){
+				if(typeof openDate === "object"){
+					if(moment.isDate(openDate)){
+						openDate = new moment(openDate);
+					}												
+				}else if(typeof openDate === "string"){
+					openDate = new moment(openDate, "DD-MM-YYYY");
+				}
+				
+				// Open date is valid moment object or not
+				if(!openDate.isValid()){
+					console.log("Invalid date format");
+					//invalid open date
+					return -1;
+				}
+				
+				if(typeof closeDate === "object"){
+					if(moment.isDate(closeDate)){
+						closeDate = new moment(closeDate);
+					}												
+				}else if(typeof closeDate === "string"){
+					closeDate = new moment(closeDate, "DD-MM-YYYY");
+				}
+				
+				// Close date is valid moment object or not
+				if(!closeDate.isValid()){
+					console.log("Invalid date format");
+					//invalid close date
+					return -2;
+				}
+				
+				// Check bid openDate is before close Date or not
+				if(openDate.isSameOrAfter(closeDate)){
+					//open date is after close date
+					return 1;
+				}
+				
+				// open date is before close date
+				return 0;
+				
+			}
+			
+			// None of the dates or one of the date is not taken
+			return -3;
+									
+		}
+		
 		$("#submit")
 				.click(
 						function() {
@@ -589,7 +773,19 @@
 							} else {
 								$("#tenderNoticeIssuedDateErr").html("");
 							}
-
+							
+							var bidStartDate = $("#bidStrartDate").val();
+							var bidCloseDate = $("#bidClosingDate").val();
+							var statusBit = isBidOpenDateAfterCloseDate(bidStartDate, bidCloseDate);
+							if(statusBit === 1){
+								showWarnigModel("invalid Bid start and end dates","Bid start date should be before end date");
+								return false;
+							}
+							
+							
+							
+							var bidCloseDate = $("#bidOpeningDate").val();
+							
 							if ($("#noticeIssuingAuthorities option:selected")
 									.val() == "") {
 								$("#noticeIssuingAuthoritiesErr")
@@ -648,5 +844,8 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"
 		type="text/javascript"></script>
+		 <script
+		src="${pageContext.request.contextPath}/resources/js/uploadDocuments/tenderProcessPublicationDocuments.js"
+		type="text/javascript"></script> 
 </body>
 </html>
