@@ -757,8 +757,7 @@ input[type="radio"]+label
 									.val();
 							if (ifbPreperationDate == ""
 									|| ifbPreperationDate == null) {
-								$("#ifbPreperationDateErr").html(
-										"Please Enter Date");
+								$("#ifbPreperationDateErr").html("Please Enter Date");
 								$("#ifbPreperationDate").focus();
 								return false;
 							} else {

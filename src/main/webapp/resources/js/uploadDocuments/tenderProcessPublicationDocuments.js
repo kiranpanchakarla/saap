@@ -304,7 +304,6 @@ function saveDocumentFile(formData, targetTable) {
 function deleteDocumentFile(tableRef) {
 
 	if (attachmentIdToDelete != 0) {
-
 		var formData = {};
 		formData["uploadFileId"] = attachmentIdToDelete;
 

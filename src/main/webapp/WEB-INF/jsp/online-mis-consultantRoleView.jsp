@@ -28,24 +28,25 @@
 
 <body>
 
-	
+
 	<c:choose>
 		<c:when
 			test="${consultantInfoObject != null && (workInfo.workStatus eq 'Land_Details' or  workInfo.workStatus eq 'PEND_SAAP_APRVL')}">
 			<c:url value="/ConsultantInfo/edit/${consultantInfoObject.work.id}"
 				var="createUrl" />
 		</c:when>
-		
+
 		<c:when
 			test="${workInfo.workStatus eq 'WORK_ESTMASN_CMPLTD' or workInfo.workStatus eq 'TECHNICL_SANKSN_CMPLTD'}">
-			<c:url value="/work/${workInfo.id}/estimation/${workInfo.workStatus eq 'WORK_ESTMASN_CMPLTD' ? 'create' : 'edit' }" var="createUrl" />
+			<c:url
+				value="/work/${workInfo.id}/estimation/${workInfo.workStatus eq 'WORK_ESTMASN_CMPLTD' ? 'create' : 'edit' }"
+				var="createUrl" />
 		</c:when>
-							
-		<c:when
-			test="${workInfo.workStatus eq 'SAAP_APRVD'}">
+
+		<c:when test="${workInfo.workStatus eq 'SAAP_APRVD'}">
 			<c:url value="/preliminaryDrawings/view" var="createUrl" />
 		</c:when>
-	
+
 		<c:otherwise>
 			<c:url value="/ConsultantInfo/create" var="createUrl" />
 		</c:otherwise>
@@ -56,9 +57,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<form id="msform" method="get" action="${createUrl}" >
+					<form id="msform" method="get" action="${createUrl}">
 
-					<fieldset>
+						<fieldset>
 							<div class="col-md-6">
 								<div class="text-center">
 									<h4 class="section-title">Work</h4>
@@ -309,12 +310,11 @@
 							<%--  <c:if test="${userRole eq 'ROLE_CONSULTANT'}"> --%>
 							<div class="col-md-12" align="right">
 								<c:choose>
-									<c:when
-										test="${workInfo.workStatus eq 'Land_Details'}">
+									<c:when test="${workInfo.workStatus eq 'Land_Details'}">
 										<button type="submit" class="btn btn-info">Consultant
 											Info</button>
 									</c:when>
-									
+
 									<c:otherwise>
 										<button type="submit" class="btn btn-info">Next</button>
 									</c:otherwise>

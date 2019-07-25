@@ -70,8 +70,7 @@
 					<%-- <form id="msform" method="POST" action="${createUrl}"  modelAttribute="techsanc" > --%>
 					<form:form id="msform" method="POST" action="${createUrl}"
 						modelAttribute="techsanc">
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" />
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
 						<c:choose>
 							<c:when test="${!empty techsanc.id}">
