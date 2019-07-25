@@ -87,7 +87,7 @@ $(document).on('keyup','.alphanumeric-and-spaces',function(){
 });
 
 $(document).on('blur','.emailValidation',function(){
-	 $("#emailErr").html("");
+	 $("#emailIdErr").html("");
 	 var enteredVal=$(this).val();
 	 enteredVal=$.trim(enteredVal);
 	 if("" === enteredVal){
@@ -96,7 +96,7 @@ $(document).on('blur','.emailValidation',function(){
 		 var regExp= /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
 		 var isValidInput=enteredVal.match(regExp);
 		 if(!isValidInput){
-			 $("#emailIdErr").html("Please Enter Valid Email");
+			 alertify.warning("Please Enter Valid Email");
 			 $(this).val("");
 		 }
 	 }

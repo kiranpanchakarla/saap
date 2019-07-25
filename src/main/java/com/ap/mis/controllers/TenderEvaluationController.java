@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.AdministrativeSection;
+import com.ap.mis.entity.LetterOfAcceptance;
 import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.TenderEvaluation;
-import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.WorkEstimations;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AdministrativeSectionService;
+import com.ap.mis.service.LetterOfAcceptanceService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.TechnicalSanctionService;
 import com.ap.mis.service.TenderEvaluationService;
@@ -40,6 +41,9 @@ public class TenderEvaluationController {
 
 	@Autowired
 	TenderEvaluationService tenderEvaluationService;
+	
+	@Autowired
+	LetterOfAcceptanceService LOAService;
 
 	private final static Logger log = Logger.getLogger(TenderEvaluationController.class);
 
@@ -76,15 +80,21 @@ public class TenderEvaluationController {
 	@PostMapping(path = { "/save" })
 	public String saveTechnicalEvaluation(@ModelAttribute TenderEvaluation tenderEvaluation) {
 
-		boolean isTenderEvaluationisNew = tenderEvaluation.getId() == null;
-
+		/*boolean isSave = tenderEvaluation.getId() == null;*/
+		LetterOfAcceptance letterofAcceptanceDetails=LOAService.findByWork(tenderEvaluation.getWork());
+		boolean isSave=true;
+	    if(letterofAcceptanceDetails!=null) {
+		isSave=false;
+	    }
 		tenderEvaluationService.saveOrUpdateTenderEvaluation(tenderEvaluation);
 		/*
 		 * return "redirect:/nextRoute/" + (isTenderEvaluationisNew ? "create" :
 		 * "edit");
 		 */
 
-		return "redirect:/adminloggedin";
+		return "redirect:/letterOfAcceptance/" +(isSave ? "create" : "edit");
+
+		
 	}
 
 }
