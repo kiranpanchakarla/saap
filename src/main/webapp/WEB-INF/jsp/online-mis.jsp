@@ -240,8 +240,7 @@ if(window.history){
 												Types of Work <span class="red">*</span>
 											</p>
 										</li>
-										<li><form:select id="typeworkid" path="typeOfWork.id"
-												onchange="hasChanged()">
+										<li><form:select id="typeworkid" path="typeOfWork.id">
 												<form:option value="">--Select--</form:option>
 												<c:forEach items="${typeOfWork}" var="typeOfWork">
 													<form:option value="${typeOfWork.id}">${typeOfWork.name}</form:option>
@@ -256,8 +255,7 @@ if(window.history){
 												Nature of work <span class="red">*</span>
 											</p>
 										</li>
-										<li><form:select id="natureOfWork" path="natureOfWork.id"
-												onchange="hasChanged()">
+										<li><form:select id="natureOfWork" path="natureOfWork.id">
 												<form:option value="">--Select--</form:option>
 												<c:forEach items="${natureOfWork}" var="natureOfWork">
 													<form:option value="${natureOfWork.id}">${natureOfWork.name}</form:option>
@@ -473,9 +471,7 @@ if(window.history){
 	 if ($('#edit_table').val() != undefined ) {
 		//alert("edit");
 		 inc = $("#edit_table").val();
-		 
 		 inc++;
-		 
 	}
 
 	if ($('#edit_table').val() != undefined ) {
@@ -483,13 +479,40 @@ if(window.history){
 	}else{
 		addItem();
 	}
+	
+	
 	$(document).ready(function() {
         $('#nav-work-tab').addClass('active');
         $('#nav-work').addClass('active');
 		$("#saveDiv").show();
     });
 	
-	function addItem() {
+	function addItem(){
+		if(inc > 3){
+			alertify
+			.confirm()
+			.setting(
+					{
+						'labels' : {
+							'ok' : 'Yes',
+							'cancel' : 'No'
+						},
+						'message' : "Are you sure. Want to Add New Row!"
+
+					})
+			.set('onok', function() {
+				addRow();
+			})
+			.setHeader(
+					'<h4 class="mb-0"> Add New Row confirmation </h4> ')
+			.set('defaultFocus', 'cancel').show('true',
+					'danger-alertjs-model');
+		}else{
+			addRow();
+		}
+	}
+	
+	function addRow(){
 		
 		var item_table_data = '<tr class="multTot multTot'+inc+'">'
 		
@@ -498,7 +521,7 @@ if(window.history){
 		+'</td>'
 		
 		+'<td>'
-		+'<input type="text" name="WorkLineItemsList['+inc+'].cost" placeholder="Estimated Cost" onkeypress="return isNumericKey(event)" autocomplete="off"  maxlength="5" required="true"  class="form-control validatePrice validateQuantity requiredQuantity requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+		+'<input type="text" name="WorkLineItemsList['+inc+'].cost" placeholder="Estimated Cost" autocomplete="off"  maxlength="5" required="true"  class="form-control validatePrice validateQuantity requiredQuantity requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 		+'</td>'
 		
 		+ ' <td class="text-center"><a  onclick="removeData('+inc+')" class="btn btn-delete" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-trash left"></i></a>'
@@ -686,43 +709,8 @@ if(window.history){
               this.value = this.value.match(/^\d+/);
           });
 
-          $('#Create').on('click', function() {
-              var noofworks = $("#noOfWorks").val();
-              if (noofworks == "" || noofworks == null) {
-                  $("#noOfWorksErr").html("Please Enter No. of Works");
-                  $("#noOfWorks").focus();
-                  return false;
-              } else {
-                  $("#noOfWorksErr").html("");
-              }
-
-              if (noofworks <= 0) {
-                  $("#work_details").val("");
-                  $("#estimated_cost").val("");
-                  $("#work_detailsErr").html("");
-              }
-          })
-
-       $("#submit").click(function() {
+          $("#submit").click(function() {
                             	
-          	 $.ajax({
-		        type: "POST",
-		        url : "<c:url value="/worksCreation/save"/>",
-		        data: isChange,
-		        processData: false,
-		        contentType: false,
-		        cache: false,
-		        timeout: 600000,
-		        success: function (data) {
-		        	if(data == true){
-						  alert(data);
-				            }
-	 /*  else{
-			alert("Unable to upload File");
-		} */
-		        } 
-		    });
-
               if ($("#typeworkid option:selected").val() == "") {
                   $("#typeworkErr").text("Select Types of Work");
                   $("#typeworkid").focus();
@@ -788,17 +776,6 @@ if(window.history){
               } else {
                   $("#workNoErr").html("");
               }
-
-              var noofworks = $("#noOfWorks").val();
-              if (noofworks == "" || noofworks == null) {
-                  $("#noOfWorksErr").html("Please Enter No. of Works");
-                  $("#noOfWorks").focus();
-                  return false;
-              } else {
-                  $("#noOfWorksErr").html("");
-              }
-
-             
 
           });
 
