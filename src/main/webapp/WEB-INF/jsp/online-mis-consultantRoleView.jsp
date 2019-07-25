@@ -35,9 +35,14 @@
 			<c:url value="/ConsultantInfo/edit/${consultantInfoObject.work.id}"
 				var="createUrl" />
 		</c:when>
-
+		
 		<c:when
-			test="${workInfo.workStatus != 'Land_Details'}">
+			test="${workInfo.workStatus eq 'WORK_ESTMASN_CMPLTD' or workInfo.workStatus eq 'TECHNICL_SANKSN_CMPLTD'}">
+			<c:url value="/work/${workInfo.id}/estimation/${workInfo.workStatus eq 'WORK_ESTMASN_CMPLTD' ? 'create' : 'edit' }" var="createUrl" />
+		</c:when>
+							
+		<c:when
+			test="${workInfo.workStatus eq 'SAAP_APRVD'}">
 			<c:url value="/preliminaryDrawings/view" var="createUrl" />
 		</c:when>
 	

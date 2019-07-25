@@ -21,6 +21,19 @@
 .fileuploadLabel{
 line-height : 3;
 }
+
+input[type="radio"]{
+ cursor: pointer;
+}
+input[type="radio"]+label
+	 {
+    color: #033d75;
+    padding-left: 10px;
+    position: relative;
+    top: -2px;
+    cursor: pointer;
+    margin-right: 1.5%;
+}
 </style>
 </head>
 <script type="text/javascript">
@@ -347,9 +360,9 @@ line-height : 3;
 							<ul class="fs-list-details clearfix">
 
 											<li><p>Upload Document</p></li>
-											<li><label for="engPaperPublicationFile" class="fileuploadLabel" ${fn:length(engPublicationAttachements) == fileUploadConstraint.maxFileUploadCount ? "style='cursor:not-allowed;'":""}>Select
+											<li><label for="engPaperPublicationFile" class="fileuploadLabel" ${fn:length(engPublicationAttachements) >= fileUploadConstraint.maxFileUploadCount ? "style='cursor:not-allowed;'":""}>Select
 													Files</label> <input type="file" name="file" id="engPaperPublicationFile" multiple
-												class="form-control mb-md" data-target-table-id="engPaperPublicationDocumentFileTable" ${fn:length(engPublicationAttachements) == fileUploadConstraint.maxFileUploadCount ? "disabled='true'":""}> <small
+												class="form-control mb-md" data-target-table-id="engPaperPublicationDocumentFileTable" ${fn:length(engPublicationAttachements) >= fileUploadConstraint.maxFileUploadCount ? "disabled='true'":""}> <small
 												class="counts">* file selected
 													${fn:length(engPublicationAttachements)}/${fileUploadConstraint.maxFileUploadCount}</small></li>
 										</ul>
@@ -434,9 +447,9 @@ line-height : 3;
 							<ul class="fs-list-details clearfix">
 
 											<li><p>Upload Document</p></li>
-											<li><label for="telPaperPublicationFile" class="fileuploadLabel" ${fn:length(teluguPublicationAttachements) == fileUploadConstraint.maxFileUploadCount ? "style='cursor:not-allowed;'":""}>Select
+											<li><label for="telPaperPublicationFile" class="fileuploadLabel" ${fn:length(teluguPublicationAttachements) >= fileUploadConstraint.maxFileUploadCount ? "style='cursor:not-allowed;'":""}>Select
 													Files</label> <input type="file" name="file" id="telPaperPublicationFile" multiple
-												class="form-control mb-md" data-target-table-id="telPaperPublicationDocumentFileTable" ${fn:length(teluguPublicationAttachements) == fileUploadConstraint.maxFileUploadCount ? "disabled='true'":""}> <small
+												class="form-control mb-md" data-target-table-id="telPaperPublicationDocumentFileTable" ${fn:length(teluguPublicationAttachements) >= fileUploadConstraint.maxFileUploadCount ? "disabled='true'":""}> <small
 												class="counts">* file selected
 													${fn:length(teluguPublicationAttachements)}/${fileUploadConstraint.maxFileUploadCount}</small></li>
 										</ul>
@@ -579,21 +592,23 @@ line-height : 3;
 									style="color: red; float: right;"></span></li>
 							</ul>
 
-							<ul class="fs-list-details fs-list-full">
+							<ul class="fs-list-details "><!-- fs-list-full -->
 								<li><p>Check Bid Status</p></li>
-								<li><p>
-										<form:radiobutton checked="checked" path="bidStatus"
-											value="In Process" />
-										In Process
+								<li><p class="pt-0">
+										<form:radiobutton checked="checked" path="bidStatus" value="In Process" label="In Process"/>																														
+										<form:radiobutton path="bidStatus" value="Bid Accepted" label="Bid Accepted"/>																			
+										<form:radiobutton path="bidStatus" value="Bid Rejected" label="Bid Rejected"/>
+									</p>
+									<%-- <p>
+										<form:radiobutton checked="checked" path="bidStatus" value="In Process" label="In Process"/>																					
 									</p>
 									<p>
-										<form:radiobutton path="bidStatus" value="Bid Accepted" />
-										Bid Accepted
+										<form:radiobutton path="bidStatus" value="Bid Accepted" label="Bid Accepted"/>										
 									</p>
 									<p>
-										<form:radiobutton path="bidStatus" value="Bid Rejected" />
-										Bid Rejected
-									</p> <span id="bidStatusErr" class="errors"
+										<form:radiobutton path="bidStatus" value="Bid Rejected" label="Bid Rejected"/>
+									</p> --%>																											
+									 <span id="bidStatusErr" class="errors"
 									style="color: red; float: right;"></span></li>
 							</ul>
 

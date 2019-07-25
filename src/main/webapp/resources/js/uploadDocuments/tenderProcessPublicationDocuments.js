@@ -19,7 +19,8 @@ function fileChangeHandler() {
 		var currentSelectedFilesSize = 0;
 
 		// Check total number of uploads exceeds max allowed upload count
-		if (!checkNumberOfFileUploadExceedThenAllowedMaxUpload(totalFiles, targetTable)) {
+		if (!checkNumberOfFileUploadExceedThenAllowedMaxUpload(totalFiles,
+				targetTable)) {
 			showMaximumUploadableFilesExceedsWarning(totalFiles, $(this));
 			return false;
 		}
@@ -34,7 +35,8 @@ function fileChangeHandler() {
 		});
 
 		// Check total size doesn't exceed allowed max size
-		if (!checkTotalFilesSizeIsExceedThenAllowedSize(currentSelectedFilesSize, targetTable)) {
+		if (!checkTotalFilesSizeIsExceedThenAllowedSize(
+				currentSelectedFilesSize, targetTable)) {
 			showMaximumFileSizeExceedsWarning($(this));
 			return false;
 		}
@@ -288,8 +290,12 @@ function saveDocumentFile(formData, targetTable) {
 		headers : {
 			'X-CSRF-TOKEN' : csrf_tokenvalue
 		},
-		success : function(data) {
+		success : function(data) {			
 			renderFilesOnGrid(data, targetTable);
+		},
+		error:function(data){
+			raiseNotification(`There is some thing happend while save a file`,
+			'error');
 		}
 	});
 
@@ -316,8 +322,14 @@ function deleteDocumentFile(tableRef) {
 				if (data == "success") {
 					deletedFileOnServer(tableRef);
 				} else {
-					alert("unable to delete");
+					//alert("unable to delete");
+					raiseNotification(`There is some thing happend while delete a file`,
+					'error');
 				}
+			},
+			error:function(data){
+				raiseNotification(`There is some thing happend while delete a file`,
+				'error');
 			}
 		});
 
@@ -329,6 +341,13 @@ function deletedFileOnServer(tableRef) {
 
 		var allAttachments = tableRef
 				.find(" tbody.publicationDocumentsTableBody");
+		var fileName = allAttachments
+				.find("tr")
+				.filter(
+						function() {
+							return $(this).data("attachmentId") === attachmentIdToDelete
+									&& $(this).data("attachmentId") > 0;
+						}).find("td").eq(1).text();
 		var filterdAttachments = allAttachments
 				.find("tr")
 				.filter(
@@ -347,6 +366,9 @@ function deletedFileOnServer(tableRef) {
 		if (filterdAttachments.length === 0) {
 			allAttachments.append(getNoAttachmentsFoundRow());
 		}
+
+		raiseNotification(`File : <b>${fileName}</b> Deleted successfully`,
+				'success');
 		attachmentIdToDelete = 0;
 	}
 
@@ -370,7 +392,8 @@ function getLoacalDateString(datetime) {
 }
 
 // Check total files size against specified max file upload size
-function checkTotalFilesSizeIsExceedThenAllowedSize(currentSelectedFileSize, targetTable) {
+function checkTotalFilesSizeIsExceedThenAllowedSize(currentSelectedFileSize,
+		targetTable) {
 	var existedUploadedFileSize = 0;
 
 	// Get all existed file size on each row by data-file-size(store current
@@ -400,7 +423,8 @@ function checkTotalFilesSizeIsExceedThenAllowedSize(currentSelectedFileSize, tar
 
 }
 
-function checkNumberOfFileUploadExceedThenAllowedMaxUpload(selectedFilesCount, targetTable) {
+function checkNumberOfFileUploadExceedThenAllowedMaxUpload(selectedFilesCount,
+		targetTable) {
 
 	var existedFilesArray = $("#" + targetTable + " tbody tr").filter(
 			function(i, e) {
@@ -445,4 +469,12 @@ function humanReadableFileSize(size) {
 	let round = Math.round(num)
 	num = round < 10 ? num.toFixed(2) : round < 100 ? num.toFixed(1) : round
 	return `${num} ${'KMGTPEZY'[i-1]}B`
+}
+
+function raiseNotification(message, notificationType) {
+
+	var notification = alertify.notify(message, notificationType, 5,
+			function() {
+
+			});
 }
