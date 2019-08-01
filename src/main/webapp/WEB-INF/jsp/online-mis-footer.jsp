@@ -21,7 +21,7 @@
         <a target="_blank" href="https://www.youtube.com/channel/UCy3mdgAFCimIxl60stdXopQ" href="#" title="Youtube"><i class="fa fa-youtube"></i></a></div>
     </div>
   </div> -->
-  <div class="footer-top">
+  <!-- <div class="footer-top">
     <div class="container">
       <div class="row">
         
@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="container">
     <div class="copyright"> <b>Manuh Global Technologies Pvt. Ltd </b> | Works management system &copy; copyright 2019 <strong>Sports Authority of Andhra Pradesh</strong> . All rights reserved. </div>
   </div>
