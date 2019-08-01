@@ -291,6 +291,14 @@ public class WorkStatusService {
 				model.addAttribute("adminstrativeSanction", administrativeSection);
 				userIdsSet.add(administrativeSection.getUpdatedBy() == null ? administrativeSection.getCreatedBy()
 						: administrativeSection.getUpdatedBy());
+				List<Attachements> administrativeAttachmentFiles = attachmentService.getAttachementsDetails(workId,
+						EnumFilter.ADMIN.getStatus());
+				model.addAttribute("administrativeAttachmentFiles", administrativeAttachmentFiles);
+				for (Attachements attachements : administrativeAttachmentFiles) {
+					userIdsSet.add(attachements.getUpdatedBy() == null ? attachements.getCreatedBy()
+							: attachements.getUpdatedBy());
+				}
+
 			} else {
 				subPhase.addSubPhase(new WorkPhase(2, "Administrative Sanction", PhaseCompletionType.NONE,
 						++subModuleYettoStart == 0 ? "" : ""));
@@ -316,6 +324,10 @@ public class WorkStatusService {
 				model.addAttribute("landAttachmentFiles", landAttachmentFiles);
 				userIdsSet.add(
 						landDetails.getUpdatedBy() == null ? landDetails.getCreatedBy() : landDetails.getUpdatedBy());
+				for (Attachements attachements : landAttachmentFiles) {
+					userIdsSet.add(attachements.getUpdatedBy() == null ? attachements.getCreatedBy()
+							: attachements.getUpdatedBy());
+				}
 			} else {
 				subPhase.addSubPhase(new WorkPhase(4, "LandDetails", PhaseCompletionType.NONE,
 						++subModuleYettoStart == 0 ? "" : ""));
@@ -384,7 +396,7 @@ public class WorkStatusService {
 					EnumFilter.PRELIMINARY_PREPARATION_LAYOUT.getStatus());
 
 			// Check if geotechnicalInvestigation is completed or not based on that its
-			// previous stage is Preliminary preparation layout is comepleted or not
+			// previous stage is Preliminary preparation layout is completed or not
 			if (geotechnicalInvestigation != null) {
 
 				subPhase.addSubPhase(new WorkPhase(++totalSubModuls, "Preliminary preparation layout details",
@@ -488,7 +500,15 @@ public class WorkStatusService {
 				model.addAttribute("agencyList", tenderProcessService.getAgencyList());
 
 				model.addAttribute("engPublicationAttachements", engPublicationAttachements);
+				for (Attachements attachements : engPublicationAttachements) {
+					userIdsSet.add(attachements.getUpdatedBy() == null ? attachements.getCreatedBy()
+							: attachements.getUpdatedBy());
+				}
 				model.addAttribute("teluguPublicationAttachements", teluguPublicationAttachements);
+				for (Attachements attachements : teluguPublicationAttachements) {
+					userIdsSet.add(attachements.getUpdatedBy() == null ? attachements.getCreatedBy()
+							: attachements.getUpdatedBy());
+				}
 
 			} else {
 				subPhase.addSubPhase(new WorkPhase(2, "Tender process", PhaseCompletionType.NONE,
@@ -521,6 +541,10 @@ public class WorkStatusService {
 								: letterofAcceptanceDetails.getUpdatedBy());
 				model.addAttribute("letterofAcceptanceDetails", letterofAcceptanceDetails);
 				model.addAttribute("letterofAcceptanceAttachments", letterofAcceptanceAttachments);
+				for (Attachements attachements : letterofAcceptanceAttachments) {
+					userIdsSet.add(attachements.getUpdatedBy() == null ? attachements.getCreatedBy()
+							: attachements.getUpdatedBy());
+				}
 			} else {
 				subPhase.addSubPhase(new WorkPhase(4, "Letter of acceptence", PhaseCompletionType.NONE,
 						++subModuleYettoStart == 0 ? "" : ""));

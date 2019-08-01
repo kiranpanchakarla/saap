@@ -310,14 +310,6 @@ h2.fs-title {
 										</div>
 									</div>
 								</div>
-								<div class="col-12">
-									<div class="row">
-										<div class="col-12">
-											<span>Document Details</span>
-										</div>
-										<div class="col-12"></div>
-									</div>
-								</div>
 								<div class="col-6">
 									<div class="row">
 										<div class="col-5">
@@ -349,6 +341,58 @@ h2.fs-title {
 										</div>
 									</div>
 								</div>
+								<div class="col-12 mt-3">
+									<p>Upload Document</p>
+									<div class="table-responsive">
+										<table
+											class="readOnlyTable table-bordered table-condensed text-left w-100">
+											<thead>
+												<tr>
+													<th style="width: 5%">S.no</th>
+													<th>File</th>
+													<th>Size</th>
+													<th>Upload date</th>
+													<th>Upload by</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${administrativeAttachmentFiles}"
+													var="file" varStatus="loop">
+													<c:set var="filePathParts"
+														value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+													<tr class="landSurveyDetailsUploadDocuments">
+														<td>${loop.index + 1}</td>
+														<td><a
+															href="${pageContext.request.contextPath}${file.path}"
+															target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a>
+														</td>
+														<td>${file.convertFileSize}</td>
+														<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm a"
+																value="${empty file.updatedAt ? file.createdAt : file.updatedAt}" /></td>
+
+														<td><c:forEach items="${userList}" var="user">
+																<c:if
+																	test="${user.id == (empty file.updatedBy ? file.createdBy : file.updatedBy)}">
+														${user.name}
+													</c:if>
+															</c:forEach></td>
+													</tr>
+
+												</c:forEach>
+												<c:if
+													test="${fn:length(administrativeAttachmentFiles) == 0}">
+													<tr class="landSurveyDetailsUploadDocuments">
+														<td colspan="5">
+															<p class="text-center p-4 mb-0">No attachments found</p>
+														</td>
+													</tr>
+												</c:if>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -538,9 +582,39 @@ h2.fs-title {
 										</div>
 									</div>
 								</div>
+								<div class="col-6">
+									<div class="row">
+										<div class="col-5">
+											<span>Last updated Date</span>
+										</div>
+										<div class="col-7">
+											<span>:</span><label> <fmt:formatDate
+													pattern="dd-MM-yyyy hh:mm a"
+													value="${empty landDetails.updatedAt ? landDetails.createdAt : landDetails.updatedAt}" /></label>
+										</div>
+									</div>
+								</div>
 
+								<div class="col-6">
+									<div class="row">
+										<div class="col-5">
+											<span>Last updated user</span>
+										</div>
+										<div class="col-7">
+											<span>:</span><label> <c:forEach items="${userList}"
+													var="user">
+													<c:if
+														test="${user.id == (empty landDetails.updatedBy ? landDetails.createdBy : landDetails.updatedBy)}">
+														${user.name}
+													</c:if>
+												</c:forEach>
 
-								<div class="col-12">
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 mt-3">
 									<p class="mb-2">
 										<span>Uploaded Land Details Document</span>
 									</p>
@@ -593,37 +667,7 @@ h2.fs-title {
 
 								</div>
 
-								<div class="col-6">
-									<div class="row">
-										<div class="col-5">
-											<span>Last updated Date</span>
-										</div>
-										<div class="col-7">
-											<span>:</span><label> <fmt:formatDate
-													pattern="dd-MM-yyyy hh:mm a"
-													value="${empty landDetails.updatedAt ? landDetails.createdAt : landDetails.updatedAt}" /></label>
-										</div>
-									</div>
-								</div>
 
-								<div class="col-6">
-									<div class="row">
-										<div class="col-5">
-											<span>Last updated user</span>
-										</div>
-										<div class="col-7">
-											<span>:</span><label> <c:forEach items="${userList}"
-													var="user">
-													<c:if
-														test="${user.id == (empty landDetails.updatedBy ? landDetails.createdBy : landDetails.updatedBy)}">
-														${user.name}
-													</c:if>
-												</c:forEach>
-
-											</label>
-										</div>
-									</div>
-								</div>
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -852,7 +896,38 @@ h2.fs-title {
 										</div>
 									</div>
 								</div>
-								<div class="col-12">
+								<div class="col-6">
+									<div class="row">
+										<div class="col-5">
+											<span>Last updated Date</span>
+										</div>
+										<div class="col-7">
+											<span>:</span><label> <fmt:formatDate
+													pattern="dd-MM-yyyy hh:mm a"
+													value="${empty landSurveyDetails.updatedAt ? landSurveyDetails.createdAt : landSurveyDetails.updatedAt}" /></label>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-6">
+									<div class="row">
+										<div class="col-5">
+											<span>Last updated user</span>
+										</div>
+										<div class="col-7">
+											<span>:</span><label> <c:forEach items="${userList}"
+													var="user">
+													<c:if
+														test="${user.id == (empty landSurveyDetails.updatedBy ? landSurveyDetails.createdBy : landSurveyDetails.updatedBy)}">
+														${user.name}
+													</c:if>
+												</c:forEach>
+
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 mt-3">
 									<p class="mb-2">
 										<span>Uploaded Land Survey Details Document</span>
 									</p>
@@ -923,37 +998,7 @@ h2.fs-title {
 
 
 								</div>
-								<div class="col-6">
-									<div class="row">
-										<div class="col-5">
-											<span>Last updated Date</span>
-										</div>
-										<div class="col-7">
-											<span>:</span><label> <fmt:formatDate
-													pattern="dd-MM-yyyy hh:mm a"
-													value="${empty landSurveyDetails.updatedAt ? landSurveyDetails.createdAt : landSurveyDetails.updatedAt}" /></label>
-										</div>
-									</div>
-								</div>
 
-								<div class="col-6">
-									<div class="row">
-										<div class="col-5">
-											<span>Last updated user</span>
-										</div>
-										<div class="col-7">
-											<span>:</span><label> <c:forEach items="${userList}"
-													var="user">
-													<c:if
-														test="${user.id == (empty landSurveyDetails.updatedBy ? landSurveyDetails.createdBy : landSurveyDetails.updatedBy)}">
-														${user.name}
-													</c:if>
-												</c:forEach>
-
-											</label>
-										</div>
-									</div>
-								</div>
 
 							</div>
 						</c:when>
@@ -1067,9 +1112,39 @@ h2.fs-title {
 										</div>
 									</div>
 								</div>
+								<div class="col-6">
+									<div class="row">
+										<div class="col-5">
+											<span>Last updated Date</span>
+										</div>
+										<div class="col-7">
+											<span>:</span><label> <fmt:formatDate
+													pattern="dd-MM-yyyy hh:mm a"
+													value="${empty geotechnicalInvestigation.updatedAt ? geotechnicalInvestigation.createdAt : geotechnicalInvestigation.updatedAt}" /></label>
+										</div>
+									</div>
+								</div>
 
+								<div class="col-6">
+									<div class="row">
+										<div class="col-5">
+											<span>Last updated user</span>
+										</div>
+										<div class="col-7">
+											<span>:</span><label> <c:forEach items="${userList}"
+													var="user">
+													<c:if
+														test="${user.id == (empty geotechnicalInvestigation.updatedBy ? geotechnicalInvestigation.createdBy : geotechnicalInvestigation.updatedBy)}">
+														${user.name}
+													</c:if>
+												</c:forEach>
 
-								<div class="col-12">
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 mt-3">
 									<p>Uploaded geotechnical investigation Document</p>
 									<div class="table-responsive">
 										<table
@@ -1137,37 +1212,7 @@ h2.fs-title {
 									</div>
 
 								</div>
-								<div class="col-6">
-									<div class="row">
-										<div class="col-5">
-											<span>Last updated Date</span>
-										</div>
-										<div class="col-7">
-											<span>:</span><label> <fmt:formatDate
-													pattern="dd-MM-yyyy hh:mm a"
-													value="${empty geotechnicalInvestigation.updatedAt ? geotechnicalInvestigation.createdAt : geotechnicalInvestigation.updatedAt}" /></label>
-										</div>
-									</div>
-								</div>
 
-								<div class="col-6">
-									<div class="row">
-										<div class="col-5">
-											<span>Last updated user</span>
-										</div>
-										<div class="col-7">
-											<span>:</span><label> <c:forEach items="${userList}"
-													var="user">
-													<c:if
-														test="${user.id == (empty geotechnicalInvestigation.updatedBy ? geotechnicalInvestigation.createdBy : geotechnicalInvestigation.updatedBy)}">
-														${user.name}
-													</c:if>
-												</c:forEach>
-
-											</label>
-										</div>
-									</div>
-								</div>
 
 							</div>
 						</c:when>
@@ -1955,8 +2000,38 @@ h2.fs-title {
 										</div>
 									</div>
 								</div>
+								<div class="col-6">
+									<div class="row">
+										<div class="col-5">
+											<span>Last updated Date</span>
+										</div>
+										<div class="col-7">
+											<span>:</span><label> <fmt:formatDate
+													pattern="dd-MM-yyyy hh:mm a"
+													value="${empty letterofAcceptanceDetails.updatedAt ? letterofAcceptanceDetails.createdAt : letterofAcceptanceDetails.updatedAt}" /></label>
+										</div>
+									</div>
+								</div>
 
-								<div class="col-12 mb-3">
+								<div class="col-6">
+									<div class="row">
+										<div class="col-5">
+											<span>Last updated user</span>
+										</div>
+										<div class="col-7">
+											<span>:</span><label> <c:forEach items="${userList}"
+													var="user">
+													<c:if
+														test="${user.id == (empty letterofAcceptanceDetails.updatedBy ? letterofAcceptanceDetails.createdBy : letterofAcceptanceDetails.updatedBy)}">
+														${user.name}
+													</c:if>
+												</c:forEach>
+
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 mt-3">
 									<p>Upload Document</p>
 									<div class="table-responsive">
 										<table
@@ -2007,37 +2082,7 @@ h2.fs-title {
 									</div>
 
 								</div>
-								<div class="col-6">
-									<div class="row">
-										<div class="col-5">
-											<span>Last updated Date</span>
-										</div>
-										<div class="col-7">
-											<span>:</span><label> <fmt:formatDate
-													pattern="dd-MM-yyyy hh:mm a"
-													value="${empty letterofAcceptanceDetails.updatedAt ? letterofAcceptanceDetails.createdAt : letterofAcceptanceDetails.updatedAt}" /></label>
-										</div>
-									</div>
-								</div>
 
-								<div class="col-6">
-									<div class="row">
-										<div class="col-5">
-											<span>Last updated user</span>
-										</div>
-										<div class="col-7">
-											<span>:</span><label> <c:forEach items="${userList}"
-													var="user">
-													<c:if
-														test="${user.id == (empty letterofAcceptanceDetails.updatedBy ? letterofAcceptanceDetails.createdBy : letterofAcceptanceDetails.updatedBy)}">
-														${user.name}
-													</c:if>
-												</c:forEach>
-
-											</label>
-										</div>
-									</div>
-								</div>
 							</div>
 						</c:when>
 						<c:otherwise>
