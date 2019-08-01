@@ -27,6 +27,7 @@ import com.ap.mis.service.MISService;
 import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.util.ContextUtil;
 import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.FileUploadConstraintsUtil;
 
 @Controller
@@ -59,6 +60,13 @@ public class TenderProcessController {
 		tenderProcessService.saveTenderingProcess(tenderingProcessObj);
 		attachService.saveAttachedDetails(workId, EnumFilter.TENDERPROCESSFORENG.getStatus(), engfile);
 		attachService.saveAttachedDetails(workId, EnumFilter.TENDERPROCESSFORTEL.getStatus(), telugufile);
+
+		if (isSave) {
+			Works work = misService.getWorkInfo(tenderingProcessObj.getWork().getId());
+			work.setStatus(EnumWorkStatus.TENDER_PROCESS_INFO.getStatus());
+			work.setWorkStatus(EnumWorkStatus.TENDER_PROCESS_INFO.getStatus());
+			misService.updateWork(work);
+		}
 
 		return "redirect:/tenderEvaluation/" + (isSave ? "create" : "edit");
 
@@ -238,6 +246,7 @@ public class TenderProcessController {
 		 * tenderInfo.getTelUpload()); } else { model.addAttribute("telUpload", null); }
 		 */
 		Works workInfo = misService.getWorkInfo(tenderInfo.getWork().getId());
+		model.addAttribute("workInfo", workInfo);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("authoritiesTypeList", tenderProcessService.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderProcessService.getAgencyList());

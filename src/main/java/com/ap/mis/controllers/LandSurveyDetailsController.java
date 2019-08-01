@@ -23,6 +23,7 @@ import com.ap.mis.service.LandDetailService;
 import com.ap.mis.service.LandSurveyDetailService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.FileUploadConstraintsUtil;
 
 @Controller
@@ -114,10 +115,14 @@ public class LandSurveyDetailsController {
 		boolean isNewLandSurveyDetails = landSurveyDetails.getId() == null;
 
 		landSurveyDetailsService.save(landSurveyDetails);
-
+		
 		if (!isNewLandSurveyDetails) {
 			return "redirect:/preliminaryPreparationLayout/edit";
 		}
+		
+		Works work = MISService.getWorkInfo(landSurveyDetails.getWork().getId());
+		work.setStatus(EnumWorkStatus.LAND_SURVEY_DETAILS.getStatus());
+		MISService.updateWork(work);
 
 		return "redirect:/preliminaryPreparationLayout/create";
 

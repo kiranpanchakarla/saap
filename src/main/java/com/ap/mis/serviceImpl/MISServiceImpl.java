@@ -127,7 +127,7 @@ public class MISServiceImpl implements MISService {
 			}
 			work.setWorkLineItemsList(ltms);
 		}
-		work.setStatus(EnumFilter.OPEN.getStatus());
+//		work.setStatus(EnumFilter.OPEN.getStatus());
 		
 		if(hset.contains(work.getWorkStatus())) {
 		try {

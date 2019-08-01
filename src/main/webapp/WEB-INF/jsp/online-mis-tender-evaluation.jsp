@@ -351,10 +351,17 @@
 								</ul> -->
 
 							</div>
+							<c:if test="${tenderEvaluation.id==null}">
+								<input type="submit" id="submit" name="next"
+									class="next action-button" value="Save and Continue">
+							</c:if>
+							<c:if test="${tenderEvaluation.id!=null}">
+								<input type="submit" id="submit" name="next"
+									class="next action-button" value="update and Continue">
+							</c:if>
 
-
-							<input type="submit" id="submit" name="next"
-								class="next action-button" value="Save">
+							<!-- input type="submit" id="submit" name="next"
+								class="next action-button" value="Save"> -->
 						</fieldset>
 						<form:input type="hidden" id="workid" path="work.id" />
 					</form:form>

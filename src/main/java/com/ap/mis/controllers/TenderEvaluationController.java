@@ -23,6 +23,7 @@ import com.ap.mis.service.MISService;
 import com.ap.mis.service.TechnicalSanctionService;
 import com.ap.mis.service.TenderEvaluationService;
 import com.ap.mis.service.WorkEstimationService;
+import com.ap.mis.util.EnumWorkStatus;
 
 @Controller
 @RequestMapping(path = "/tenderEvaluation")
@@ -41,7 +42,7 @@ public class TenderEvaluationController {
 
 	@Autowired
 	TenderEvaluationService tenderEvaluationService;
-	
+
 	@Autowired
 	LetterOfAcceptanceService LOAService;
 
@@ -80,21 +81,26 @@ public class TenderEvaluationController {
 	@PostMapping(path = { "/save" })
 	public String saveTechnicalEvaluation(@ModelAttribute TenderEvaluation tenderEvaluation) {
 
-		/*boolean isSave = tenderEvaluation.getId() == null;*/
-		LetterOfAcceptance letterofAcceptanceDetails=LOAService.findByWork(tenderEvaluation.getWork());
-		boolean isSave=true;
-	    if(letterofAcceptanceDetails!=null) {
-		isSave=false;
-	    }
+		/* boolean isSave = tenderEvaluation.getId() == null; */
+		LetterOfAcceptance letterofAcceptanceDetails = LOAService.findByWork(tenderEvaluation.getWork());
+		boolean isSave = true;
+		if (letterofAcceptanceDetails != null) {
+			isSave = false;
+		}
 		tenderEvaluationService.saveOrUpdateTenderEvaluation(tenderEvaluation);
 		/*
 		 * return "redirect:/nextRoute/" + (isTenderEvaluationisNew ? "create" :
 		 * "edit");
 		 */
 
-		return "redirect:/letterOfAcceptance/" +(isSave ? "create" : "edit");
+		if (isSave) {
+			Works work = misService.getWorkInfo(tenderEvaluation.getWork().getId());
+			work.setStatus(EnumWorkStatus.TENDER_EVALUATION_INFO.getStatus());
+			misService.updateWork(work);
+		}
 
-		
+		return "redirect:/letterOfAcceptance/" + (isSave ? "create" : "edit");
+
 	}
 
 }

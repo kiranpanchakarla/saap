@@ -17,6 +17,7 @@ import com.ap.mis.entity.Works;
 import com.ap.mis.service.AttachmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.FileUploadConstraintsUtil;
 
 @Controller
@@ -58,8 +59,13 @@ public class PreliminaryPreparationLayoutController {
 	@PostMapping(path = { "/save" })
 	public String savePreliminaryPreparationLayout(Model model, HttpSession session) {
 
-		// int workId = (int) session.getAttribute("workIdSession");
-
+		int workId = (int) session.getAttribute("workIdSession");
+		Works work = MISService.getWorkInfo(workId);
+		if (work.getStatus().equals(EnumWorkStatus.LAND_SURVEY_DETAILS.getStatus())) {
+			work.setStatus(EnumWorkStatus.PRELIMINARY_PREPARATION_LAYOUT_DETAILS.getStatus());
+			MISService.updateWork(work);
+		}
+		
 		return "online-mis-preliminary-preparation-layout";
 	}
 

@@ -634,16 +634,16 @@ input[type="radio"]+label
 							</ul>
 						</div>
 
-						<%-- <c:if test="${tenderingProcessObj.id==null}">
+						<c:if test="${tenderingProcessObj.id==null}">
 							<input type="submit" id="submit" name="next"
 								class="next action-button" value="Save and Continue">
 						</c:if>
 						<c:if test="${tenderingProcessObj.id!=null}">
 							<input type="submit" id="submit" name="next"
 								class="next action-button" value="update and Continue">
-						</c:if> --%>
-						<input type="submit" id="submit" name="next"
-							class="next action-button" value="Save">
+						</c:if>
+						<!-- <input type="submit" id="submit" name="next"
+							class="next action-button" value="Save"> -->
 					</fieldset>
 					<form:input type="hidden" id="workid" path="work.id" />
 				</form:form>

@@ -45,11 +45,15 @@ public class TechnicalSanctionController {
 		 * model.addAttribute("sessionTimeout", "sessionTimeout"); return
 		 * "online-admin"; }
 		 */
-		Works work = misService.getWorkInfo(techsanc.getWork().getId());
 
-		work.setWorkStatus(EnumWorkStatus.TECHNICAL_SANCTION_COMPLETED.getStatus());
+		boolean isTechnicalSanctionNotExisted = techsanc.getId() == null;
 		techSanction.saveTechSanction(techsanc);
-		misService.updateWork(work);
+		if (isTechnicalSanctionNotExisted) {
+			Works work = misService.getWorkInfo(techsanc.getWork().getId());
+			work.setWorkStatus(EnumWorkStatus.TECHNICAL_SANCTION_COMPLETED.getStatus());
+			work.setStatus(EnumWorkStatus.TECHNICAL_SANCTION_COMPLETED.getStatus());
+			misService.updateWork(work);
+		}
 
 		return "redirect:/adminloggedin";
 

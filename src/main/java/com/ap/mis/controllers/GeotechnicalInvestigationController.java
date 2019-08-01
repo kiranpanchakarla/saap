@@ -88,7 +88,15 @@ public class GeotechnicalInvestigationController {
 			@ModelAttribute GeotechnicalInvestigation geotechnicalInvestigationDetails, Model model,
 			HttpSession session) {
 
+		boolean isGeotechnicalInvestigationNotExist = geotechnicalInvestigationDetails.getId() == null;
+
 		geotechnicalInvestigationDetails = geotechnicalInvestigation.save(geotechnicalInvestigationDetails);
+
+		if (isGeotechnicalInvestigationNotExist) {
+			Works work = MISService.getWorkInfo(geotechnicalInvestigationDetails.getWork().getId());
+			work.setStatus(EnumWorkStatus.GEOTECHNICAL_INVESTIGATION.getStatus());
+			MISService.updateWork(work);
+		}
 
 		// geotechnicalInvestigation
 

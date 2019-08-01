@@ -111,7 +111,7 @@ public class WorkEstimationController {
 		model.addAttribute("userRole", loggedInUser.getRole().getRoleName());
 
 		WorkEstimations workEstimation = workEstimationService.getWorkEstimationByWork(workInfo);
-		if(workEstimation == null) {
+		if (workEstimation == null) {
 			workEstimation = new WorkEstimations();
 			workEstimation.setWork(workInfo);
 		}
@@ -124,11 +124,18 @@ public class WorkEstimationController {
 	@PostMapping(path = { "/save" })
 	public String saveWorkEstimation(@ModelAttribute WorkEstimations workEstimation,
 			@PathVariable(value = "workId", required = true) Integer workId) {
-		Works work = misService.getWorkInfo(workId);
 
-		if (work != null) {
+		boolean isWorkEstimationNotExist = workEstimation.getId() == null;
+
+		Works work = misService.getWorkInfo(workId);
+		
+		
+		
+		workEstimationService.save(workEstimation);
+
+		if (isWorkEstimationNotExist) {			
 			work.setWorkStatus(EnumWorkStatus.WORK_ESTIMATION_COMPLETED.getStatus());
-			workEstimationService.save(workEstimation);
+			work.setStatus(EnumWorkStatus.WORK_ESTIMATION_COMPLETED.getStatus());
 			misService.updateWork(work);
 		}
 
