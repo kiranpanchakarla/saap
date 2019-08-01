@@ -14,12 +14,12 @@
 	<context:property-placeholder location="classpath:application.properties" />
 
 	<mvc:annotation-driven />
-	
+
 	<!-- Specifying the Resource location to load JS, CSS, Images etc -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
- 
- <mvc:resources mapping="/data/uploads/tmp/**" location="file:/data/uploads/tmp/" /> 
+
+	<mvc:resources mapping="/data/uploads/tmp/**" location="file:/data/uploads/tmp/" />
 
 
 	<!-- View Resolver -->
@@ -28,8 +28,8 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
-	
+
+
 
 	<!-- DataSource -->
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
@@ -61,20 +61,35 @@
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> 
+		<property name="exceptionMappings"> <props> <prop key="com.ap.mis.exception.RequestedResourceNotAvailable">errorPage</prop> 
+		</props> </property> <property name="defaultErrorView" value="errorPage"/> 
+		</bean> -->
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<bean id="JavaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${spring.mail.host}"></property>
+		<property name="port" value="${spring.mail.port}"></property>
+		<property name="username" value="${spring.mail.username}"></property>
+		<property name="password" value="${spring.mail.password}"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${spring.mail.properties.mail.smtp.auth}</prop>
+				<prop key="mail.smtp.starttls.enable">${spring.mail.properties.mail.smtp.starttls.enable}</prop>
+			</props>
+		</property>
+	</bean>
 	
-		<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-    <property name="exceptionMappings">
-        <props>
-            <prop key="com.ap.mis.exception.RequestedResourceNotAvailable">errorPage</prop>
-        </props>
-    </property>
-     <property name="defaultErrorView" value="errorPage"/> 
-    
-</bean> -->
-	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 	
 	
+	
+	
+
+
+
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

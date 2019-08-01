@@ -1,6 +1,8 @@
 package com.ap.mis.serviceImpl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,9 @@ import com.ap.mis.entity.WorkLineItemsList;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.EnumWorkStatus;
+import com.ap.mis.util.SendEmail;
 import com.ap.mis.util.UploadUtil;
-
 
 @Service
 @Transactional
@@ -31,7 +34,24 @@ public class MISServiceImpl implements MISService {
 	@Autowired
 	UploadUtil uploadUtil;
 	
+		
+	@Autowired
+	SendEmail sendEmail;
 	
+	Set<String> hset=new HashSet<>();
+	
+	
+	public MISServiceImpl() {
+		initializeWorkStatus();
+	}
+	
+	private void initializeWorkStatus() {
+		hset.add(EnumWorkStatus.LAND.getStatus());
+		hset.add(EnumWorkStatus.PENDING_SAAP_APPROVAL.getStatus());
+		hset.add(EnumWorkStatus.SAAP_APPROVED.getStatus());
+		hset.add(EnumWorkStatus.WORK_ESTIMATION_COMPLETED.getStatus());
+		hset.add(EnumWorkStatus.TECHNICAL_SANCTION_COMPLETED.getStatus());
+	}
 
 	@Override
 	public Works saveWorks(Works work) {
@@ -45,7 +65,8 @@ public class MISServiceImpl implements MISService {
 			}
 			work.setWorkLineItemsList(ltms);
 		}
-			return	misDao.saveWorks(work);
+		
+		return	misDao.saveWorks(work);
 	}
 	
 	@Override
@@ -107,6 +128,15 @@ public class MISServiceImpl implements MISService {
 			work.setWorkLineItemsList(ltms);
 		}
 		work.setStatus(EnumFilter.OPEN.getStatus());
+		
+		if(hset.contains(work.getWorkStatus())) {
+		try {
+			sendEmail.sendApproveEmail(work);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			log.error("Mail Sent failed", ex);
+		}
+		}
 		return misDao.updateWork(work);
 	}
 
