@@ -75,8 +75,10 @@ public class SendEmail extends EmailerGenerator {
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 								
 				String bodyContent="";//checks the workStatus and based on that a msg is generated
+				String moduleName="";
 				if(work.getWorkStatus()==EnumWorkStatus.LAND.getStatus()) {
 					bodyContent="Work Info Created";
+					moduleName=EnumFilter.LANDDETAILS.getStatus();
 				}else if(work.getWorkStatus()==EnumWorkStatus.PENDING_SAAP_APPROVAL.getStatus()) {
 					bodyContent="Consultant Created";
 				}else if(work.getWorkStatus()==EnumWorkStatus.SAAP_APPROVED.getStatus()) {
@@ -92,7 +94,8 @@ public class SendEmail extends EmailerGenerator {
 				message.setText(bodyContent);
 				message.setSentDate(new Date());
 				
-				List<Attachements> attachements=attachService.getAttachementsDetails(work.getId(),EnumFilter.ADMIN.getStatus());
+				if(moduleName!=null && !moduleName.equals("")) {
+				List<Attachements> attachements=attachService.getAttachementsDetails(work.getId(),moduleName);
 				//add attachments
 				for(Attachements attachDetails :attachements) {
 					if (attachDetails.getPath() != null && !attachDetails.getPath().equals("")) {
@@ -103,6 +106,7 @@ public class SendEmail extends EmailerGenerator {
 			                    ex.printStackTrace();
 			                }
 			            } 
+				}
 				}
 				
 				
