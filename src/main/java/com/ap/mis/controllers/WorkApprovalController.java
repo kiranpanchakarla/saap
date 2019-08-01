@@ -185,31 +185,33 @@ public class WorkApprovalController {
 		fileUploadUserIds.addAll(PPLayoutFileUploadConsultantIds);
 		fileUploadUserIds.addAll(GIFileUploadConsultantIds);
 
-		List<User> fileUploadUsers = userService.findByUserIds(fileUploadUserIds);
+		if (fileUploadUserIds.size() > 0) {
+			List<User> fileUploadUsers = userService.findByUserIds(fileUploadUserIds);
 
-		landSurveyAttachmentFiles = landSurveyAttachmentFiles.stream().map(a -> {
-			int userId = (a.getUpdatedBy() == null ? a.getCreatedBy() : a.getUpdatedBy());
-			Predicate<User> userPredicate = u -> u.getId() == userId;
-			String userName = fileUploadUsers.stream().filter(userPredicate).findFirst().get().getName();
-			a.setFileUploadUserName(userName);
-			return a;
-		}).collect(Collectors.toList());
+			landSurveyAttachmentFiles = landSurveyAttachmentFiles.stream().map(a -> {
+				int userId = (a.getUpdatedBy() == null ? a.getCreatedBy() : a.getUpdatedBy());
+				Predicate<User> userPredicate = u -> u.getId() == userId;
+				String userName = fileUploadUsers.stream().filter(userPredicate).findFirst().get().getName();
+				a.setFileUploadUserName(userName);
+				return a;
+			}).collect(Collectors.toList());
 
-		PPLayoutAttachmentFiles = PPLayoutAttachmentFiles.stream().map(a -> {
-			int userId = (a.getUpdatedBy() == null ? a.getCreatedBy() : a.getUpdatedBy());
-			Predicate<User> userPredicate = u -> u.getId() == userId;
-			String userName = fileUploadUsers.stream().filter(userPredicate).findFirst().get().getName();
-			a.setFileUploadUserName(userName);
-			return a;
-		}).collect(Collectors.toList());
+			PPLayoutAttachmentFiles = PPLayoutAttachmentFiles.stream().map(a -> {
+				int userId = (a.getUpdatedBy() == null ? a.getCreatedBy() : a.getUpdatedBy());
+				Predicate<User> userPredicate = u -> u.getId() == userId;
+				String userName = fileUploadUsers.stream().filter(userPredicate).findFirst().get().getName();
+				a.setFileUploadUserName(userName);
+				return a;
+			}).collect(Collectors.toList());
 
-		GIAttachmentFiles = GIAttachmentFiles.stream().map(a -> {
-			int userId = (a.getUpdatedBy() == null ? a.getCreatedBy() : a.getUpdatedBy());
-			Predicate<User> userPredicate = u -> u.getId() == userId;
-			String userName = fileUploadUsers.stream().filter(userPredicate).findFirst().get().getName();
-			a.setFileUploadUserName(userName);
-			return a;
-		}).collect(Collectors.toList());
+			GIAttachmentFiles = GIAttachmentFiles.stream().map(a -> {
+				int userId = (a.getUpdatedBy() == null ? a.getCreatedBy() : a.getUpdatedBy());
+				Predicate<User> userPredicate = u -> u.getId() == userId;
+				String userName = fileUploadUsers.stream().filter(userPredicate).findFirst().get().getName();
+				a.setFileUploadUserName(userName);
+				return a;
+			}).collect(Collectors.toList());
+		}
 
 		model.addAttribute("consultant", consultant);
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));

@@ -840,7 +840,7 @@ button.btn {
 
 									</div>
 								</fieldset>
-								<div>
+								<div class="text-center">
 
 									<input type="button" name="previous" class="next action-button"
 										value="Previous">
@@ -851,7 +851,7 @@ button.btn {
 									<input type="button" id="approveWork"
 											class="next action-button" value="Approve">
 									<input type="button" id="home" class="next action-button"
-										value="Home"> <input type="hidden" id="workid"
+										value="Back"> <input type="hidden" id="workid"
 										value="${work.id}" />
 								</div>
 
