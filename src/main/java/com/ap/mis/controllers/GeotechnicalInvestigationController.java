@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.Attachements;
+import com.ap.mis.entity.ConsultantInfo;
 import com.ap.mis.entity.GeotechnicalInvestigation;
+import com.ap.mis.entity.LandSurveyDetails;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AttachmentService;
+import com.ap.mis.service.ConsultantInfoService;
 import com.ap.mis.service.GeotechnicalInvestigationService;
+import com.ap.mis.service.LandSurveyDetailService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.EnumWorkStatus;
@@ -34,12 +38,17 @@ public class GeotechnicalInvestigationController {
 
 	@Autowired
 	GeotechnicalInvestigationService geotechnicalInvestigation;
+	
+	@Autowired
+	LandSurveyDetailService landSurveyDetailsService;
 
 	@Autowired
 	AttachmentService attachmentService;
 
 	@Autowired
 	FileUploadConstraintsUtil fileUploadConstraint;
+	
+	@Autowired ConsultantInfoService constInfoService;
 
 	@GetMapping(path = { "/create", "/edit", "/view" })
 	public String getGeotechnicalInvestigation(Model model, HttpSession session, HttpServletRequest request) {
@@ -58,6 +67,12 @@ public class GeotechnicalInvestigationController {
 
 		List<Attachements> attachments = attachmentService.getAttachementsDetails(workId, workModuleStatus.getStatus());
 
+		ConsultantInfo consltInfo = constInfoService.getConsultDetails(workId);
+		model.addAttribute("consultantInfoObject",consltInfo);
+		model.addAttribute("consltInfo",consltInfo);
+		LandSurveyDetails existedLandSurveyDetails = landSurveyDetailsService.findByWork(work);
+		model.addAttribute("landSurvey",existedLandSurveyDetails);
+		
 		GeotechnicalInvestigation geotechnicalInvestigationDetails = geotechnicalInvestigation.findByWork(work);
 
 		if (geotechnicalInvestigationDetails == null) {
@@ -70,7 +85,8 @@ public class GeotechnicalInvestigationController {
 			disableWriteControllers = work.getWorkStatus()
 					.equalsIgnoreCase(EnumWorkStatus.PENDING_SAAP_APPROVAL.getStatus())
 					|| work.getWorkStatus().equalsIgnoreCase(EnumWorkStatus.SAAP_APPROVED.getStatus());
-
+		model.addAttribute("workObject",work);
+		model.addAttribute("investigation",geotechnicalInvestigationDetails);
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		model.addAttribute("geotehnicalInvestigationLayoutAttachmentFiles", attachments);
 		model.addAttribute("moduleName", workModuleStatus.getStatus());

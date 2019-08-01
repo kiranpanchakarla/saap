@@ -95,6 +95,12 @@
 
 	<section id="contact" class="section-bg-con">
 		<div class="container">
+		<c:import url="/WEB-INF/jsp/online-mis-consultantTabView.jsp" />
+
+		<div class="tab-content">
+
+			<div class="tab-pane fade show" id="nav-admin" role="tabpanel"
+				aria-labelledby="nav-admin-tab">
 			<div class="row">
 				<div class="col-md-12">
 					<c:url value="/landSurveyDetails/save" var="createUrl" />
@@ -373,9 +379,8 @@
 			</div>
 			<!-- /.MultiStep Form -->
 		</div>
-
-
-
+</div>
+</div>
 
 	</section>
 
@@ -451,6 +456,16 @@
 
 
 	<script>
+	
+	var onChange = false;
+	
+    <c:if test="${landSurveyDetails.id == null}">
+    var form = document.querySelector('#msform');
+    form.addEventListener('change', function() {
+    	onChange = true;
+    	//alert(onChange);
+    });
+    </c:if>
 		$(document).ready(function() {
 			/*
 			// Show uploaded files on model
@@ -460,6 +475,10 @@
 			});
 			
 			 */
+			 
+			 $('#nav-survey-tab').addClass('active');
+		     $('#nav-survey').addClass('active');
+		     
 
 			$(".tableCollapseButton").off().on('click', function() {
 

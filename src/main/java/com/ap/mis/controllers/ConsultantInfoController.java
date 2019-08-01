@@ -1,10 +1,7 @@
 package com.ap.mis.controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,14 +11,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.ap.mis.entity.ConsultantInfo;
-import com.ap.mis.entity.NatureOfWork;
+import com.ap.mis.entity.GeotechnicalInvestigation;
+import com.ap.mis.entity.LandSurveyDetails;
 import com.ap.mis.entity.TechnicalSanction;
-import com.ap.mis.entity.TypeOfWork;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.ConsultantInfoService;
+import com.ap.mis.service.GeotechnicalInvestigationService;
+import com.ap.mis.service.LandSurveyDetailService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.TechnicalSanctionService;
 import com.ap.mis.util.EnumFilter;
@@ -31,18 +29,21 @@ import com.ap.mis.util.SecurityUtil;
 @Controller
 @RequestMapping("/ConsultantInfo")
 public class ConsultantInfoController {
-
+	
 	private static final Logger log = Logger.getLogger(ConsultantInfoController.class);
 
+	@Autowired MISService misService;
+	
+	@Autowired ConsultantInfoService constInfoService;
+	
+	@Autowired TechnicalSanctionService technicalSanctionService;
+	
 	@Autowired
-	MISService misService;
+	LandSurveyDetailService landSurveyDetailsService;
 
 	@Autowired
-	ConsultantInfoService constInfoService;
-
-	@Autowired
-	TechnicalSanctionService technicalSanctionService;
-
+	GeotechnicalInvestigationService geotechnicalInvestigation;
+	
 	@PostMapping(value = "/save")
 	public String saveConsultantInfo(@ModelAttribute ConsultantInfo consultantInfoObject, Model model,
 			HttpServletRequest request, HttpSession session) {
@@ -80,15 +81,20 @@ public class ConsultantInfoController {
 		}
 
 	}
-
+	
 	@GetMapping(value = "/create")
-	public String create(@ModelAttribute User userObject, Model model, HttpServletRequest request) {
+	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		userObject = SecurityUtil.getLoggedUser();
-		userObject = misService.verifyUser(userObject);
-		model.addAttribute("consultantInfoObject", new ConsultantInfo());
+	    userObject =misService.verifyUser(userObject);
+	    int workId =(int) session.getAttribute("workIdSession");
+	    Works workInfo=misService.getWorkInfo(workId);
+	    model.addAttribute("workObject", workInfo);
+	    model.addAttribute("consultantInfoObject", new ConsultantInfo());
 		session.setAttribute("loggedInUserObj", userObject);
-		return "online-mis-consultant-information";
+		LandSurveyDetails existedLandSurveyDetails = landSurveyDetailsService.findByWork(workInfo);
+		model.addAttribute("landSurvey",existedLandSurveyDetails);
+	    return "online-mis-consultant-information";
 	}
 
 	@GetMapping(value = "/view")
@@ -99,12 +105,20 @@ public class ConsultantInfoController {
 		model.addAttribute("techInfo", techInfo);
 		return "online-mis-consultInfoView";
 	}
-
+	
 	@GetMapping(value = "/edit/{id}")
-	public String edit(Model model, @PathVariable("id") Integer id, HttpServletRequest request) {
-		System.out.println("WORK ID:::" + id);
+	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int workId =(int) session.getAttribute("workIdSession");
+		Works workInfo=misService.getWorkInfo(workId);
 		ConsultantInfo consltInfo = constInfoService.getConsultDetails(id);
-		model.addAttribute("consultantInfoObject", consltInfo);
-		return "online-mis-consultant-information";
+		model.addAttribute("consultantInfoObject",consltInfo);
+		model.addAttribute("workObject", consltInfo.getWork());
+		LandSurveyDetails existedLandSurveyDetails = landSurveyDetailsService.findByWork(workInfo);
+		model.addAttribute("landSurvey",existedLandSurveyDetails);
+		model.addAttribute("consltInfo",consltInfo);
+		GeotechnicalInvestigation geotechnicalInvestigationDetails = geotechnicalInvestigation.findByWork(workInfo);
+		model.addAttribute("investigation",geotechnicalInvestigationDetails);
+	    return "online-mis-consultant-information";
 	}
 }

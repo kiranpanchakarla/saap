@@ -1,8 +1,10 @@
 package com.ap.mis.controllers;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import com.ap.mis.entity.NatureOfWork;
 import com.ap.mis.entity.TypeOfWork;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Village;
+import com.ap.mis.entity.WorkHistory;
 import com.ap.mis.entity.WorkLineItemsList;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AdministrativeSectionService;
@@ -29,6 +32,7 @@ import com.ap.mis.service.DistrictService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.MandalService;
 import com.ap.mis.service.VillageService;
+import com.ap.mis.service.WorkHistroyService;
 import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.SecurityUtil;
@@ -50,7 +54,8 @@ public class WorkCreationController {
 	MandalService mandalService;
 	@Autowired
 	VillageService villageService;
-
+	@Autowired
+	WorkHistroyService workHistroyService;
 	@PostMapping(value = "/save")
 	public String workCreationSave(@ModelAttribute Works workObject, Model model, HttpServletRequest request,
 			HttpSession session) {
@@ -63,6 +68,12 @@ public class WorkCreationController {
 			workObject.setStatus(EnumFilter.OPEN.getStatus());
 			workObject.setWorkStatus(EnumWorkStatus.WORK.getStatus());
 			misService.saveWorks(workObject);
+			
+			WorkHistory workHistory = new WorkHistory();
+			workHistory.setWork(workObject);
+			workHistory.setWorkStatus(EnumWorkStatus.WORK.getStatus());
+			workHistroyService.saveWorks(workHistory);
+			
 		} else {
 			log.info("inside update:" + workObject.getId());
 			workObject.setStatus(workObject.getStatus());
@@ -147,6 +158,11 @@ public class WorkCreationController {
 		return "online-mis-workCreationView";
 	}
 
+	@GetMapping(value = "/main")
+	public String mainTest(Model model) {
+		return "main";
+		
+	}
 	/*
 	 * @GetMapping(value = "/edit") public String GetInfo(Model model, String
 	 * workId) {

@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.Attachements;
+import com.ap.mis.entity.ConsultantInfo;
+import com.ap.mis.entity.GeotechnicalInvestigation;
+import com.ap.mis.entity.LandSurveyDetails;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AttachmentService;
+import com.ap.mis.service.ConsultantInfoService;
+import com.ap.mis.service.GeotechnicalInvestigationService;
+import com.ap.mis.service.LandSurveyDetailService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.EnumWorkStatus;
@@ -33,6 +39,14 @@ public class PreliminaryPreparationLayoutController {
 
 	@Autowired
 	FileUploadConstraintsUtil fileUploadConstraint;
+	
+	@Autowired ConsultantInfoService constInfoService;
+	
+	@Autowired
+	GeotechnicalInvestigationService geotechnicalInvestigation;
+	
+	@Autowired
+	LandSurveyDetailService landSurveyDetailsService;
 
 	@GetMapping(path = { "/create", "/edit", "/view" })
 	public String createPreliminaryPreparationLayout(Model model, HttpSession session) {
@@ -43,7 +57,9 @@ public class PreliminaryPreparationLayoutController {
 		Works work = MISService.getWorkInfo(workId);
 
 		List<Attachements> attachments = attachmentService.getAttachementsDetails(workId, workModuleStatus.getStatus());
-
+		ConsultantInfo consltInfo = constInfoService.getConsultDetails(workId);
+		model.addAttribute("consltInfo",consltInfo);
+		model.addAttribute("consultantInfoObject",consltInfo);
 		model.addAttribute("work", work);
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		model.addAttribute("preliminaryPreparationLayoutAttachmentFiles", attachments);
@@ -52,7 +68,12 @@ public class PreliminaryPreparationLayoutController {
 		model.addAttribute("FILE_UPLOAD_PENDING", EnumFilter.OPEN.getStatus());
 		model.addAttribute("FILE_UPLOAD_APPROVED", EnumFilter.ATTACHMENT_APPROVED.getStatus());
 		model.addAttribute("FILE_UPLOAD_REJECTED", EnumFilter.ATTACHMENT_REJECTED.getStatus());
-
+		model.addAttribute("workObject", work);
+		LandSurveyDetails existedLandSurveyDetails = landSurveyDetailsService.findByWork(work);
+		model.addAttribute("landSurvey",existedLandSurveyDetails);
+		GeotechnicalInvestigation geotechnicalInvestigationDetails = geotechnicalInvestigation.findByWork(work);
+		model.addAttribute("investigation",geotechnicalInvestigationDetails);
+		
 		return "online-mis-preliminary-preparation-layout";
 	}
 

@@ -76,10 +76,12 @@ public class PreliminaryDrawingController {
 
 		model.addAttribute("work", work);
 		model.addAttribute("consultant", consultant);
+		model.addAttribute("consltInfo",consultant);
+		model.addAttribute("consultantInfoObject",consultant);
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		model.addAttribute("landSurveyDetails", landSurveyDetails);
 		model.addAttribute("geotechnicalInvestigation", geotechnicalInvestigation);
-
+		model.addAttribute("workObject", work);
 		model.addAttribute("landAttachmentFiles", landAttachmentFiles);
 		model.addAttribute("landSurveyAttachmentFiles", landSurveyAttachmentFiles);
 		model.addAttribute("PPLayoutAttachmentFiles", PPLayoutAttachmentFiles);
@@ -89,8 +91,8 @@ public class PreliminaryDrawingController {
 		model.addAttribute("FILE_UPLOAD_PENDING", EnumFilter.OPEN.getStatus());
 		model.addAttribute("FILE_UPLOAD_APPROVED", EnumFilter.ATTACHMENT_APPROVED.getStatus());
 		model.addAttribute("FILE_UPLOAD_REJECTED", EnumFilter.ATTACHMENT_REJECTED.getStatus());
-		
-
+		model.addAttribute("landSurvey",landSurveyDetails);
+		model.addAttribute("investigation",geotechnicalInvestigation);
 		return "online-mis-preliminary-drawings";
 	}
 

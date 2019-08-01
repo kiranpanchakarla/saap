@@ -32,6 +32,12 @@ margin-left: 10px;
 
 	<section id="contact" class="section-bg-con">
 		<div class="container">
+		<c:import url="/WEB-INF/jsp/online-mis-consultantTabView.jsp" />
+
+		<div class="tab-content">
+
+			<div class="tab-pane fade show" id="nav-admin" role="tabpanel"
+				aria-labelledby="nav-admin-tab">
 			<div class="row">
 				<div class="col-md-12">
 					<c:url value="/preliminaryDrawings/sendforApproval" var="createUrl" />
@@ -519,7 +525,7 @@ margin-left: 10px;
 
 
 							</div>
-						</fieldset>
+						
 
 						<c:if test="${SAAP_APPROVED_STATUS eq work.workStatus}">
 							<input type="button" id="approved" name="next" disabled="true" style="cursor: not-allowed;"
@@ -538,12 +544,14 @@ margin-left: 10px;
 							<input type="submit" id="submit" name="next"
 								class="next action-button" value="Send for approval">
 						</c:if>
-
+</fieldset>
 
 					</form>
 
 				</div>
 			</div>
+		</div>
+		</div>
 		</div>
 		<!-- /.MultiStep Form -->
 
@@ -703,6 +711,11 @@ margin-left: 10px;
 	<jsp:include page="online-mis-footer.jsp" />
 
 	<script>
+	var onChange = false;
+	$(document).ready(function() {
+		$('#nav-approvals-tab').addClass('active');
+	    $('#nav-approvals').addClass('active');
+	});
 		<c:if test="${SAAP_APPROVED_STATUS eq work.workStatus || PENDING_SAAP_APPROVAL eq work.workStatus}">
 
 		$(document).ready(function() {
@@ -711,6 +724,8 @@ margin-left: 10px;
 				<c:url value="/adminloggedin" var="homeUrl" />
 				window.location.href = "${homeUrl}"
 			});
+			
+			 
 		});
 
 		</c:if>

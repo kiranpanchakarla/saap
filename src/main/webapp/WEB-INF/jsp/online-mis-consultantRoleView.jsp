@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <!DOCTYPE html>
@@ -22,7 +22,32 @@
 <script src="<c:url value="/resources/lib/jquery/jquery.min.js"/>"
 	type="text/javascript"></script>
 
-
+<style>
+label {
+    color: #06213e !important;
+    word-break: break-word;
+    margin-left: 5px;
+}
+h2+div.row {
+    margin-left: -5px !important;
+}
+h2.fs-title {
+    margin-bottom: 15px;
+    letter-spacing: unset;
+}
+#nav-tab {
+    width: 100%;
+}
+.tab-content {
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+}
+#nav-tab li a.disabled {
+    pointer-events: none !important;
+}
+.click-not-allowed {
+    cursor: not-allowed !important;
+}
+</style>
 
 </head>
 
@@ -55,259 +80,372 @@
 
 	<section id="contact" class="section-bg-con">
 		<div class="container">
+		<c:import url="/WEB-INF/jsp/online-mis-consultantTabView.jsp" />
+
+		<div class="tab-content">
+
+			<div class="tab-pane fade show" id="nav-admin" role="tabpanel"
+				aria-labelledby="nav-admin-tab">
 			<div class="row">
 				<div class="col-md-12">
 					<form id="msform" method="get" action="${createUrl}">
-
-						<fieldset>
-							<div class="col-md-6">
-								<div class="text-center">
-									<h4 class="section-title">Work</h4>
-								</div>
-								<div class="table-responsive">
-
-									<table class="table table-bordered" style="width: 100%">
-										<thead>
-											<tr>
-												<th>Types of Work</th>
-												<td>${workInfo.typeOfWork.name}</td>
-											</tr>
-											<tr>
-												<th>Nature of work</th>
-												<td>${workInfo.natureOfWork.name}</td>
-											</tr>
-											<tr>
-												<th>District</th>
-												<td>${workInfo.district.name}</td>
-											</tr>
-											<tr>
-												<th>Constituency</th>
-												<td>${workInfo.constituency.name}</td>
-
-											</tr>
-											<tr>
-												<th>Mandal</th>
-												<td>${workInfo.mandal.name}</td>
-
-											</tr>
-											<tr>
-												<th>Village</th>
-												<td>${workInfo.village.name}</td>
-
-											</tr>
-											<tr>
-												<th>Location</th>
-												<td>${workInfo.district.name}</td>
-
-											</tr>
-											<tr>
-												<th>Work Number</th>
-												<td>${workInfo.workNo}</td>
-
-											</tr>
-											<tr>
-												<th>Work Detail</th>
-												<td>${workLineItems.workDetails}</td>
-
-											</tr>
-											<tr>
-												<th>Estimated Cost</th>
-												<td>${workLineItems.cost}</td>
-											</tr>
-
-										</thead>
-										<tbody style="display: none;"></tbody>
-
-									</table>
-
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="text-center">
-									<h4 class="section-title">Administrative Sanction</h4>
-								</div>
-								<div class="table-responsive">
-									<table class="table table-bordered" style="width: 100%">
-										<thead>
-
-											<tr>
-												<th>Name of Work</th>
-												<td>${adminInfo.workName}</td>
-											</tr>
-											<tr>
-												<th>Work Number</th>
-												<td>${adminInfo.workNumber}</td>
-											</tr>
-											<tr>
-												<th>Sanctioned Details</th>
-												<td>${adminInfo.sanctionedDetails}</td>
-
-											</tr>
-											<tr>
-												<th>Grant</th>
-												<td>${adminInfo.typeOfGrant.name}</td>
-
-											</tr>
-											<tr>
-												<th>Financial Year</th>
-												<td>${adminInfo.financialYear.year}</td>
-
-											</tr>
-											<tr>
-												<th>Engagement of Department by</th>
-												<td>${adminInfo.executiveDept.name}</td>
-
-											</tr>
-											<tr>
-												<th>Engagement of Consultant by</th>
-												<td>${adminInfo.consultant.name}</td>
-
-											</tr>
-											<tr>
-												<th>Document Details</th>
-
-												<td><c:forEach items="${adminFile}" var="file">
+					<br>
+ 					<h2 class="fs-title">Work</h2>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Work Type</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workInfo.typeOfWork.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Work Nature</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workInfo.natureOfWork.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>District</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workInfo.district.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Constituency</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workInfo.constituency.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Mandal</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workInfo.mandal.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Village</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workInfo.village.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Location</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workInfo.location}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Work Number</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workInfo.workNo}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Work Detail</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workLineItems.workDetails}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Estimated Cost</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${workLineItems.cost}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        <hr />
+                         <br>
+ 					<h2 class="fs-title">Administrative Sanction</h2>
+                    <div class="row">
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Sanctioned Details</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${adminInfo.sanctionedDetails}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Grant</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${adminInfo.typeOfGrant.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Financial Year</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${adminInfo.financialYear.year}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Engagement of Department by</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${adminInfo.executiveDept.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Engagement of Consultant by</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${adminInfo.consultant.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Document Details</span>
+                                </div>
+                                <div class="col-7">
+                                <c:forEach items="${adminFile}" var="file">
 														<a href="${file.value}" target="_blank" id="docView"
 															name="image" style="float: left;">${file.key}</a>
 														<br>
-													</c:forEach></td>
-
-											</tr>
-										</thead>
-										<tbody style="display: none;"></tbody>
-
-									</table>
-								</div>
-							</div>
-
-							<br>
-
-						</fieldset>
-
-						<fieldset>
-							<div class="col-md-6">
-								<div class="text-center">
-									<h4 class="section-title">Department</h4>
-								</div>
-								<div class="table-responsive">
-
-									<table class="table table-bordered" style="width: 100%">
-										<thead>
-											<tr>
-												<th>Department</th>
-												<td>${deptInfo.departmentName}</td>
-											</tr>
-											<tr>
-												<th>Nature of work</th>
-												<td>${workInfo.natureOfWork.name}</td>
-											</tr>
-											<tr>
-												<th>Circle</th>
-												<td>${deptInfo.circle}</td>
-											</tr>
-											<tr>
-												<th>Division</th>
-												<td>${deptInfo.divisionName.name}</td>
-
-											</tr>
-											<tr>
-												<th>SubDivision</th>
-												<td>${deptInfo.subdivisionName.name}</td>
-
-											</tr>
-											<tr>
-												<th>Section</th>
-												<td>${deptInfo.sectionName.name}</td>
-
-											</tr>
-											<tr>
-												<th>Section Officer</th>
-												<td>${deptInfo.sectionOfficerName}</td>
-
-											</tr>
-											<tr>
-												<th>Mobile</th>
-												<td>${deptInfo.mobileNo}</td>
-
-											</tr>
-											<tr>
-												<th>Email Id</th>
-												<td>${deptInfo.email}</td>
-
-											</tr>
-
-										</thead>
-										<tbody style="display: none;"></tbody>
-
-									</table>
-
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="text-center">
-									<h4 class="section-title">Land Details</h4>
-								</div>
-								<div class="table-responsive">
-									<table class="table table-bordered" style="width: 100%">
-										<thead>
-											<tr>
-												<th>Work</th>
-												<td>${landInfo.work.natureOfWork.name}</td>
-											</tr>
-											<tr>
-												<th>Work Number</th>
-												<td>${landInfo.work.workNo}</td>
-											</tr>
-											<tr>
-												<th>Name of Work</th>
-												<td>${adminInfo.workName}</td>
-											</tr>
-											<tr>
-												<th>Land Extend</th>
-												<td>${landInfo.landExtend}</td>
-
-											</tr>
-											<tr>
-												<th>Survey Number</th>
-												<td>${landInfo.surveyNo}</td>
-
-											</tr>
-											<tr>
-												<th>Field Measurement Details</th>
-												<td>${landInfo.bookDetails}</td>
-
-											</tr>
-											<tr>
-												<th>Type Of Land</th>
-												<td>${landInfo.typeOfLand.name}</td>
-
-											</tr>
-											<tr>
-												<th>Document Details</th>
-												<td><c:forEach items="${landFile}" var="landfile">
+													</c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        <hr />
+                        <br>
+ 					<h2 class="fs-title">Department</h2>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Department</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${deptInfo.departmentName}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Circle</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${deptInfo.circle}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Division</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${deptInfo.divisionName.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>SubDivision</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${deptInfo.subdivisionName.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Section</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${deptInfo.sectionName.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Section Officer</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${deptInfo.sectionOfficerName}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Mobile</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${deptInfo.mobileNo}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Email Id</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${deptInfo.email}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        <hr />
+                        <br>
+ 					<h2 class="fs-title">Land Details</h2>
+                    <div class="row">
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Land Extend</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${landInfo.landExtend}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Survey Number</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${landInfo.surveyNo}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Field Measurement</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${landInfo.bookDetails}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Type Of Land</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${landInfo.typeOfLand.name}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Document Details</span>
+                                </div>
+                                <div class="col-7">
+                                <c:forEach items="${landFile}" var="landfile">
 														<a href="${landfile.value}" target="_blank" id="docView"
 															name="image" style="float: left;">${landfile.key}</a>
 														<br>
-													</c:forEach></td>
-
-											</tr>
-
-										</thead>
-										<tbody style="display: none;"></tbody>
-
-									</table>
-								</div>
-							</div>
-							<br>
-							<%-- <c:if test="${userRole eq 'ROLE_DEPARTMENT'}">
+													</c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        
+                        <c:if test="${userRole eq 'ROLE_DEPARTMENT'}">
 		<div class="col-md-12" align="right">
           <button type="submit" class="btn btn-info">Executive Department</button>
          </div>
-         </c:if> --%>
+         </c:if>
 
-							<%--  <c:if test="${userRole eq 'ROLE_CONSULTANT'}"> --%>
+							 <c:if test="${userRole eq 'ROLE_CONSULTANT'}">
 							<div class="col-md-12" align="right">
 								<c:choose>
 									<c:when test="${workInfo.workStatus eq 'Land_Details'}">
@@ -320,15 +458,13 @@
 									</c:otherwise>
 								</c:choose>
 							</div>
-							<%--  </c:if> --%>
-
-						</fieldset>
-
-
-
+							 </c:if>
+                        <br>
 					</form>
 				</div>
 			</div>
+		</div>
+		</div>
 		</div>
 	</section>
 	<br>
@@ -337,6 +473,7 @@
 	<br>
 
 	<script>
+	var onChange = false;
 		$(document).ready(function() {
 			/* 	 alert( $.fn.jquery ) */
 			$('#viewTable').DataTable({
@@ -346,7 +483,11 @@
 				"info" : false,
 				"dom" : '<"top"i>rt<"bottom"flp><"clear">'
 			});
+			
+			$('#nav-work-tab').addClass('active');
+			$('#nav-work').addClass('active');
 		});
+		
 	</script>
 
 	<!-- <script  src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/>

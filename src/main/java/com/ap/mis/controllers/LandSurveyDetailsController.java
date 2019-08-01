@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.Attachements;
+import com.ap.mis.entity.ConsultantInfo;
+import com.ap.mis.entity.GeotechnicalInvestigation;
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.LandSurveyDetails;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AttachmentService;
+import com.ap.mis.service.ConsultantInfoService;
+import com.ap.mis.service.GeotechnicalInvestigationService;
 import com.ap.mis.service.LandDetailService;
 import com.ap.mis.service.LandSurveyDetailService;
 import com.ap.mis.service.MISService;
@@ -46,6 +50,11 @@ public class LandSurveyDetailsController {
 
 	@Autowired
 	FileUploadConstraintsUtil fileUploadConstraint;
+	
+	@Autowired ConsultantInfoService constInfoService;
+	
+	@Autowired
+	GeotechnicalInvestigationService geotechnicalInvestigationService;
 
 	@GetMapping(path = { "/create", "/edit" })
 	public String createLandSurveyDetails(Model model, HttpSession session) {
@@ -56,8 +65,13 @@ public class LandSurveyDetailsController {
 
 		// load Survey land details
 		Works work = MISService.getWorkInfo(workId);
-
+		
+		//check consultant info
+		ConsultantInfo consltInfo = constInfoService.getConsultDetails(workId);
+		model.addAttribute("consultantInfoObject",consltInfo);
+		
 		LandSurveyDetails existedLandSurveyDetails = landSurveyDetailsService.findByWork(work);
+		model.addAttribute("landSurvey",existedLandSurveyDetails);
 		if (existedLandSurveyDetails != null) {
 			newLandSurvey = existedLandSurveyDetails;
 		}
@@ -80,7 +94,12 @@ public class LandSurveyDetailsController {
 		model.addAttribute("FILE_UPLOAD_PENDING", EnumFilter.OPEN.getStatus());
 		model.addAttribute("FILE_UPLOAD_APPROVED", EnumFilter.ATTACHMENT_APPROVED.getStatus());
 		model.addAttribute("FILE_UPLOAD_REJECTED", EnumFilter.ATTACHMENT_REJECTED.getStatus());
-
+		model.addAttribute("workObject", work);
+		model.addAttribute("consltInfo",consltInfo);
+		
+		GeotechnicalInvestigation geotechnicalInvestigation = geotechnicalInvestigationService.findByWork(work);
+		model.addAttribute("investigation", geotechnicalInvestigation);
+		
 		return "online-mis-land-survey-details";
 	}
 

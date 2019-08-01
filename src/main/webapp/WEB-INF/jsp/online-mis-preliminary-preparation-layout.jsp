@@ -25,6 +25,12 @@
 
 	<section id="contact" class="section-bg-con">
 		<div class="container">
+		<c:import url="/WEB-INF/jsp/online-mis-consultantTabView.jsp" />
+
+		<div class="tab-content">
+
+			<div class="tab-pane fade show" id="nav-admin" role="tabpanel"
+				aria-labelledby="nav-admin-tab">
 			<div class="row m-0">
 				<div class="col-md-12">
 					<c:url value="/geotechnicalInvestigation/create" var="createUrl" />
@@ -157,17 +163,32 @@
 			<!-- /.MultiStep Form -->
 
 		</div>
+		</div>
+		</div>
 	</section>
 
 	<!-- #contact --> </main>
 
 	<script>
+	
+		var onChange = false;
+	
+    <c:if test="${landSurveyDetails.id != null}">
+    var form = document.querySelector('#msform');
+    form.addEventListener('change', function() {
+    	onChange = true;
+    });
+    </c:if>
 		$(document).ready(function() {
 			updateTotalFileCount(${fn:length(preliminaryPreparationLayoutAttachmentFiles)});
 			$("#msform").on('submit', function(e) {
 				e.preventDefault();
 				window.location.href = $(this).attr("action");
 			})
+			
+			$('#nav-layouts-tab').addClass('active');
+		     $('#nav-layouts').addClass('active');
+		     /* $("#nav-investigation-tab").css({"background": "#02c05b !important;"}); */
 		})
 
 		//var filesList = [];

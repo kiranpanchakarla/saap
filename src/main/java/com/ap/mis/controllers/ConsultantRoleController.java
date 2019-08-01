@@ -18,13 +18,17 @@ import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.Attachements;
 import com.ap.mis.entity.ConsultantInfo;
 import com.ap.mis.entity.DepartmentLinkingLine;
+import com.ap.mis.entity.GeotechnicalInvestigation;
 import com.ap.mis.entity.LandDetails;
+import com.ap.mis.entity.LandSurveyDetails;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AdministrativeSectionService;
 import com.ap.mis.service.AttachmentService;
 import com.ap.mis.service.ConsultantInfoService;
+import com.ap.mis.service.GeotechnicalInvestigationService;
 import com.ap.mis.service.LandDetailService;
+import com.ap.mis.service.LandSurveyDetailService;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.util.ContextUtil;
@@ -52,13 +56,21 @@ public class ConsultantRoleController {
 	
 	@Autowired ConsultantInfoService consultantInfoService;
 	
+	@Autowired
+	LandSurveyDetailService landSurveyDetailsService;
+	
+	@Autowired
+	GeotechnicalInvestigationService geotechnicalInvestigation;
+	
 	@GetMapping(value = "/view")
 	public String view(Model model, String workId,HttpServletRequest request,HttpSession session) {
 		/*Work Details*/
 		Works workInfo=misService.getWorkInfo(Integer.parseInt(workId));
 		model.addAttribute("workInfo",workInfo);
 		model.addAttribute("workLineItems",workInfo.getWorkLineItemsList().get(0));
+		model.addAttribute("workObject", workInfo);
 		session.setAttribute("workIdSession", Integer.parseInt(workId));
+		
 		/*Administrative Sanction Details*/
 		
         AdministrativeSection adminInfo = admService.getAdminDetails(Integer.parseInt(workId));
@@ -100,6 +112,13 @@ public class ConsultantRoleController {
 		
 		ConsultantInfo consltInfo = consultantInfoService.getConsultDetails(Integer.parseInt(workId));
 		model.addAttribute("consultantInfoObject",consltInfo);
+		model.addAttribute("consltInfo",consltInfo);
+		
+		LandSurveyDetails existedLandSurveyDetails = landSurveyDetailsService.findByWork(workInfo);
+		model.addAttribute("landSurvey",existedLandSurveyDetails);
+		
+		GeotechnicalInvestigation geotechnicalInvestigationDetails = geotechnicalInvestigation.findByWork(workInfo);
+		model.addAttribute("investigation",geotechnicalInvestigationDetails);
 		
 	    return "online-mis-consultantRoleView";
 	}

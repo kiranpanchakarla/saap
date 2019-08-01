@@ -25,6 +25,12 @@
 
 	<section id="contact" class="section-bg-con">
 		<div class="container">
+		<c:import url="/WEB-INF/jsp/online-mis-consultantTabView.jsp" />
+
+		<div class="tab-content">
+
+			<div class="tab-pane fade show" id="nav-admin" role="tabpanel"
+				aria-labelledby="nav-admin-tab">
 			<div class="row m-0">
 				<div class="col-md-12">
 					<c:url value="/geotechnicalInvestigation/save" var="createUrl" />
@@ -170,16 +176,28 @@
 			<!-- /.MultiStep Form -->
 
 		</div>
+		</div>
+		</div>
 	</section>
 
 	<!-- #contact --> </main>
 
 	<script>
+		 
+		var onChange = false;
+			
+		    <c:if test="${geotechnicalInvestigationDetails.id == null}">
+		    var form = document.querySelector('#msform');
+		    form.addEventListener('change', function() {
+		    	onChange = true;
+		    });
+		    </c:if>
 		
-		//var filesList = [];
-
 		$(document).ready(function(){
-			updateTotalFileCount( ${fn:length(geotehnicalInvestigationLayoutAttachmentFiles)} );
+			updateTotalFileCount(${fn:length(geotehnicalInvestigationLayoutAttachmentFiles)} );
+		
+			$('#nav-investigation-tab').addClass('active');
+		     $('#nav-investigation').addClass('active');
 		});
 		
 		var moduleName = "${moduleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"

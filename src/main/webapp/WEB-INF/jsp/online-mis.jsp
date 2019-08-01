@@ -200,7 +200,8 @@ if(window.history){
 	<section id="contact" class="section-bg-con">
 		<div class="container">
 			<%-- <c:if test="${!empty workObject.id}"> --%>
-			<jsp:include page="online-mis-tabView.jsp" />
+			<%-- <jsp:include page="online-mis-tabView.jsp" /> --%>
+			<c:import url="/WEB-INF/jsp/online-mis-tabView.jsp" /> 
 			<%--   </c:if> --%>
 			<div class="tab-content">
 

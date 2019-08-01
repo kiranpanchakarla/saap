@@ -215,7 +215,7 @@ public class WorkApprovalController {
 		model.addAttribute("workLineItems", work.getWorkLineItemsList().get(0));
 		model.addAttribute("landSurveyDetails", landSurveyDetails);
 		model.addAttribute("geotechnicalInvestigation", geotechnicalInvestigation);
-
+		model.addAttribute("workObject", work);
 		model.addAttribute("landAttachmentFiles", landattachements);
 		model.addAttribute("landSurveyAttachmentFiles", landSurveyAttachmentFiles);
 		model.addAttribute("PPLayoutAttachmentFiles", PPLayoutAttachmentFiles);
