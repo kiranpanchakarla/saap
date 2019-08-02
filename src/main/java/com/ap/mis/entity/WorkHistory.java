@@ -5,16 +5,17 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_sa_workshistory")
-public class WorkHistory implements Serializable{
+@Table(name = "tbl_sa_workshistory")
+public class WorkHistory implements Serializable {
 
 	/**
 	 * 
@@ -22,26 +23,27 @@ public class WorkHistory implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="history_id",nullable=false,unique=true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
 	private Integer historyId;
-	
+
 	@Column(name = "module")
 	private String module;
-	
+
 	@Column(name = "sub_module")
 	private String subModule;
-	
+
 	@Column(name = "action")
 	private String actionPerform;
-	
-	@Column(name = "userId ")
-	private int user;
-	
+
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+
 	@Column(name = "created_date")
 	private Date createdDate;
-	
-	@OneToOne(targetEntity = Works.class)
+
+	@ManyToOne(targetEntity = Works.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
 
@@ -77,11 +79,11 @@ public class WorkHistory implements Serializable{
 		this.actionPerform = actionPerform;
 	}
 
-	public int getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(int user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -101,6 +103,4 @@ public class WorkHistory implements Serializable{
 		this.work = work;
 	}
 
-	 
-	
 }

@@ -23,4 +23,10 @@ public class WorkStatusViewController {
 		return "online-mis-full-work-status";
 	}
 
+	@GetMapping(path = "/history")
+	public String getWorkHistory(@PathVariable(value = "workId") int workId, Model model) {
+
+		return "online-mis-full-work-history";
+	}
+
 }

@@ -75,7 +75,7 @@ public class WorkCreationController {
 			workHistory.setModule(EnumFilter.SAAP.getStatus());
 			workHistory.setSubModule(EnumWorkStatus.WORK.getStatus());
 			workHistory.setCreatedDate(new Date());
-			workHistory.setUser(loggedInUser.getId());
+			workHistory.setUser(loggedInUser);
 			workHistory.setWork(workObject);
 			workHistroyService.saveWorks(workHistory);
 			
@@ -90,7 +90,7 @@ public class WorkCreationController {
 			workHistory.setModule(EnumFilter.SAAP.getStatus());
 			workHistory.setSubModule(EnumWorkStatus.WORK.getStatus());
 			workHistory.setCreatedDate(new Date());
-			workHistory.setUser(loggedInUser.getId());
+			workHistory.setUser(loggedInUser);
 			workHistory.setWork(workObject);
 			workHistroyService.saveWorks(workHistory);
 			// checking... AdministrativeSection is created or not
