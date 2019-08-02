@@ -1,6 +1,7 @@
 package com.ap.mis.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tbl_sa_workshistory")
-public class WorkHistory extends AuditModel implements Serializable{
+public class WorkHistory implements Serializable{
 
 	/**
 	 * 
@@ -22,22 +23,74 @@ public class WorkHistory extends AuditModel implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id",nullable=false,unique=true)
-	private Integer id;
+	@Column(name="history_id",nullable=false,unique=true)
+	private Integer historyId;
+	
+	@Column(name = "module")
+	private String module;
+	
+	@Column(name = "sub_module")
+	private String subModule;
+	
+	@Column(name = "action")
+	private String actionPerform;
+	
+	@Column(name = "userId ")
+	private int user;
+	
+	@Column(name = "created_date")
+	private Date createdDate;
 	
 	@OneToOne(targetEntity = Works.class)
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
-	
-	@Column(name = "work_status")
-	private String workStatus;
 
-	public Integer getId() {
-		return id;
+	public Integer getHistoryId() {
+		return historyId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setHistoryId(Integer historyId) {
+		this.historyId = historyId;
+	}
+
+	public String getModule() {
+		return module;
+	}
+
+	public void setModule(String module) {
+		this.module = module;
+	}
+
+	public String getSubModule() {
+		return subModule;
+	}
+
+	public void setSubModule(String subModule) {
+		this.subModule = subModule;
+	}
+
+	public String getActionPerform() {
+		return actionPerform;
+	}
+
+	public void setActionPerform(String actionPerform) {
+		this.actionPerform = actionPerform;
+	}
+
+	public int getUser() {
+		return user;
+	}
+
+	public void setUser(int user) {
+		this.user = user;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public Works getWork() {
@@ -48,13 +101,6 @@ public class WorkHistory extends AuditModel implements Serializable{
 		this.work = work;
 	}
 
-	public String getWorkStatus() {
-		return workStatus;
-	}
-
-	public void setWorkStatus(String workStatus) {
-		this.workStatus = workStatus;
-	}
-	
+	 
 	
 }

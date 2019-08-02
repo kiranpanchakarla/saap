@@ -1,5 +1,6 @@
 package com.ap.mis.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,8 +71,12 @@ public class WorkCreationController {
 			misService.saveWorks(workObject);
 			
 			WorkHistory workHistory = new WorkHistory();
+			workHistory.setActionPerform(EnumFilter.SAVED.getStatus());
+			workHistory.setModule(EnumFilter.SAAP.getStatus());
+			workHistory.setSubModule(EnumWorkStatus.WORK.getStatus());
+			workHistory.setCreatedDate(new Date());
+			workHistory.setUser(loggedInUser.getId());
 			workHistory.setWork(workObject);
-			workHistory.setWorkStatus(EnumWorkStatus.WORK.getStatus());
 			workHistroyService.saveWorks(workHistory);
 			
 		} else {
@@ -79,7 +84,15 @@ public class WorkCreationController {
 			workObject.setStatus(workObject.getStatus());
 			workObject.setWorkStatus(workObject.getWorkStatus());
 			misService.updateWork(workObject);
-
+			
+			WorkHistory workHistory = new WorkHistory();
+			workHistory.setActionPerform(EnumFilter.UPDATED.getStatus());
+			workHistory.setModule(EnumFilter.SAAP.getStatus());
+			workHistory.setSubModule(EnumWorkStatus.WORK.getStatus());
+			workHistory.setCreatedDate(new Date());
+			workHistory.setUser(loggedInUser.getId());
+			workHistory.setWork(workObject);
+			workHistroyService.saveWorks(workHistory);
 			// checking... AdministrativeSection is created or not
 			AdministrativeSection adminInfo = administrativeSectionService.getAdminDetails(workObject.getId());
 			if (adminInfo == null) {
