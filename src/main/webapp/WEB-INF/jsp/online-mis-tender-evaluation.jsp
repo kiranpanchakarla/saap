@@ -71,7 +71,7 @@
 
 	<section id="contact" class="section-bg-con">
 		<div class="container">
-
+<c:import url="/WEB-INF/jsp/online-mis-departmentTabView.jsp" />
 			<div class="row">
 				<div class="col-md-12">
 
@@ -384,6 +384,12 @@
 	<jsp:include page="online-mis-footer.jsp" />
 
 	<script type="text/javascript">
+	var onChange = false;
+	$(document).ready(function(){
+		$('#nav-evaluation-tab').addClass('active');
+		$('#nav-evaluation').addClass('active');
+	});
+	
 		$("#amount").on('input', function() {
 			this.value = this.value.match(/^\d+\.?\d{0,2}/);
 		});

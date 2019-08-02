@@ -18,10 +18,9 @@
 <body>
  <!--=== Header ====-->
 <jsp:include page="online-mis-header.jsp" />
-
+<br>
 <div class="container">
-<div class="tab-content">
-	<div class="tab-pane fade show" id="nav-land" role="tabpanel" aria-labelledby="nav-land-tab">
+<c:import url="/WEB-INF/jsp/online-mis-departmentTabView.jsp" />
 		<div class="row">
 			<div class="col-md-12"> 
 			              
@@ -111,15 +110,17 @@
 			</div>
 		</div>
 	</div>
-</div>
-</div>
+ 
 
     <!--=== Footer ====-->
-	<jsp:include page="online-mis-footer.jsp" />
+	
 <script type="text/javascript">
 var contextPath = "${pageContext.request.contextPath}";
+var onChange = false;
 $(document).ready(function(){
 	updateTotalFileCount( ${fn:length(attachments)} );
+	$('#nav-loa-tab').addClass('active');
+	$('#nav-loa').addClass('active');
 });
 var moduleName = "${moduleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"
 
@@ -142,8 +143,10 @@ $("#submit").click(function(){
 	}
 	
 })
-
+ 
+	
 </script>
+<c:import url="/WEB-INF/jsp/online-mis-footer.jsp" />
 <script src="${pageContext.request.contextPath}/resources/js/libraries/moment.js"
 		type="text/javascript"></script>	
  <script src="${pageContext.request.contextPath}/resources/js/uploadDocuments/fileUploadDocuments.js"

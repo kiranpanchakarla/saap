@@ -3,7 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,51 +54,42 @@ h2.fs-title {
 <body>
 
 
-	<c:choose>
-		<c:when
-			test="${consultantInfoObject != null && (workInfo.workStatus eq 'Land_Details' or  workInfo.workStatus eq 'PEND_SAAP_APRVL')}">
-			<c:url value="/ConsultantInfo/edit/${consultantInfoObject.work.id}"
-				var="createUrl" />
+    
+    <c:choose>
+		<c:when test="${tenderInfo.id != null}">
+		<c:url value="/tenderProcess/edit/${workObject.id}" var="createUrl"></c:url>
 		</c:when>
-
-		<c:when
-			test="${workInfo.workStatus eq 'WORK_ESTMASN_CMPLTD' or workInfo.workStatus eq 'TECHNICL_SANKSN_CMPLTD'}">
-			<c:url
-				value="/work/${workInfo.id}/estimation/${workInfo.workStatus eq 'WORK_ESTMASN_CMPLTD' ? 'create' : 'edit' }"
-				var="createUrl" />
-		</c:when>
-
-		<c:when test="${workInfo.workStatus eq 'SAAP_APRVD'}">
-			<c:url value="/preliminaryDrawings/view" var="createUrl" />
-		</c:when>
-
 		<c:otherwise>
-			<c:url value="/ConsultantInfo/create" var="createUrl" />
+		 <c:url value="/tenderProcess/create" var="createUrl"></c:url>
 		</c:otherwise>
-
-	</c:choose>
-
+		</c:choose>
+    
 	<section id="contact" class="section-bg-con">
 		<div class="container">
+		<c:choose>
+		<c:when test="${userRole eq 'ROLE_CONSULTANT'}">
 		<c:import url="/WEB-INF/jsp/online-mis-consultantTabView.jsp" />
+		</c:when>
+		<c:otherwise>
+		 <c:import url="/WEB-INF/jsp/online-mis-departmentTabView.jsp" />
+		</c:otherwise>
+		</c:choose>
 
 		<div class="tab-content">
-
-			<div class="tab-pane fade show" id="nav-admin" role="tabpanel"
-				aria-labelledby="nav-admin-tab">
+		
 			<div class="row">
 				<div class="col-md-12">
 					<form id="msform" method="get" action="${createUrl}">
 					<br>
- 					<h2 class="fs-title">Work</h2>
+ 					<h2 class="fs-title">Consultant Information</h2>
                     <div class="row">
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Work Type</span>
+                                    <span>Consultant Firm</span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${workInfo.typeOfWork.name}</label>
+                                    <span>:</span><label>${consltInfo.consultant_firm}</label>
                                 </div>
                             </div>
                         </div>
@@ -106,10 +97,10 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Work Nature</span>
+                                    <span>PAN</span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${workInfo.natureOfWork.name}</label>
+                                    <span>:</span><label>${consltInfo.pan_number}</label>
                                 </div>
                             </div>
                         </div>
@@ -117,10 +108,10 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>District</span>
+                                    <span>TIN </span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${workInfo.district.name}</label>
+                                    <span>:</span><label>${consltInfo.tin_number}</label>
                                 </div>
                             </div>
                         </div>
@@ -128,10 +119,10 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Constituency</span>
+                                    <span>Mobile </span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${workInfo.constituency.name}</label>
+                                    <span>:</span><label>${consltInfo.mobile_no}</label>
                                 </div>
                             </div>
                         </div>
@@ -139,10 +130,10 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Mandal</span>
+                                    <span>Landline </span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${workInfo.mandal.name}</label>
+                                    <span>:</span><label>${consltInfo.landline_no}</label>
                                 </div>
                             </div>
                         </div>
@@ -150,10 +141,10 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Village</span>
+                                    <span>Email</span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${workInfo.village.name}</label>
+                                    <span>:</span><label>${consltInfo.emailId}</label>
                                 </div>
                             </div>
                         </div>
@@ -161,60 +152,27 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Location</span>
+                                    <span>Address</span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${workInfo.location}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Work Number</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${workInfo.workNo}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Work Detail</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${workLineItems.workDetails}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Estimated Cost</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${workLineItems.cost}</label>
+                                    <span>:</span><label>${consltInfo.address}</label>
                                 </div>
                             </div>
                         </div>
                         
                         </div>
-                        <hr />
+                         
                          <br>
- 					<h2 class="fs-title">Administrative Sanction</h2>
+ 					<h2 class="fs-title">BANK DETAILS OF FIRM</h2>
                     <div class="row">
                         
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Sanctioned Details</span>
+                                    <span>Bank</span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${adminInfo.sanctionedDetails}</label>
+                                    <span>:</span><label>${consltInfo.bank_name}</label>
                                 </div>
                             </div>
                         </div>
@@ -222,10 +180,10 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Grant</span>
+                                    <span>Branch</span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${adminInfo.typeOfGrant.name}</label>
+                                    <span>:</span><label>${consltInfo.branch}</label>
                                 </div>
                             </div>
                         </div>
@@ -233,10 +191,10 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Financial Year</span>
+                                    <span>Account Type</span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${adminInfo.financialYear.year}</label>
+                                    <span>:</span><label>${consltInfo.account_type}</label>
                                 </div>
                             </div>
                         </div>
@@ -244,10 +202,10 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Engagement of Department by</span>
+                                    <span>A/c Number</span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${adminInfo.executiveDept.name}</label>
+                                    <span>:</span><label>${consltInfo.account_number}</label>
                                 </div>
                             </div>
                         </div>
@@ -255,10 +213,108 @@ h2.fs-title {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-5">
-                                    <span>Engagement of Consultant by</span>
+                                    <span>IFSC Code</span>
                                 </div>
                                 <div class="col-7">
-                                    <span>:</span><label>${adminInfo.consultant.name}</label>
+                                    <span>:</span><label>${consltInfo.ifsc_code}</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <hr />
+                        <br>
+                        
+ 					<h2 class="fs-title">LAND SURVEY DETAILS</h2>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Survey</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${landSurveyDetails.surveycontent}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Comments</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${landSurveyDetails.comments}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                         <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Land Details Document</span>
+                                </div>
+                                <div class="col-7">
+                                   <span>:</span><c:forEach items="${landAttachmentFiles}" var="file" varStatus="loop">
+									<c:set var="filePathParts" value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+									<a href="${pageContext.request.contextPath}${file.path}"
+									target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a>
+									</c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Land Survey Details Document</span>
+                                </div>
+                                <div class="col-7">
+                                   <span>:</span><c:forEach items="${landSurveyAttachmentFiles}" var="file" varStatus="loop">
+									<c:set var="filePathParts" value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+									<a href="${pageContext.request.contextPath}${file.path}"
+									target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a>
+									</c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                         
+                        
+                        </div>
+                        <hr />
+                        <br>
+ 					<h2 class="fs-title">PRELIMINARY PREPARATION LAYOUT</h2>
+                    <div class="row">
+                        
+                        
+                        
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Document Details</span>
+                                </div>
+                                <div class="col-7">
+                                <span>:</span><c:forEach items="${PPLayoutAttachmentFiles}" var="file" varStatus="loop">
+									<c:set var="filePathParts" value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+									<a href="${pageContext.request.contextPath}${file.path}"
+									target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a>
+									</c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        
+                        <h2 class="fs-title">GEOTECHNICAL INVESTIGATION</h2>
+                    <div class="row">
+                        
+                         <div class="col-4">
+                            <div class="row">
+                                <div class="col-5">
+                                    <span>Comments</span>
+                                </div>
+                                <div class="col-7">
+                                    <span>:</span><label>${investigation.comments}</label>
                                 </div>
                             </div>
                         </div>
@@ -269,170 +325,11 @@ h2.fs-title {
                                     <span>Document Details</span>
                                 </div>
                                 <div class="col-7">
-                                <c:forEach items="${adminFile}" var="file">
-														<a href="${file.value}" target="_blank" id="docView"
-															name="image" style="float: left;">${file.key}</a>
-														<br>
-													</c:forEach>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        </div>
-                        <hr />
-                        <br>
- 					<h2 class="fs-title">Department</h2>
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Department</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${deptInfo.departmentName}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Circle</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${deptInfo.circle}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Division</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${deptInfo.divisionName.name}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>SubDivision</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${deptInfo.subdivisionName.name}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Section</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${deptInfo.sectionName.name}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Section Officer</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${deptInfo.sectionOfficerName}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Mobile</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${deptInfo.mobileNo}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Email Id</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${deptInfo.email}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        </div>
-                        <hr />
-                        <br>
- 					<h2 class="fs-title">Land Details</h2>
-                    <div class="row">
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Land Extend</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${landInfo.landExtend}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Survey Number</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${landInfo.surveyNo}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Field Measurement</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${landInfo.bookDetails}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Type Of Land</span>
-                                </div>
-                                <div class="col-7">
-                                    <span>:</span><label>${landInfo.typeOfLand.name}</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-5">
-                                    <span>Document Details</span>
-                                </div>
-                                <div class="col-7">
-                                <c:forEach items="${landFile}" var="landfile">
-														<a href="${landfile.value}" target="_blank" id="docView"
-															name="image" style="float: left;">${landfile.key}</a>
-														<br>
-													</c:forEach>
+                                <span>:</span><c:forEach items="${GIAttachmentFiles}" var="file" varStatus="loop">
+									<c:set var="filePathParts" value="${fn:split(fn:replace(file.path, '\\\\','@'), '@')}" />
+									<a href="${pageContext.request.contextPath}${file.path}"
+									target="_blank">${filePathParts[fn:length(filePathParts)-1]}</a>
+									</c:forEach>
                                 </div>
                             </div>
                         </div>
@@ -441,7 +338,7 @@ h2.fs-title {
                         
                         <c:if test="${userRole eq 'ROLE_DEPARTMENT'}">
 		<div class="col-md-12" align="right">
-          <button type="submit" class="btn btn-info">Executive Department</button>
+           <button type="submit" class="btn btn-info">Tender Process</button>  
          </div>
          </c:if>
 
@@ -452,7 +349,7 @@ h2.fs-title {
 										<button type="submit" class="btn btn-info">Consultant
 											Info</button>
 									</c:when>
-
+									
 									<c:otherwise>
 										<button type="submit" class="btn btn-info">Next</button>
 									</c:otherwise>
@@ -484,8 +381,8 @@ h2.fs-title {
 				"dom" : '<"top"i>rt<"bottom"flp><"clear">'
 			});
 			
-			$('#nav-work-tab').addClass('active');
-			$('#nav-work').addClass('active');
+			$('#nav-consultant-tab').addClass('active');
+			$('#nav-consultant').addClass('active');
 		});
 		
 	</script>

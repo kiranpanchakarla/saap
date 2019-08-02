@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ap.mis.entity.Attachements;
 import com.ap.mis.entity.LetterOfAcceptance;
+import com.ap.mis.entity.TenderEvaluation;
+import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AttachmentService;
 import com.ap.mis.service.LetterOfAcceptanceService;
 import com.ap.mis.service.MISService;
+import com.ap.mis.service.TenderEvaluationService;
+import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.FileUploadConstraintsUtil;
 
@@ -42,6 +46,12 @@ public class LetterOfAcceptanceController {
 	@Autowired
 	AttachmentService attachmentService;
 	
+	@Autowired
+	TenderEvaluationService tenderEvaluationService;
+	
+	@Autowired
+	TenderingProcessService tenderProcessService;
+	
 	
 	@GetMapping(path = { "/create", "/edit" })
 	public String create(Model model,HttpSession session) {
@@ -52,11 +62,18 @@ public class LetterOfAcceptanceController {
         List<Attachements> attachments = attachmentService.getAttachementsDetails(workId, moduleStatus.getStatus());
         
         Works work = MISService.getWorkInfo(workId);
+        model.addAttribute("workObject", work);
         LetterOfAcceptance letterofAcceptanceDetails=LOAService.findByWork(work);
         if(letterofAcceptanceDetails== null) {
         	letterofAcceptanceDetails=new LetterOfAcceptance();
         	letterofAcceptanceDetails.setWork(work);
         }
+        
+        TenderingProcess tenderInfo = tenderProcessService.getTenderDetails(workId);
+		model.addAttribute("tenderInfo",tenderInfo);
+		
+		TenderEvaluation tenderEvaluation = tenderEvaluationService.findTenderEvaluationByWork(work);
+		model.addAttribute("tenderEvaluation", tenderEvaluation);
         model.addAttribute("moduleName", moduleStatus.getStatus());
 		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
 		model.addAttribute("attachments", attachments);

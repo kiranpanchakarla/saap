@@ -167,6 +167,8 @@
 				e.preventDefault();
 				window.location.href = $(this).attr("action");
 			})
+			
+			
 		})
 
 		//var filesList = [];

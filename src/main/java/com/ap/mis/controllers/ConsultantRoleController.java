@@ -21,6 +21,8 @@ import com.ap.mis.entity.DepartmentLinkingLine;
 import com.ap.mis.entity.GeotechnicalInvestigation;
 import com.ap.mis.entity.LandDetails;
 import com.ap.mis.entity.LandSurveyDetails;
+import com.ap.mis.entity.TenderEvaluation;
+import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AdministrativeSectionService;
@@ -31,6 +33,8 @@ import com.ap.mis.service.LandDetailService;
 import com.ap.mis.service.LandSurveyDetailService;
 import com.ap.mis.service.LineDepartmentService;
 import com.ap.mis.service.MISService;
+import com.ap.mis.service.TenderEvaluationService;
+import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.util.ContextUtil;
 import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.SecurityUtil;
@@ -61,6 +65,18 @@ public class ConsultantRoleController {
 	
 	@Autowired
 	GeotechnicalInvestigationService geotechnicalInvestigation;
+	
+	@Autowired
+	ConsultantInfoService consultantService;
+	
+	@Autowired
+	AttachmentService attachmentService;
+	
+	@Autowired
+	TenderingProcessService tenderProcessService;
+	
+	@Autowired
+	TenderEvaluationService tenderEvaluationService;
 	
 	@GetMapping(value = "/view")
 	public String view(Model model, String workId,HttpServletRequest request,HttpSession session) {
@@ -120,6 +136,46 @@ public class ConsultantRoleController {
 		GeotechnicalInvestigation geotechnicalInvestigationDetails = geotechnicalInvestigation.findByWork(workInfo);
 		model.addAttribute("investigation",geotechnicalInvestigationDetails);
 		
-	    return "online-mis-consultantRoleView";
+	    return "online-mis-workInfo";
 	}
+	
+	@GetMapping(value = "/consultantInfo")
+	public String consultantinfo(Model model,HttpServletRequest request,HttpSession session) {
+		
+		int workId = (int) session.getAttribute("workIdSession");
+
+		Works work = misService.getWorkInfo(workId);
+		ConsultantInfo consultant = consultantService.getConsultDetails(workId);
+		LandSurveyDetails landSurveyDetails = landSurveyDetailsService.findByWork(work);
+		GeotechnicalInvestigation investigation = geotechnicalInvestigation.findByWork(work);
+		
+		List<Attachements> landAttachmentFiles = attachmentService.getAttachementsDetails(workId,
+				EnumFilter.LANDDETAILS.getStatus());
+		List<Attachements> landSurveyAttachmentFiles = attachmentService.getAttachementsDetails(workId,
+				EnumFilter.LAND_SURVEY_DETAILS.getStatus());
+		List<Attachements> PPLayoutAttachmentFiles = attachmentService.getAttachementsDetails(workId,
+				EnumFilter.PRELIMINARY_PREPARATION_LAYOUT.getStatus());
+		List<Attachements> GIAttachmentFiles = attachmentService.getAttachementsDetails(workId,
+				EnumFilter.GEOTECHNICAL_INVESTIGATION.getStatus());
+		
+		User loggedInUser = SecurityUtil.getLoggedUser();
+		model.addAttribute("userRole", loggedInUser.getRole().getRoleName());
+		
+		TenderingProcess tenderInfo = tenderProcessService.getTenderDetails(workId);
+		TenderEvaluation tenderEvaluation = tenderEvaluationService.findTenderEvaluationByWork(work);
+		model.addAttribute("workObject", work);
+		model.addAttribute("consltInfo",consultant);
+		model.addAttribute("landSurveyDetails",landSurveyDetails);
+		model.addAttribute("investigation",investigation);
+		model.addAttribute("tenderInfo",tenderInfo);
+		model.addAttribute("tenderEvaluation",tenderEvaluation);
+		model.addAttribute("landAttachmentFiles",landAttachmentFiles);
+		model.addAttribute("landSurveyAttachmentFiles",landSurveyAttachmentFiles);
+		model.addAttribute("PPLayoutAttachmentFiles",PPLayoutAttachmentFiles);
+		model.addAttribute("GIAttachmentFiles",GIAttachmentFiles);
+		session.setAttribute("workIdSession",workId);
+		return "online-mis-consultantInfo";
+		
+	}
+	
 }

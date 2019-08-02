@@ -15,6 +15,7 @@ import com.ap.mis.entity.AdministrativeSection;
 import com.ap.mis.entity.LetterOfAcceptance;
 import com.ap.mis.entity.TechnicalSanction;
 import com.ap.mis.entity.TenderEvaluation;
+import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.WorkEstimations;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AdministrativeSectionService;
@@ -22,6 +23,7 @@ import com.ap.mis.service.LetterOfAcceptanceService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.TechnicalSanctionService;
 import com.ap.mis.service.TenderEvaluationService;
+import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.service.WorkEstimationService;
 import com.ap.mis.util.EnumWorkStatus;
 
@@ -42,6 +44,9 @@ public class TenderEvaluationController {
 
 	@Autowired
 	TenderEvaluationService tenderEvaluationService;
+	
+	@Autowired
+	TenderingProcessService tenderProcessService;
 
 	@Autowired
 	LetterOfAcceptanceService LOAService;
@@ -56,6 +61,7 @@ public class TenderEvaluationController {
 		Works workInfo = misService.getWorkInfo(workId);
 
 		model.addAttribute("workInfo", workInfo);
+		model.addAttribute("workObject", workInfo);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 
 		WorkEstimations workEstimation = workEstimationService.getWorkEstimationByWork(workInfo);
@@ -67,6 +73,8 @@ public class TenderEvaluationController {
 		TechnicalSanction technicalSanction = technicalSanctionService.getTechDetails(workId);
 		model.addAttribute("technicalSanction", technicalSanction);
 
+		TenderingProcess tenderInfo = tenderProcessService.getTenderDetails(workId);
+		model.addAttribute("tenderInfo",tenderInfo);
 		TenderEvaluation tenderEvaluation = tenderEvaluationService.findTenderEvaluationByWork(workInfo);
 		if (tenderEvaluation == null) {
 			tenderEvaluation = new TenderEvaluation();

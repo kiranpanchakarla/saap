@@ -19,11 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ap.mis.entity.AgreementDetails;
 import com.ap.mis.entity.Attachements;
+import com.ap.mis.entity.TenderEvaluation;
 import com.ap.mis.entity.TenderingProcess;
 import com.ap.mis.entity.Works;
 import com.ap.mis.service.AgreementDetailService;
 import com.ap.mis.service.AttachmentService;
 import com.ap.mis.service.MISService;
+import com.ap.mis.service.TenderEvaluationService;
 import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.util.ContextUtil;
 import com.ap.mis.util.EnumFilter;
@@ -48,6 +50,9 @@ public class TenderProcessController {
 
 	@Autowired
 	FileUploadConstraintsUtil fileUploadConstraint;
+	
+	@Autowired
+	TenderEvaluationService tenderEvaluationService;
 
 	@PostMapping(value = "/save")
 	public String saveTenderingProcess(@ModelAttribute TenderingProcess tenderingProcessObj, Model model,
@@ -121,20 +126,25 @@ public class TenderProcessController {
 		 * 
 		 * return "online-mis-tendering-process";
 		 */
-
+        int id;
 		HttpSession session = request.getSession();
-		Works workInfo = misService.getWorkInfo(Integer.parseInt(workId));
-		TenderingProcess tenderProcess = tenderProcessService.getTenderDetails(Integer.parseInt(workId));
+		if(workId == null) {
+			id = (int) session.getAttribute("workIdSession");
+		}else {
+			 id = Integer.parseInt(workId);
+		}
+		Works workInfo = misService.getWorkInfo(id);
+		TenderingProcess tenderProcess = tenderProcessService.getTenderDetails(id);
 		if (tenderProcess == null) {
 			tenderProcess = new TenderingProcess();
 			tenderProcess.setWork(workInfo);
 		}
 
-		List<Attachements> engPublicationAttachements = attachService.getAttachementsDetails(Integer.parseInt(workId),
+		List<Attachements> engPublicationAttachements = attachService.getAttachementsDetails(id,
 				EnumFilter.TENDERPROCESSFORENG.getStatus());
 
 		List<Attachements> teluguPublicationAttachements = attachService
-				.getAttachementsDetails(Integer.parseInt(workId), EnumFilter.TENDERPROCESSFORTEL.getStatus());
+				.getAttachementsDetails(id, EnumFilter.TENDERPROCESSFORTEL.getStatus());
 
 		model.addAttribute("tenderingProcessObj", tenderProcess);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
@@ -247,10 +257,12 @@ public class TenderProcessController {
 		 */
 		Works workInfo = misService.getWorkInfo(tenderInfo.getWork().getId());
 		model.addAttribute("workInfo", workInfo);
+		model.addAttribute("workObject", workInfo);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
 		model.addAttribute("authoritiesTypeList", tenderProcessService.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderProcessService.getAgencyList());
 		model.addAttribute("tenderingProcessObj", tenderInfo);
+		model.addAttribute("tenderInfo",tenderInfo);
 		model.addAttribute("fileUploadConstraint", fileUploadConstraint);
 
 		model.addAttribute("engPublicationAttachements", engAttachements);
@@ -259,6 +271,9 @@ public class TenderProcessController {
 		model.addAttribute("englishPaperNotificationAttachmentModuleName", EnumFilter.TENDERPROCESSFORENG.getStatus());
 		model.addAttribute("teluguPaperNotificationAttachmentModuleName", EnumFilter.TENDERPROCESSFORTEL.getStatus());
 
+		TenderEvaluation tenderEvaluation = tenderEvaluationService.findTenderEvaluationByWork(workInfo);
+		model.addAttribute("tenderEvaluation", tenderEvaluation);
+		
 		return "online-mis-tendering-process";
 	}
 

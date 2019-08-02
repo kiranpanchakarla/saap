@@ -114,8 +114,10 @@
 															</c:when>
 															<c:when
 																test="${viewDetails.status eq 'TENDR_PROCES_INFO'}">
-																<c:url value="/tenderProcess/edit/${viewDetails.id}"
-																	var="path"></c:url>
+																 <c:url value="/tenderProcess/edit/${viewDetails.id}"
+																	var="path"></c:url> 
+																	<%-- <c:url value="/consultant/view?workId=${viewDetails.id}" 
+																	var="path"></c:url>--%>
 															</c:when>
 															<c:otherwise>
 																<c:url value="work/${viewDetails.id}/estimation/create"

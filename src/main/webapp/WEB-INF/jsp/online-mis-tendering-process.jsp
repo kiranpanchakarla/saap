@@ -199,7 +199,7 @@ input[type="radio"]+label
     ============================--> <section id="contact"
 		class="section-bg-con">
 	<div class="container">
-
+		<c:import url="/WEB-INF/jsp/online-mis-departmentTabView.jsp" />
 		<div class="row">
 			<div class="col-md-12">
 
@@ -657,6 +657,11 @@ input[type="radio"]+label
 	<jsp:include page="online-mis-footer.jsp" />
 
 	<script type="text/javascript">
+	var onChange = false;
+	$(document).ready(function(){
+		$('#nav-process-tab').addClass('active');
+		$('#nav-process').addClass('active');
+	});
 	var contextPath = "${pageContext.request.contextPath}";
 	
 	var english_paper_notification_module = "${englishPaperPublicationAttachmentModuleName}", telugu_paper_notification_module = "${teluguPaperPublicationAttachmentModuleName}", csrf_tokenName = "${_csrf.parameterName}", csrf_tokenvalue = "${_csrf.token}"
