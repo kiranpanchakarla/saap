@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +17,20 @@
 
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 <jsp:include page="online-mis-header.jsp" />
+<style type="text/css">
+.work-details label {
+	word-break: break-word;
+}
 
+.timeline h2.work-action-title {
+	width: 200px;
+	word-break: break-word;
+}
+
+.timeline .timeline-items .timeline-item.inverted {
+	text-align: left !important;
+}
+</style>
 </head>
 
 <body>
@@ -23,6 +38,51 @@
 	<!-- dummy content start -->
 	<div class="container">
 		<div class="timeline">
+
+
+			<c:forEach items="${workHistoryRecentToOld}"
+				var="workHistoryRecentToOldEntry">
+				<h2 class="work-action-title">
+					<fmt:formatDate pattern="dd-MM-yyyy"
+						value="${workHistoryRecentToOldEntry.key}" />
+				</h2>
+				<ul class="timeline-items">
+					<c:forEach items="${workHistoryRecentToOldEntry.value}"
+						var="workHistory" varStatus="loop">
+
+						<li
+							class="is-hidden timeline-item ${loop.count%2 == 0 ? 'inverted' : ''}">
+							<h3>${workHistory.actionPerform}</h3>
+							<hr>
+
+							<div class="row work-details text-left">
+								<div class="col-6">Module</div>
+								<div class="col-6 d-flex">
+									<span>:</span>&nbsp;<label>${workHistory.module}</label>
+								</div>
+								<div class="col-6">Sub Module</div>
+								<div class="col-6 d-flex">
+									<span>:</span>&nbsp;<label>${workHistory.subModule}</label>
+								</div>
+								<div class="col-6">User</div>
+								<div class="col-6 d-flex">
+									<span>:</span>&nbsp;<label>${workHistory.user.name}</label>
+								</div>
+
+							</div>
+
+							<hr> <time>
+								<fmt:formatDate pattern="hh:mm a"
+									value="${workHistory.createdDate}" />
+							</time>
+						</li>
+					</c:forEach>
+				</ul>
+
+
+			</c:forEach>
+
+
 			<h2>12-2013</h2>
 			<ul class="timeline-items">
 				<li class="is-hidden timeline-item">
@@ -228,6 +288,8 @@
 			offset : 150
 
 		});
+		
+		
 	</script>
 </body>
 </html>

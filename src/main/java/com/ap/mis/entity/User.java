@@ -21,7 +21,7 @@ public class User extends AuditModel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id",nullable = false, unique = true)
+	@Column(name = "user_id", nullable = false, unique = true)
 	private Integer id;
 
 	@Column(name = "user_name")
@@ -163,7 +163,5 @@ public class User extends AuditModel implements Serializable {
 				+ email + ", address=" + address + ", isAdmin=" + isAdmin + ", isActive=" + isActive + ", isDeleted="
 				+ isDeleted + ", role=" + role + "]";
 	}
-	
-	
 
 }
