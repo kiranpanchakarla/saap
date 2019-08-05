@@ -23,19 +23,21 @@ import com.ap.mis.util.SecurityUtil;
 @RequestMapping("/misDetails")
 public class MisDetailsController {
 
-	@Autowired MISService misService;
-	
-	@Autowired OnlineMisDetailsService onlineMisDetailsService;
-	
+	@Autowired
+	MISService misService;
+
+	@Autowired
+	OnlineMisDetailsService onlineMisDetailsService;
+
 	@GetMapping(value = "/list")
-	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
+	public String create(@ModelAttribute User userObject, Model model, HttpServletRequest request) {
 		userObject = SecurityUtil.getLoggedUser();
-	    userObject =misService.verifyUser(userObject);
-	    List<OnlineMisDetails> reportList = onlineMisDetailsService.getList();
-		model.addAttribute("reportList", reportList); 
+		userObject = misService.verifyUser(userObject);
+		List<OnlineMisDetails> reportList = onlineMisDetailsService.getList();
+		model.addAttribute("reportList", reportList);
 		HttpSession session = request.getSession();
-		int workid =(int) session.getAttribute("workIdSession");
-		Works workInfo=misService.getWorkInfo(workid);
+		int workid = (int) session.getAttribute("workIdSession");
+		Works workInfo = misService.getWorkInfo(workid);
 		model.addAttribute("workInfo", workInfo);
 		return "online-mis-details";
 	}

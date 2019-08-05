@@ -30,25 +30,75 @@
 .timeline .timeline-items .timeline-item.inverted {
 	text-align: left !important;
 }
+
+.history-icon-holder {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 30px;
+	height: 30px;
+	transform: translate(-50%, -50%);
+	padding: 2px;
+	margin-left: 0px;
+	text-align: center;
+	color: #ffffff;
+	background: transparent;
+	transition: transform .02S ease-out;
+}
+
+.cd-timeline-img {
+	background-color: #00438b !important;
+}
+
+.history-icon-holder .fa {
+	font-size: 25px
+}
+
+.work-details label {
+	color: #212529;
+}
+
+.work-histoyr-event-container {
+	background-color: #e9f0f5;
+}
+
+.cd-date {
+	font-size: 1.2rem !important;
+}
+
+.no-history-found-container {
+	min-height: calc(100vh - 217px);
+}
+
+.no-history-found {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: #989898;
+	transform: translate(-50%, -50%);
+}
 </style>
 </head>
 
 <body>
 
 	<!-- dummy content start -->
-	<div class="container">
-		<div class="timeline">
+	<div class="container work-histoyr-event-container">
 
 
-			<c:forEach items="${workHistoryRecentToOld}"
+
+		<%-- <c:forEach items="${workHistoryRecentToOld}"
 				var="workHistoryRecentToOldEntry">
 				<h2 class="work-action-title">
 					<fmt:formatDate pattern="dd-MM-yyyy"
 						value="${workHistoryRecentToOldEntry.key}" />
 				</h2>
+				
+				
 				<ul class="timeline-items">
 					<c:forEach items="${workHistoryRecentToOldEntry.value}"
-						var="workHistory" varStatus="loop">
+						var="workHistory" varStatus="loop">											
 
 						<li
 							class="is-hidden timeline-item ${loop.count%2 == 0 ? 'inverted' : ''}">
@@ -80,216 +130,142 @@
 				</ul>
 
 
-			</c:forEach>
+			</c:forEach> --%>
+		<c:choose>
+			<c:when test="${fn:length(workHistoryRecentToOld) > 0}">
+				<section id="cd-timeline" class="cd-container">
+					<c:forEach items="${workHistoryRecentToOld}" var="workHistory"
+						varStatus="loop">
 
 
-			<h2>12-2013</h2>
-			<ul class="timeline-items">
-				<li class="is-hidden timeline-item">
-					<!-- Normal block, positionned to the left -->
-					<h3>Title</h3>
-					<hr>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Amet cupiditate, delectus deserunt doloribus earum eveniet
-						explicabo fuga iste magni maxime mollitia nemo neque, perferendis
-						quod reprehenderit ut, vel veritatis voluptas?</p>
-					<hr> <time>January 2013</time>
-				</li>
-			</ul>
-			<h2>2014</h2>
-			<ul class="timeline-items">
-				<li class="is-hidden timeline-item inverted">
-					<!-- Normal block, positionned to the right  -->
-					<h3>Title</h3>
-					<hr>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Adipisci alias aspernatur consequuntur culpa deserunt ea esse est
-						inventore, ipsa laborum officia, quam quia quidem, rem sunt
-						tempora tenetur ullam voluptatem.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Dicta dolore harum iure quod ut! Accusamus aspernatur corporis est
-						excepturi facere laudantium nesciunt nihil optio, quaerat quos
-						rerum sunt suscipit voluptate?.</p>
-					<hr> <time>Mars 2014</time>
-				</li>
-				<li class="is-hidden timeline-item centered">
-					<!-- Centered block, positionned in the middle -->
-					<h3>Title</h3>
-					<hr>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Blanditiis, cupiditate dicta dignissimos dolorem doloribus ducimus
-						eos error ex molestiae nobis odio odit optio placeat quasi
-						repudiandae, unde velit voluptate voluptatem!</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
-						commodi consectetur cupiditate ea, eius excepturi expedita illum,
-						incidunt ipsam iste modi obcaecati optio repellendus! Dolore
-						dolores pariatur sint veniam voluptates!</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Adipisci consequatur distinctio doloremque eos eum eveniet fuga
-						molestiae mollitia nesciunt nisi nobis nostrum, odio omnis
-						pariatur praesentium quibusdam sequi sint voluptates.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A
-						aliquam, aspernatur commodi consequuntur corporis dicta,
-						distinctio enim eos expedita, id iste laborum maxime nesciunt
-						quaerat sed temporibus veniam vero voluptatem.</p>
-					<p>
-						<a href="#">Link</a>
-					</p>
-					<hr> <time>Date</time>
-				</li>
+						<div class="cd-timeline-block">
+							<div class="cd-timeline-img cd-movie">
+								<div class="history-icon-holder">
+									<i class="fa fa-history"></i>
+								</div>
+							</div>
+							<!-- cd-timeline-img -->
 
-			</ul>
-			<h2>2015</h2>
-			<ul class="timeline-items">
-				<li class="is-hidden timeline-item">
-					<h3>Title</h3>
-					<hr>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-						aspernatur blanditiis dolorem, eos excepturi impedit neque nisi
-						recusandae repudiandae tempora. Ad debitis ducimus est et
-						explicabo, id in nam necessitatibus?</p>
+							<div class="cd-timeline-content">
+								<h2>${workHistory.actionPerform}</h2>
+								<hr />
 
-					<p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit. Accusamus aperiam, culpa eveniet excepturi fugiat, harum
-							laborum laudantium magni nemo nihil officia possimus quaerat quas
-							quod sapiente sit tempora vel? Veritatis.</span>
-					</p>
-					<hr> <time>Date</time>
-				</li>
-				<li class="is-hidden timeline-item inverted">
-					<h3>Title</h3>
-					<hr>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Cumque dignissimos inventore labore maiores mollitia neque
-						nesciunt nulla obcaecati vel velit! Aut, maxime minima? Eos est
-						laborum non optio quidem ut!</p>
+								<div class="row work-details text-left">
+									<div class="col-6">Module</div>
+									<div class="col-6 d-flex">
+										<span>:</span>&nbsp;<label>${workHistory.module}</label>
+									</div>
+									<div class="col-6">Sub Module</div>
+									<div class="col-6 d-flex">
+										<span>:</span>&nbsp;<label>${workHistory.subModule}</label>
+									</div>
+									<div class="col-6">User</div>
+									<div class="col-6 d-flex">
+										<span>:</span>&nbsp;<label>${workHistory.user.name}</label>
+									</div>
 
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Autem distinctio fugit, harum id magnam perferendis porro sint vel
-						voluptate voluptatibus! Ad adipisci deleniti ea nisi, placeat
-						ratione saepe sunt veritatis.</p>
-					<hr> <time>Date</time>
-				</li>
+								</div>
+
+								<span class="cd-date"> <fmt:formatDate
+										pattern="dd MMM yyyy hh:mm a"
+										value="${workHistory.createdDate}" /></span>
+							</div>
+							<!-- cd-timeline-content -->
+						</div>
+					</c:forEach>
+
+				</section>
 
 
-			</ul>
-			<h2>2016</h2>
-			<ul class="timeline-items">
-				<li class="is-hidden timeline-item">
-					<h3>Title</h3>
-					<hr>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In
-						ipsum magnam quis vero vitae. Adipisci at doloribus eius expedita
-						id, nobis officiis perferendis quae sint ut. Consectetur nostrum
-						obcaecati veritatis!</p>
 
-					<p>
-						Lorem ipsum dolor sit amet, <strong>consectetur</strong>
-						adipisicing elit. Aliquam asperiores, cum deserunt dicta est
-						facere fuga fugiat laboriosam perspiciatis quae quia ratione rem.
-						Aspernatur earum, est et facilis nobis repudiandae.
-					</p>
-					<hr> <time>Date</time>
-				</li>
-				<li class="is-hidden timeline-item">
-					<h3>Grands Enfants</h3>
-					<hr>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Adipisci animi, commodi delectus dolor ea maxime modi nobis
-						obcaecati odit, provident quaerat, soluta voluptates! Ex inventore
-						libero placeat quaerat quod sint?</p>
-					<p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit. Cumque delectus doloremque inventore iste officiis porro
-							possimus quis, quod repellat sint. Aliquam dolorum explicabo hic
-							illo modi molestias quae, quia reiciendis!</span> <span>Ab
-							assumenda inventore molestiae optio similique veritatis? Autem
-							cupiditate earum eius fugiat fugit magnam nihil officiis quas qui
-							repudiandae! Assumenda, expedita fugit ipsam natus odio qui
-							similique. Debitis, error, quia.</span>
-					</p>
-					<p>
-						<a href="#">Link</a>
-					</p>
-					<hr> <time>Date</time>
-				</li>
-				<li class="is-hidden timeline-item centered">
-					<h3>Title</h3>
-					<hr>
-					<p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit. Aliquam aliquid animi architecto aspernatur assumenda dicta
-							distinctio ducimus, fugiat fugit hic itaque laudantium maxime nam
-							praesentium rem sint sit sunt voluptatibus!</span><span>Aliquam
-							aliquid consequuntur cum ipsum itaque libero magni maxime, minima
-							necessitatibus, odit, placeat quam quo ratione recusandae
-							repudiandae sapiente tempore! Alias, id, rerum? Cum deserunt,
-							dolorem explicabo illum numquam quibusdam?</span><span>Autem
-							distinctio error magni, maiores praesentium provident
-							voluptatibus. A, ad autem beatae debitis deserunt ducimus
-							exercitationem inventore magni, molestias neque quasi quibusdam
-							quo. Ab dolor modi, neque numquam officiis quam.</span> <span>Fuga
-							libero nam similique. Animi aut cum cupiditate ducimus, eum
-							laboriosam minima neque numquam odio officia placeat possimus
-							quaerat quidem similique sint ullam vero voluptatem voluptatibus.
-							Accusamus commodi perspiciatis repellendus.</span>
-					</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Accusantium earum inventore nobis quo! Aspernatur consectetur
-						corporis eaque, eveniet expedita, explicabo ipsum nostrum omnis
-						pariatur, placeat quaerat reprehenderit tempora totam ullam.</p>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem
-						blanditiis expedita illo ipsum molestiae, nisi porro quaerat quam
-						quidem reprehenderit sed, sit, ut! At dolorem et, eum facilis
-						quasi sed! <strong>Lorem ipsum</strong> dolor sit amet,
-						consectetur adipisicing elit. Asperiores cumque cupiditate debitis
-						ea ex iure iusto maiores mollitia nihil non obcaecati omnis quidem
-						quod sequi soluta suscipit, tenetur voluptatem voluptatum.
-					</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Animi architecto aut cum dolore dolores neque nesciunt nostrum
-						porro quibusdam ratione! Architecto cum distinctio error et in
-						laboriosam molestiae molestias saepe!</p>
-					<p>
-						<a href="#">Link</a>
-					</p>
-					<hr> <time>Date</time>
-				</li>
+			</c:when>
+			<c:otherwise>
+				<div class="row">
+					<div class="col-12">
+						<div class="no-history-found-container">
+							<p class="p-5 text-center m-5 no-history-found">No History
+								found</p>
+						</div>
+					</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
 
 
-			</ul>
+		<div class="row">
+			<div class="col-12 p-4">
 
+				<button type="button" id="backToHomeBtn"
+					class="btn btn-primary pull-left">
+					<i class="fa fa-long-arrow-left"></i>&nbsp;Back
+				</button>
+
+			</div>
 		</div>
+
 	</div>
-
-
-	<!-- dummy content end -->
-
-
 
 	<jsp:include page="online-mis-footer.jsp" />
 	<script
-		src="<c:url value="/resources/lib/timelify/js/jquery.timelify.js"/>"
+		src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
 		type="text/javascript"></script>
-	<script type="text/javascript">
-		$('.timeline').timelify({
+	<script>
+		jQuery(document)
+				.ready(
+						function($) {
 
-			// animation types
-			animLeft : "bounceInLeft",
-			animRight : "bounceInRight",
-			animCenter : "bounceInUp",
+							$("#backToHomeBtn")
+									.off()
+									.on(
+											'click',
+											function() {
+												window.location.href = "<c:url value='/work'/>";
+											});
+							var $timeline_block = $('.cd-timeline-block');
 
-			// animation speed
-			animSpeed : 300,
+							//hide timeline blocks which are outside the viewport
+							$timeline_block
+									.each(function() {
+										if ($(this).offset().top > $(window)
+												.scrollTop()
+												+ $(window).height() * 0.75) {
+											$(this)
+													.find(
+															'.cd-timeline-img, .cd-timeline-content')
+													.addClass('is-hidden');
+										}
+									});
 
-			// trigger position in pixels
-			offset : 150
-
-		});
-		
-		
+							//on scolling, show/animate timeline blocks when enter the viewport
+							$(window)
+									.on(
+											'scroll',
+											function() {
+												$timeline_block
+														.each(function() {
+															if ($(this)
+																	.offset().top <= $(
+																	window)
+																	.scrollTop()
+																	+ $(window)
+																			.height()
+																	* 0.75
+																	&& $(this)
+																			.find(
+																					'.cd-timeline-img')
+																			.hasClass(
+																					'is-hidden')) {
+																$(this)
+																		.find(
+																				'.cd-timeline-img, .cd-timeline-content')
+																		.removeClass(
+																				'is-hidden')
+																		.addClass(
+																				'bounce-in');
+															}
+														});
+											});
+						});
 	</script>
 </body>
 </html>

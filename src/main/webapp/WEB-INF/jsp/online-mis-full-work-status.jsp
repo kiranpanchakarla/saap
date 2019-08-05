@@ -2126,7 +2126,7 @@ h2.fs-title {
 									.on(
 											'click',
 											function() {
-												window.location.href = "<c:url value='/adminloggedin'/>";
+												window.location.href = "<c:url value='/work'/>";
 											});
 							$("#nav-tab  li a.nav-link:not(.disabled)").on(
 									'click',

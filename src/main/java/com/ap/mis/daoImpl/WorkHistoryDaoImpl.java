@@ -30,7 +30,7 @@ public class WorkHistoryDaoImpl implements WorkHistoryDao {
 	public List<WorkHistory> getAllWorkHistoryByWork(Works work) {
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession()
-				.createQuery("from WorkHistory as wrkh where wrkh.work = :work", WorkHistory.class)
+				.createQuery("from WorkHistory as wrkh where wrkh.work = :work order by wrkh.createdDate desc", WorkHistory.class)
 				.setParameter("work", work).getResultList();
 
 	}

@@ -28,9 +28,19 @@
     <nav id="nav-menu-container">
       <ul class="nav-menu">
          <li><a href="<c:url value="/adminloggedin"/>">Home</a></li>
-          <c:if test="${userRole eq 'ROLE_ADMIN'}">
-         <li><a href="<c:url value="/worksCreation/create?source=newWork"/>">New Work Creation</a></li>
-         <li><a href="<c:url value="/workApprovals/pending"/>">Work Approval</a></li>
+         <c:if test="${userRole eq 'ROLE_ADMIN'}">
+	         <%-- <li><a href="<c:url value="/worksCreation/create?source=newWork"/>">New Work Creation</a></li>
+	         <li><a href="<c:url value="/workApprovals/pending"/>">Work Approval</a></li> --%>
+	         <li class="nav-item dropdown">
+        		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         		Works
+       			 </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		          <a class="dropdown-item" href="<c:url value="/worksCreation/create?source=newWork"/>">New Work Creation</a>		          
+		          <a class="dropdown-item" href="<c:url value="/workApprovals/pending"/>">Work Approval</a>		          
+		          <a class="dropdown-item" href="<c:url value="/work"/>">All Works</a>
+		        </div>
+      		</li>	         	         	       
          </c:if>
                   
         <li><a href="<c:url value="/logout"/>">Logout</a></li>

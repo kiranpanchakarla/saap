@@ -11,5 +11,5 @@ public interface WorkHistroyService {
 
 	public WorkHistory saveWorks(WorkHistory workHistory);
 
-	public Map<Date, List<WorkHistory>> getWorkHistoryByWork(Works work);
+	public List<WorkHistory> getWorkHistoryByWork(Works work);
 }

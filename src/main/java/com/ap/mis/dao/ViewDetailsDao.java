@@ -11,8 +11,6 @@ public interface ViewDetailsDao {
 	
 	List<Object[]> getApprovalDetials();
 
+	List<Object[]> getAllWorkDetials();
 	
-
-	
-
 }

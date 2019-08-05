@@ -10,5 +10,7 @@ public interface ViewDetailsService {
 	List<ViewDetails> getViewDetials();
 	
 	List<ViewDetails> getApprovalDetials();
+	
+	List<ViewDetails> getAllWorks();
 
 }
