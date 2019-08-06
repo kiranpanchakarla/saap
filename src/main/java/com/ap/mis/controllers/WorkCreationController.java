@@ -57,6 +57,7 @@ public class WorkCreationController {
 	VillageService villageService;
 	@Autowired
 	WorkHistroyService workHistroyService;
+
 	@PostMapping(value = "/save")
 	public String workCreationSave(@ModelAttribute Works workObject, Model model, HttpServletRequest request,
 			HttpSession session) {
@@ -68,8 +69,8 @@ public class WorkCreationController {
 			isSave = true;
 			workObject.setStatus(EnumFilter.OPEN.getStatus());
 			workObject.setWorkStatus(EnumWorkStatus.WORK.getStatus());
-			misService.saveWorks(workObject);
-			
+			workObject = misService.saveWorks(workObject);
+
 			WorkHistory workHistory = new WorkHistory();
 			workHistory.setActionPerform(EnumFilter.SAVED.getStatus());
 			workHistory.setModule(EnumFilter.SAAP.getStatus());
@@ -78,13 +79,15 @@ public class WorkCreationController {
 			workHistory.setUser(loggedInUser);
 			workHistory.setWork(workObject);
 			workHistroyService.saveWorks(workHistory);
-			
+
 		} else {
 			log.info("inside update:" + workObject.getId());
-			workObject.setStatus(workObject.getStatus());
-			workObject.setWorkStatus(workObject.getWorkStatus());
+			/*
+			 * workObject.setStatus(workObject.getStatus());
+			 * workObject.setWorkStatus(workObject.getWorkStatus());
+			 */
 			misService.updateWork(workObject);
-			
+
 			WorkHistory workHistory = new WorkHistory();
 			workHistory.setActionPerform(EnumFilter.UPDATED.getStatus());
 			workHistory.setModule(EnumFilter.SAAP.getStatus());
@@ -99,9 +102,10 @@ public class WorkCreationController {
 				isSave = true;
 			}
 		}
-		/*WorktoLandDetails obj = new WorktoLandDetails();
-		obj.setWorks(workObject);
-		session.setAttribute("generalInfo", obj);*/
+		/*
+		 * WorktoLandDetails obj = new WorktoLandDetails(); obj.setWorks(workObject);
+		 * session.setAttribute("generalInfo", obj);
+		 */
 		session.setAttribute("workIdSession", workObject.getId());
 		session.setAttribute("workInfo", workObject);
 		Integer idVal = workObject.getId();
@@ -136,9 +140,10 @@ public class WorkCreationController {
 		if (request.getRequestURI().endsWith("/create") && request.getParameter("source") != null
 				&& request.getParameter("source").equalsIgnoreCase("newWork")) {
 			workId = null;
-		}else if (request.getRequestURI().endsWith("/edit") && request.getParameter("workId") != null && workId == null) {
-            workId = Integer.parseInt(request.getParameter("workId"));
-        }
+		} else if (request.getRequestURI().endsWith("/edit") && request.getParameter("workId") != null
+				&& workId == null) {
+			workId = Integer.parseInt(request.getParameter("workId"));
+		}
 
 		Works work = new Works();
 
@@ -152,7 +157,7 @@ public class WorkCreationController {
 
 		model.addAttribute("districts", districtsService.findAll());
 		model.addAttribute("workObject", work);
-		model.addAttribute("workLineItemsList",work.getWorkLineItemsList());
+		model.addAttribute("workLineItemsList", work.getWorkLineItemsList());
 		List<TypeOfWork> typeOfWork = misService.findAll();
 		model.addAttribute("typeOfWork", typeOfWork);
 		List<NatureOfWork> natureOfWork = misService.natureOfDetails();
@@ -174,7 +179,7 @@ public class WorkCreationController {
 	@GetMapping(value = "/main")
 	public String mainTest(Model model) {
 		return "main";
-		
+
 	}
 	/*
 	 * @GetMapping(value = "/edit") public String GetInfo(Model model, String
@@ -230,7 +235,7 @@ public class WorkCreationController {
 	@ResponseBody
 	public Boolean isValidWorkNumber(String name) {
 		Works work = misService.findByWorkNumber(name);
-		if (work.getWorkNo()!= null && work.getWorkNo().equals(name)) {
+		if (work.getWorkNo() != null && work.getWorkNo().equals(name)) {
 			log.info("Work Number Already Exists");
 			return true;
 		} else {

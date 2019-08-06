@@ -207,6 +207,14 @@ public class WorkStatusService {
 		// iterate each work phase list to fill sub list and update main phase status
 		// according to sub module completion
 		String workSubModuleStatus = work.getStatus();
+		if (workSubModuleStatus == null) {
+			// model.addAttribute("errorStatus", "Work status is missing");
+			workPhasList.get(phaseIndex - 1).setActivePhase(true);
+			model.addAttribute("workPhasList", workPhasList);
+			model.addAttribute("activePhaseIndex", phaseIndex);
+			return;
+		}
+
 		for (int i = 0; i <= workUptoPhase.getKey().ordinal(); i++) {
 
 			// Assume i is the previous module/s of current module and is completed(before
@@ -482,9 +490,7 @@ public class WorkStatusService {
 			TenderingProcess tenderProcess = tenderProcessService.getTenderDetails(workId);
 
 			if (tenderProcess != null) {
-
-				tenderProcess.setAngencyName(null);
-
+			
 				subPhase.addSubPhase(new WorkPhase(++totalSubModuls, "Tender process", PhaseCompletionType.FULL, ""));
 				userIdsSet.add(tenderProcess.getUpdatedBy() == null ? tenderProcess.getCreatedBy()
 						: tenderProcess.getUpdatedBy());
@@ -496,8 +502,8 @@ public class WorkStatusService {
 						EnumFilter.TENDERPROCESSFORTEL.getStatus());
 
 				model.addAttribute("tenderProcess", tenderProcess);
-				model.addAttribute("authoritiesTypeList", tenderProcessService.getAuthoritiesList());
-				model.addAttribute("agencyList", tenderProcessService.getAgencyList());
+				//model.addAttribute("authoritiesTypeList", tenderProcessService.getAuthoritiesList());
+				//model.addAttribute("agencyList", tenderProcessService.getAgencyList());
 
 				model.addAttribute("engPublicationAttachements", engPublicationAttachements);
 				for (Attachements attachements : engPublicationAttachements) {

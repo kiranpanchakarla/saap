@@ -1698,7 +1698,8 @@ h2.fs-title {
 											<span>Name of the agency </span>
 										</div>
 										<div class="col-7 d-flex">
-											<span>:</span><label>${tenderProcess.angencyName.name }</label>
+											<span>:</span><label>
+												${tenderProcess.angencyName.name } </label>
 										</div>
 									</div>
 								</div>
@@ -1771,7 +1772,7 @@ h2.fs-title {
 											<span>Agreement Category</span>
 										</div>
 										<div class="col-7">
-											<span>:</span><label></label>
+											<span>:</span><label>${tenderEvaluation.agreementCategory }</label>
 										</div>
 									</div>
 								</div>
@@ -2117,66 +2118,55 @@ h2.fs-title {
 
 
 	<!--=== Footer ====--> <jsp:include page="online-mis-footer.jsp" /> <script>
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(
+				function() {
 
-							$("#backToHomeBtn")
-									.off()
-									.on(
-											'click',
-											function() {
-												window.location.href = "<c:url value='/work'/>";
-											});
-							$("#nav-tab  li a.nav-link:not(.disabled)").on(
-									'click',
-									function() {
-										window.location.href = $(this).attr(
-												"href");
-									});
+					$("#backToHomeBtn").off().on('click', function() {
+						window.location.href = "<c:url value='/work'/>";
+					});
+					
+					
+					$("#nav-tab  li a.nav-link:not(.disabled)").on('click',
+							function() {
+								window.location.href = $(this).attr("href");
+							});
 
-							var index = $("#nav-tab li a.active").parent("li")
-									.index();
+					var index = $("#nav-tab li a.active").parent("li").index();
 
-							var lastActiveTab = $(
-									"#nav-tab  li a.nav-link:not(.disabled)")
-									.parent("li").last().index();
+					var lastActiveTab = $(
+							"#nav-tab  li a.nav-link:not(.disabled)").parent(
+							"li").last().index();
 
-							var previousButtonRef = $("#previous").prop(
-									"disabled", index == 0);
-							var nextButtonRef = $("#next").prop("disabled",
-									index == lastActiveTab);
+					var previousButtonRef = $("#previous").prop("disabled",
+							index == 0);
+					var nextButtonRef = $("#next").prop("disabled",
+							(lastActiveTab < 0 || index == lastActiveTab));
 
-							if (index == 0) {
-								previousButtonRef.addClass("click-not-allowed")
-							} else {
-								previousButtonRef.removeClass(
-										"click-not-allowed").on(
-										'click',
-										function() {
-											$("#nav-tab li a.active").parent(
-													"li").prev().find("a")
-													.trigger("click");
-										});
+					if (index == 0) {
+						previousButtonRef.addClass("click-not-allowed")
+					} else {
+						previousButtonRef.removeClass("click-not-allowed").on(
+								'click',
+								function() {
+									$("#nav-tab li a.active").parent("li")
+											.prev().find("a").trigger("click");
+								});
 
-							}
+					}
 
-							if (index == lastActiveTab) {
-								nextButtonRef.addClass("click-not-allowed")
-							} else {
-								nextButtonRef.removeClass("click-not-allowed")
-										.on(
-												'click',
-												function() {
-													$("#nav-tab li a.active")
-															.parent("li")
-															.next().find("a")
-															.trigger("click");
-												});
+					if (lastActiveTab < 0 || index == lastActiveTab) {
+						nextButtonRef.addClass("click-not-allowed")
+					} else {
+						nextButtonRef.removeClass("click-not-allowed").on(
+								'click',
+								function() {
+									$("#nav-tab li a.active").parent("li")
+											.next().find("a").trigger("click");
+								});
 
-							}
+					}
 
-						});
+				});
 	</script>
 </body>
 </html>

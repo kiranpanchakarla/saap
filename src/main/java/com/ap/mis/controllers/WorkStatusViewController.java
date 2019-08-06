@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ap.mis.entity.User;
 import com.ap.mis.entity.WorkHistory;
 import com.ap.mis.entity.Works;
+import com.ap.mis.model.ConsolidatedWorkHistory;
 import com.ap.mis.service.WorkHistroyService;
 import com.ap.mis.serviceImpl.WorkStatusService;
 import com.ap.mis.util.SecurityUtil;
@@ -39,7 +40,7 @@ public class WorkStatusViewController {
 	public String getWorkHistory(@PathVariable(value = "workId") int workId, Model model) {
 		Works work = new Works();
 		work.setId(workId);
-		List<WorkHistory> workHistory = workHistoryService.getWorkHistoryByWork(work);
+		List<ConsolidatedWorkHistory> workHistory = workHistoryService.getWorkHistoryByWork(work);
 		model.addAttribute("workHistoryRecentToOld", workHistory);
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		model.addAttribute("userRole", loggedInUser.getRole().getRoleName());

@@ -17,7 +17,49 @@
 
 <c:import url="/WEB-INF/jsp/online-mis-headFiles.jsp" />
 <jsp:include page="online-mis-header.jsp" />
+
 <style type="text/css">
+.no-history-found-container {
+	min-height: calc(100vh - 154px);
+}
+
+.no-lr-margin {
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+}
+
+.no-history-found-container>.row {
+	padding: 8px 0px;
+	border-bottom: 1px solid #dfdfdf;
+	margin-bottom: 4px;
+}
+
+.no-history-found-container>.row:last-child {
+	border-bottom: none;
+}
+
+.work-history-header {
+	margin: 4px 0px 6px;
+	padding: 4px;
+	text-align: center;
+	background: #00438b;
+}
+
+.work-history-header label {
+	margin: 0px;
+	color: #ff8800;
+	padding-bottom: 3px;
+}
+
+.no-history-found {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: #989898;
+	transform: translate(-50%, -50%);
+}
+/*
 .work-details label {
 	word-break: break-word;
 }
@@ -70,15 +112,10 @@
 	min-height: calc(100vh - 217px);
 }
 
-.no-history-found {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	font-size: 25px;
-	color: #989898;
-	transform: translate(-50%, -50%);
-}
+
+*/
 </style>
+
 </head>
 
 <body>
@@ -86,186 +123,116 @@
 	<!-- dummy content start -->
 	<div class="container work-histoyr-event-container">
 
+		<div class="no-history-found-container">
+			<h2 class="work-history-header">
+				<label>Work History</label>
+			</h2>
+
+			
 
 
-		<%-- <c:forEach items="${workHistoryRecentToOld}"
-				var="workHistoryRecentToOldEntry">
-				<h2 class="work-action-title">
-					<fmt:formatDate pattern="dd-MM-yyyy"
-						value="${workHistoryRecentToOldEntry.key}" />
-				</h2>
-				
-				
-				<ul class="timeline-items">
-					<c:forEach items="${workHistoryRecentToOldEntry.value}"
-						var="workHistory" varStatus="loop">											
-
-						<li
-							class="is-hidden timeline-item ${loop.count%2 == 0 ? 'inverted' : ''}">
-							<h3>${workHistory.actionPerform}</h3>
-							<hr>
-
-							<div class="row work-details text-left">
-								<div class="col-6">Module</div>
-								<div class="col-6 d-flex">
-									<span>:</span>&nbsp;<label>${workHistory.module}</label>
-								</div>
-								<div class="col-6">Sub Module</div>
-								<div class="col-6 d-flex">
-									<span>:</span>&nbsp;<label>${workHistory.subModule}</label>
-								</div>
-								<div class="col-6">User</div>
-								<div class="col-6 d-flex">
-									<span>:</span>&nbsp;<label>${workHistory.user.name}</label>
-								</div>
-
-							</div>
-
-							<hr> <time>
-								<fmt:formatDate pattern="hh:mm a"
-									value="${workHistory.createdDate}" />
-							</time>
-						</li>
-					</c:forEach>
-				</ul>
-
-
-			</c:forEach> --%>
-		<c:choose>
-			<c:when test="${fn:length(workHistoryRecentToOld) > 0}">
-				<section id="cd-timeline" class="cd-container">
+			<c:choose>
+				<c:when test="${fn:length(workHistoryRecentToOld) > 0}">
 					<c:forEach items="${workHistoryRecentToOld}" var="workHistory"
 						varStatus="loop">
-
-
-						<div class="cd-timeline-block">
-							<div class="cd-timeline-img cd-movie">
-								<div class="history-icon-holder">
-									<i class="fa fa-history"></i>
-								</div>
-							</div>
-							<!-- cd-timeline-img -->
-
-							<div class="cd-timeline-content">
-								<h2>${workHistory.actionPerform}</h2>
-								<hr />
-
-								<div class="row work-details text-left">
-									<div class="col-6">Module</div>
-									<div class="col-6 d-flex">
-										<span>:</span>&nbsp;<label>${workHistory.module}</label>
-									</div>
-									<div class="col-6">Sub Module</div>
-									<div class="col-6 d-flex">
-										<span>:</span>&nbsp;<label>${workHistory.subModule}</label>
-									</div>
-									<div class="col-6">User</div>
-									<div class="col-6 d-flex">
-										<span>:</span>&nbsp;<label>${workHistory.user.name}</label>
-									</div>
-
-								</div>
-
+						<!-- <li class="list-group-item"> -->
+						<div class="row no-lr-margin">
+							<div class="col-lg-2 col-md-4 col-sm-4 col-xs-5">
 								<span class="cd-date"> <fmt:formatDate
-										pattern="dd MMM yyyy hh:mm a"
-										value="${workHistory.createdDate}" /></span>
+										pattern="dd MMM yyyy hh:mm a" value="${workHistory.date}" />
+								</span>
 							</div>
-							<!-- cd-timeline-content -->
+							<div class="col-lg-10 col-md-8 col-sm-8 col-xs-7 d-flex">
+								<span>&nbsp;:&nbsp;</span> <span>${workHistory.message}</span>
+							</div>
 						</div>
+						<!-- </li> -->
 					</c:forEach>
-
-				</section>
-
+					<!-- </ul> -->
 
 
-			</c:when>
-			<c:otherwise>
-				<div class="row">
-					<div class="col-12">
-						<div class="no-history-found-container">
-							<p class="p-5 text-center m-5 no-history-found">No History
-								found</p>
+				</c:when>
+				<c:otherwise>
+					<div class="row no-lr-margin">
+						<div class="col-12">
+							<div class="w-100 position-relative">
+								<h4 class="p-5 text-center m-5">No History found</h4>
+							</div>
 						</div>
 					</div>
+				</c:otherwise>
+			</c:choose>
+
+
+			<div class="row no-lr-margin">
+				<div class="col-12 pl-0">
+
+					<button type="button" id="backToHomeBtn"
+						class="btn btn-primary pull-left">
+						<i class="fa fa-long-arrow-left"></i>&nbsp;Back
+					</button>
+
 				</div>
-			</c:otherwise>
-		</c:choose>
-
-
-		<div class="row">
-			<div class="col-12 p-4">
-
-				<button type="button" id="backToHomeBtn"
-					class="btn btn-primary pull-left">
-					<i class="fa fa-long-arrow-left"></i>&nbsp;Back
-				</button>
-
 			</div>
 		</div>
-
 	</div>
 
 	<jsp:include page="online-mis-footer.jsp" />
-	<script
+	<!-- <script
 		src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
-		type="text/javascript"></script>
+		type="text/javascript"></script> -->
 	<script>
-		jQuery(document)
-				.ready(
-						function($) {
+		jQuery(document).ready(function($) {
 
-							$("#backToHomeBtn")
-									.off()
-									.on(
-											'click',
-											function() {
-												window.location.href = "<c:url value='/work'/>";
-											});
-							var $timeline_block = $('.cd-timeline-block');
+			$("#backToHomeBtn").off().on('click', function() {
+				window.location.href = "<c:url value='/work'/>";
+			});
+			/*var $timeline_block = $('.cd-timeline-block');
 
-							//hide timeline blocks which are outside the viewport
-							$timeline_block
-									.each(function() {
-										if ($(this).offset().top > $(window)
-												.scrollTop()
-												+ $(window).height() * 0.75) {
-											$(this)
-													.find(
-															'.cd-timeline-img, .cd-timeline-content')
-													.addClass('is-hidden');
-										}
-									});
+			//hide timeline blocks which are outside the viewport
+			$timeline_block
+					.each(function() {
+						if ($(this).offset().top > $(window)
+								.scrollTop()
+								+ $(window).height() * 0.75) {
+							$(this)
+									.find(
+											'.cd-timeline-img, .cd-timeline-content')
+									.addClass('is-hidden');
+						}
+					});
 
-							//on scolling, show/animate timeline blocks when enter the viewport
-							$(window)
-									.on(
-											'scroll',
-											function() {
-												$timeline_block
-														.each(function() {
-															if ($(this)
-																	.offset().top <= $(
-																	window)
-																	.scrollTop()
-																	+ $(window)
-																			.height()
-																	* 0.75
-																	&& $(this)
-																			.find(
-																					'.cd-timeline-img')
-																			.hasClass(
-																					'is-hidden')) {
-																$(this)
-																		.find(
-																				'.cd-timeline-img, .cd-timeline-content')
-																		.removeClass(
-																				'is-hidden')
-																		.addClass(
-																				'bounce-in');
-															}
-														});
-											});
-						});
+			//on scolling, show/animate timeline blocks when enter the viewport
+			$(window)
+					.on(
+							'scroll',
+							function() {
+								$timeline_block
+										.each(function() {
+											if ($(this)
+													.offset().top <= $(
+													window)
+													.scrollTop()
+													+ $(window)
+															.height()
+			 * 0.75
+													&& $(this)
+															.find(
+																	'.cd-timeline-img')
+															.hasClass(
+																	'is-hidden')) {
+												$(this)
+														.find(
+																'.cd-timeline-img, .cd-timeline-content')
+														.removeClass(
+																'is-hidden')
+														.addClass(
+																'bounce-in');
+											}
+										});
+							});
+			 */
+		});
 	</script>
 </body>
 </html>

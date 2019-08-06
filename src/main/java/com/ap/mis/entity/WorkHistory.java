@@ -1,8 +1,6 @@
 package com.ap.mis.entity;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tbl_sa_workshistory")
@@ -50,8 +47,7 @@ public class WorkHistory implements Serializable {
 	@JoinColumn(name = "work_id", referencedColumnName = "id")
 	private Works work;
 
-	@Transient
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 
 	public Integer getHistoryId() {
 		return historyId;
@@ -109,15 +105,6 @@ public class WorkHistory implements Serializable {
 		this.work = work;
 	}
 
-	@Transient
-	public Date onlyDate() {
-		try {
-			return sdf.parse(sdf.format(this.getCreatedDate()));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 
 }
