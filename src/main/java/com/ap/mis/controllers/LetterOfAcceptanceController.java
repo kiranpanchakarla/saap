@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,6 +25,7 @@ import com.ap.mis.service.MISService;
 import com.ap.mis.service.TenderEvaluationService;
 import com.ap.mis.service.TenderingProcessService;
 import com.ap.mis.util.EnumFilter;
+import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.FileUploadConstraintsUtil;
 
 
@@ -53,9 +55,11 @@ public class LetterOfAcceptanceController {
 	TenderingProcessService tenderProcessService;
 	
 	
-	@GetMapping(path = { "/create", "/edit" })
-	public String create(Model model,HttpSession session) {
-		int workId = (int) session.getAttribute("workIdSession");
+	@GetMapping(path = { "/create/{workId}", "/edit/{workId}" })
+	public String create(Model model,HttpSession session,@PathVariable("workId") Integer workId) {
+		if(workId==null) {
+		workId = (int) session.getAttribute("workIdSession");
+		}
 		log.info("Letter Of Acceptance details for given Work id " + workId);
 		
 		EnumFilter moduleStatus = EnumFilter.LOA;
@@ -84,6 +88,9 @@ public class LetterOfAcceptanceController {
 	@PostMapping(path = "/save")
 	public String saveDetails(@ModelAttribute LetterOfAcceptance letterOfAcceptance, Model model, HttpSession session) {
 		letterOfAcceptance = LOAService.save(letterOfAcceptance);
+		Works work = MISService.getWorkInfo(letterOfAcceptance.getWork().getId());
+		work.setStatus(EnumWorkStatus.LETTER_OF_ACCEPTANCE.getStatus());
+		MISService.updateWork(work);
 		return "redirect:/adminloggedin";
 	}
 	

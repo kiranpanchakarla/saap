@@ -37,7 +37,7 @@ public class MISDaoImpl implements MISdao {
 	@Override
 	public User verifyUser(User user) {
 		User validUser = null;
-		String ss = "from User  where name=:un   and CAST(password as binary) = CAST(:pw as binary) ";
+		/*String ss = "from User  where name=:un   and CAST(password as binary) = CAST(:pw as binary) ";*/
 		// Query q=sessionFactory.getCurrentSession().createQuery(ss);
 		// q.setParameter("un",user.getName());
 		// q.setParameter("pw", user.getPassword());

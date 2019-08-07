@@ -67,6 +67,12 @@ h2.fs-title {
 					<c:url value="/ConsultantInfo/edit/${consultantInfoObject.work.id}"
 						var="createUrl" />
 				</c:when>
+				
+				<c:when
+					test="${consultantInfoObject == null && (workInfo.workStatus eq 'Land_Details' or  workInfo.workStatus eq 'PEND_SAAP_APRVL')}">
+					<c:url value="/ConsultantInfo/create/${workInfo.id}"
+						var="createUrl" />
+				</c:when>
 
 				<c:when
 					test="${workInfo.workStatus eq 'WORK_ESTMASN_CMPLTD' or workInfo.workStatus eq 'TECHNICL_SANKSN_CMPLTD'}">

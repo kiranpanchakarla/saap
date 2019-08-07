@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,11 +39,13 @@ public class UploadController {
 	@Autowired
 	AttachmentHistoryDetailsService attachHistoryService;
 
-	@PostMapping(value = "/files")
+	@PostMapping(value = "/files/{workid}")
 	public List<Attachements> fileUplaod(Model model, HttpServletRequest request,
 			@RequestParam("files") MultipartFile[] file, @RequestParam("moduleName") String moduleName,
-			HttpSession session) {
-		int workId = (int) session.getAttribute("workIdSession");
+			HttpSession session,@PathVariable("workid") Integer workId) {
+		if(workId==null) {
+		 workId = (int) session.getAttribute("workIdSession");
+		}
 		List<Attachements> attachments = attachmentService.saveAttachedDetails(workId, moduleName, file);
 		try {
 			attachmentHistoryDetailsSave(attachments);

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -48,10 +49,13 @@ public class PreliminaryPreparationLayoutController {
 	@Autowired
 	LandSurveyDetailService landSurveyDetailsService;
 
-	@GetMapping(path = { "/create", "/edit", "/view" })
-	public String createPreliminaryPreparationLayout(Model model, HttpSession session) {
-
-		int workId = (int) session.getAttribute("workIdSession");
+	@GetMapping(path = { "/create/{id}", "/edit/{id}", "/view" })
+	public String createPreliminaryPreparationLayout(Model model, HttpSession session,@PathVariable("id") Integer workId) {
+       
+		
+		 if(workId==null) {
+			 workId = (int) session.getAttribute("workIdSession");
+	        }
 		log.info("Land survey details for given Work id " + workId);
 		EnumFilter workModuleStatus = EnumFilter.PRELIMINARY_PREPARATION_LAYOUT;
 		Works work = MISService.getWorkInfo(workId);
@@ -77,17 +81,18 @@ public class PreliminaryPreparationLayoutController {
 		return "online-mis-preliminary-preparation-layout";
 	}
 
-	@PostMapping(path = { "/save" })
-	public String savePreliminaryPreparationLayout(Model model, HttpSession session) {
-
-		int workId = (int) session.getAttribute("workIdSession");
+	@PostMapping(path = { "/save/{workId}" })
+	public String savePreliminaryPreparationLayout(Model model, HttpSession session,@PathVariable("workId") Integer workId) {
+        if(workId==null) {
+		workId = (int) session.getAttribute("workIdSession");
+        }
 		Works work = MISService.getWorkInfo(workId);
 		if (work.getStatus().equals(EnumWorkStatus.LAND_SURVEY_DETAILS.getStatus())) {
 			work.setStatus(EnumWorkStatus.PRELIMINARY_PREPARATION_LAYOUT_DETAILS.getStatus());
 			MISService.updateWork(work);
 		}
 		
-		return "online-mis-preliminary-preparation-layout";
+		return "redirect:/geotechnicalInvestigation/create/"+workId;
 	}
 
 }

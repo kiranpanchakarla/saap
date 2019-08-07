@@ -269,7 +269,7 @@ input[type="radio"]+label
 									</p></li>
 								<li><form:input type="text" id="workNumber"
 										path="workNumber" class="form-control mb-md" readonly="true"
-										value="${workInfo.workNo}" /> <span id="workNumberErr"
+										value="${workObject.workNo}" /> <span id="workNumberErr"
 									class="errors" style="color: red; float: right;"></span></li>
 							</ul>
 
@@ -670,7 +670,7 @@ input[type="radio"]+label
 	var maxFileUploadCount = ${fileUploadConstraint.maxFileUploadCount};
 	var allowedFileExtensions = "${fileUploadConstraint.allowedExtensions}".replace(/\s/g,'').split(",");
 
-	var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
+	var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files/${workObject.id}'/>";
 	
 	
 	

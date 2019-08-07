@@ -128,7 +128,7 @@ var maxFileSize = ${fileUploadConstraint.maxFileUploadSize};
 var maxFileUploadCount = ${fileUploadConstraint.maxFileUploadCount};
 var allowedFileExtensions = "${fileUploadConstraint.allowedExtensions}".replace(/\s/g,'').split(",");
 
-var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
+var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files/${workObject.id}'/>";
 
 </script>
 <script type="text/javascript">

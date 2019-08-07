@@ -37,7 +37,6 @@
 </body>
 <script>
 	$(document).ready(function() {
-
 		$("#nav-consultant-tab").click(function() {
 			<c:url value="/consultant/consultantInfo" var="homeUrl" />
 				window.location.href = "${homeUrl}";
@@ -122,7 +121,7 @@
 		});
 		
 		$("#nav-evaluation-tab").click(function() {
-		<c:url value="/tenderEvaluation/edit" var="homeUrl"></c:url>
+		<c:url value="/tenderEvaluation/edit/${workObject.id}" var="homeUrl"></c:url>
 		    	if(onChange == true){
 			    	alertify
 					.confirm()
@@ -148,7 +147,7 @@
 		});
 		
 		$("#nav-loa-tab").click(function() {
-		    <c:url value="/letterOfAcceptance/edit/" var="homeUrl" />
+		    <c:url value="/letterOfAcceptance/edit/${workObject.id}" var="homeUrl" />
 		    	if(onChange == true){
 			    	alertify
 					.confirm()

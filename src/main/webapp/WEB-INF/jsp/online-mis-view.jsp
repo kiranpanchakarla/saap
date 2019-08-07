@@ -97,11 +97,15 @@
 															href="<c:url value="/worksCreation/delete?workId=${viewDetails.id}"/>"
 															onclick="" data-toggle="tooltip" data-placement="top"
 															title="Delete"><i
-															class="glyphicon glyphicon-trash left"></i></a>														
+															class="glyphicon glyphicon-trash left"></i></a>
+														<a class="btn btn-history"
+															href="<c:url value="/work/${viewDetails.id}/phase/1/status"/>"
+															onclick="" data-toggle="tooltip" data-placement="top"
+															title="History"><i class="fa fa-history left"></i></a>
 													</c:when>
+													
 													<c:when test="${userRole eq 'ROLE_DEPARTMENT'}">
-
-														<c:choose>
+                                                    <c:choose>
 															<c:when
 																test="${viewDetails.status eq 'TECHNICL_SANKSN_CMPLTD'}">
 																<c:url
@@ -109,22 +113,27 @@
 																	var="path"></c:url>
 															</c:when>
 															<c:when
-																test="${viewDetails.status eq 'TENDR_PROCES_INFO'}">
+																test="${viewDetails.individualScreenStatus eq 'TENDR_PROCES_INFO'}">
+																 <c:url value="/tenderEvaluation/create/${viewDetails.id}"
+																	var="path"></c:url> 
+															</c:when>
+															<c:when
+																test="${viewDetails.individualScreenStatus eq 'TENDR_EVALUASN_INFO'}">
+																 <c:url value="/letterOfAcceptance/create/${viewDetails.id}"
+																	var="path"></c:url> 
+															</c:when>
+															
+														 <c:when
+																test="${viewDetails.individualScreenStatus eq 'LOA'}">
 																 <c:url value="/tenderProcess/edit/${viewDetails.id}"
 																	var="path"></c:url> 
-																	<%-- <c:url value="/consultant/view?workId=${viewDetails.id}" 
-																	var="path"></c:url>--%>
-															</c:when>
+															</c:when> 
 															<c:otherwise>
 																<c:url value="work/${viewDetails.id}/estimation/create"
 																	var="path"></c:url>
 															</c:otherwise>
 														</c:choose>
-
-
-
-
-														<a class="btn btn-edit" href="${path}"
+                                                           <a class="btn btn-edit" href="${path}"
 															data-toggle="tooltip" data-placement="top" title="Edit"><i
 															class="glyphicon glyphicon-pencil left"></i></a>
 													</c:when>
@@ -136,6 +145,39 @@
 																	value="/technicalSanction/create?workId=${viewDetails.id}"
 																	var="path"></c:url>
 															</c:when>
+															<c:when
+																test="${viewDetails.individualScreenStatus eq 'Land_Details'}">
+																<c:url
+																	value="/ConsultantInfo/create/${viewDetails.id}"
+																	var="path"></c:url>
+															</c:when>
+															<c:when
+																test="${viewDetails.individualScreenStatus eq 'CONSLTNT_INFO'}">
+																<c:url
+																	value="/landSurveyDetails/create/${viewDetails.id}"
+																	var="path"></c:url>
+															</c:when>
+															<c:when
+																test="${viewDetails.individualScreenStatus eq 'LAND_SURVY_INFO'}">
+																<c:url
+																	value="/preliminaryPreparationLayout/create/${viewDetails.id}"
+																	var="path"></c:url>
+															</c:when>
+															<c:when
+																test="${viewDetails.individualScreenStatus eq 'PP_LAYOUT_INFO'}">
+																<c:url
+																	value="/geotechnicalInvestigation/create/${viewDetails.id}"
+																	var="path"></c:url>
+															</c:when>
+															<c:when
+																test="${viewDetails.individualScreenStatus eq 'GEO_TECHNCL_INFO'}">
+																<c:url
+																	value="/preliminaryDrawings/view/${viewDetails.id}"
+																	var="path"></c:url>
+															</c:when>
+															
+															
+															
 															<c:otherwise>
 																<c:url value="/consultant/view?workId=${viewDetails.id}"
 																	var="path"></c:url>

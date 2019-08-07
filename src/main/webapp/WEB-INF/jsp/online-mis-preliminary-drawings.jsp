@@ -40,7 +40,7 @@ margin-left: 10px;
 				aria-labelledby="nav-admin-tab">
 			<div class="row">
 				<div class="col-md-12">
-					<c:url value="/preliminaryDrawings/sendforApproval" var="createUrl" />
+					<c:url value="/preliminaryDrawings/sendforApproval/${workObject.id}" var="createUrl" />
 					<form id="msform" method="post" action="${createUrl}">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />

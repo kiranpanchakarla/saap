@@ -59,7 +59,12 @@ public class TenderProcessController {
 			HttpServletRequest request, @RequestParam("engfile") MultipartFile[] engfile,
 			@RequestParam("telugufile") MultipartFile[] telugufile, HttpSession session) {
 		System.out.println("Save called");
-		boolean isSave = tenderingProcessObj.getId() == null;
+		/*boolean isSave = tenderingProcessObj.getId() == null;*/
+		TenderEvaluation tenderEvaluation = tenderEvaluationService.findTenderEvaluationByWork(tenderingProcessObj.getWork());
+		boolean isSave=true;
+		if(tenderEvaluation!=null) {
+			isSave=false;
+		}
 		int workId = (int) session.getAttribute("workIdSession");
 
 		tenderProcessService.saveTenderingProcess(tenderingProcessObj);
@@ -73,7 +78,7 @@ public class TenderProcessController {
 			misService.updateWork(work);
 		}
 
-		return "redirect:/tenderEvaluation/" + (isSave ? "create" : "edit");
+		return "redirect:/tenderEvaluation/" + (isSave ? "create/" : "edit/")+workId;
 
 		/*
 		 * String engModule = EnumFilter.TENDERPROCESSFORENG.getStatus(); String
@@ -148,7 +153,7 @@ public class TenderProcessController {
 
 		model.addAttribute("tenderingProcessObj", tenderProcess);
 		model.addAttribute("workLineItems", workInfo.getWorkLineItemsList().get(0));
-		model.addAttribute("workInfo", workInfo);
+		model.addAttribute("workObject", workInfo);
 		model.addAttribute("authoritiesTypeList", tenderProcessService.getAuthoritiesList());
 		model.addAttribute("agencyList", tenderProcessService.getAgencyList());
 

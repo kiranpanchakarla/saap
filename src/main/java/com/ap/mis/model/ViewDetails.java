@@ -12,9 +12,16 @@ public class ViewDetails {
 	private String agencyName;
 	private Integer id;
 	private String status;
+	private String individualScreenStatus;
 	
 	
 	
+	public String getIndividualScreenStatus() {
+		return individualScreenStatus;
+	}
+	public void setIndividualScreenStatus(String individualScreenStatus) {
+		this.individualScreenStatus = individualScreenStatus;
+	}
 	public String getStatus() {
 		return status;
 	}

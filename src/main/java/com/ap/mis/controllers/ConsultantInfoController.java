@@ -73,21 +73,23 @@ public class ConsultantInfoController {
 
 		if (isSave == true) {
 			log.info("isSave value save T :" + isSave);
-			return "redirect:/landSurveyDetails/create";
+			return "redirect:/landSurveyDetails/create/" + workId;
 			// return "redirect:/technicalSanction/create";
 		} else {
 			log.info("isSave value edit F :" + isSave);
-			return "redirect:/landSurveyDetails/edit";
+			return "redirect:/landSurveyDetails/edit/" + workId;
 		}
 
 	}
 	
-	@GetMapping(value = "/create")
-	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request) {
+	@GetMapping(value = "/create/{workId}")
+	public String create(@ModelAttribute User userObject, Model model,HttpServletRequest request,@PathVariable("workId") Integer workId) {
 		HttpSession session = request.getSession();
 		userObject = SecurityUtil.getLoggedUser();
 	    userObject =misService.verifyUser(userObject);
-	    int workId =(int) session.getAttribute("workIdSession");
+	    if(workId==null) {
+	    workId =(int) session.getAttribute("workIdSession");
+	    }
 	    Works workInfo=misService.getWorkInfo(workId);
 	    model.addAttribute("workObject", workInfo);
 	    model.addAttribute("consultantInfoObject", new ConsultantInfo());
@@ -106,12 +108,14 @@ public class ConsultantInfoController {
 		return "online-mis-consultInfoView";
 	}
 	
-	@GetMapping(value = "/edit/{id}")
-	public String edit(Model model,@PathVariable("id") Integer id,HttpServletRequest request) {
+	@GetMapping(value = "/edit/{workId}")
+	public String edit(Model model,@PathVariable("workId") Integer workId,HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		int workId =(int) session.getAttribute("workIdSession");
+		if(workId==null) {
+		workId =(int) session.getAttribute("workIdSession");
+		}
 		Works workInfo=misService.getWorkInfo(workId);
-		ConsultantInfo consltInfo = constInfoService.getConsultDetails(id);
+		ConsultantInfo consltInfo = constInfoService.getConsultDetails(workId);
 		model.addAttribute("consultantInfoObject",consltInfo);
 		model.addAttribute("workObject", consltInfo.getWork());
 		LandSurveyDetails existedLandSurveyDetails = landSurveyDetailsService.findByWork(workInfo);

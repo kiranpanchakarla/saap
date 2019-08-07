@@ -33,8 +33,8 @@
 				aria-labelledby="nav-admin-tab">
 			<div class="row m-0">
 				<div class="col-md-12">
-					<c:url value="/geotechnicalInvestigation/create" var="createUrl" />
-					<form id="msform" method="get" action="${createUrl }">
+					<c:url value="/preliminaryPreparationLayout/save/${work.id}" var="createUrl" />
+					<form id="msform" method="POST" action="${createUrl }">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
@@ -181,10 +181,10 @@
     </c:if>
 		$(document).ready(function() {
 			updateTotalFileCount(${fn:length(preliminaryPreparationLayoutAttachmentFiles)});
-			$("#msform").on('submit', function(e) {
+			/* $("#msform").on('submit', function(e) {
 				e.preventDefault();
 				window.location.href = $(this).attr("action");
-			})
+			}) */
 			
 			$('#nav-layouts-tab').addClass('active');
 		     $('#nav-layouts').addClass('active');
@@ -200,7 +200,7 @@
 		var maxFileUploadCount = ${fileUploadConstraint.maxFileUploadCount};
 		var allowedFileExtensions = "${fileUploadConstraint.allowedExtensions}".replace(/\s/g,'').split(",");
 
-		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
+		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files/${work.id}'/>";
 		var contextPath = "${pageContext.request.contextPath}";
 		
 		var FILE_UPLOAD_PENDING = "${FILE_UPLOAD_PENDING}",

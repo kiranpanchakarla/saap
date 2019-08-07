@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -51,10 +52,11 @@ public class PreliminaryDrawingController {
 	@Autowired
 	GeotechnicalInvestigationService geotechnicalInvestigationService;
 
-	@GetMapping(path = "/view")
-	public String getPreliminaryDrawings(Model model, HttpSession session) {
-
-		int workId = (int) session.getAttribute("workIdSession");
+	@GetMapping(path = "/view/{workid}")
+	public String getPreliminaryDrawings(Model model, HttpSession session,@PathVariable("workid") Integer workId) {
+        if(workId==null) {
+		workId = (int) session.getAttribute("workIdSession");
+        }
 		log.info("PreliminaryDrawing details for given Work id " + workId);
 
 		Works work = misService.getWorkInfo(workId);
@@ -96,9 +98,11 @@ public class PreliminaryDrawingController {
 		return "online-mis-preliminary-drawings";
 	}
 
-	@PostMapping(path = "/sendforApproval")
-	public String sendForApproval(HttpSession session) {
-		int workId = (int) session.getAttribute("workIdSession");
+	@PostMapping(path = "/sendforApproval/{workId}")
+	public String sendForApproval(HttpSession session,@PathVariable("workId") Integer workId) {
+		if(workId==null) {
+		workId = (int) session.getAttribute("workIdSession");
+		}
 		log.info("PreliminaryDrawing details send for approval of given Work id " + workId);
 
 		Works work = misService.getWorkInfo(workId);

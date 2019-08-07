@@ -98,7 +98,7 @@
 		});
 		
 		$("#nav-survey-tab").click(function() {
-		    <c:url value="/landSurveyDetails/edit" var="homeUrl" />
+		    <c:url value="/landSurveyDetails/edit/${workObject.id}" var="homeUrl" />
 		    	if(onChange == true){
 			    	alertify
 					.confirm()
@@ -124,7 +124,7 @@
 		});
 		
 		$("#nav-layouts-tab").click(function() {
-		    <c:url value="/preliminaryPreparationLayout/edit" var="homeUrl" />
+		    <c:url value="/preliminaryPreparationLayout/edit/${workObject.id}" var="homeUrl" />
 		    	if(onChange == true){
 			    	alertify
 					.confirm()
@@ -150,7 +150,7 @@
 		});
 		
 		$("#nav-investigation-tab").click(function() {
-		    <c:url value="/geotechnicalInvestigation/edit/" var="homeUrl" />
+		    <c:url value="/geotechnicalInvestigation/edit/${workObject.id}" var="homeUrl" />
 		    	if(onChange == true){
 			    	alertify
 					.confirm()
@@ -176,7 +176,7 @@
 		});
 		
 		$("#nav-approvals-tab").click(function() {
-		    <c:url value="/preliminaryDrawings/view" var="homeUrl" />
+		    <c:url value="/preliminaryDrawings/view/${workObject.id}" var="homeUrl" />
 		    window.location.href = "${homeUrl}";
 		});
 		
@@ -184,7 +184,7 @@
 		 
 		$("#nav-consultant-tab").not('.active').addClass('disabled');
 		$("#nav-consultant-tab").not('.active').find('a').removeAttr("data-toggle");
-		$("#nav-consultant-tab").css({"pointer-events":"none"});
+		$("#nav-consultant-tab").css({"pointer-events":"none"}); 
 		//$("#nav-consultant-tab").css({"background":"#0e4c2f"});
 		
 	 	$("#nav-survey-tab").not('.active').addClass('disabled');

@@ -83,6 +83,7 @@ public class ViewDetailsServiceImpl implements ViewDetailsService {
 			viewDetailModel.setAgencyName(obj[8] == null ? "" : obj[8].toString());
 			viewDetailModel.setId((obj[9] == null ? 0 : ((Integer) obj[9]).intValue()));
 			viewDetailModel.setStatus((obj[10] == null ? "" : obj[10].toString()));
+			viewDetailModel.setIndividualScreenStatus((obj[11]==null?"":obj[11].toString()));
 			detailsList.add(viewDetailModel);
 		}
 		return detailsList;

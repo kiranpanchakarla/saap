@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -53,9 +54,11 @@ public class TenderEvaluationController {
 
 	private final static Logger log = Logger.getLogger(TenderEvaluationController.class);
 
-	@GetMapping(path = { "/create", "/edit" })
-	public String getTechnicalEvaluation(Model model, HttpSession session) {
-		int workId = (int) session.getAttribute("workIdSession");
+	@GetMapping(path = { "/create/{workId}", "/edit/{workId}" })
+	public String getTechnicalEvaluation(Model model, HttpSession session,@PathVariable("workId") Integer workId) {
+		if(workId==null) {
+		workId = (int) session.getAttribute("workIdSession");
+		}
 		log.info("Tender evaluation for Work id" + workId);
 
 		Works workInfo = misService.getWorkInfo(workId);
@@ -100,14 +103,14 @@ public class TenderEvaluationController {
 		 * return "redirect:/nextRoute/" + (isTenderEvaluationisNew ? "create" :
 		 * "edit");
 		 */
-
+        int workId=tenderEvaluation.getWork().getId();
 		if (isSave) {
 			Works work = misService.getWorkInfo(tenderEvaluation.getWork().getId());
 			work.setStatus(EnumWorkStatus.TENDER_EVALUATION_INFO.getStatus());
 			misService.updateWork(work);
 		}
 
-		return "redirect:/letterOfAcceptance/" + (isSave ? "create" : "edit");
+		return "redirect:/letterOfAcceptance/" + (isSave ? "create/"+workId : "edit/"+workId);
 
 	}
 

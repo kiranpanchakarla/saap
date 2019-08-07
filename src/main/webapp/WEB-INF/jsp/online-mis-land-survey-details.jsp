@@ -366,7 +366,7 @@
 						<!-- Hiddend filds -->
 						<form:input type="hidden" id="landId" path="landDetails.id" />
 
-						<form:input type="hidden" id="workid" path="work.id" />
+						<form:input type="hidden" id="workid" path="work.id" value="${work.id}"/>
 
 
 						<c:if test="${not empty landSurveyDetails.id}">
@@ -537,7 +537,7 @@
 		var maxFileUploadCount = ${fileUploadConstraint.maxFileUploadCount};
 		var allowedFileExtensions = "${fileUploadConstraint.allowedExtensions}".replace(/\s/g,'').split(",");
 
-		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files'/>";
+		var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files/${workObject.id}'/>";
 		var contextPath = "${pageContext.request.contextPath}";
 		var FILE_UPLOAD_PENDING = "${FILE_UPLOAD_PENDING}",
 		FILE_UPLOAD_APPROVED = "${FILE_UPLOAD_APPROVED}",

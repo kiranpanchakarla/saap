@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -50,8 +51,8 @@ public class GeotechnicalInvestigationController {
 	
 	@Autowired ConsultantInfoService constInfoService;
 
-	@GetMapping(path = { "/create", "/edit", "/view" })
-	public String getGeotechnicalInvestigation(Model model, HttpSession session, HttpServletRequest request) {
+	@GetMapping(path = { "/create/{workid}", "/edit/{workid}", "/view" })
+	public String getGeotechnicalInvestigation(Model model, HttpSession session, HttpServletRequest request,@PathVariable("workid") Integer workId) {
 		boolean disableWriteControllers = false;
 
 		// Check for current route is for view
@@ -59,8 +60,9 @@ public class GeotechnicalInvestigationController {
 		disableWriteControllers = request.getRequestURL().toString().endsWith("/view");
 
 		log.info("request url " + request.getRequestURL().toString());
-
-		int workId = (int) session.getAttribute("workIdSession");
+        if(workId==null) {
+		workId = (int) session.getAttribute("workIdSession");
+        }
 		log.info("geotechnical investigation work details for given Work id " + workId);
 		EnumFilter workModuleStatus = EnumFilter.GEOTECHNICAL_INVESTIGATION;
 		Works work = MISService.getWorkInfo(workId);
@@ -105,7 +107,7 @@ public class GeotechnicalInvestigationController {
 			HttpSession session) {
 
 		boolean isGeotechnicalInvestigationNotExist = geotechnicalInvestigationDetails.getId() == null;
-
+        int workId=geotechnicalInvestigationDetails.getWork().getId();
 		geotechnicalInvestigationDetails = geotechnicalInvestigation.save(geotechnicalInvestigationDetails);
 
 		if (isGeotechnicalInvestigationNotExist) {
@@ -116,7 +118,7 @@ public class GeotechnicalInvestigationController {
 
 		// geotechnicalInvestigation
 
-		return "redirect:/preliminaryDrawings/view";
+		return "redirect:/preliminaryDrawings/view/" + workId;
 
 	}
 }

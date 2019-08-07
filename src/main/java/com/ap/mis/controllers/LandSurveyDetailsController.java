@@ -56,10 +56,11 @@ public class LandSurveyDetailsController {
 	@Autowired
 	GeotechnicalInvestigationService geotechnicalInvestigationService;
 
-	@GetMapping(path = { "/create", "/edit" })
-	public String createLandSurveyDetails(Model model, HttpSession session) {
-
-		int workId = (int) session.getAttribute("workIdSession");
+	@GetMapping(path = { "/create/{id}", "/edit/{id}" })
+	public String createLandSurveyDetails(Model model, HttpSession session,@PathVariable("id") Integer workId) {
+    if(workId==null) {
+		workId = (int) session.getAttribute("workIdSession");
+    }
 		log.info("Land survey details for given Work id " + workId);
 		LandSurveyDetails newLandSurvey = new LandSurveyDetails();
 
@@ -132,18 +133,19 @@ public class LandSurveyDetailsController {
 	public String saveLandSurveyDetails(@ModelAttribute LandSurveyDetails landSurveyDetails, Model model) {
 
 		boolean isNewLandSurveyDetails = landSurveyDetails.getId() == null;
+		int workId=landSurveyDetails.getWork().getId();
 
 		landSurveyDetailsService.save(landSurveyDetails);
 		
 		if (!isNewLandSurveyDetails) {
-			return "redirect:/preliminaryPreparationLayout/edit";
+			return "redirect:/preliminaryPreparationLayout/edit/"+workId;
 		}
 		
 		Works work = MISService.getWorkInfo(landSurveyDetails.getWork().getId());
 		work.setStatus(EnumWorkStatus.LAND_SURVEY_DETAILS.getStatus());
 		MISService.updateWork(work);
 
-		return "redirect:/preliminaryPreparationLayout/create";
+		return "redirect:/preliminaryPreparationLayout/create/"+workId;
 
 	}
 
