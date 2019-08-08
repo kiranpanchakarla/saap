@@ -41,16 +41,18 @@ public class LineDepartmentController {
 	@Autowired
 	WorkHistroyService workHistroyService;
 
-	@PostMapping(value = "/save")
+	@PostMapping(value = "/save/{workId}")
 	public String lineDepatmentSave(@ModelAttribute DepartmentLinkingLine lineDeptObj, Model model,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request, HttpSession session,@PathVariable("workId") Integer workid) {
 		boolean isSave = false;
 		User loggedInUser = SecurityUtil.getLoggedUser();
-		int workid = (int) session.getAttribute("workIdSession");
+		if(workid==null) {
+		workid = (int) session.getAttribute("workIdSession");
+		}
 		Integer idVal = lineDeptObj.getWork().getId();
 		Works workInfo = misService.getWorkInfo(workid);
 		session.setAttribute("workInfo", workInfo);
-
+		session.setAttribute("workIdSession", workid);
 		WorkHistory workHistory = new WorkHistory();
 		workHistory.setActionPerform(
 				lineDeptObj.getId() == null ? EnumFilter.SAVED.getStatus() : EnumFilter.UPDATED.getStatus());
@@ -86,22 +88,27 @@ public class LineDepartmentController {
 		 * session.setAttribute("generalInfo", obj);
 		 */
 		if (isSave == true) {
-			return "redirect:/landDetails/create";
+			return "redirect:/landDetails/create/" + idVal;
 		} else {
 			return "redirect:/landDetails/edit/" + idVal;
 		}
 
 	}
 
-	@GetMapping(value = "/create")
-	public String create(@ModelAttribute User userObject, Model model, HttpServletRequest request) {
+	@GetMapping(value = "/create/{workId}")
+	public String create(@ModelAttribute User userObject, Model model, HttpServletRequest request,@PathVariable("workId") Integer workid) {
 		HttpSession session = request.getSession();
 		userObject = SecurityUtil.getLoggedUser();
 		userObject = misService.verifyUser(userObject);
 		model.addAttribute("lineDeptObj", new DepartmentLinkingLine());
 		session.setAttribute("loggedInUserObj", userObject);
-		Works workInfo = (Works) session.getAttribute("workInfo");
+		if(workid==null) {
+			workid = (int) session.getAttribute("workIdSession");
+			}
+		Works workInfo = misService.getWorkInfo(workid);
+		/*Works workInfo = (Works) session.getAttribute("workInfo");*/
 		model.addAttribute("workObject", workInfo);
+	
 		model.addAttribute("divisionList", lineDepartService.getDivisionList());
 		model.addAttribute("subdivisionList", lineDepartService.getSubdivisionList());
 		model.addAttribute("sectionList", lineDepartService.getSectionList());

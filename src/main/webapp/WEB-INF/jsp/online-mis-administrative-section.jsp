@@ -59,14 +59,14 @@
 					aria-labelledby="nav-admin-tab">
 					<div class="row">
 						<div class="col-md-12">
-							<c:url value="/administrativeSection/save" var="createUrl" />
+							<c:url value="/administrativeSection/save/${workObject.id}" var="createUrl" />
 							<form:form id="msform" method="POST" action="${createUrl}"
 								modelAttribute="adminSecObject">
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
 								<input type="hidden" id="moduleName" value="ADMINISTRATIVE" />
 								<form:input type="hidden" id="workid" path="work.id"
-									value="${workInfo.id}" />
+									value="${workObject.id}" />
 
 								<c:choose>
 									<c:when test="${!empty adminSecObject.id}">
@@ -96,7 +96,7 @@
 												</p></li>
 											<li><form:input type="text" id="workNumber"
 													path="workNumber" class="form-control mb-md"
-													readonly="true" value="${workInfo.workNo}" /> <span
+													readonly="true" value="${workObject.workNo}" /> <span
 												id="workNumberErr" class="errors"
 												style="color: red; float: right;"></span></li>
 										</ul>
@@ -272,7 +272,7 @@ var maxFileSize = ${fileUploadConstraint.maxFileUploadSize};
 var maxFileUploadCount = ${fileUploadConstraint.maxFileUploadCount};
 var allowedFileExtensions = "${fileUploadConstraint.allowedExtensions}".replace(/\s/g,'').split(",");
 
-var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files/${workInfo.id}'/>";
+var deleteDocumentFileUrl = "<c:url value='/upload/deleteFiles'/>", saveDocumentFileUrl = "<c:url value='/upload/files/${workObject.id}'/>";
 
 </script>
 	<script type="text/javascript">

@@ -58,7 +58,7 @@
 								<thead>
 									<tr>
 										<th>S.No</th>
-										<!--    <th>ID</th> -->
+										<!--  <th>ID</th>  -->
 										<th>Work No</th>
 										<th>Type of Work</th>
 										<th>Nature Of Work</th>
@@ -75,7 +75,7 @@
 										<tr>
 											<td><c:set var="count" value="${count + 1}" scope="page" />
 												<c:out value="${count}" /></td>
-											<%-- 	<td>${viewDetails.id}</td> --%>
+											<%-- <td>${viewDetails.id}</td>  --%>
 											<td>${viewDetails.workNo}</td>
 											<td>${viewDetails.typeOfWork}</td>
 											<td>${viewDetails.natureOfWork}</td>
@@ -83,11 +83,31 @@
 											<td>${viewDetails.consultantfirm}</td>
 											<td>${viewDetails.agencyName}</td>
 											<td>${viewDetails.status}</td>
-											<td>											
+											<td>									
 											<c:choose>
 													<c:when test="${userRole eq 'ROLE_ADMIN'}">
+													<c:choose>
+													       <c:when
+																test="${viewDetails.status eq 'Work_Created'}">
+																<c:url value="/administrativeSection/create/${viewDetails.id}" var="path"></c:url>
+															</c:when>
+															<c:when
+																test="${viewDetails.status eq 'Admin_Sanction'}">
+																<c:url value="/lineDepartment/create/${viewDetails.id}" var="path"></c:url>
+															</c:when>
+															 <c:when
+																test="${viewDetails.status eq 'Line_Department'}">
+																<c:url value="/landDetails/create/${viewDetails.id}" var="path"></c:url>
+															</c:when> 
+															<c:when
+																test="${viewDetails.status eq 'Land_Details'}">
+																<c:url value="/worksCreation/edit?workId=${viewDetails.id}" var="path"></c:url>
+															</c:when> 
+															<c:otherwise>
+															</c:otherwise>
+															</c:choose>
 														<a class="btn btn-edit"
-															href="<c:url value="/worksCreation/edit?workId=${viewDetails.id}"/>"
+															href="${path}"
 															data-toggle="tooltip" data-placement="top" title="Edit"><i
 															class="glyphicon glyphicon-pencil left"></i></a>
 														<a class="btn btn-view"

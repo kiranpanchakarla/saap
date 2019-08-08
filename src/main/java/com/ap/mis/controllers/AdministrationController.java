@@ -60,12 +60,14 @@ public class AdministrationController {
 	@Autowired
 	WorkHistroyService workHistroyService;
 
-	@PostMapping(value = "/save")
+	@PostMapping(value = "/save/{workId}")
 	public String administrativeSectionSave(@ModelAttribute AdministrativeSection adminSecObject, Model model,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request, HttpSession session,@PathVariable("workId") Integer workid) {
 
 		boolean isSave = false;
-		int workid = (int) session.getAttribute("workIdSession");
+		if(workid==null) {
+		 workid = (int) session.getAttribute("workIdSession");
+		}
 		/* Integer idVal = adminSecObject.getWork().getId(); */
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		adminSecObject.setUser(loggedInUser);
@@ -98,7 +100,7 @@ public class AdministrationController {
 				isSave = true;
 			}
 		}
-
+		session.setAttribute("workIdSession", workid);
 		session.setAttribute("workInfo", workInfo);
 
 		/*
@@ -109,22 +111,24 @@ public class AdministrationController {
 		 */
 
 		if (isSave == true) {
-			return "redirect:/lineDepartment/create";
+			return "redirect:/lineDepartment/create/" + workid;
 		} else {
 			return "redirect:/lineDepartment/edit/" + workid;
 		}
 
 	}
 
-	@GetMapping(value = "/create")
-	public String create(@ModelAttribute User userObject, Model model, HttpServletRequest request) {
+	@GetMapping(value = "/create/{workId}")
+	public String create(@ModelAttribute User userObject, Model model, HttpServletRequest request,@PathVariable("workId") Integer workid) {
 		HttpSession session = request.getSession();
 		userObject = SecurityUtil.getLoggedUser();
 		userObject = misService.verifyUser(userObject);
 		model.addAttribute("adminSecObject", new AdministrativeSection());
 		session.setAttribute("loggedInUserObj", userObject);
 		session.getAttribute("workInfo");
-		int workid = (int) session.getAttribute("workIdSession");
+		if(workid==null) {
+		workid = (int) session.getAttribute("workIdSession");
+		}
 		Works workInfo = misService.getWorkInfo(workid);
 		EnumFilter workModuleStatus = EnumFilter.ADMIN;
 		model.addAttribute("moduleName", workModuleStatus.getStatus());

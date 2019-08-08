@@ -72,20 +72,23 @@ public class LandDetailsController {
 	@Autowired
 	WorkHistroyService workHistroyService;
 
-	@PostMapping(value = "/save")
+	@PostMapping(value = "/save/{workId}")
 	public String landDetailsSave(@ModelAttribute LandDetails landDetails, Model model, HttpServletRequest request,
-			HttpSession session) {
+			HttpSession session,@PathVariable("workId") Integer workid) {
 
 		boolean isSave = false;
 		User loggedInUser = SecurityUtil.getLoggedUser();
 		landDetails.setUser(loggedInUser);
+		if(workid==null) {
+			workid = (int) session.getAttribute("workIdSession");
+			}
 		/*
 		 * WorktoLandDetails obj = new WorktoLandDetails(); obj = (WorktoLandDetails)
 		 * session.getAttribute("generalInfo"); obj.setLandDetails(landDetails);
 		 * session.setAttribute("generalInfo", obj);
 		 */
 		session.setAttribute("landDetails", landDetails);
-		Works workInfo = misService.getWorkInfo(landDetails.getWork().getId());
+		Works workInfo = misService.getWorkInfo(workid);
 
 		WorkHistory workHistory = new WorkHistory();
 		workHistory.setActionPerform(
@@ -161,8 +164,8 @@ public class LandDetailsController {
 			if (consultantInfo == null) {
 				isSave = true;
 			}
-
-			return "redirect:generalInfo";
+			return "redirect:/landDetails/generalInfo";
+			/*return "redirect:generalInfo";*/
 		} else {
 			return "redirect:/adminloggedin";
 		}
@@ -225,12 +228,14 @@ public class LandDetailsController {
 
 	}
 
-	@GetMapping(value = "/create")
-	public String create(@ModelAttribute User userObject, Model model, HttpServletRequest request) {
+	@GetMapping(value = "/create/{workId}")
+	public String create(@ModelAttribute User userObject, Model model, HttpServletRequest request,@PathVariable("workId") Integer workid) {
 		HttpSession session = request.getSession();
 		userObject = SecurityUtil.getLoggedUser();
 		userObject = misService.verifyUser(userObject);
-		int workid = (int) session.getAttribute("workIdSession");
+		if(workid==null) {
+		 workid = (int) session.getAttribute("workIdSession");
+		}
 		Works workInfo = misService.getWorkInfo(workid);
 		EnumFilter workModuleStatus = EnumFilter.LANDDETAILS;
 		model.addAttribute("moduleName", workModuleStatus.getStatus());

@@ -53,7 +53,7 @@
 	 <div class="tab-pane fade show" id="nav-department" role="tabpanel" aria-labelledby="nav-department-tab">
     <div class="row">
     <div class="col-md-12">
-        <c:url value="/lineDepartment/save" var="createUrl" />
+        <c:url value="/lineDepartment/save/${workObject.id}" var="createUrl" />
        <form:form id="msform" method="POST" action="${createUrl}" modelAttribute="lineDeptObj">
        <input type="hidden" name="${_csrf.parameterName}"
            value="${_csrf.token}" />
@@ -77,7 +77,7 @@
                 
                 <ul class="fs-list-details">
                 <li><p>Nature of work <span class="red">*</span></p></li>
-                <li><form:input type="text" id="workNature" path="workNature"  class="form-control mb-md" readonly="true" value="${workInfo.natureOfWork.name}" />
+                <li><form:input type="text" id="workNature" path="workNature"  class="form-control mb-md" readonly="true" value="${workObject.natureOfWork.name}" />
                 <span id="workNatureErr" class="errors" style="color:red;float:right;"></span>
                 </li>
                 </ul>
@@ -159,7 +159,7 @@
 								value="${empty lineDeptObj.id ? 'Save' : 'Update'} and Continue">
                 
             </fieldset>
-            <form:input type="hidden" id="workid" path="work.id" value="${workInfo.id}"/>
+            <form:input type="hidden" id="workid" path="work.id" value="${workObject.id}"/>
         </form:form>
     </div>
 </div>

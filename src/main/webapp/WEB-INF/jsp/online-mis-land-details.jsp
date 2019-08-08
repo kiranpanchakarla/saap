@@ -57,7 +57,7 @@
 					aria-labelledby="nav-land-tab">
 					<div class="row">
 						<div class="col-md-12">
-							<c:url value="/landDetails/save" var="createUrl" />
+							<c:url value="/landDetails/save/${workObject.id}" var="createUrl" />
 							<form:form id="msform" method="POST" action="${createUrl}"
 								modelAttribute="landDetails" enctype="multipart/form-data">
 								<input type="hidden" name="${_csrf.parameterName}"
@@ -212,7 +212,7 @@
 							
 							<input type="submit" id="submit" name="next"
 								class="next action-button float-right"
-								value="${empty landDetails.id ? 'Save and Continue' : 'Save'} ">
+								value="${empty landDetails.id ? 'Save' : 'Update'} and Continue">
 
 									</div>
 									<%-- <c:if test="${landDetails.id==null}">

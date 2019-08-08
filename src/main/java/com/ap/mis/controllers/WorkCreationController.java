@@ -103,7 +103,7 @@ public class WorkCreationController {
 		session.setAttribute("workInfo", workObject);
 		Integer idVal = workObject.getId();
 		if (isSave == true) {
-			return "redirect:/administrativeSection/create";
+			return "redirect:/administrativeSection/create/" + idVal;
 		} else {
 			return "redirect:/administrativeSection/edit/" + idVal;
 

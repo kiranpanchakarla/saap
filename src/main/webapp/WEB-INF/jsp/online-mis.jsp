@@ -211,7 +211,7 @@ if(window.history){
 					<div class="row">
 						<div class="col-md-12">
 
-							<c:url value="/worksCreation/save" var="createUrl" />
+							<c:url value="/worksCreation/save/" var="createUrl" />
 							<%-- <form id="msform"  method="post" action="${createUrl}" modelAttribute="workObject"> --%>
 
 							<form:form id="msform" method="POST" data-toggle="validator" action="${createUrl}"
