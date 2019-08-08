@@ -67,18 +67,9 @@ public class WorkCreationController {
 		if (workObject.getId() == null) {
 			log.info("inside save:" + workObject.getId());
 			isSave = true;
-			workObject.setStatus(EnumFilter.OPEN.getStatus());
-			workObject.setWorkStatus(EnumWorkStatus.WORK.getStatus());
+			workObject.setStatus(EnumWorkStatus.WORK.getStatus());
+			workObject.setWorkStatus(EnumWorkStatus.WORK.getStatus());			
 			workObject = misService.saveWorks(workObject);
-
-			WorkHistory workHistory = new WorkHistory();
-			workHistory.setActionPerform(EnumFilter.SAVED.getStatus());
-			workHistory.setModule(EnumFilter.SAAP.getStatus());
-			workHistory.setSubModule(EnumWorkStatus.WORK.getStatus());
-			workHistory.setCreatedDate(new Date());
-			workHistory.setUser(loggedInUser);
-			workHistory.setWork(workObject);
-			workHistroyService.saveWorks(workHistory);
 
 		} else {
 			log.info("inside update:" + workObject.getId());
@@ -88,20 +79,22 @@ public class WorkCreationController {
 			 */
 			misService.updateWork(workObject);
 
-			WorkHistory workHistory = new WorkHistory();
-			workHistory.setActionPerform(EnumFilter.UPDATED.getStatus());
-			workHistory.setModule(EnumFilter.SAAP.getStatus());
-			workHistory.setSubModule(EnumWorkStatus.WORK.getStatus());
-			workHistory.setCreatedDate(new Date());
-			workHistory.setUser(loggedInUser);
-			workHistory.setWork(workObject);
-			workHistroyService.saveWorks(workHistory);
 			// checking... AdministrativeSection is created or not
 			AdministrativeSection adminInfo = administrativeSectionService.getAdminDetails(workObject.getId());
 			if (adminInfo == null) {
 				isSave = true;
 			}
 		}
+
+		WorkHistory workHistory = new WorkHistory();
+		workHistory.setActionPerform(
+				workObject.getId() == null ? EnumFilter.SAVED.getStatus() : EnumFilter.UPDATED.getStatus());
+		workHistory.setModule(EnumFilter.ADMINISTRATOR.getStatus());
+		workHistory.setSubModule(EnumWorkStatus.WORK.getStatus());
+		workHistory.setCreatedDate(new Date());
+		workHistory.setUser(loggedInUser);
+		workHistory.setWork(workObject);
+		workHistroyService.saveWorks(workHistory);
 		/*
 		 * WorktoLandDetails obj = new WorktoLandDetails(); obj.setWorks(workObject);
 		 * session.setAttribute("generalInfo", obj);

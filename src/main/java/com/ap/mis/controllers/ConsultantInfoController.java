@@ -2,6 +2,7 @@ package com.ap.mis.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.ap.mis.entity.ConsultantInfo;
 import com.ap.mis.entity.GeotechnicalInvestigation;
 import com.ap.mis.entity.LandSurveyDetails;
@@ -22,7 +24,6 @@ import com.ap.mis.service.GeotechnicalInvestigationService;
 import com.ap.mis.service.LandSurveyDetailService;
 import com.ap.mis.service.MISService;
 import com.ap.mis.service.TechnicalSanctionService;
-import com.ap.mis.util.EnumFilter;
 import com.ap.mis.util.EnumWorkStatus;
 import com.ap.mis.util.SecurityUtil;
 
@@ -57,6 +58,7 @@ public class ConsultantInfoController {
 			constInfoService.saveConsultantInfo(consultantInfoObject);
 			Works workInfo = misService.getWorkInfo(workId);
 			workInfo.setStatus(EnumWorkStatus.CONSULTANT_INFO.getStatus());
+			workInfo.setWorkStatus(EnumWorkStatus.CONSULTANT_INFO.getStatus());			
 			misService.updateWork(workInfo);
 			session.setAttribute("workInfo", workInfo);
 			isSave = true;

@@ -83,7 +83,8 @@
 											<td>${viewDetails.consultantfirm}</td>
 											<td>${viewDetails.agencyName}</td>
 											<td>${viewDetails.status}</td>
-											<td><c:choose>
+											<td>											
+											<c:choose>
 													<c:when test="${userRole eq 'ROLE_ADMIN'}">
 														<a class="btn btn-edit"
 															href="<c:url value="/worksCreation/edit?workId=${viewDetails.id}"/>"
@@ -97,11 +98,7 @@
 															href="<c:url value="/worksCreation/delete?workId=${viewDetails.id}"/>"
 															onclick="" data-toggle="tooltip" data-placement="top"
 															title="Delete"><i
-															class="glyphicon glyphicon-trash left"></i></a>
-														<a class="btn btn-history"
-															href="<c:url value="/work/${viewDetails.id}/phase/1/status"/>"
-															onclick="" data-toggle="tooltip" data-placement="top"
-															title="History"><i class="fa fa-history left"></i></a>
+															class="glyphicon glyphicon-trash left"></i></a>														
 													</c:when>
 													
 													<c:when test="${userRole eq 'ROLE_DEPARTMENT'}">
